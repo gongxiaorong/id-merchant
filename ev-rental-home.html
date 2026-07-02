@@ -1,0 +1,310 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>电动车租赁商户管理端 · 首页</title>
+  <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+    body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',system-ui,sans-serif;background:#E8EAED;min-height:100vh;display:flex;justify-content:center;align-items:center;color:#111}
+    .hide-scroll::-webkit-scrollbar{display:none}.hide-scroll{scrollbar-width:none}
+    .slide-enter-active,.slide-leave-active{transition:transform .28s cubic-bezier(.32,.72,0,1)}
+    .slide-enter-from,.slide-leave-to{transform:translateX(100%)}
+    .fade-enter-active,.fade-leave-active{transition:opacity .25s}
+    .fade-enter-from,.fade-leave-to{opacity:0}
+    @keyframes shimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}
+    .sk{background:linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%);background-size:400px 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+    .item-enter-active{transition:all .35s cubic-bezier(.32,.72,0,1)}
+    .item-enter-from{opacity:0;transform:translateY(12px)}
+    .toast-wrap{position:absolute;top:50px;left:16px;right:16px;z-index:9999;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+    .toast-item{padding:10px 20px;border-radius:12px;font-size:14px;font-weight:500;color:#fff;pointer-events:auto;backdrop-filter:blur(10px);text-align:center;max-width:80%;line-height:1.4}
+    .toast-success{background:rgba(23,163,74,.9)}
+    .toast-info{background:rgba(47,111,235,.9)}
+    .toast-enter-active{transition:all .3s cubic-bezier(.32,.72,0,1)}
+    .toast-leave-active{transition:all .25s ease-in}
+    .toast-enter-from{opacity:0;transform:translateY(-20px) scale(.9)}
+    .toast-leave-to{opacity:0;transform:translateY(-10px) scale(.95)}
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="w-[393px] h-[852px] bg-black rounded-[55px] p-3 relative" style="box-shadow:0 0 0 2px #333,0 30px 60px rgba(0,0,0,.35)">
+    <div class="absolute top-[23px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-black rounded-[20px] z-[2000]"></div>
+    <div class="w-full h-full bg-[#F6F7F9] rounded-[44px] overflow-hidden flex flex-col relative">
+
+      <!-- Toast -->
+      <div class="toast-wrap">
+        <transition-group name="toast">
+          <div v-for="t in toasts" :key="t.id" class="toast-item" :class="'toast-'+t.type">{{ t.msg }}</div>
+        </transition-group>
+      </div>
+
+      <!-- Header -->
+      <div class="pt-14 px-5 pb-3.5 bg-white shrink-0">
+        <div class="flex justify-between items-center">
+          <h1 class="text-[22px] font-bold tracking-[-.3px]">{{ store.name }}</h1>
+          <div class="flex gap-2.5">
+            <div class="w-9 h-9 rounded-full bg-[#F6F7F9] border border-[#E5E5E5] flex items-center justify-center cursor-pointer relative active:bg-[#E5E5E5]" @click="open('messages')">
+              <i data-lucide="bell" class="w-[18px] h-[18px]"></i>
+              <span v-if="unread>0" class="absolute -top-[3px] -right-[3px] min-w-[16px] h-[16px] rounded-full bg-[#DC2626] text-white text-[9px] font-bold flex items-center justify-center border-2 border-white px-[3px]">{{ unread }}</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-[#6B6B6B] mt-1">{{ store.date }}</p>
+      </div>
+
+      <!-- Scrollable Content -->
+      <div class="flex-1 overflow-y-auto px-5 pt-4 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+
+        <!-- 经营数据 -->
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-[15px] font-semibold">经营数据</span>
+        </div>
+        <div v-if="loading" class="grid grid-cols-2 gap-2.5">
+          <div v-for="n in 4" :key="'bs'+n" class="bg-white border border-[#E5E5E5] rounded-xl p-4" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+            <div class="sk h-3 w-16 mb-3"></div><div class="sk h-6 w-24"></div>
+          </div>
+        </div>
+        <transition-group v-else name="item" tag="div" class="grid grid-cols-2 gap-2.5">
+          <div class="bg-white border border-[#E5E5E5] rounded-xl p-4" v-for="(s,i) in bizStats" :key="s.label" :style="{transitionDelay:i*60+'ms',boxShadow:'0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)'}">
+            <div class="text-xs text-[#6B6B6B] font-medium mb-2">{{ s.label }}</div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-[22px] font-bold leading-none" style="font-variant-numeric:tabular-nums">{{ s.value }}</span>
+              <span v-if="s.trend" class="text-[11px] font-semibold px-1.5 py-0.5 rounded-[6px]" :class="s.trend>0?'text-[#17A34A] bg-[#ECFDF3]':'text-[#DC2626] bg-[#FEF2F2]'">{{ s.trend>0?'↑':'↓' }}{{ Math.abs(s.trend) }}%</span>
+            </div>
+          </div>
+        </transition-group>
+
+        <!-- 车辆运营 -->
+        <div class="flex justify-between items-center mb-3 mt-5">
+          <span class="text-[15px] font-semibold">车辆运营</span>
+        </div>
+        <div v-if="loading" class="grid grid-cols-2 gap-2.5">
+          <div v-for="n in 2" :key="'bv'+n" class="bg-white border border-[#E5E5E5] rounded-xl p-4" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+            <div class="sk h-3 w-16 mb-3"></div><div class="sk h-6 w-12"></div>
+          </div>
+        </div>
+        <transition-group v-else name="item" tag="div" class="grid grid-cols-2 gap-2.5">
+          <div class="bg-white border border-[#E5E5E5] rounded-xl p-4" v-for="(s,i) in vehStats" :key="s.label" :style="{transitionDelay:i*60+'ms',boxShadow:'0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)'}">
+            <div class="text-xs text-[#6B6B6B] font-medium mb-2">{{ s.label }}</div>
+            <span class="text-[22px] font-bold leading-none" :class="s.danger?'text-[#DC2626]':''">{{ s.value }}</span>
+          </div>
+        </transition-group>
+
+        <!-- 最近告警 -->
+        <div class="flex justify-between items-center mb-3 mt-5">
+          <span class="text-[15px] font-semibold">最近告警</span>
+          <span class="flex items-center gap-0.5 text-sm text-[#2F6FEB] font-medium cursor-pointer select-none active:opacity-70" @click="open('alerts')">
+            全部<i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </span>
+        </div>
+        <div v-if="loading" class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden">
+          <div v-for="n in 3" :key="'ba'+n" class="flex items-center gap-3 px-4 py-3.5" :style="n<3?{borderBottom:'1px solid #E5E5E5'}:{}">
+            <div class="sk w-9 h-9 rounded-[10px] shrink-0"></div>
+            <div class="flex-1"><div class="sk h-3.5 w-28 mb-2"></div><div class="sk h-3 w-40"></div></div>
+          </div>
+        </div>
+        <div v-else-if="recent.length" class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden">
+          <transition-group name="item">
+            <div class="flex items-center gap-3 px-4 py-3.5 border-b border-[#E5E5E5] last:border-b-0" v-for="(a,i) in recent" :key="a.id" :style="{transitionDelay:i*80+'ms'}">
+              <div class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0" :class="lvBg(a.lv)">
+                <i :data-lucide="a.icon" class="w-[18px] h-[18px]"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-semibold">{{ a.vin }}</span>
+                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded-[4px]" :class="lvBg(a.lv)">{{ a.type }}</span>
+                </div>
+                <div class="text-xs text-[#999]">告警时间：{{ a.time }}</div>
+              </div>
+            </div>
+          </transition-group>
+        </div>
+        <div v-else class="flex flex-col items-center py-10">
+          <div class="w-14 h-14 rounded-full bg-[#ECFDF3] flex items-center justify-center mb-3"><i data-lucide="shield-check" class="w-7 h-7 text-[#17A34A]"></i></div>
+          <div class="text-[15px] font-semibold text-[#111] mb-1">暂无告警</div>
+          <div class="text-[13px] text-[#999]">车辆运营状态良好，无需处理</div>
+        </div>
+
+      </div>
+
+      <!-- 告警中心覆层 -->
+      <transition name="slide">
+        <div v-if="ov==='alerts'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+          <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="close"><i data-lucide="chevron-left" class="w-5 h-5"></i></div>
+            <div class="flex-1 text-center text-[17px] font-semibold mr-8">告警中心</div>
+          </div>
+          <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+            <div v-if="allAlerts.length" class="flex flex-col gap-2.5">
+              <transition-group name="item">
+                <div class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden" v-for="(a,i) in allAlerts" :key="a.id" :style="{transitionDelay:i*50+'ms'}">
+                  <div class="flex items-center gap-3 px-4 py-3.5">
+                    <div class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0" :class="lvBg(a.lv)">
+                      <i :data-lucide="a.icon" class="w-[18px] h-[18px]"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex justify-between items-center mb-1">
+                        <span class="text-sm font-semibold">{{ a.vin }}</span>
+                        <span class="text-[11px] font-semibold px-2 py-0.5 rounded-[4px]" :class="lvBg(a.lv)">{{ a.type }}</span>
+                      </div>
+                      <div class="text-xs text-[#999]">告警时间：{{ a.time }}</div>
+                    </div>
+                  </div>
+                </div>
+              </transition-group>
+            </div>
+            <div v-else class="flex flex-col items-center py-16">
+              <div class="w-14 h-14 rounded-full bg-[#ECFDF3] flex items-center justify-center mb-3"><i data-lucide="shield-check" class="w-7 h-7 text-[#17A34A]"></i></div>
+              <div class="text-[15px] font-semibold text-[#111] mb-1">暂无告警</div>
+              <div class="text-[13px] text-[#999]">所有车辆运营正常</div>
+            </div>
+          </div>
+        </div>
+      </transition>
+
+      <!-- 消息中心覆层 -->
+      <transition name="slide">
+        <div v-if="ov==='messages'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+          <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="close"><i data-lucide="chevron-left" class="w-5 h-5"></i></div>
+            <div class="flex-1 text-center text-[17px] font-semibold mr-8">消息中心</div>
+          </div>
+          <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+            <div v-if="msgs.length" class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden">
+              <transition-group name="item">
+                <div class="flex items-center px-4 py-3.5 border-b border-[#E5E5E5] last:border-b-0 gap-3 cursor-pointer active:bg-[#F6F7F9]" v-for="(m,i) in msgs" :key="m.id" :style="{transitionDelay:i*60+'ms'}" @click="readMsg(m)">
+                  <span class="w-2 h-2 rounded-full shrink-0" :class="m.read?'bg-transparent border border-[#E5E5E5]':'bg-[#2F6FEB]'"></span>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-semibold mb-[3px]">{{ m.title }}</div>
+                    <div class="text-xs text-[#6B6B6B] truncate">{{ m.desc }}</div>
+                  </div>
+                  <span class="text-[11px] text-[#999] shrink-0">{{ m.time }}</span>
+                </div>
+              </transition-group>
+            </div>
+            <div v-else class="flex flex-col items-center py-16">
+              <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><i data-lucide="inbox" class="w-7 h-7 text-[#2F6FEB]"></i></div>
+              <div class="text-[15px] font-semibold text-[#111] mb-1">暂无消息</div>
+              <div class="text-[13px] text-[#999]">新消息将在此处通知</div>
+            </div>
+          </div>
+        </div>
+      </transition>
+
+      <!-- Tab Bar -->
+      <div class="absolute bottom-0 left-0 right-0 h-[83px] bg-white/90 backdrop-blur-[20px] border-t border-[#E5E5E5] flex pb-[22px] z-[100]">
+        <div class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none transition-colors duration-150"
+             :class="t.active?'text-[#2F6FEB]':'text-[#999]'" v-for="t in tabs" :key="t.label">
+          <i :data-lucide="t.icon" class="w-[22px] h-[22px]"></i>
+          <span class="text-[10px] font-semibold">{{ t.label }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const { createApp, ref, computed, onMounted, nextTick, watch } = Vue;
+
+createApp({
+  setup() {
+    const ov = ref(null);
+    const loading = ref(true);
+    const store = { name: '测试门店', date: '2024年10月24日 周四' };
+
+    const toasts = ref([]);
+    let tid = 0;
+    function toast(msg, type = 'info') {
+      const id = ++tid;
+      toasts.value.push({ id, msg, type });
+      setTimeout(() => {
+        const i = toasts.value.findIndex(t => t.id === id);
+        if (i >= 0) toasts.value.splice(i, 1);
+      }, 2000);
+    }
+
+    const bizStats = ref([
+      { label: '今日收款',   value: '¥3,240',  trend: 12 },
+      { label: '本月收款',   value: '¥28,500',  trend: 8  },
+      { label: '进行中订单', value: '18',        trend: null },
+      { label: '待还订单',   value: '8',         trend: null }
+    ]);
+
+    const vehStats = ref([
+      { label: '在线车辆', value: '42' },
+      { label: '离线车辆', value: '8',  danger: true }
+    ]);
+
+    const recent = ref([
+      { id: 1, vin: 'A00888', type: '车辆离线',   lv: 'p0', time: '2024-10-24 10:45', icon: 'wifi-off' },
+      { id: 2, vin: 'A00042', type: 'GPS信号丢失', lv: 'p1', time: '2024-10-24 10:30', icon: 'map-pin-off' },
+      { id: 3, vin: 'A00015', type: 'GPS定位过时', lv: 'p1', time: '2024-10-24 09:15', icon: 'timer' }
+    ]);
+
+    const allAlerts = ref([
+      { id: 1, vin: 'A00888', type: '车辆离线',   lv: 'p0', time: '2024-10-24 10:45', icon: 'wifi-off' },
+      { id: 2, vin: 'A00042', type: 'GPS信号丢失', lv: 'p1', time: '2024-10-24 10:30', icon: 'map-pin-off' },
+      { id: 3, vin: 'A00015', type: 'GPS定位过时', lv: 'p1', time: '2024-10-24 09:15', icon: 'timer' },
+      { id: 4, vin: 'A00023', type: 'GPS定位过时', lv: 'p1', time: '2024-10-24 09:15', icon: 'timer' },
+      { id: 5, vin: 'A00015', type: '疑似断电',   lv: 'p2', time: '2024-10-24 08:50', icon: 'zap-off' },
+      { id: 6, vin: 'A00037', type: '疑似断电',   lv: 'p2', time: '2024-10-24 07:30', icon: 'zap-off' }
+    ]);
+
+    const msgs = ref([
+      { id: 1, title: '系统维护通知',        desc: '10月25日 02:00-04:00 服务器升级',   time: '10:30', read: false },
+      { id: 2, title: '车辆 #008 离线告警',   desc: '车辆已离线超过2小时，请及时处理',    time: '09:15', read: false },
+      { id: 3, title: '订单 #20241024 已逾期', desc: '客户未按时归还车辆，请联系确认',   time: '昨天',   read: true  },
+      { id: 4, title: '新版本更新提示',       desc: 'V2.3.0 已发布，新增电池健康度报表', time: '10-22',  read: true  }
+    ]);
+
+    const tabs = ref([
+      { label: '首页', icon: 'home',      active: true  },
+      { label: '车辆', icon: 'bike',      active: false },
+      { label: '订单', icon: 'file-text', active: false },
+      { label: '我的', icon: 'user',      active: false }
+    ]);
+
+    const unread = computed(() => msgs.value.filter(m => !m.read).length);
+
+    const LV = {
+      p0: 'bg-[#FEF2F2] text-[#DC2626]',
+      p1: 'bg-[#FFFBEB] text-[#D97706]',
+      p2: 'bg-[#EBF1FD] text-[#2F6FEB]'
+    };
+    function lvBg(lv) { return LV[lv] || LV.p2; }
+
+    function open(id) { ov.value = id; }
+    function close()  { ov.value = null; }
+
+    function readMsg(m) {
+      if (!m.read) {
+        m.read = true;
+        toast('已标记为已读', 'info');
+      }
+    }
+
+    onMounted(() => {
+      setTimeout(() => { loading.value = false; paint(); }, 800);
+    });
+
+    function paint() {
+      nextTick(() => { try { if (window.lucide) lucide.createIcons(); } catch(e) {} });
+    }
+    watch(ov, paint);
+
+    return {
+      ov, loading, store, toasts,
+      bizStats, vehStats, recent, allAlerts, msgs, tabs, unread,
+      lvBg, open, close, readMsg, toast
+    };
+  }
+}).mount('#app');
+</script>
+</body>
+</html>

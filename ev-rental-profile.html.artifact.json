@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "电动车租赁商户管理端 · 我的（体验优化版）",
+  "entry": "ev-rental-profile.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "primary": true,
+  "createdAt": "2026-06-26T06:06:29.653Z",
+  "updatedAt": "2026-06-26T06:14:50.403Z",
+  "sourceSkillId": "agent-browser",
+  "designSystemId": "default",
+  "metadata": {
+    "identifier": "ev-rental-profile-exp",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}

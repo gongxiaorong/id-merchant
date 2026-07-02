@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "电动车租赁商户管理端",
+  "entry": "ev-rental-manager.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "primary": true,
+  "createdAt": "2026-07-01T06:23:52.506Z",
+  "updatedAt": "2026-07-01T06:23:52.509Z",
+  "sourceSkillId": "agent-browser",
+  "designSystemId": "default",
+  "metadata": {
+    "identifier": "ev-rental-manager",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}

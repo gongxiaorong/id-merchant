@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "EV Rental — SPA 整合版 V2.0",
+  "entry": "ev-rental-spa.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "primary": true,
+  "createdAt": "2026-07-01T03:55:28.450Z",
+  "updatedAt": "2026-07-01T03:55:28.456Z",
+  "sourceSkillId": "agent-browser",
+  "designSystemId": "default",
+  "metadata": {
+    "identifier": "ev-rental-spa",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}

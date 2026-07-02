@@ -1,0 +1,280 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>电动车租赁商户管理端 · 订单</title>
+<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',system-ui,sans-serif;background:#E8EAED;min-height:100vh;display:flex;justify-content:center;align-items:center;color:#111}
+.hid::-webkit-scrollbar{display:none}.hid{scrollbar-width:none}
+.sl-enter-active,.sl-leave-active{transition:transform .28s cubic-bezier(.32,.72,0,1)}.sl-enter-from,.sl-leave-to{transform:translateX(100%)}
+.fd-enter-active,.fd-leave-active{transition:opacity .25s}.fd-enter-from,.fd-leave-to{opacity:0}
+.sh-enter-active,.sh-leave-active{transition:transform .3s cubic-bezier(.32,.72,0,1)}.sh-enter-from,.sh-leave-to{transform:translateY(100%)}
+input[type=date],select{font-family:inherit}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield}
+.filter-tabs{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain;user-select:none;width:100%;flex-wrap:nowrap;white-space:nowrap;cursor:grab}
+.filter-tabs::-webkit-scrollbar{display:none}.filter-tabs:active{cursor:grabbing}
+.filter-pill{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0}
+@keyframes shimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}
+.sk{background:linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%);background-size:400px 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+.item-enter-active{transition:all .35s cubic-bezier(.32,.72,0,1)}
+.item-enter-from{opacity:0;transform:translateY(12px)}
+.toast-wrap{position:absolute;top:50px;left:16px;right:16px;z-index:99999;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.toast-item{padding:10px 20px;border-radius:12px;font-size:14px;font-weight:500;color:#fff;pointer-events:auto;backdrop-filter:blur(10px);text-align:center;max-width:80%;line-height:1.4}
+.toast-success{background:rgba(23,163,74,.9)}.toast-error{background:rgba(220,38,38,.9)}.toast-info{background:rgba(47,111,235,.9)}.toast-warn{background:rgba(217,119,6,.9)}
+.toast-enter-active{transition:all .3s cubic-bezier(.32,.72,0,1)}.toast-leave-active{transition:all .25s ease-in}
+.toast-enter-from{opacity:0;transform:translateY(-20px) scale(.9)}.toast-leave-to{opacity:0;transform:translateY(-10px) scale(.95)}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="w-[393px] h-[852px] bg-black rounded-[55px] p-3 relative" style="box-shadow:0 0 0 2px #333,0 30px 60px rgba(0,0,0,.35)">
+<div class="absolute top-[23px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-black rounded-[20px] z-[2000]"></div>
+<div class="w-full h-full bg-[#F6F7F9] rounded-[44px] overflow-hidden flex flex-col relative">
+
+<!-- Toast -->
+<div class="toast-wrap"><transition-group name="toast"><div v-for="t in toasts" :key="t.id" class="toast-item" :class="'toast-'+t.type">{{ t.msg }}</div></transition-group></div>
+
+<!-- ═══ LIST ═══ -->
+<template v-if="!ov">
+<div class="pt-14 px-5 pb-2 bg-white shrink-0">
+<div class="flex gap-2 items-center">
+<div class="flex-1 rounded-full flex items-center py-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:6px;padding-right:4px">
+<select v-model="searchScope" class="bg-transparent border-none text-[11px] font-medium outline-none pl-1.5 pr-3 mr-1 cursor-pointer appearance-none truncate" style="border-right:1px solid #E5E5E5;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%2710%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23999%27 stroke-width=%272%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 0 center;max-width:62px"><option value="id">订单号</option><option value="account">账号</option><option value="phone">手机号</option><option value="email">邮箱</option><option value="vin">车架号</option></select>
+<input v-model="q" type="text" :placeholder="searchPH" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="doSearch">
+<div @click="doSearch" class="h-7 px-2.5 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-[11px] font-semibold">搜索</div>
+</div>
+<div @click="openFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="hasF?{background:'#EBF1FD',border:'1px solid #2F6FEB',color:'#2F6FEB'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}"><i data-lucide="sliders-horizontal" class="w-4 h-4"></i></div>
+</div>
+</div>
+<div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
+<div class="filter-tabs" id="orderPillRow">
+<div v-for="p in quickPills" :key="p.v" @click="ap=p.v" class="filter-pill" :style="ap===p.v?{background:'#2F6FEB',color:'#fff',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ qCnt[p.v]||0 }})</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-3 pb-24 hid" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<!-- 骨架屏 -->
+<template v-if="loading">
+<div v-for="n in 4" :key="'sk'+n" class="bg-white rounded-xl p-4 mb-2.5" style="border:1px solid #E5E5E5">
+<div class="flex justify-between items-center mb-2"><div class="sk h-3.5 rounded w-28"></div><div class="sk h-5 rounded w-12"></div></div>
+<div class="flex justify-between items-center mb-1.5"><div class="sk h-3 rounded w-24"></div><div class="sk h-5 rounded w-16"></div></div>
+<div class="flex justify-between items-center mb-2"><div class="sk h-3 rounded w-32"></div><div class="sk h-3 rounded w-12"></div></div>
+<div class="sk h-3 rounded w-40"></div>
+</div>
+</template>
+<!-- 列表 -->
+<template v-else-if="oFiltered.length">
+<transition-group name="item">
+<div v-for="(o,i) in oFiltered" :key="o.id" @click="openDetail(o)" class="bg-white rounded-xl p-4 mb-2.5 cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms',opacity:o.status==='cancelled'?0.6:1}">
+<div class="flex justify-between items-center mb-2"><span class="text-[13px] font-semibold">{{ o.id }}</span><span class="text-[11px] font-semibold px-2 py-0.5 rounded" :style="stg(o.status)">{{ sl(o.status) }}</span></div>
+<div v-if="hasVehicle(o.status)" class="flex justify-between items-center text-[12px] mb-1"><span class="text-[#666]">{{ o.model }} {{ o.vin }}</span><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
+<div v-else class="flex justify-end items-center text-[12px] mb-1"><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
+<div class="flex justify-between items-center text-[12px] mb-2"><span class="text-[#666]">{{ o.customer }} {{ o.phone }}</span><span class="text-[#999]">{{ o.plan }}</span></div>
+<div class="text-[11px] text-[#999]">{{ o.time }}</div>
+</div>
+</transition-group>
+</template>
+<!-- 空状态 -->
+<div v-else class="flex flex-col items-center justify-center py-16">
+<div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><i data-lucide="file-text" class="w-8 h-8 text-[#2F6FEB]"></i></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无订单</div>
+<div class="text-[13px] text-[#999] mb-4">{{ q||hasF ? '未找到匹配的订单，请调整搜索条件' : '还没有订单记录' }}</div>
+<div v-if="q||hasF" @click="q='';resetFS()" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:#2F6FEB;border:1px solid #2F6FEB">清除筛选</div>
+</div>
+</div>
+</template>
+
+<!-- ═══ DETAIL ═══ -->
+<transition name="sl"><div v-if="ov==='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="ov=null"><i data-lucide="chevron-left" class="w-5 h-5"></i></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">订单详情</div>
+<span class="text-[14px] font-medium cursor-pointer shrink-0" :style="refundable?{color:'#2F6FEB'}:{color:'#999',pointerEvents:'none'}" @click="refundable&&toast('正在跳转退款记录页…','info')">退款记录</span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
+<div class="flex flex-wrap gap-1.5 mb-3"><div v-for="s in allStatus" :key="s.v" @click="dSt=s.v" class="px-2.5 py-1 rounded-xl text-[11px] cursor-pointer transition-all" :style="dSt===s.v?{background:'#2F6FEB',color:'#fff',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div>
+<div v-if="dSt==='pendingPay'" class="flex items-center gap-1.5 mb-3"><span class="text-[11px] text-[#999] mr-1">支付方式：</span><div @click="dPm='online'" class="px-2.5 py-1 rounded-xl text-[11px] cursor-pointer transition-all" :style="dPm==='online'?{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线上支付</div><div @click="dPm='offline'" class="px-2.5 py-1 rounded-xl text-[11px] cursor-pointer transition-all" :style="dPm==='offline'?{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线下支付</div></div>
+<div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">订单编号</span><span class="flex items-center text-[14px] font-semibold">{{ do_.id }}<i data-lucide="copy" class="w-4 h-4 ml-1.5 text-[#999] cursor-pointer active:text-[#2F6FEB]" @click="copyId"></i></span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">用户信息</span><span class="flex items-center"><span class="text-[14px] font-semibold">{{ do_.customer }} {{ do_.phone }}</span><div @click.stop="toast('正在呼叫 '+do_.customer+'…','info')" class="w-7 h-7 rounded-full bg-[#EBF1FD] flex items-center justify-center ml-2 cursor-pointer text-[#2F6FEB] shrink-0 active:bg-[#2F6FEB] active:text-white"><i data-lucide="phone" class="w-3.5 h-3.5"></i></div></span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">开始时间</span><span class="text-[14px] font-semibold">2025-01-18 14:00:00</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">结束时间</span><span class="text-[14px] font-semibold">2025-01-20 14:00:00</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">租车方案</span><span class="text-[14px] font-semibold">{{ do_.plan }}</span></div>
+<div class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">当前状态</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
+</div>
+<div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">租金</span><span class="text-[14px] font-semibold">¥{{ do_.amount }}</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">押金</span><span class="text-[14px] font-semibold">¥500</span></div>
+<template v-if="showPaid"><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">实付金额</span><span class="text-[14px] font-bold text-[#17A34A]">¥{{ do_.amount+500 }}</span></div><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付方式</span><span class="text-[14px] font-semibold">微信支付</span></div><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付时间</span><span class="text-[14px] font-semibold">2025-01-18 13:30:00</span></div></template>
+<template v-if="dSt==='pendingPay'"><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付方式</span><span class="text-[14px] font-semibold">{{ dPm==='offline'?'线下支付':'微信支付' }}</span></div></template>
+<template v-if="dSt==='complete'"><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">押金退还</span><span class="text-[14px] font-bold text-[#17A34A]">¥500</span></div><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">退还时间</span><span class="text-[14px] font-semibold">2025-03-10 09:05:00</span></div></template>
+</div>
+<div v-if="showVehicle" @click="toast('正在跳转车辆详情…','info')" class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><i data-lucide="bike" class="w-6 h-6 text-[#2F6FEB]"></i></div>
+<div class="flex-1 min-w-0"><div class="text-[13px] font-semibold mb-0.5">车架号：{{ do_.vin }}</div><div class="text-[12px] text-[#666] flex items-center gap-1">{{ do_.model }} <span class="w-1.5 h-1.5 rounded-full bg-[#17A34A]"></span> 在线</div></div>
+<i data-lucide="chevron-right" class="w-4 h-4 text-[#999] shrink-0"></i>
+</div>
+</div>
+<div v-if="showActions" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
+<div class="flex gap-3">
+<button @click="doPrimary" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer transition-colors" :style="primaryDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">{{ primaryLabel }}</button>
+<button v-if="dualMode" @click="doDanger" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer transition-colors" :style="dualIsCancel?{background:'#E5E5E5',color:'#111'}:{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
+</div></div>
+</div></transition>
+
+<!-- ═══ REFUND SHEET ═══ -->
+<transition name="fd"><div v-if="showRefund" class="absolute inset-0 z-[900]" style="background:rgba(0,0,0,.5)" @click="showRefund=false"></div></transition>
+<transition name="sh"><div v-if="showRefund" class="absolute bottom-0 left-0 right-0 bg-white z-[901] rounded-t-[20px] max-h-[92%] flex flex-col">
+<div class="w-9 h-[5px] mx-auto mt-3 mb-2" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[18px] font-bold pb-4 px-5 shrink-0">{{ refundMode==='return'?'归还车辆':'退款' }}</div>
+<div class="flex-1 overflow-y-auto px-5 hid" style="max-height:45vh">
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">租金退款</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">可退上限 ¥800.00</div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">押金退款</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">可退上限 ¥500.00</div></div>
+<div class="mb-4"><div class="text-[14px] font-semibold mb-2">退款原因 <span class="font-normal text-[#999]">（选填）</span></div><textarea v-model="rReason" placeholder="请输入退款原因..." class="w-full p-4 rounded-xl text-[15px] outline-none resize-none min-h-[90px] transition-colors" style="border:1px solid #E5E5E5;font-family:inherit"></textarea></div>
+</div>
+<div class="px-5 pb-8 shrink-0"><div class="flex justify-between items-center py-3" style="border-top:1px solid #E5E5E5"><span class="text-[16px] font-semibold">合计退款</span><span class="text-[22px] font-bold text-[#17A34A]">¥{{ refundTotal.toFixed(2) }}</span></div><button @click="submitRefund" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer transition-colors" style="background:#17A34A">{{ refundMode==='return'?'确认归还':'确认退款' }}</button></div>
+</div></transition>
+
+<!-- ═══ FILTER SHEET ═══ -->
+<transition name="fd"><div v-if="showFS" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="showFS=false"></div></transition>
+<transition name="sh"><div v-if="showFS" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] flex flex-col" style="max-height:70%">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">订单筛选</div>
+<div class="flex-1 overflow-y-auto px-5 pb-3 hid" style="min-height:0">
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">订单状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" @click="fsStC=fsStC===s.v?'':s.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="fsStC===s.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div @click="fsPayC=fsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="fsPayC==='2c2p'?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div @click="fsPayC=fsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="fsPayC==='offline'?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线下支付</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" @click="fsPayStC=fsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="fsPayStC===p.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
+<div style="margin-bottom:16px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">时间范围</div><div style="display:flex;gap:8px;align-items:center"><input v-model="fsStartC" type="date" class="flex-1 py-2 px-3 rounded-lg text-[14px] outline-none" style="border:1px solid #E5E5E5;font-family:inherit;min-width:0"><span class="text-[14px] text-[#999]">至</span><input v-model="fsEndC" type="date" class="flex-1 py-2 px-3 rounded-lg text-[14px] outline-none" style="border:1px solid #E5E5E5;font-family:inherit;min-width:0"></div></div>
+</div>
+<div class="flex gap-3 px-5 pb-8 shrink-0"><button @click="resetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">重置</button><button @click="applyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:#2F6FEB">确定</button></div>
+</div></transition>
+
+<!-- ═══ MODAL z-999 ═══ -->
+<transition name="fd"><div v-if="mod" class="absolute inset-0 z-[999] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="text-[17px] font-bold text-center">{{ modTitle }}</div>
+<div class="text-[14px] text-[#666] text-center leading-relaxed">{{ modDesc }}</div>
+<div class="flex gap-3 mt-2"><div @click="mod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div><div @click="confirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" :style="modDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">确认</div></div>
+</div>
+</div></transition>
+
+<!-- ═══ TAB BAR ═══ -->
+<div class="absolute bottom-0 left-0 right-0 h-[83px] bg-white/90 backdrop-blur-[20px] flex pb-[22px] z-[100]" style="border-top:1px solid #E5E5E5">
+<a href="index.html" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none no-underline text-[#999]"><i data-lucide="home" class="w-[22px] h-[22px]"></i><span class="text-[10px] font-semibold">首页</span></a>
+<a href="vehicles.html" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none no-underline text-[#999]"><i data-lucide="bike" class="w-[22px] h-[22px]"></i><span class="text-[10px] font-semibold">车辆</span></a>
+<div class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none text-[#2F6FEB]"><i data-lucide="file-text" class="w-[22px] h-[22px]"></i><span class="text-[10px] font-semibold">订单</span></div>
+<a href="profile.html" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none no-underline text-[#999]"><i data-lucide="user" class="w-[22px] h-[22px]"></i><span class="text-[10px] font-semibold">我的</span></a>
+</div>
+
+</div></div></div>
+<script>
+const{createApp,ref,computed,onMounted,onUpdated,nextTick}=Vue;
+createApp({
+setup(){
+const ov=ref(null),mod=ref(null),showFS=ref(false),showRefund=ref(false),loading=ref(true);
+const q=ref(''),searchScope=ref('id'),ap=ref('');
+const searchPH=computed(()=>({id:'搜索订单号',account:'搜索账号',phone:'搜索手机号',email:'搜索邮箱',vin:'搜索车架号'})[searchScope.value]||'搜索订单号');
+
+const toasts=ref([]);let tid=0;
+function toast(msg,type){var id=++tid;toasts.value.push({id:id,msg:msg,type:type||'info'});setTimeout(function(){var i=toasts.value.findIndex(function(t){return t.id===id});if(i>=0)toasts.value.splice(i,1)},2000)}
+
+var orders=ref([
+{id:'#ORD2025012001',model:'雅迪 E-Bike Pro',vin:'A11111',customer:'Chen Yi',phone:'+86 13800001111',plan:'月租',amount:350,status:'created',payment:'2c2p',time:'下单 2025-01-20 09:00:00'},
+{id:'#ORD2025012002',model:'雅迪 City Cruiser',vin:'A22222',customer:'Li Er',phone:'+86 13800002222',plan:'月租',amount:560,status:'pendingPay',payment:'offline',time:'下单 2025-01-20 09:30:00'},
+{id:'#ORD2025012003',model:'雅迪 Mountain X',vin:'A33333',customer:'Zhang San',phone:'+86 13800003333',plan:'月租',amount:280,status:'pickup',payment:'2c2p',time:'预约取车 2025-01-21 09:00:00'},
+{id:'#ORD2025011804',model:'雅迪 Mountain X',vin:'A55555',customer:'Wang Wu',phone:'+86 13800005555',plan:'月租 × 2个月',amount:420,status:'progress',payment:'2c2p',time:'取车 2025-01-18 14:00:00 · 还车 2025-01-20 14:00:00'},
+{id:'#ORD2025011705',model:'雅迪 Commuter S',vin:'A66666',customer:'Zhao Liu',phone:'+86 13800006666',plan:'月租',amount:180,status:'return',payment:'offline',time:'取车 2025-01-17 08:00:00 · 应还 2025-01-20 18:00:00'},
+{id:'#ORD2025011506',model:'雅迪 E-Bike Pro',vin:'A77777',customer:'Sun Qi',phone:'+86 13800007777',plan:'月租',amount:150,status:'overdue',payment:'2c2p',time:'取车 2025-01-15 10:00:00 · 应还 2025-01-18 10:00:00'},
+{id:'#ORD2025011007',model:'雅迪 City Cruiser',vin:'A88888',customer:'Zhou Ba',phone:'+86 13800008888',plan:'月租 × 2个月',amount:620,status:'complete',payment:'offline',time:'取车 2025-01-10 09:00:00 · 还车 2025-03-10 09:00:00'},
+{id:'#ORD2025011908',model:'雅迪 Commuter S',vin:'A99999',customer:'Zheng Jiu',phone:'+86 13800009999',plan:'月租',amount:300,status:'cancelled',payment:'2c2p',time:'下单 2025-01-19 11:00:00 · 取消 2025-01-19 14:00:00'},
+{id:'#ORD2025010809',model:'雅迪 Mountain X',vin:'A10101',customer:'Wu Shi',phone:'+86 13900001010',plan:'月租',amount:450,status:'breach',payment:'offline',time:'取车 2025-01-08 08:00:00 · 应还 2025-01-10 08:00:00'}
+]);
+
+var allStatus=[{v:'created',l:'已创建'},{v:'pendingPay',l:'待支付'},{v:'pickup',l:'待取车'},{v:'progress',l:'进行中'},{v:'return',l:'待还车'},{v:'overdue',l:'已超期'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'},{v:'breach',l:'已违约'}];
+var paySts=[{v:'pending',l:'待支付'},{v:'processing',l:'支付中'},{v:'paid',l:'已支付'},{v:'refunding',l:'退款中'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
+var quickPills=[{l:'全部',v:''},{l:'待取车',v:'pickup'},{l:'进行中',v:'progress'},{l:'待还车',v:'return'},{l:'已超期',v:'overdue'}];
+
+var qCnt=computed(function(){var m={};orders.value.forEach(function(o){m[o.status]=(m[o.status]||0)+1});return{'':orders.value.length,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
+
+var fsSt=ref(''),fsPay=ref(''),fsPaySt=ref(''),fsStart=ref(''),fsEnd=ref('');
+var fsStC=ref(''),fsPayC=ref(''),fsPayStC=ref(''),fsStartC=ref(''),fsEndC=ref('');
+var hasF=computed(function(){return!!fsSt.value||!!fsPay.value||!!fsPaySt.value||!!fsStart.value});
+
+var vehSts=['progress','return','overdue','complete','breach'];
+function hasVehicle(s){return vehSts.indexOf(s)!==-1}
+
+var oFiltered=computed(function(){return orders.value.filter(function(o){
+  if(ap.value&&o.status!==ap.value)return false;
+  if(fsSt.value&&o.status!==fsSt.value)return false;
+  if(fsPay.value&&o.payment!==fsPay.value)return false;
+  if(fsPaySt.value&&o.paySt!==fsPaySt.value)return false;
+  if(fsStart.value){var m=o.time.match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<fsStart.value||m[1]>fsEnd.value))return false}
+  if(q.value){var f={id:o.id,vin:o.vin||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(q.value.toLowerCase())===-1)return false}
+  return true;
+})});
+
+function sl(s){var m={created:'已创建',pendingPay:'待支付',pickup:'待取车',progress:'进行中','return':'待还车',overdue:'已超期',complete:'已完成',cancelled:'已取消',breach:'已违约'};return m[s]||s}
+function stg(s){var m={created:{background:'#F0F4FF',color:'#5B7FEB',border:'1px solid #5B7FEB'},pendingPay:{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'},pickup:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},progress:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},'return':{background:'#FFF3E0',color:'#E67E22',border:'1px solid #E67E22'},overdue:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'},complete:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'},cancelled:{background:'#F6F7F9',color:'#BBB',border:'1px solid #DDD'},breach:{background:'#FEE2E2',color:'#991B1B',border:'1px solid #991B1B'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
+
+var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
+var dSt=ref(''),dPm=ref('online');
+var showPaid=computed(function(){return vehSts.concat(['pickup']).indexOf(dSt.value)!==-1});
+var showVehicle=computed(function(){return vehSts.indexOf(dSt.value)!==-1});
+var refundable=computed(function(){return vehSts.concat(['pickup','cancelled']).indexOf(dSt.value)!==-1});
+var showActions=computed(function(){return dSt.value!=='cancelled'});
+var primaryLabel=computed(function(){var isOff=dSt.value==='pendingPay'&&dPm.value==='offline';var m={created:'取消订单',pendingPay:isOff?'确认支付':'取消订单',pickup:'取消订单',progress:'归还车辆','return':'归还车辆',overdue:'归还车辆',complete:'退款',breach:'归还车辆'};return m[dSt.value]||''});
+var primaryDanger=computed(function(){return['created','pendingPay','pickup'].indexOf(dSt.value)!==-1&&!(dSt.value==='pendingPay'&&dPm.value==='offline')});
+var dualMode=computed(function(){return dSt.value==='overdue'||dSt.value==='breach'||(dSt.value==='pendingPay'&&dPm.value==='offline')});
+var dualIsCancel=computed(function(){return dSt.value==='pendingPay'&&dPm.value==='offline'});
+var dangerLabel=computed(function(){return(dSt.value==='pendingPay'&&dPm.value==='offline')?'取消订单':'车辆报失'});
+
+function openDetail(o){do_.value=o;dSt.value=o.status;dPm.value='online';ov.value='detail'}
+function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
+function doSearch(){toast('搜索完成，'+oFiltered.value.length+' 条结果','info')}
+function doPrimary(){var isOff=dSt.value==='pendingPay'&&dPm.value==='offline';if(isOff){mod.value='confirmPay';return}if(['created','pendingPay','pickup'].indexOf(dSt.value)!==-1){mod.value='cancel'}else if(vehSts.filter(function(s){return s!=='complete'}).indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
+function doDanger(){if(dSt.value==='pendingPay'&&dPm.value==='offline'){mod.value='cancel';return}mod.value='lost'}
+
+var modTitle=computed(function(){var m={cancel:'确认取消订单',confirmPay:'确认支付',lost:'确认车辆报失',refundConfirm:refundMode.value==='return'?'确认归还车辆':'确认退款'};return m[mod.value]||''});
+var modDesc=computed(function(){var m={cancel:'确定要取消该订单吗？取消后不可恢复。',confirmPay:'确认为该订单进行线下支付确认吗？',lost:'确定要对该车辆进行报失处理吗？',refundConfirm:'合计退款 ¥'+refundTotal.value.toFixed(2)+'，确定'+(refundMode.value==='return'?'归还车辆':'执行退款')+'吗？'};return m[mod.value]||''});
+var modDanger=computed(function(){return mod.value==='cancel'||mod.value==='lost'});
+function confirmMod(){var m=mod.value;mod.value=null;if(m==='cancel')toast('订单已取消','success');if(m==='confirmPay')toast('线下支付确认成功，订单已更新为待取车','success');if(m==='lost')toast('车辆报失已提交，已冻结该订单','success');if(m==='refundConfirm'){showRefund.value=false;toast(refundMode.value==='return'?'车辆已归还！退款已处理':'退款已完成！','success')}}
+
+var refundMode=ref('return'),rRent=ref(0),rDep=ref(0),rReason=ref('');
+var rRentErr=computed(function(){return rRent.value>800}),rDepErr=computed(function(){return rDep.value>500});
+var refundTotal=computed(function(){var r=rRent.value||0,d=rDep.value||0;if(r<0)r=0;if(d<0)d=0;if(r>800)r=800;if(d>500)d=500;return r+d});
+function clampRent(){if(rRent.value>800)rRent.value=800;if(rRent.value<0)rRent.value=0}
+function clampDep(){if(rDep.value>500)rDep.value=500;if(rDep.value<0)rDep.value=0}
+function openRefund(mode){refundMode.value=mode;rRent.value=0;rDep.value=0;rReason.value='';showRefund.value=true}
+function submitRefund(){mod.value='refundConfirm'}
+function openFS(){fsStC.value=fsSt.value;fsPayC.value=fsPay.value;fsPayStC.value=fsPaySt.value;fsStartC.value=fsStart.value;fsEndC.value=fsEnd.value;showFS.value=true}
+function resetFS(){fsStC.value='';fsPayC.value='';fsPayStC.value='';fsStartC.value='';fsEndC.value='';toast('筛选已重置','info')}
+function applyFS(){fsSt.value=fsStC.value;fsPay.value=fsPayC.value;fsPaySt.value=fsPayStC.value;fsStart.value=fsStartC.value;fsEnd.value=fsEndC.value;showFS.value=false;toast('筛选已应用','info')}
+
+function initPillDrag(){document.querySelectorAll('.filter-tabs').forEach(function(t){var d=false,sx,sl;t.addEventListener('mousedown',function(e){d=true;t.style.cursor='grabbing';sx=e.pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('mouseleave',function(){d=false;t.style.cursor='grab'});t.addEventListener('mouseup',function(){d=false;t.style.cursor='grab'});t.addEventListener('mousemove',function(e){if(!d)return;e.preventDefault();t.scrollLeft=sl-(e.pageX-t.offsetLeft-sx)});t.addEventListener('touchstart',function(e){sx=e.touches[0].pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('touchmove',function(e){t.scrollLeft=sl-(e.touches[0].pageX-t.offsetLeft-sx)})})}
+function paint(){nextTick(function(){try{if(window.lucide)lucide.createIcons()}catch(e){}initPillDrag()})}
+onMounted(function(){setTimeout(function(){loading.value=false;paint()},800)});
+onUpdated(paint);
+
+return{
+ov:ov,mod:mod,showFS:showFS,showRefund:showRefund,loading:loading,q:q,searchScope:searchScope,searchPH:searchPH,
+orders:orders,allStatus:allStatus,paySts:paySts,quickPills:quickPills,qCnt:qCnt,oFiltered:oFiltered,
+fsSt:fsSt,fsPay:fsPay,fsPaySt:fsPaySt,fsStart:fsStart,fsEnd:fsEnd,fsStC:fsStC,fsPayC:fsPayC,fsPayStC:fsPayStC,fsStartC:fsStartC,fsEndC:fsEndC,hasF:hasF,
+do_:do_,dSt:dSt,dPm:dPm,showPaid:showPaid,showVehicle:showVehicle,refundable:refundable,showActions:showActions,
+primaryLabel:primaryLabel,primaryDanger:primaryDanger,dualMode:dualMode,dualIsCancel:dualIsCancel,dangerLabel:dangerLabel,
+modTitle:modTitle,modDesc:modDesc,modDanger:modDanger,
+refundMode:refundMode,rRent:rRent,rDep:rDep,rReason:rReason,rRentErr:rRentErr,rDepErr:rDepErr,refundTotal:refundTotal,
+toasts:toasts,ap:ap,
+sl:sl,stg:stg,hasVehicle:hasVehicle,openDetail:openDetail,copyId:copyId,doSearch:doSearch,doPrimary:doPrimary,doDanger:doDanger,confirmMod:confirmMod,
+openRefund:openRefund,clampRent:clampRent,clampDep:clampDep,submitRefund:submitRefund,
+openFS:openFS,resetFS:resetFS,applyFS:applyFS,toast:toast
+};
+}
+}).mount('#app');
+</script>
+</body>
+</html>
