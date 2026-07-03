@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -261,11 +262,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div @click="vehOV='add'" class="absolute bottom-[105px] right-5 w-14 h-14 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer z-[80] active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
 </template>
+
+<!-- ═══ VEHICLE DETAIL ═══ -->
 <transition name="sl">
 <div v-if="vehOV==='detail'" v-swipe-close="()=>vehOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold mr-8">车辆详情</div>
+<div class="flex-1 text-center text-[17px] font-semibold">车辆详情</div>
+<span class="text-[14px] font-medium text-[#2F6FEB] cursor-pointer shrink-0 active:opacity-70" @click="openVehEdit">编辑</span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll" style="touch-action:pan-y">
 <div class="bg-white rounded-xl overflow-hidden mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
@@ -306,13 +310,51 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" style="background:#ECFDF3;color:#17A34A;border:1px solid #17A34A">在线</span></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">中控编号</div><div class="text-[14px] font-semibold">{{ dv.ctrl }}</div></div></div>
-<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车型</div><div class="text-[14px] font-semibold">{{ dv.model }}</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车牌号</div><div class="text-[14px] font-semibold">京A·88888</div></div></div>
+<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车型</div><div class="text-[14px] font-semibold">{{ dv.model }}</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车牌号</div><div class="text-[14px] font-semibold">{{ dv.plate }}</div></div></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">电池电量</div><div class="text-[14px] font-semibold" :style="{color:bc(dv.batteryMain)}">主{{ dv.batteryMain }}% / 副{{ dv.batterySub }}%</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车辆状态</div><div class="text-[14px] font-semibold">{{ dv.status }}</div></div></div>
 <div class="flex justify-between items-center py-2.5"><div class="text-[12px] text-[#999]">最后信号时间</div><div class="text-[14px] font-semibold">{{ dv.time }}</div></div>
 </div>
 </div>
 </div>
 </transition>
+
+<!-- ═══ VEHICLE EDIT ═══ -->
+<transition name="sl">
+<div v-if="vehOV==='edit'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑车辆信息</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-28 hide-scroll">
+<div class="mb-5">
+<div class="text-[13px] font-semibold text-[#999] mb-2">基本信息（不可编辑）</div>
+<div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5">
+<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 shrink-0">车架号</span><span class="text-sm font-semibold flex-1">{{ dv.vin }}</span></div>
+<div class="flex py-2.5"><span class="text-[13px] text-[#999] w-20 shrink-0">状态</span><span class="text-sm font-semibold flex-1" :style="{color:dv.online?'#17A34A':'#D97706'}">{{ dv.online?'在线':'离线' }} · {{ dv.status }}</span></div>
+</div>
+</div>
+<div class="mb-5">
+<div class="text-[14px] font-semibold mb-2">中控编号</div>
+<input v-model="editCtrl" type="text" maxlength="20" placeholder="请输入中控编号" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5">
+</div>
+<div class="mb-5">
+<div class="text-[14px] font-semibold mb-2">车型</div>
+<select v-model="editModel" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none appearance-none bg-white cursor-pointer transition-colors" style="border:1px solid #E5E5E5;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23999%27 stroke-width=%272%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 16px center">
+<option v-for="m in vehModels" :key="m" :value="m">{{ m }}</option>
+</select>
+</div>
+<div class="mb-5">
+<div class="text-[14px] font-semibold mb-2">车牌号</div>
+<input v-model="editPlate" type="text" maxlength="12" placeholder="请输入车牌号" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5">
+</div>
+</div>
+<div class="absolute bottom-7 left-5 right-5">
+<button @click="saveVehEdit" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:#2F6FEB">保存</button>
+</div>
+</div>
+</transition>
+
+<!-- ═══ ADD VEHICLE ═══ -->
 <transition name="sl">
 <div v-if="vehOV==='add'" v-swipe-close="()=>{vehOV=null;addModel='';addVin='';addCtrl=''}" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
@@ -332,7 +374,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[14px] font-semibold mb-2">车架号</div>
 <div class="flex items-center bg-white rounded-xl overflow-hidden" :style="!addModel?{opacity:0.5,pointerEvents:'none',border:'1px solid #E5E5E5'}:{border:'1px solid #E5E5E5'}">
 <input v-model="addVin" type="text" placeholder="请输入车架号" class="flex-1 bg-transparent border-none text-[15px] outline-none px-4 py-3.5 min-w-0 placeholder:text-[#999]">
-<!-- <div @click="scanVin" class="w-11 h-11 flex items-center justify-center bg-[#EBF1FD] text-[#2F6FEB] cursor-pointer rounded-full mr-1.5 shrink-0 active:bg-[#2F6FEB] active:text-white"><span v-html="luci('scan','w-5 h-5')"></span></div> -->
 </div>
 </div>
 <div class="mb-6">
@@ -347,6 +388,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 </transition>
+
 <transition name="fd"><div v-if="vehShowModelSheet" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="vehShowModelSheet=false"></div></transition>
 <transition name="sh">
 <div v-if="vehShowModelSheet" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] max-h-[65%] flex flex-col">
@@ -365,6 +407,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 </transition>
+
 <!-- ═══ SCAN OVERLAY ═══ -->
 <transition name="fd"><div v-if="scanning" class="absolute inset-0 z-[700] flex flex-col items-center justify-center" style="background:rgba(0,0,0,.85)">
 <div class="scan-frame"><div class="scan-line"></div><div class="absolute inset-0 flex items-center justify-center"><span v-html="luci('scan','w-10 h-10 text-white/20')"></span></div></div>
@@ -372,6 +415,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div @click="doScan" class="px-10 py-3 rounded-full text-[15px] font-semibold text-white cursor-pointer active:opacity-70" style="background:#2F6FEB">点击模拟扫码</div>
 <div @click="scanning=false" class="mt-4 text-white/40 text-[13px] cursor-pointer active:opacity-60">取消</div>
 </div></transition>
+
 <transition name="fd"><div v-if="vehShowFS" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="vehShowFS=false"></div></transition>
 <transition name="sh">
 <div v-if="vehShowFS" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] max-h-[65%] flex flex-col">
@@ -398,6 +442,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 </transition>
+
 <transition name="fd">
 <div v-if="vehMod" class="absolute inset-0 z-[800] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
 <div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
@@ -935,16 +980,44 @@ const vehOV=ref(null),vehMod=ref(null),vehShowModelSheet=ref(false),vehShowFS=re
 const vehLoading=ref(true),vehRefreshing=ref(false);
 const locked=ref(false),pressProgress=ref(0),lockJustDone=ref(false);
 let pressTimer=null,pressStart=0;const PRESS_DURATION=1500;
-const vehicles=ref([{vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30'},{vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15'},{vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00'},{vin:'LSVAU2Z0D00001000',ctrl:'860123456789040',status:'已报失',online:false,batteryMain:0,batterySub:0,time:'2024-10-23 09:00'}]);
+const vehicles=ref([
+{vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30'},
+{vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15'},
+{vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00'},
+{vin:'LSVAU2Z0D00001000',ctrl:'860123456789040',model:'雅迪 Commuter S',plate:'京D·00001',status:'已报失',online:false,batteryMain:0,batterySub:0,time:'2024-10-23 09:00'}
+]);
 const vehModels=['雅迪 E-Bike Pro','雅迪 City Cruiser','雅迪 Mountain X','雅迪 Commuter S'];
 const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehFsModelC=ref(''),vehFsOnlineC=ref(null);
 const vehHasF=computed(()=>!!vehFsModel.value||vehFsOnline.value!==null);
 const pills=[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'},{l:'已报失',v:'已报失'}];
 const pillCnt=computed(()=>{const m={};vehicles.value.forEach(v=>{m[v.status]=(m[v.status]||0)+1});return{'':vehicles.value.length,'空闲':m['空闲']||0,'占用中':m['占用中']||0,'租用中':m['租用中']||0,'已报失':m['已报失']||0}});
 const filtered=computed(()=>vehicles.value.filter(v=>{if(vehPill.value&&v.status!==vehPill.value)return false;if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true}));
-const dv=ref({vin:'',ctrl:'',model:'',status:'',online:true,batteryMain:0,batterySub:0,time:''});
+const dv=ref({vin:'',ctrl:'',model:'',plate:'',status:'',online:true,batteryMain:0,batterySub:0,time:''});
 const armed=ref(false),lost=ref(false),findLoading=ref(false);
-function vehOpenDetail(v){dv.value=v;armed.value=false;lost.value=false;vehOV.value='detail'}
+
+/* ══ Vehicle Edit ══ */
+const editCtrl=ref(''),editModel=ref(''),editPlate=ref('');
+function openVehEdit(){
+editCtrl.value=dv.value.ctrl;
+editModel.value=dv.value.model;
+editPlate.value=dv.value.plate;
+vehOV.value='edit';
+}
+function saveVehEdit(){
+dv.value.ctrl=editCtrl.value;
+dv.value.model=editModel.value;
+dv.value.plate=editPlate.value;
+const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);
+if(idx>=0){
+vehicles.value[idx].ctrl=editCtrl.value;
+vehicles.value[idx].model=editModel.value;
+vehicles.value[idx].plate=editPlate.value;
+}
+vehOV.value='detail';
+toast('车辆信息已保存','success');
+}
+
+function vehOpenDetail(v){dv.value={...v};armed.value=false;lost.value=false;vehOV.value='detail'}
 function vehDoSearch(){if(vehQ.value)toast('搜索完成，'+filtered.value.length+' 条结果','info')}
 function startPress(e){e.preventDefault();pressStart=Date.now();pressProgress.value=0;const update=()=>{const now=Date.now();const elapsed=now-pressStart;pressProgress.value=Math.min((elapsed/PRESS_DURATION)*100,100);if(elapsed>=PRESS_DURATION){locked.value=!locked.value;pressProgress.value=0;lockJustDone.value=true;toast(locked.value?'已开锁，车辆已解锁':'已关锁，车辆已锁定','success');setTimeout(()=>lockJustDone.value=false,300);return}pressTimer=requestAnimationFrame(update)};pressTimer=requestAnimationFrame(update)}
 function endPress(){if(pressTimer){cancelAnimationFrame(pressTimer);pressTimer=null}const decay=()=>{if(pressProgress.value>0){pressProgress.value=Math.max(0,pressProgress.value-5);requestAnimationFrame(decay)}};requestAnimationFrame(decay)}
@@ -1112,6 +1185,8 @@ dv,armed,lost,findLoading,addModel,addVin,addCtrl,modelQ,filteredModels,canSubmi
 vehModTitle,vehModDesc,vehModDanger,
 vehOpenDetail,vehDoSearch,startPress,endPress,doFind,vehConfirmMod,pickModel,scanVin,doScan,scanning,submitAdd,
 vehOpenFS,vehToggleFSModel,vehToggleFSOnline,vehResetFS,vehApplyFS,sc,bi,bc,
+/* Vehicle Edit */
+editCtrl,editModel,editPlate,openVehEdit,saveVehEdit,
 /* Orders */
 ordersOV,ordersMod,ordersShowFS,showRefund,ordersLoading,ordersRefreshing,ordersQ,searchScope,ordersPill,searchPH,
 orders,allStatus,paySts,quickPills,qCnt,oFiltered,
