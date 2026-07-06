@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "车辆详情编辑功能 · index.html",
+  "entry": "index-vehicle-edit-2.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "primary": true,
+  "createdAt": "2026-07-03T05:48:33.641Z",
+  "updatedAt": "2026-07-03T05:48:33.647Z",
+  "sourceSkillId": "agent-browser",
+  "designSystemId": "default",
+  "metadata": {
+    "identifier": "index-vehicle-edit",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}

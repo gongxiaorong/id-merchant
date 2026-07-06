@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "订单详情 · 客户补充资料",
+  "entry": "index-vehicle-edit-2-2.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "primary": true,
+  "createdAt": "2026-07-03T07:43:17.320Z",
+  "updatedAt": "2026-07-03T07:43:17.327Z",
+  "sourceSkillId": "agent-browser",
+  "designSystemId": "default",
+  "metadata": {
+    "identifier": "index-vehicle-edit-2",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}

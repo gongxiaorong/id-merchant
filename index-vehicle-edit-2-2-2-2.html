@@ -1,0 +1,1305 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>电动车租赁商户管理端 · 首页</title>
+<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',system-ui,sans-serif;background:#E8EAED;min-height:100vh;display:flex;justify-content:center;align-items:center;color:#111}
+.hide-scroll::-webkit-scrollbar{display:none}.hide-scroll{scrollbar-width:none}
+.hid::-webkit-scrollbar{display:none}.hid{scrollbar-width:none}
+.sl-enter-active,.sl-leave-active{transition:transform .28s cubic-bezier(.32,.72,0,1)}.sl-enter-from,.sl-leave-to{transform:translateX(100%)}
+.fd-enter-active,.fd-leave-active{transition:opacity .25s}.fd-enter-from,.fd-leave-to{opacity:0}
+.sh-enter-active,.sh-leave-active{transition:transform .3s cubic-bezier(.32,.72,0,1)}.sh-enter-from,.sh-leave-to{transform:translateY(100%)}
+@keyframes spin{to{transform:rotate(360deg)}}.anim-spin{animation:spin 1s linear infinite}
+@keyframes shimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}
+.skeleton{background:linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%);background-size:400px 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+.sk{background:linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%);background-size:400px 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+.filter-tabs{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain;user-select:none;width:100%;flex-wrap:nowrap;white-space:nowrap;cursor:grab}
+.filter-tabs::-webkit-scrollbar{display:none}.filter-tabs:active{cursor:grabbing}
+.filter-pill{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0}
+.item-enter-active{transition:all .35s cubic-bezier(.32,.72,0,1)}.item-enter-from{opacity:0;transform:translateY(12px)}
+.toast-wrap{position:absolute;top:50px;left:16px;right:16px;z-index:99999;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.toast-item{padding:10px 20px;border-radius:12px;font-size:14px;font-weight:500;color:#fff;pointer-events:auto;backdrop-filter:blur(10px);text-align:center;max-width:80%;line-height:1.4}
+.toast-success{background:rgba(23,163,74,.9)}.toast-error{background:rgba(220,38,38,.9)}.toast-info{background:rgba(47,111,235,.9)}.toast-warn{background:rgba(217,119,6,.9)}
+.toast-enter-active{transition:all .3s cubic-bezier(.32,.72,0,1)}.toast-leave-active{transition:all .25s ease-in}
+.toast-enter-from{opacity:0;transform:translateY(-20px) scale(.9)}.toast-leave-to{opacity:0;transform:translateY(-10px) scale(.95)}
+input[type=date],select{font-family:inherit}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield}
+.cb{width:20px;height:20px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid #E5E5E5;transition:all .15s}
+.cb.on{background:#2F6FEB;border-color:#2F6FEB;color:#fff}.cb.pt{border-color:#2F6FEB;color:#2F6FEB;background:#fff}
+.card-actions{display:flex;border-top:1px solid #E5E5E5;margin-top:0}
+.card-action-btn{flex:1;padding:10px 0;font-size:13px;font-weight:600;text-align:center;cursor:pointer;user-select:none;transition:opacity .15s}
+.card-action-btn:active{opacity:.8}
+.card-action-btn + .card-action-btn{border-left:1px solid #E5E5E5}
+.ptr-indicator{overflow:hidden;transition:height .2s;height:0;text-align:center;font-size:12px;color:#999;line-height:40px;flex-shrink:0}
+.ptr-indicator .ptr-spinner{display:inline-block;width:16px;height:16px;border:2px solid #E5E5E5;border-top-color:#2F6FEB;border-radius:50%;vertical-align:middle;margin-right:6px;animation:ptr-spin .6s linear infinite}
+@keyframes ptr-spin{to{transform:rotate(360deg)}}
+.tab-fade-enter-active,.tab-fade-leave-active{transition:opacity .2s ease,transform .2s ease}
+.tab-fade-enter-from{opacity:0;transform:translateY(6px)}
+.tab-fade-leave-to{opacity:0;transform:translateY(-6px)}
+.scan-frame{width:220px;height:220px;border:2px solid rgba(255,255,255,.6);border-radius:16px;position:relative;overflow:hidden}
+.scan-line{position:absolute;left:4px;right:4px;height:2px;background:#2F6FEB;animation:scan-move 2s ease-in-out infinite}
+@keyframes scan-move{0%{top:4px}50%{top:212px}100%{top:4px}}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="w-[393px] h-[852px] bg-black rounded-[55px] p-3 relative" style="box-shadow:0 0 0 2px #333,0 30px 60px rgba(0,0,0,.35)">
+<div class="absolute top-[23px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-black rounded-[20px] z-[2000]"></div>
+<div class="w-full h-full bg-[#F6F7F9] rounded-[44px] overflow-hidden flex flex-col relative">
+
+<!-- ═══ Toast ═══ -->
+<div class="toast-wrap"><transition-group name="toast"><div v-for="t in toasts" :key="t.id" class="toast-item" :class="'toast-'+t.type">{{ t.msg }}</div></transition-group></div>
+<transition name="tab-fade" mode="out-in"><div :key="tab" class="flex-1 relative flex flex-col overflow-hidden">
+
+<!-- ═══ HOME ═══ -->
+<template v-if="tab==='home'">
+<div class="pt-14 px-5 pb-3.5 bg-white shrink-0">
+<div class="flex justify-between items-center">
+<h1 class="text-[22px] font-bold tracking-[-.3px]">{{ store.name }}</h1>
+<div class="flex gap-2.5">
+<div class="w-9 h-9 rounded-full bg-[#F6F7F9] border border-[#E5E5E5] flex items-center justify-center cursor-pointer relative active:bg-[#E5E5E5]" @click="homeOpen('messages')">
+<span v-html="luci('bell','w-[18px] h-[18px]')"></span>
+<span v-if="unread>0" class="absolute -top-[3px] -right-[3px] min-w-[16px] h-[16px] rounded-full bg-[#DC2626] text-white text-[9px] font-bold flex items-center justify-center border-2 border-white px-[3px]">{{ unread }}</span>
+</div>
+</div>
+</div>
+<p class="text-xs text-[#6B6B6B] mt-1">{{ store.date }}</p>
+</div>
+<div class="ptr-indicator" id="ptr-home"><span class="ptr-text">下拉刷新</span></div>
+<div id="sc-home" class="flex-1 overflow-y-auto min-h-0 px-5 pt-4 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div class="flex justify-between items-center mb-3"><span class="text-[15px] font-semibold">经营数据</span></div>
+<div v-if="homeLoading" class="grid grid-cols-2 gap-2.5">
+<div v-for="n in 4" :key="'bs'+n" class="bg-white border border-[#E5E5E5] rounded-xl p-4" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="sk h-3 w-16 mb-3"></div><div class="sk h-6 w-24"></div>
+</div>
+</div>
+<transition-group v-else name="item" tag="div" class="grid grid-cols-2 gap-2.5">
+<div class="bg-white border border-[#E5E5E5] rounded-xl p-4" v-for="(s,i) in bizStats" :key="s.label" :style="{transitionDelay:i*60+'ms',boxShadow:'0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)'}">
+<div class="text-xs text-[#6B6B6B] font-medium mb-2">{{ s.label }}</div>
+<div class="flex items-baseline gap-2">
+<span class="text-[22px] font-bold leading-none" style="font-variant-numeric:tabular-nums">{{ s.value }}</span>
+<span v-if="s.trend" class="text-[11px] font-semibold px-1.5 py-0.5 rounded-[6px]" :class="s.trend>0?'text-[#17A34A] bg-[#ECFDF3]':'text-[#DC2626] bg-[#FEF2F2]'">{{ s.trend>0?'↑':'↓' }}{{ Math.abs(s.trend) }}%</span>
+</div>
+</div>
+</transition-group>
+<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">车辆运营</span></div>
+<div v-if="homeLoading" class="grid grid-cols-2 gap-2.5">
+<div v-for="n in 2" :key="'bv'+n" class="bg-white border border-[#E5E5E5] rounded-xl p-4" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="sk h-3 w-16 mb-3"></div><div class="sk h-6 w-12"></div>
+</div>
+</div>
+<transition-group v-else name="item" tag="div" class="grid grid-cols-2 gap-2.5">
+<div class="bg-white border border-[#E5E5E5] rounded-xl p-4" v-for="(s,i) in vehStats" :key="s.label" :style="{transitionDelay:i*60+'ms',boxShadow:'0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)'}">
+<div class="text-xs text-[#6B6B6B] font-medium mb-2">{{ s.label }}</div>
+<span class="text-[22px] font-bold leading-none" :class="s.danger?'text-[#DC2626]':''">{{ s.value }}</span>
+</div>
+</transition-group>
+<div class="flex justify-between items-center mb-3 mt-5">
+<span class="text-[15px] font-semibold">最近告警</span>
+<span class="flex items-center gap-0.5 text-sm text-[#2F6FEB] font-medium cursor-pointer select-none active:opacity-70" @click="homeOpen('alerts')">
+全部<span v-html="luci('chevron-right','w-4 h-4')"></span>
+</span>
+</div>
+<div v-if="homeLoading" class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden">
+<div v-for="n in 3" :key="'ba'+n" class="flex items-center gap-3 px-4 py-3.5" :style="n<3?{borderBottom:'1px solid #E5E5E5'}:{}">
+<div class="sk w-9 h-9 rounded-[10px] shrink-0"></div>
+<div class="flex-1"><div class="sk h-3.5 w-28 mb-2"></div><div class="sk h-3 w-40"></div></div>
+</div>
+</div>
+<div v-else-if="recent.length" class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden">
+<transition-group name="item">
+<div class="flex items-center gap-3 px-4 py-3.5 border-b border-[#E5E5E5] last:border-b-0" v-for="(a,i) in recent" :key="a.id" :style="{transitionDelay:i*80+'ms'}">
+<div class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0" :class="lvBg(a.lv)">
+<span v-html="luci(a.icon,'w-[18px] h-[18px]')"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm font-semibold">{{ a.vin }}</span>
+<span class="text-[11px] font-semibold px-2 py-0.5 rounded-[4px]" :class="lvBg(a.lv)">{{ a.type }}</span>
+</div>
+<div class="text-xs text-[#999]">告警时间：{{ a.time }}</div>
+</div>
+</div>
+</transition-group>
+</div>
+<div v-else class="flex flex-col items-center py-10">
+<div class="w-14 h-14 rounded-full bg-[#ECFDF3] flex items-center justify-center mb-3"><span v-html="luci('shield-check','w-7 h-7 text-[#17A34A]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无告警</div>
+<div class="text-[13px] text-[#999]">车辆运营状态良好，无需处理</div>
+</div>
+</div>
+<transition name="sl">
+<div v-if="homeOV==='alerts'" v-swipe-close="homeClose" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="homeClose"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">告警中心</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+<div v-if="allAlerts.length" class="flex flex-col gap-2.5">
+<transition-group name="item">
+<div class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden" v-for="(a,i) in allAlerts" :key="a.id" :style="{transitionDelay:i*50+'ms'}">
+<div class="flex items-center gap-3 px-4 py-3.5">
+<div class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0" :class="lvBg(a.lv)">
+<span v-html="luci(a.icon,'w-[18px] h-[18px]')"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm font-semibold">{{ a.vin }}</span>
+<span class="text-[11px] font-semibold px-2 py-0.5 rounded-[4px]" :class="lvBg(a.lv)">{{ a.type }}</span>
+</div>
+<div class="text-xs text-[#999]">告警时间：{{ a.time }}</div>
+</div>
+</div>
+</div>
+</transition-group>
+</div>
+<div v-else class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#ECFDF3] flex items-center justify-center mb-3"><span v-html="luci('shield-check','w-7 h-7 text-[#17A34A]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无告警</div>
+<div class="text-[13px] text-[#999]">所有车辆运营正常</div>
+</div>
+</div>
+</div>
+</transition>
+<transition name="sl">
+<div v-if="homeOV==='messages'" v-swipe-close="homeClose" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="homeClose"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">消息中心</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+<div v-if="msgs.length" class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden">
+<transition-group name="item">
+<div class="flex items-center px-4 py-3.5 border-b border-[#E5E5E5] last:border-b-0 gap-3 cursor-pointer active:bg-[#F6F7F9]" v-for="(m,i) in msgs" :key="m.id" :style="{transitionDelay:i*60+'ms'}" @click="readMsg(m)">
+<span class="w-2 h-2 rounded-full shrink-0" :class="m.read?'bg-transparent border border-[#E5E5E5]':'bg-[#2F6FEB]'"></span>
+<div class="flex-1 min-w-0">
+<div class="text-sm font-semibold mb-[3px]">{{ m.title }}</div>
+<div class="text-xs text-[#6B6B6B] truncate">{{ m.desc }}</div>
+</div>
+<span class="text-[11px] text-[#999] shrink-0">{{ m.time }}</span>
+</div>
+</transition-group>
+</div>
+<div v-else class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('inbox','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无消息</div>
+<div class="text-[13px] text-[#999]">新消息将在此处通知</div>
+</div>
+</div>
+</div>
+</transition>
+</template>
+
+<!-- ═══ VEHICLES ═══ -->
+<template v-if="tab==='vehicles'">
+<template v-if="!vehOV">
+<div class="pt-14 px-5 pb-2 bg-white shrink-0">
+<div class="flex gap-2 items-center">
+<div class="flex-1 rounded-full flex items-center py-1.5 gap-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:14px;padding-right:4px">
+<span v-html="luci('search','w-4 h-4 text-[#999] shrink-0')"></span>
+<input v-model="vehQ" type="text" placeholder="搜索车架号" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="vehDoSearch">
+<div @click="vehDoSearch" class="h-8 px-3 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-xs font-semibold">搜索</div>
+</div>
+<div @click="vehOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="vehHasF?{background:'#EBF1FD',border:'1px solid #2F6FEB',color:'#2F6FEB'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}">
+<span v-html="luci('sliders-horizontal','w-4 h-4')"></span>
+</div>
+</div>
+</div>
+<div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
+<div class="filter-tabs" id="vehiclePillRow">
+<div v-for="p in pills" :key="p.v" @click="vehPill=p.v" class="filter-pill" :style="vehPill===p.v?{background:'#2F6FEB',color:'#fff',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ pillCnt[p.v] }})</div>
+</div>
+</div>
+<div class="ptr-indicator" id="ptr-veh"><span class="ptr-text">下拉刷新</span></div>
+<div id="sc-veh" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<template v-if="vehLoading">
+<div v-for="n in 3" :key="'sk-'+n" class="bg-white rounded-xl p-4 mb-2.5" style="border:1px solid #E5E5E5">
+<div class="skeleton h-4 rounded w-28 mb-3"></div>
+<div class="flex justify-between items-center mb-2">
+<div class="skeleton h-3.5 rounded w-24"></div>
+<div class="flex gap-2"><div class="skeleton h-3.5 rounded w-10"></div><div class="skeleton h-3.5 rounded w-10"></div></div>
+</div>
+<div class="flex justify-between">
+<div class="flex gap-3"><div class="skeleton h-3 rounded w-12"></div><div class="skeleton h-3 rounded w-12"></div></div>
+<div class="skeleton h-3 rounded w-28"></div>
+</div>
+</div>
+</template>
+<template v-else-if="filtered.length">
+<div v-for="v in filtered" :key="v.vin" @click="vehOpenDetail(v)" class="bg-white rounded-xl p-4 mb-2.5 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="text-[15px] font-semibold mb-1.5">车架号：{{ v.vin }}</div>
+<div class="flex justify-between items-center text-[13px] mb-1.5">
+<span>中控编号：{{ v.ctrl }}</span>
+<div class="flex gap-3">
+<span class="flex items-center gap-1 text-[12px]" :style="{color:v.online?'#17A34A':'#D97706'}"><span class="w-1.5 h-1.5 rounded-full" :style="{background:v.online?'#17A34A':'#D97706'}"></span>{{ v.online?'在线':'离线' }}</span>
+<span class="flex items-center gap-1 text-[12px]" :style="{color:sc(v.status)}"><span class="w-1.5 h-1.5 rounded-full" :style="{background:sc(v.status)}"></span>{{ v.status }}</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-3 text-[12px]">
+<span class="flex items-center gap-1" :style="{color:bc(v.batteryMain)}"><span v-html="luci(bi(v.batteryMain),'w-3 h-3')"></span>{{ v.batteryMain }}%</span>
+<span class="flex items-center gap-1" :style="{color:bc(v.batterySub)}"><span v-html="luci(bi(v.batterySub),'w-3 h-3')"></span>{{ v.batterySub }}%</span>
+</div>
+<span class="text-[11px] text-[#999]">最后信号时间：{{ v.time }}</span>
+</div>
+</div>
+</template>
+<div v-else class="flex flex-col items-center justify-center py-16">
+<div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4">
+<span v-html="luci('bike','w-8 h-8 text-[#2F6FEB]')"></span>
+</div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无车辆</div>
+<div class="text-[13px] text-[#999] mb-4">{{ vehQ||vehHasF ? '未找到匹配的车辆，请调整搜索条件' : '点击右下角 + 添加第一辆车辆' }}</div>
+<div v-if="vehQ||vehHasF" @click="vehQ='';vehResetFS()" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:#2F6FEB;border:1px solid #2F6FEB">清除筛选</div>
+</div>
+</div>
+<div @click="vehOV='add'" class="absolute bottom-[105px] right-5 w-14 h-14 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer z-[80] active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
+</template>
+
+<!-- ═══ VEHICLE DETAIL ═══ -->
+<transition name="sl">
+<div v-if="vehOV==='detail'" v-swipe-close="()=>vehOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">车辆详情</div>
+<span class="text-[14px] font-medium text-[#2F6FEB] cursor-pointer shrink-0 active:opacity-70" @click="openVehEdit">编辑</span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll" style="touch-action:pan-y">
+<div class="bg-white rounded-xl overflow-hidden mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="w-full h-[170px] bg-[#F6F7F9] flex flex-col items-center justify-center gap-2 cursor-pointer active:bg-[#EEF0F2]" style="background-image:linear-gradient(rgba(0,0,0,.04)1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.04)1px,transparent 1px);background-size:30px 30px" @click="toast('车辆位置页面','info')">
+<span v-html="luci('map-pin','w-8 h-8 text-[#2F6FEB]')"></span><span class="text-[13px] text-[#666]">查看车辆位置</span>
+</div>
+<div class="flex justify-between items-center px-4 py-3" style="border-top:1px solid #E5E5E5">
+<span class="text-[13px] text-[#666]">实时位置 · 北京市朝阳区</span>
+<span class="flex items-center gap-1 text-[13px] text-[#2F6FEB] font-medium cursor-pointer active:opacity-70" @click="toast('历史轨迹页面','info')">历史轨迹<span v-html="luci('chevron-right','w-3.5 h-3.5')"></span></span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-3">
+<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] relative overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);transition:background .3s" @mousedown="startPress" @mouseup="endPress" @mouseleave="endPress" @touchstart.prevent="startPress" @touchend="endPress" @touchcancel="endPress">
+<div class="absolute bottom-0 left-0 w-full transition-all duration-75 ease-linear" :style="{height:pressProgress+'%',background:locked?'rgba(220,38,38,0.1)':'rgba(39,111,235,0.1)'}"></div>
+<div class="relative z-10 flex flex-col items-center gap-1 transition-all" :style="lockJustDone?{transform:'scale(1.08)'}:{transform:'scale(1)'}">
+<span v-html="luci(locked?'lock':'unlock','w-7 h-7 transition-all')"></span>
+<span class="text-[13px] font-semibold">{{ locked?'长按关锁':'长按开锁' }}</span>
+</div>
+</div>
+<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);transition:all .3s" :style="findLoading?{background:'#FFF3E0',borderColor:'#E67E22',pointerEvents:'none'}:{}" @click="doFind">
+<span v-html="luci(findLoading?'loader':'locate','w-7 h-7 transition-all'+(findLoading?' anim-spin':''))" :style="findLoading?{color:'#E67E22'}:{}"></span>
+<span class="text-[13px] font-semibold" :style="findLoading?{color:'#E67E22'}:{}">{{ findLoading?'寻车中...':'寻车' }}</span>
+</div>
+<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehMod='arm'">
+<span v-html="luci('shield-check','w-7 h-7 transition-all')"></span>
+<span class="text-[13px] font-semibold">{{ armed?'解除设防':'设防' }}</span>
+</div>
+<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehMod='lost'">
+<span v-html="luci('alert-triangle','w-7 h-7 transition-all')"></span>
+<span class="text-[13px] font-semibold">{{ lost?'解除报失':'报失' }}</span>
+</div>
+</div>
+<div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[#2F6FEB]')"></span></div>
+<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">Wang Wu</div><div class="text-[13px] text-[#666]">+86 13800005555</div></div>
+<div @click.stop="toast('正在呼叫 Wang Wu…','info')" class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[#2F6FEB] cursor-pointer shrink-0 active:bg-[#2F6FEB] active:text-white"><span v-html="luci('phone','w-4 h-4')"></span></div>
+</div>
+<div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" style="background:#ECFDF3;color:#17A34A;border:1px solid #17A34A">在线</span></div>
+<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">中控编号</div><div class="text-[14px] font-semibold">{{ dv.ctrl }}</div></div></div>
+<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车型</div><div class="text-[14px] font-semibold">{{ dv.model }}</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车牌号</div><div class="text-[14px] font-semibold">{{ dv.plate }}</div></div></div>
+<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">电池电量</div><div class="text-[14px] font-semibold" :style="{color:bc(dv.batteryMain)}">主{{ dv.batteryMain }}% / 副{{ dv.batterySub }}%</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车辆状态</div><div class="text-[14px] font-semibold">{{ dv.status }}</div></div></div>
+<div class="flex justify-between items-center py-2.5"><div class="text-[12px] text-[#999]">最后信号时间</div><div class="text-[14px] font-semibold">{{ dv.time }}</div></div>
+</div>
+</div>
+</div>
+</transition>
+
+<!-- ═══ VEHICLE EDIT ═══ -->
+<transition name="sl">
+<div v-if="vehOV==='edit'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑车辆信息</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-28 hide-scroll">
+<div class="mb-5">
+<div class="text-[13px] font-semibold text-[#999] mb-2">基本信息</div>
+<div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5">
+<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 shrink-0">车架号</span><span class="text-sm font-semibold flex-1">{{ dv.vin }}</span></div>
+<div class="flex py-2.5"><span class="text-[13px] text-[#999] w-20 shrink-0">状态</span><span class="text-sm font-semibold flex-1" :style="{color:dv.online?'#17A34A':'#D97706'}">{{ dv.online?'在线':'离线' }} · {{ dv.status }}</span></div>
+</div>
+</div>
+<div class="mb-5">
+<div class="text-[14px] font-semibold mb-2">中控编号</div>
+<input v-model="editCtrl" type="text" maxlength="20" placeholder="请输入中控编号" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5">
+</div>
+<div class="mb-5">
+<div class="text-[14px] font-semibold mb-2">车型</div>
+<div @click="vehShowModelSheet=true" class="flex items-center p-4 rounded-xl cursor-pointer active:bg-[#dce8fb]" style="border:2px dashed #2F6FEB;background:#EBF1FD">
+<div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center mr-3 shrink-0" style="border:1px solid #E5E5E5"><span v-html="luci('bike','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<span class="flex-1 text-[15px]" :style="editModel?{color:'#111',fontWeight:500}:{color:'#999'}">{{ editModel||'选择型号' }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
+</div>
+</div>
+<div class="mb-5">
+<div class="text-[14px] font-semibold mb-2">车牌号</div>
+<input v-model="editPlate" type="text" maxlength="12" placeholder="请输入车牌号" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5">
+</div>
+</div>
+<div class="absolute bottom-7 left-5 right-5">
+<button @click="saveVehEdit" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:#2F6FEB">保存</button>
+</div>
+</div>
+</transition>
+
+<!-- ═══ ADD VEHICLE ═══ -->
+<transition name="sl">
+<div v-if="vehOV==='add'" v-swipe-close="()=>{vehOV=null;addModel='';addVin='';addCtrl=''}" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV=null;addModel='';addVin='';addCtrl=''"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">新增车辆</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-28 hide-scroll">
+<div class="mb-6">
+<div class="text-[14px] font-semibold mb-2">车型</div>
+<div @click="vehShowModelSheet=true" class="flex items-center p-4 rounded-xl cursor-pointer active:bg-[#dce8fb]" style="border:2px dashed #2F6FEB;background:#EBF1FD">
+<div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center mr-3 shrink-0" style="border:1px solid #E5E5E5"><span v-html="luci('bike','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<span class="flex-1 text-[15px]" :style="addModel?{color:'#111',fontWeight:500}:{color:'#999'}">{{ addModel||'选择型号' }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
+</div>
+</div>
+<div class="mb-6">
+<div class="text-[14px] font-semibold mb-2">车架号</div>
+<div class="flex items-center bg-white rounded-xl overflow-hidden" :style="!addModel?{opacity:0.5,pointerEvents:'none',border:'1px solid #E5E5E5'}:{border:'1px solid #E5E5E5'}">
+<input v-model="addVin" type="text" placeholder="请输入车架号" class="flex-1 bg-transparent border-none text-[15px] outline-none px-4 py-3.5 min-w-0 placeholder:text-[#999]">
+</div>
+</div>
+<div class="mb-6">
+<div class="text-[14px] font-semibold mb-2">中控编号</div>
+<div class="flex items-center bg-white rounded-xl overflow-hidden" :style="!addModel?{opacity:0.5,pointerEvents:'none',border:'1px solid #E5E5E5'}:{border:'1px solid #E5E5E5'}">
+<input v-model="addCtrl" type="text" maxlength="20" placeholder="请输入中控编号" class="flex-1 bg-transparent border-none text-[15px] outline-none px-4 py-3.5 min-w-0 placeholder:text-[#999]">
+</div>
+</div>
+</div>
+<div class="absolute bottom-7 left-5 right-5">
+<button @click="submitAdd" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" :style="canSubmit?{background:'#2F6FEB'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">确认添加</button>
+</div>
+</div>
+</transition>
+
+<transition name="fd"><div v-if="vehShowModelSheet" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="vehShowModelSheet=false"></div></transition>
+<transition name="sh">
+<div v-if="vehShowModelSheet" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] max-h-[65%] flex flex-col">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">选择车型</div>
+<div class="mx-5 mb-3 rounded-full flex items-center px-4 py-2.5 gap-2 shrink-0" style="background:#F6F7F9;border:1px solid #E5E5E5">
+<span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
+<input v-model="modelQ" type="text" placeholder="搜索车型" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]">
+</div>
+<div class="flex-1 overflow-y-auto pb-8">
+<div v-for="m in filteredModels" :key="m" @click="pickModel(m)" class="flex items-center px-5 py-4 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED">
+<div class="w-12 h-12 rounded-lg bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<span class="flex-1 text-[15px] font-medium">{{ m }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
+</div>
+</div>
+</div>
+</transition>
+
+<!-- ═══ SCAN OVERLAY ═══ -->
+<transition name="fd"><div v-if="scanning" class="absolute inset-0 z-[700] flex flex-col items-center justify-center" style="background:rgba(0,0,0,.85)">
+<div class="scan-frame"><div class="scan-line"></div><div class="absolute inset-0 flex items-center justify-center"><span v-html="luci('scan','w-10 h-10 text-white/20')"></span></div></div>
+<div class="text-white/50 text-[13px] mt-5 mb-6">请将车架号二维码对准取景框</div>
+<div @click="doScan" class="px-10 py-3 rounded-full text-[15px] font-semibold text-white cursor-pointer active:opacity-70" style="background:#2F6FEB">点击模拟扫码</div>
+<div @click="scanning=false" class="mt-4 text-white/40 text-[13px] cursor-pointer active:opacity-60">取消</div>
+</div></transition>
+
+<transition name="fd"><div v-if="vehShowFS" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="vehShowFS=false"></div></transition>
+<transition name="sh">
+<div v-if="vehShowFS" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] max-h-[65%] flex flex-col">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">车辆筛选</div>
+<div class="flex-1 overflow-y-auto px-5 pb-3">
+<div class="mb-5">
+<div class="text-[14px] font-semibold mb-2">车型</div>
+<div class="flex flex-wrap gap-2">
+<div v-for="m in vehModels" :key="m" @click="vehToggleFSModel(m)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsModelC===m?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ m }}</div>
+</div>
+</div>
+<div class="mb-4">
+<div class="text-[14px] font-semibold mb-2">在线状态</div>
+<div class="flex flex-wrap gap-2">
+<div @click="vehToggleFSOnline(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===true?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">在线</div>
+<div @click="vehToggleFSOnline(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===false?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">离线</div>
+</div>
+</div>
+</div>
+<div class="flex gap-3 px-5 pb-8 shrink-0">
+<button @click="vehResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">重置</button>
+<button @click="vehApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:#2F6FEB">确定</button>
+</div>
+</div>
+</transition>
+
+<transition name="fd">
+<div v-if="vehMod" class="absolute inset-0 z-[800] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="text-[17px] font-bold text-center">{{ vehModTitle }}</div>
+<div class="text-[14px] text-[#666] text-center leading-relaxed">{{ vehModDesc }}</div>
+<div class="flex gap-3 mt-2">
+<div @click="vehMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div>
+<div @click="vehConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" :style="vehModDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">确认</div>
+</div>
+</div>
+</div>
+</transition>
+</template>
+
+<!-- ═══ ORDERS ═══ -->
+<template v-if="tab==='orders'">
+<template v-if="!ordersOV">
+<div class="pt-14 px-5 pb-2 bg-white shrink-0">
+<div class="flex gap-2 items-center">
+<div class="flex-1 rounded-full flex items-center py-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:6px;padding-right:4px">
+<select v-model="searchScope" class="bg-transparent border-none text-[11px] font-medium outline-none pl-1.5 pr-3 mr-1 cursor-pointer appearance-none truncate" style="border-right:1px solid #E5E5E5;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%2710%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23999%27 stroke-width=%272%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 0 center;max-width:62px"><option value="id">订单号</option><option value="account">账号</option><option value="phone">手机号</option><option value="email">邮箱</option><option value="vin">车架号</option></select>
+<input v-model="ordersQ" type="text" :placeholder="searchPH" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="ordersDoSearch">
+<div @click="ordersDoSearch" class="h-7 px-2.5 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-[11px] font-semibold">搜索</div>
+</div>
+<div @click="ordersOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="ordersHasF?{background:'#EBF1FD',border:'1px solid #2F6FEB',color:'#2F6FEB'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
+</div>
+</div>
+<div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
+<div class="filter-tabs" id="orderPillRow">
+<div v-for="p in quickPills" :key="p.v" @click="ordersPill=p.v" class="filter-pill" :style="ordersPill===p.v?{background:'#2F6FEB',color:'#fff',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ qCnt[p.v]||0 }})</div>
+</div>
+</div>
+<div class="ptr-indicator" id="ptr-ord"><span class="ptr-text">下拉刷新</span></div>
+<div id="sc-ord" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hid" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<template v-if="ordersLoading">
+<div v-for="n in 4" :key="'sk'+n" class="bg-white rounded-xl p-4 mb-2.5" style="border:1px solid #E5E5E5">
+<div class="flex justify-between items-center mb-2"><div class="sk h-3.5 rounded w-28"></div><div class="sk h-5 rounded w-12"></div></div>
+<div class="flex justify-between items-center mb-1.5"><div class="sk h-3 rounded w-24"></div><div class="sk h-5 rounded w-16"></div></div>
+<div class="flex justify-between items-center mb-2"><div class="sk h-3 rounded w-32"></div><div class="sk h-3 rounded w-12"></div></div>
+<div class="sk h-3 rounded w-40"></div>
+</div>
+</template>
+<template v-else-if="oFiltered.length">
+<div v-for="(o,i) in oFiltered" :key="o.id" @click="ordersOpenDetail(o)" class="bg-white rounded-xl p-4 mb-2.5 cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms',opacity:o.status==='cancelled'?0.6:1}">
+<div class="flex justify-between items-center mb-2"><span class="text-[13px] font-semibold">{{ o.id }}</span><span class="text-[11px] font-semibold px-2 py-0.5 rounded" :style="stg(o.status)">{{ sl(o.status) }}</span></div>
+<div v-if="hasVehicle(o.status)" class="flex justify-between items-center text-[12px] mb-1"><span class="text-[#666]">{{ o.vin }}</span><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
+<div v-else class="flex justify-end items-center text-[12px] mb-1"><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
+<div class="flex justify-between items-center text-[12px] mb-2"><span class="text-[#666]">{{ o.customer }} {{ o.phone }}</span><span class="text-[#999]">{{ o.plan }}</span></div>
+<div class="text-[11px] text-[#999]">{{ o.time }}</div>
+</div>
+</template>
+<div v-else class="flex flex-col items-center justify-center py-16">
+<div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('file-text','w-8 h-8 text-[#2F6FEB]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无订单</div>
+<div class="text-[13px] text-[#999] mb-4">{{ ordersQ||ordersHasF ? '未找到匹配的订单，请调整搜索条件' : '还没有订单记录' }}</div>
+<div v-if="ordersQ||ordersHasF" @click="ordersQ='';ordersResetFS()" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:#2F6FEB;border:1px solid #2F6FEB">清除筛选</div>
+</div>
+</div>
+</template>
+<transition name="sl"><div v-if="ordersOV==='detail'" v-swipe-close="()=>ordersOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="ordersOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">订单详情</div>
+<span class="text-[14px] font-medium cursor-pointer shrink-0" :style="refundable?{color:'#2F6FEB'}:{color:'#999',pointerEvents:'none'}" @click="refundable&&toast('正在跳转退款记录页…','info')">退款记录</span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
+<div class="flex flex-wrap gap-1.5 mb-3"><div v-for="s in allStatus" :key="s.v" @click="dSt=s.v" class="px-2.5 py-1 rounded-xl text-[11px] cursor-pointer transition-all" :style="dSt===s.v?{background:'#2F6FEB',color:'#fff',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div>
+<div v-if="dSt==='pendingPay'" class="flex items-center gap-1.5 mb-3"><span class="text-[11px] text-[#999] mr-1">支付方式：</span><div @click="dPm='online'" class="px-2.5 py-1 rounded-xl text-[11px] cursor-pointer transition-all" :style="dPm==='online'?{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线上支付</div><div @click="dPm='offline'" class="px-2.5 py-1 rounded-xl text-[11px] cursor-pointer transition-all" :style="dPm==='offline'?{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线下支付</div></div>
+<div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">订单编号</span><span class="flex items-center text-[14px] font-semibold">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 ml-1.5 text-[#999] cursor-pointer active:text-[#2F6FEB]')" @click="copyId"></span></span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">用户信息</span><span class="flex items-center"><span class="text-[14px] font-semibold">{{ do_.customer }} {{ do_.phone }}</span><div @click.stop="toast('正在呼叫 '+do_.customer+'…','info')" class="w-7 h-7 rounded-full bg-[#EBF1FD] flex items-center justify-center ml-2 cursor-pointer text-[#2F6FEB] shrink-0 active:bg-[#2F6FEB] active:text-white"><span v-html="luci('phone','w-3.5 h-3.5')"></span></div></span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">开始时间</span><span class="text-[14px] font-semibold">2025-01-18 14:00:00</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">结束时间</span><span class="text-[14px] font-semibold">2025-01-20 14:00:00</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">租车方案</span><span class="text-[14px] font-semibold">{{ do_.plan }}</span></div>
+<div class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">当前状态</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
+</div>
+<div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">租金</span><span class="text-[14px] font-semibold">¥{{ do_.amount }}</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">押金</span><span class="text-[14px] font-semibold">¥500</span></div>
+<template v-if="showPaid"><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">实付金额</span><span class="text-[14px] font-bold text-[#17A34A]">¥{{ do_.amount+500 }}</span></div><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付方式</span><span class="text-[14px] font-semibold">微信支付</span></div><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付时间</span><span class="text-[14px] font-semibold">2025-01-18 13:30:00</span></div></template>
+<template v-if="dSt==='pendingPay'"><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付方式</span><span class="text-[14px] font-semibold">{{ dPm==='offline'?'线下支付':'微信支付' }}</span></div></template>
+<template v-if="dSt==='complete'"><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">押金退还</span><span class="text-[14px] font-bold text-[#17A34A]">¥500</span></div><div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">退还时间</span><span class="text-[14px] font-semibold">2025-03-10 09:05:00</span></div></template>
+</div>
+<div v-if="showVehicle" @click="toast('正在跳转车辆详情…','info')" class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[#2F6FEB]')"></span></div>
+<div class="flex-1 min-w-0"><div class="text-[13px] font-semibold mb-0.5">车架号：{{ do_.vin }}</div><div class="text-[12px] text-[#666] flex items-center gap-1">{{ do_.model }} <span class="w-1.5 h-1.5 rounded-full bg-[#17A34A]"></span> 在线</div></div>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999] shrink-0')"></span>
+</div>
+
+<!-- ═══ 客户补充资料 · 入口卡片 ═══ -->
+<div v-if="showDocCard" @click="openDocsPage" class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('folder-open','w-5 h-5 text-[#2F6FEB]')"></span></div>
+<div class="flex-1 min-w-0">
+<div class="text-[14px] font-semibold">客户补充资料</div>
+<div class="text-[12px] text-[#999] mt-0.5">{{ curDocs.length ? curDocs.length+' 份资料' : '暂无补充资料' }}</div>
+</div>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999] shrink-0')"></span>
+</div>
+
+</div>
+<div v-if="showActions" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
+<div class="flex gap-3">
+<button @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="primaryDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">{{ primaryLabel }}</button>
+<button v-if="dualMode" @click="ordersDoDanger" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-colors" :style="dualIsCancel?{background:'#E5E5E5',color:'#111'}:{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
+</div></div>
+</div></transition>
+
+<!-- ═══ ORDER DOCS SUB-PAGE ═══ -->
+<transition name="sl">
+<div v-if="ordersOV==='docs'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">客户补充资料</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-24 hid">
+<template v-if="!curDocs.length">
+<div class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#F6F7F9] flex items-center justify-center mb-3"><span v-html="luci('file-plus','w-7 h-7 text-[#999]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无补充资料</div>
+<div class="text-[13px] text-[#999]">点击下方按钮添加客户资料</div>
+</div>
+</template>
+<template v-else>
+<div class="flex flex-col gap-2.5">
+<div v-for="doc in curDocs" :key="doc.id" class="bg-white rounded-xl p-4 flex items-start gap-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<template v-if="doc.type==='image'">
+<div class="w-12 h-12 rounded-lg shrink-0 flex items-center justify-center text-[10px] font-semibold" :style="{background:doc.color+'15',color:doc.color,border:'1px solid '+doc.color+'30'}">{{ doc.label }}</div>
+<div class="flex-1 min-w-0">
+<div class="text-[14px] font-semibold mb-1">{{ doc.label }}</div>
+<div class="text-[12px] text-[#999]">{{ doc.time }}</div>
+</div>
+</template>
+<template v-else>
+<div class="flex-1 min-w-0 p-3 rounded-lg" style="background:#F6F7F9;border:1px solid #E5E5E5">
+<div class="text-[14px] leading-relaxed mb-1.5">{{ doc.content }}</div>
+<div class="text-[12px] text-[#999]">{{ doc.time }}</div>
+</div>
+</template>
+<div @click="deleteDoc(doc.id)" class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 cursor-pointer active:opacity-80 ml-auto" style="background:#FEE2E2;color:#DC2626"><span v-html="luci('trash-2','w-3.5 h-3.5')"></span></div>
+</div>
+</div>
+</template>
+</div>
+<div class="absolute bottom-7 left-5 right-5">
+<button @click="openDocSheet" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:#2F6FEB">添加资料</button>
+</div>
+</div>
+</transition>
+
+<transition name="fd"><div v-if="showRefund" class="absolute inset-0 z-[900]" style="background:rgba(0,0,0,.5)" @click="showRefund=false"></div></transition>
+<transition name="sh"><div v-if="showRefund" class="absolute bottom-0 left-0 right-0 bg-white z-[901] rounded-t-[20px] max-h-[92%] flex flex-col">
+<div class="w-9 h-[5px] mx-auto mt-3 mb-2" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[18px] font-bold pb-4 px-5 shrink-0">{{ refundMode==='return'?'归还车辆':'退款' }}</div>
+<div class="flex-1 overflow-y-auto px-5 hid" style="max-height:45vh">
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">租金退款</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">可退上限 ¥800.00</div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">押金退款</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">可退上限 ¥500.00</div></div>
+<div class="mb-4"><div class="text-[14px] font-semibold mb-2">退款原因 <span class="font-normal text-[#999]">（选填）</span></div><textarea v-model="rReason" placeholder="请输入退款原因..." class="w-full p-4 rounded-xl text-[15px] outline-none resize-none min-h-[90px] transition-colors" style="border:1px solid #E5E5E5;font-family:inherit"></textarea></div>
+</div>
+<div class="px-5 pb-8 shrink-0"><div class="flex justify-between items-center py-3" style="border-top:1px solid #E5E5E5"><span class="text-[16px] font-semibold">合计退款</span><span class="text-[22px] font-bold text-[#17A34A]">¥{{ refundTotal.toFixed(2) }}</span></div><button @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#17A34A">{{ refundMode==='return'?'确认归还':'确认退款' }}</button></div>
+</div></transition>
+
+<!-- ═══ ADD DOC SHEET ═══ -->
+<transition name="fd"><div v-if="showDocSheet" class="absolute inset-0 z-[604]" style="background:rgba(0,0,0,.35)" @click="showDocSheet=false"></div></transition>
+<transition name="sh">
+<div v-if="showDocSheet" class="absolute bottom-0 left-0 right-0 bg-white z-[605] rounded-t-[20px] flex flex-col" style="max-height:70%">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">添加补充资料</div>
+<div class="flex mx-5 mb-3 shrink-0 rounded-full p-0.5" style="background:#F6F7F9;border:1px solid #E5E5E5">
+<div @click="docSheetTab='image'" class="flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="docSheetTab==='image'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">拍照上传</div>
+<div @click="docSheetTab='text'" class="flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="docSheetTab==='text'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">文字备注</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pb-8">
+<template v-if="docSheetTab==='image'">
+<div class="grid grid-cols-2 gap-2.5">
+<div v-for="img in docImageTypes" :key="img.label" @click="addDocImage(img)" class="flex flex-col items-center justify-center py-5 rounded-xl cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:2px dashed #E5E5E5">
+<div class="w-10 h-10 rounded-full flex items-center justify-center mb-2" :style="{background:img.color+'15'}"><span v-html="luci(img.icon,'w-5 h-5')" :style="{color:img.color}"></span></div>
+<span class="text-[13px] font-medium">{{ img.label }}</span>
+</div>
+</div>
+</template>
+<template v-else>
+<textarea v-model="docText" placeholder="请输入备注内容..." class="w-full p-4 rounded-xl text-[15px] outline-none resize-none min-h-[120px]" style="border:1px solid #E5E5E5;font-family:inherit"></textarea>
+<div @click="addDocText" class="mt-3 w-full py-3 rounded-xl text-[15px] font-semibold text-white text-center cursor-pointer transition-colors" :style="docText.trim()?{background:'#2F6FEB'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">确认添加</div>
+</template>
+</div>
+</div>
+</transition>
+
+<!-- ═══ FILTER SHEET ═══ -->
+<transition name="fd"><div v-if="ordersShowFS" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="ordersShowFS=false"></div></transition>
+<transition name="sh"><div v-if="ordersShowFS" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] flex flex-col" style="max-height:70%">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">订单筛选</div>
+<div class="flex-1 overflow-y-auto px-5 pb-3 hid" style="min-height:0">
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">订单状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" @click="ordersFsStC=ordersFsStC===s.v?'':s.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsStC===s.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div @click="ordersFsPayC=ordersFsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='2c2p'?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div @click="ordersFsPayC=ordersFsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='offline'?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线下支付</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" @click="ordersFsPayStC=ordersFsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayStC===p.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
+<div style="margin-bottom:16px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">时间范围</div><div style="display:flex;gap:8px;align-items:center"><input v-model="ordersFsStartC" type="date" class="flex-1 py-2 px-3 rounded-lg text-[14px] outline-none" style="border:1px solid #E5E5E5;font-family:inherit;min-width:0"><span class="text-[14px] text-[#999]">至</span><input v-model="ordersFsEndC" type="date" class="flex-1 py-2 px-3 rounded-lg text-[14px] outline-none" style="border:1px solid #E5E5E5;font-family:inherit;min-width:0"></div></div>
+</div>
+<div class="flex gap-3 px-5 pb-8 shrink-0"><button @click="ordersResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">重置</button><button @click="ordersApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:#2F6FEB">确定</button></div>
+</div></transition>
+
+<!-- ═══ MODAL ═══ -->
+<transition name="fd"><div v-if="ordersMod" class="absolute inset-0 z-[999] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="text-[17px] font-bold text-center">{{ ordersModTitle }}</div>
+<div class="text-[14px] text-[#666] text-center leading-relaxed">{{ ordersModDesc }}</div>
+<div class="flex gap-3 mt-2"><div @click="ordersMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div><div @click="ordersConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" :style="ordersModDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">确认</div></div>
+</div>
+</div></transition>
+</template>
+
+<!-- ═══ PROFILE ═══ -->
+<template v-if="tab==='profile'">
+<template v-if="!profileOV&&!profileSub">
+<div style="padding-top:60px" class="px-5 shrink-0"></div>
+<div class="flex-1 overflow-y-auto px-5 pb-24 hid" style="touch-action:pan-y;-webkit-overflow-scrolling:touch;padding-top:0">
+<div class="bg-white rounded-xl p-4 mb-6 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="w-12 h-12 rounded-full bg-[#E8F0FE] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-6 h-6 text-[#4A7CF7]')"></span></div>
+<div class="flex-1"><div class="text-lg font-bold mb-1">Manager Wang</div><div class="text-[13px] text-[#666]">+86 13571893628</div></div>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
+</div>
+<div class="text-xl font-bold mb-3" style="color:#222">常用功能</div>
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div v-for="(m,i) in menuList" :key="m.id" @click="openMenu(m.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" :style="i<menuList.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+<div class="w-7 h-7 flex items-center justify-center mr-3 text-[#666]"><span v-html="luci(m.icon,'w-5 h-5')"></span></div>
+<span class="flex-1 text-[15px] font-medium">{{ m.label }}</span>
+<div class="flex items-center gap-1"><span v-if="m.sub" class="text-[13px] text-[#666] mr-1">{{ m.sub }}</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
+</div>
+</div>
+</div>
+</template>
+
+<!-- ═══ HEADER ═══ -->
+<template v-if="profileOV||profileSub">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD] transition-colors" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-align:center text-[17px] font-semibold" :style="hdrAction?{marginRight:0}:{}">{{ hdrTitle }}</div>
+<span v-if="hdrAction" class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="hdrAction.fn">{{ hdrAction.label }}</span>
+</div>
+</template>
+
+<!-- ═══ PROFILE SUB PAGES ═══ -->
+<!-- (unchanged from previous version) -->
+<transition name="sl"><div v-if="profileOV==='store'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">门店列表</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<transition-group name="item">
+<div v-for="(s,i) in stores" :key="s.name" @click="doSwitch(s.name)" class="bg-white rounded-xl p-4 mb-2.5 flex items-center cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
+<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('building-2','w-5 h-5 text-[#2F6FEB]')"></span></div>
+<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ s.name }}</div><div class="text-xs text-[#999] truncate">{{ s.addr }}</div></div>
+<span v-if="curStore===s.name" v-html="luci('check','w-5 h-5 text-[#2F6FEB] shrink-0')"></span>
+</div>
+</transition-group>
+</div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileOV==='model'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">车型管理</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="rounded-full flex items-center px-3.5 py-2 gap-1.5 mb-3" style="background:#fff;border:1px solid #E5E5E5">
+<span v-html="luci('search','w-4 h-4 text-[#999] shrink-0')"></span><input v-model="mQ" placeholder="搜索车型名称" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]">
+</div>
+<transition-group v-if="mFilter.length" name="item">
+<div v-for="(m,i) in mFilter" :key="m.name" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
+<div class="p-4 flex items-center">
+<div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[#2F6FEB]')"></span></div>
+<div class="flex-1"><div class="text-[15px] font-semibold mb-1">{{ m.name }}</div><div class="flex gap-3 text-xs text-[#666]"><span>共 {{ m.count }} 辆</span><span>月租 ¥{{ m.rent }}</span><span>押金 ¥{{ m.deposit }}</span></div><div class="text-[11px] text-[#999] mt-1">最后更新：{{ m.time }}</div></div>
+</div>
+<div class="card-actions"><div class="card-action-btn" style="color:#2F6FEB" @click="openModelEdit(m)">编辑</div></div>
+</div>
+</transition-group>
+<div v-else class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('bike','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">{{ mQ ? '未找到匹配的车型' : '暂无车型' }}</div>
+<div class="text-[13px] text-[#999]">{{ mQ ? '请调整搜索关键词' : '还没有车型数据' }}</div>
+</div>
+</div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileSub==='mEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">编辑车型</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-24 hid">
+<div class="mb-5"><div class="text-sm font-semibold mb-2">车型名称</div><div class="text-base font-semibold py-3.5">{{ fm.name }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">月租（¥）<span class="text-[#DC2626] ml-0.5">*</span></div><input v-model.number="fm.rent" type="number" @input="vClr('rent')" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.rent?'#E5E5E5':'#DC2626')}"><div v-if="fE.rent" class="text-[#DC2626] text-xs mt-1">{{ fE.rent }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">押金（¥）<span class="text-[#DC2626] ml-0.5">*</span></div><input v-model.number="fm.deposit" type="number" @input="vClr('deposit')" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.deposit?'#E5E5E5':'#DC2626')}"><div v-if="fE.deposit" class="text-[#DC2626] text-xs mt-1">{{ fE.deposit }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">排序</div><input v-model.number="fm.sort" type="number" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"></div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveModel" :disabled="modelSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">保存</button></div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileOV==='account'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">账号管理</div><span class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="openAccAdd()">新增</span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="rounded-full flex items-center px-3.5 py-2 gap-1.5 mb-3" style="background:#fff;border:1px solid #E5E5E5">
+<span v-html="luci('search','w-4 h-4 text-[#999] shrink-0')"></span><input v-model="aQ" placeholder="搜索账号/姓名/手机号" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]">
+</div>
+<transition-group v-if="aFilter.length" name="item">
+<div v-for="(a,i) in aFilter" :key="a.account" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
+<div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openAccDetail(a)">
+<div class="flex justify-between items-center mb-2"><span class="text-[15px] font-semibold">{{ a.account }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="a.status==='启用'?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ a.status }}</span></div>
+<div class="grid grid-cols-2 gap-x-3 gap-y-0.5 text-xs text-[#666] mb-2"><div>手机号：{{ mask(a.code+a.phone) }}</div><div>邮箱：{{ a.email }}</div><div>姓名：{{ a.name }}</div><div>备注：{{ a.remark||'—' }}</div></div>
+<div class="flex gap-1 mb-1"><span v-for="r in a.roles.split('、')" :key="r" class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#EBF1FD] text-[#2F6FEB]">{{ r }}</span></div>
+<div class="text-[11px] text-[#999]">创建时间：{{ a.created }}</div>
+</div>
+<div class="card-actions">
+<div class="card-action-btn" style="color:#2F6FEB" @click="openAccEdit(a)">编辑</div>
+<div class="card-action-btn" :style="{color:a.status==='启用'?'#D97706':'#17A34A'}" @click="toggleAcc(a)">{{ a.status==='启用'?'禁用':'启用' }}</div>
+</div>
+</div>
+</transition-group>
+<div v-else class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('users','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">{{ aQ ? '未找到匹配的账号' : '暂无账号' }}</div>
+<div class="text-[13px] text-[#999]">{{ aQ ? '请调整搜索关键词' : '点击右上角新增添加账号' }}</div>
+</div>
+</div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileSub==='aDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">账号详情</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="text-[13px] font-semibold text-[#999] mb-2">基本信息</div>
+<div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div v-for="(r,j) in adRows" :key="r.k" class="flex py-2.5" :style="j<adRows.length-1?{borderBottom:'1px dashed #E5E5E5'}:{}"><span class="text-[13px] text-[#999] w-20 shrink-0">{{ r.k }}</span><span class="text-sm font-medium flex-1">{{ r.v }}</span></div>
+</div>
+<div class="text-[13px] font-semibold text-[#999] mb-2">职位与权限</div>
+<div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 shrink-0">职位</span><span class="text-sm font-medium flex-1">{{ da.roles }}</span></div>
+<div class="flex py-2.5"><span class="text-[13px] text-[#999] w-20 shrink-0">状态</span><span class="text-sm font-medium flex-1">{{ da.status }}</span></div>
+</div>
+</div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileSub==='aAdd'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">新增账号</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-24 hid">
+<div class="mb-5"><div class="text-sm font-semibold mb-2">账号<span class="text-[#DC2626] ml-0.5">*</span></div><input v-model="fa.account" @input="vClr('account')" placeholder="请输入账号" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.account?'#E5E5E5':'#DC2626')}"><div v-if="fE.account" class="text-[#DC2626] text-xs mt-1">{{ fE.account }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">姓名<span class="text-[#DC2626] ml-0.5">*</span></div><input v-model="fa.name" @input="vClr('name')" placeholder="请输入姓名" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.name?'#E5E5E5':'#DC2626')}"><div v-if="fE.name" class="text-[#DC2626] text-xs mt-1">{{ fE.name }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">手机号</div>
+<div class="flex items-center rounded-xl overflow-hidden bg-white transition-all" :style="!fa.account?{opacity:0.5,pointerEvents:'none',border:'1px solid #E5E5E5'}:{border:'1px solid #E5E5E5'}">
+<select v-model="fa.code" class="bg-transparent border-none text-[15px] outline-none pl-4 pr-2 py-3.5 cursor-pointer appearance-none" style="min-width:62px"><option>+86</option><option>+852</option><option>+1</option><option>+44</option><option>+81</option></select>
+<div style="width:1px;height:22px;background:#E5E5E5"></div>
+<input v-model="fa.phone" type="tel" placeholder="请输入手机号" class="flex-1 bg-transparent border-none text-[15px] outline-none px-3 py-3.5 min-w-0">
+</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">邮箱</div><input v-model="fa.email" type="email" placeholder="请输入邮箱" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5" :disabled="!fa.account"></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">职位<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#E5E5E5')}">{{ r }}</div></div><div v-if="fE.roles" class="text-[#DC2626] text-xs mt-1">{{ fE.roles }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">备注</div><input v-model="fa.remark" placeholder="请输入备注" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"></div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveAccAdd" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">保存</button></div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileSub==='aEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">编辑账号</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-24 hid">
+<div class="mb-5"><div class="text-sm font-semibold mb-2">账号<span class="text-[#DC2626] ml-0.5">*</span></div><div class="text-base font-semibold py-3.5">{{ fa.account }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">姓名<span class="text-[#DC2626] ml-0.5">*</span></div><input v-model="fa.name" @input="vClr('name')" placeholder="请输入姓名" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.name?'#E5E5E5':'#DC2626')}"><div v-if="fE.name" class="text-[#DC2626] text-xs mt-1">{{ fE.name }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">手机号</div>
+<div class="flex items-center rounded-xl overflow-hidden bg-white" style="border:1px solid #E5E5E5">
+<select v-model="fa.code" class="bg-transparent border-none text-[15px] outline-none pl-4 pr-2 py-3.5 cursor-pointer appearance-none" style="min-width:62px"><option>+86</option><option>+852</option><option>+1</option><option>+44</option><option>+81</option></select>
+<div style="width:1px;height:22px;background:#E5E5E5"></div>
+<input v-model="fa.phone" type="tel" placeholder="请输入手机号" class="flex-1 bg-transparent border-none text-[15px] outline-none px-3 py-3.5 min-w-0">
+</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">邮箱</div><input v-model="fa.email" type="email" placeholder="请输入邮箱" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">职位<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#E5E5E5')}">{{ r }}</div></div><div v-if="fE.roles" class="text-[#DC2626] text-xs mt-1">{{ fE.roles }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">备注</div><input v-model="fa.remark" placeholder="请输入备注" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"></div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveAccEdit" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">保存</button></div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileOV==='pos'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">职位管理</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="rounded-full flex items-center px-3.5 py-2 gap-1.5 mb-3" style="background:#fff;border:1px solid #E5E5E5">
+<span v-html="luci('search','w-4 h-4 text-[#999] shrink-0')"></span><input v-model="pQ" placeholder="搜索职位名称" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]">
+</div>
+<transition-group v-if="pFilter.length" name="item">
+<div v-for="(p,i) in pFilter" :key="p.name" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
+<div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openPosDetail(p)">
+<div class="flex justify-between items-center mb-1"><span class="text-[15px] font-semibold">{{ p.name }}</span><span class="text-[11px] font-medium px-2 py-0.5 rounded" :style="p.level==='代理商门店'?{background:'#F0F4FF',color:'#5B7FEB'}:{background:'#FFF3E0',color:'#E67E22'}">{{ p.level }}</span></div>
+<div class="text-xs text-[#999] mb-0.5">上级职位：{{ p.parent }}</div>
+<div class="text-xs text-[#999] mb-0.5">备注：{{ p.remark||'—' }}</div>
+<div class="text-[11px] text-[#999]">创建时间：{{ p.created }}</div>
+</div>
+<div class="card-actions">
+<div class="card-action-btn" style="color:#2F6FEB" @click="openPosEdit(p)">编辑</div>
+<div class="card-action-btn" style="color:#DC2626" @click="delPos(p)">删除</div>
+</div>
+</div>
+</transition-group>
+<div v-else class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('briefcase','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">{{ pQ ? '未找到匹配的职位' : '暂无职位' }}</div>
+<div class="text-[13px] text-[#999]">{{ pQ ? '请调整搜索关键词' : '还没有职位数据' }}</div>
+</div>
+</div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileSub==='pDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">职位详情</div><span class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="openPosAdd(dp.name)">新增下级职位</span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div v-for="(r,j) in pdRows" :key="r.k" class="flex py-2.5" :style="j<pdRows.length-1?{borderBottom:'1px dashed #E5E5E5'}:{}"><span class="text-[13px] text-[#999] w-20 shrink-0">{{ r.k }}</span><span class="text-sm font-medium flex-1">{{ r.v }}</span></div>
+</div>
+<div v-for="sec in [{l:'平台端权限',t:pTreeP},{l:'商户端权限',t:pTreeM}]" :key="sec.l">
+<div class="text-[13px] font-semibold text-[#999] mb-2">{{ sec.l }}</div>
+<div class="bg-white rounded-xl overflow-hidden mb-5" style="border:1px solid #E5E5E5">
+<div v-for="g in sec.t" :key="g.name">
+<div class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border-bottom:1px solid #E5E5E5" @click="g.exp=!g.exp"><span v-html="luci('chevron-right','w-4 h-4 text-[#999] mr-2 transition-transform')" :style="g.exp?{transform:'rotate(90deg)'}:{}"></span><span v-html="luci(g.icon,'w-4 h-4 text-[#999] mr-2')"></span><span class="text-sm font-semibold flex-1">{{ g.name }}</span></div>
+<div v-show="g.exp" class="pl-10 pr-4 pb-2"><div v-for="c in g.items" :key="c.n" class="py-2 text-[13px]" :style="{color:c.c?'#111':'#666',fontWeight:c.c?500:400}">{{ c.n }}</div></div>
+</div></div></div>
+</div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileSub==='pAdd'||profileSub==='pEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">{{ profileSub==='pAdd'?'新增职位':'编辑职位' }}</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-24 hid">
+<div class="mb-5"><div class="text-sm font-semibold mb-2">上级职位</div><div class="px-4 py-3.5 rounded-xl text-[15px] font-medium bg-[#F6F7F9]" style="border:1px solid #E5E5E5">{{ fp.parent }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">职位名称<span class="text-[#DC2626] ml-0.5">*</span></div><input v-model="fp.name" @input="vClr('name')" placeholder="请输入职位名称" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.name?'#E5E5E5':'#DC2626')}"><div v-if="fE.name" class="text-[#DC2626] text-xs mt-1">{{ fE.name }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">门店级别<span class="text-[#DC2626] ml-0.5">*</span></div><select v-model="fp.level" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none appearance-none bg-white cursor-pointer" style="border:1px solid #E5E5E5"><option>代理商门店</option><option>运营门店</option></select></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">备注</div><input v-model="fp.remark" placeholder="请输入备注" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"></div>
+<div v-for="sec in [{l:'平台端权限',t:pTreeP},{l:'商户端权限',t:pTreeM}]" :key="sec.l">
+<div class="flex justify-between items-center mb-2"><span class="text-sm font-semibold">{{ sec.l }}</span><span class="text-[13px] font-medium text-[#2F6FEB] cursor-pointer" @click="selAll(sec.t)">全选</span></div>
+<div class="bg-white rounded-xl overflow-hidden mb-4" style="border:1px solid #E5E5E5">
+<div v-for="g in sec.t" :key="g.name">
+<div class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border-bottom:1px solid #E5E5E5" @click="g.exp=!g.exp">
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999] mr-2 transition-transform')" :style="g.exp?{transform:'rotate(90deg)'}:{}"></span><span v-html="luci(g.icon,'w-4 h-4 text-[#999] mr-2')"></span><span class="text-sm font-semibold flex-1">{{ g.name }}</span>
+<div class="cb" :class="gCb(g)" @click.stop="togG(g)"><span v-html="luci('check','w-3 h-3')"></span></div>
+</div>
+<div v-show="g.exp" class="pl-10 pr-4 pb-2"><div v-for="c in g.items" :key="c.n" class="flex items-center gap-2.5 py-2 cursor-pointer" @click="c.c=!c.c"><div class="cb" :class="c.c?'on':''"><span v-html="luci('check','w-3 h-3')"></span></div><span class="text-[13px]" :style="{color:c.c?'#111':'#666',fontWeight:c.c?500:400}">{{ c.n }}</span></div></div>
+</div></div></div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="savePos" :disabled="posSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">保存</button></div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileOV==='cs'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">客服信息</div><span class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="openCsEdit(-1)">新增</span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<transition-group v-if="csList.length" name="item">
+<div v-for="(c,i) in csList" :key="i" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
+<div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openCsEdit(i)">
+<div class="text-[15px] font-semibold mb-2">{{ c.code }} {{ c.phone }}</div>
+<div class="grid grid-cols-2 gap-0.5 text-xs text-[#666]"><div>服务时段：{{ p2(c.sh) }}:{{ p2(c.sm) }} - {{ p2(c.eh) }}:{{ p2(c.em) }}</div><div style="grid-column:1/-1">备注：{{ c.remark||'—' }}</div></div>
+</div>
+<div class="card-actions">
+<div class="card-action-btn" style="color:#2F6FEB" @click="openCsEdit(i)">编辑</div>
+<div class="card-action-btn" style="color:#DC2626" @click="delCs(i)">删除</div>
+</div>
+</div>
+</transition-group>
+<div v-else class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('headset','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无客服信息</div>
+<div class="text-[13px] text-[#999]">点击右上角新增添加客服电话</div>
+</div>
+</div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileSub==='csEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">{{ csIdx===-1?'新增客服':'编辑客服' }}</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-5 pb-24 hid">
+<div class="mb-5"><div class="text-sm font-semibold mb-2">客服电话<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="flex items-center rounded-xl overflow-hidden bg-white transition-colors" :style="{border:'1px solid '+(!fE.phone?'#E5E5E5':'#DC2626')}">
+<select v-model="fc.code" class="bg-transparent border-none text-[15px] outline-none pl-4 pr-2 py-3.5 cursor-pointer appearance-none" style="min-width:62px"><option>+86</option><option>+852</option><option>+1</option><option>+44</option><option>+81</option><option>+82</option></select>
+<div style="width:1px;height:22px;background:#E5E5E5"></div>
+<input v-model="fc.phone" @input="vClr('phone')" type="tel" placeholder="请输入客服电话号码" class="flex-1 bg-transparent border-none text-[15px] outline-none px-3 py-3.5 min-w-0">
+</div><div v-if="fE.phone" class="text-[#DC2626] text-xs mt-1">{{ fE.phone }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">开始时间<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="flex items-center gap-2"><select v-model.number="fc.sh" class="w-16 px-2 py-2.5 rounded-xl text-sm text-center outline-none cursor-pointer appearance-none bg-white" style="border:1px solid #E5E5E5"><option v-for="h in 24" :key="h" :value="h-1">{{ p2(h-1) }}</option></select><span class="text-sm font-medium">时</span><select v-model.number="fc.sm" class="w-16 px-2 py-2.5 rounded-xl text-sm text-center outline-none cursor-pointer appearance-none bg-white" style="border:1px solid #E5E5E5"><option :value="0">00</option><option :value="30">30</option></select><span class="text-sm font-medium">分</span></div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">结束时间<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="flex items-center gap-2"><select v-model.number="fc.eh" class="w-16 px-2 py-2.5 rounded-xl text-sm text-center outline-none cursor-pointer appearance-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.time?'#E5E5E5':'#DC2626')}"><option v-for="h in 24" :key="h" :value="h-1">{{ p2(h-1) }}</option></select><span class="text-sm font-medium">时</span><select v-model.number="fc.em" class="w-16 px-2 py-2.5 rounded-xl text-sm text-center outline-none cursor-pointer appearance-none bg-white transition-colors" :style="{border:'1px solid '+(!fE.time?'#E5E5E5':'#DC2626')}"><option :value="0">00</option><option :value="30">30</option></select><span class="text-sm font-medium">分</span></div><div v-if="fE.time" class="text-[#DC2626] text-xs mt-1">{{ fE.time }}</div></div>
+<div class="mb-5"><div class="text-sm font-semibold mb-2">备注</div><input v-model="fc.remark" placeholder="例如 值班经理热线" class="w-full px-4 py-3.5 rounded-xl text-[15px] outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"></div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveCs" :disabled="csSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">保存</button></div>
+</div></transition>
+
+<transition name="sl"><div v-if="profileOV==='config'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">订单配置</div><span class="text-sm font-medium cursor-pointer shrink-0" :style="cfgSaving?{color:'#999',pointerEvents:'none'}:{color:'#2F6FEB'}" @click="saveCfg">保存</span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="pb-4" style="border-bottom:1px solid #E5E5E5">
+<div class="text-sm font-semibold mb-3 leading-relaxed">订单结束前 <span class="text-[#2F6FEB]">{{ cfg.pre }}</span> 天状态变更至待还车</div>
+<div class="flex items-center gap-2"><input v-model.number="cfg.pre" type="number" min="1" class="w-[72px] px-3 py-2.5 rounded-xl text-base font-semibold text-center outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"><span class="text-[15px] font-medium">天</span></div>
+<div class="text-xs text-[#999] mt-2 leading-relaxed">租期到期前自动转为待还车状态，提醒用户及时归还</div>
+</div>
+<div class="pt-4">
+<div class="text-sm font-semibold mb-3 leading-relaxed">订单超期 <span class="text-[#DC2626]">{{ cfg.breach }}</span> 天状态变更至已违约且不可开锁</div>
+<div class="flex items-center gap-2"><input v-model.number="cfg.breach" type="number" min="1" class="w-[72px] px-3 py-2.5 rounded-xl text-base font-semibold text-center outline-none bg-white transition-colors" style="border:1px solid #E5E5E5"><span class="text-[15px] font-medium">天</span></div>
+<div class="text-xs text-[#999] mt-2 leading-relaxed">到达设定超期天数后订单自动切换为已违约状态，车辆远程开锁功能锁定</div>
+</div></div>
+</div>
+</div></transition>
+
+<!-- ═══ MODALS ═══ -->
+<transition name="fd"><div v-if="profileMod" class="absolute inset-0 z-[800] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="text-[17px] font-bold text-center">{{ profileMdT }}</div>
+<div class="text-sm text-[#666] text-center leading-relaxed">{{ profileMdD }}</div>
+<div class="flex gap-3 mt-2">
+<div @click="profileMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div>
+<div @click="profileMdOk" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="profileMdDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">确认</div>
+</div></div>
+</div></transition>
+</template>
+
+</div>
+</transition>
+
+<!-- ═══ UNIFIED TAB BAR ═══ -->
+<div class="absolute bottom-0 left-0 right-0 h-[83px] bg-white/90 backdrop-blur-[20px] flex pb-[22px] z-[100]" style="border-top:1px solid #E5E5E5">
+<div @click="tab='home'" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='home'?'text-[#2F6FEB]':'text-[#999]'">
+<span v-html="luci('home','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">首页</span>
+</div>
+<div @click="tab='vehicles'" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='vehicles'?'text-[#2F6FEB]':'text-[#999]'">
+<span v-html="luci('bike','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">车辆</span>
+</div>
+<div @click="tab='orders'" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='orders'?'text-[#2F6FEB]':'text-[#999]'">
+<span v-html="luci('file-text','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">订单</span>
+</div>
+<div @click="tab='profile'" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='profile'?'text-[#2F6FEB]':'text-[#999]'">
+<span v-html="luci('user','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">我的</span>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+const{createApp,ref,computed,onMounted,onUpdated,nextTick,watch}=Vue;
+const app=createApp({
+setup(){
+const tab=ref('home');
+
+function luci(n,c){if(!window.lucide||!n||!lucide.icons)return'';try{var p=(s)=>s.replace(/(\w)(\w*)(-|\s*)/g,(_,a,b)=>a.toUpperCase()+b.toLowerCase());var d=lucide.icons[p(n)];if(!d||d[0]!=='svg')return'';var a=d[1],cls='lucide lucide-'+n+(c?' '+c:''),sv='<svg';for(var k in a)if(a.hasOwnProperty(k))sv+=' '+k+'="'+String(a[k]).replace(/"/g,'&quot;')+'"';sv+=' class="'+cls+'">';function b(ch){var h='';for(var i=0;i<ch.length;i++){var t=ch[i][0],at=ch[i][1];h+='<'+t;for(var k in at)if(at.hasOwnProperty(k))h+=' '+k+'="'+String(at[k]).replace(/"/g,'&quot;')+'"';if(ch[i][2]&&ch[i][2].length)h+='>'+b(ch[i][2])+'</'+t+'>';else h+='/>'}return h}sv+=b(d[2])+'</svg>';return sv}catch(ex){return''}}
+
+const toasts=ref([]);let tid=0;
+function toast(msg,type='info'){const id=++tid;toasts.value.push({id,msg,type});setTimeout(()=>{const i=toasts.value.findIndex(t=>t.id===id);if(i>=0)toasts.value.splice(i,1)},2000)}
+const fE=ref({});
+function vErr(o){const e={};for(const[k,v]of Object.entries(o))if(!v||(Array.isArray(v)&&!v.length))e[k]='必填项';Object.assign(fE.value,e);return!Object.keys(e).length}
+function vClr(k){if(fE.value[k]){const o={...fE.value};delete o[k];fE.value=o}}
+
+/* ══ HOME ══ */
+const homeOV=ref(null);
+const homeLoading=ref(true),homeRefreshing=ref(false);
+const store={name:'测试门店',date:'2024年10月24日 周四'};
+const bizStats=ref([{label:'今日收款',value:'¥3,240',trend:12},{label:'本月收款',value:'¥28,500',trend:8},{label:'进行中订单',value:'18',trend:null},{label:'待还订单',value:'8',trend:null}]);
+const vehStats=ref([{label:'在线车辆',value:'42'},{label:'离线车辆',value:'8',danger:true}]);
+const recent=ref([{id:1,vin:'LSVAU2Z0A00888000',type:'车辆离线',lv:'p0',time:'2024-10-24 10:45',icon:'wifi-off'},{id:2,vin:'LSVAU2Z0A00042000',type:'GPS信号丢失',lv:'p1',time:'2024-10-24 10:30',icon:'map-pin-off'},{id:3,vin:'LSVAU2Z0A00015000',type:'GPS定位过时',lv:'p1',time:'2024-10-24 09:15',icon:'timer'}]);
+const allAlerts=ref([{id:1,vin:'LSVAU2Z0A00888000',type:'车辆离线',lv:'p0',time:'2024-10-24 10:45',icon:'wifi-off'},{id:2,vin:'LSVAU2Z0A00042000',type:'GPS信号丢失',lv:'p1',time:'2024-10-24 10:30',icon:'map-pin-off'},{id:3,vin:'LSVAU2Z0A00015000',type:'GPS定位过时',lv:'p1',time:'2024-10-24 09:15',icon:'timer'},{id:4,vin:'LSVAU2Z0A00023000',type:'GPS定位过时',lv:'p1',time:'2024-10-24 09:15',icon:'timer'},{id:5,vin:'LSVAU2Z0A00015000',type:'疑似断电',lv:'p2',time:'2024-10-24 08:50',icon:'zap-off'},{id:6,vin:'LSVAU2Z0A00037000',type:'疑似断电',lv:'p2',time:'2024-10-24 07:30',icon:'zap-off'}]);
+const msgs=ref([{id:1,title:'系统维护通知',desc:'10月25日 02:00-04:00 服务器升级',time:'10:30',read:false},{id:2,title:'车辆 #008 离线告警',desc:'车辆已离线超过2小时，请及时处理',time:'09:15',read:false},{id:3,title:'订单 #20241024 已逾期',desc:'客户未按时归还车辆，请联系确认',time:'昨天',read:true},{id:4,title:'新版本更新提示',desc:'V2.3.0 已发布，新增电池健康度报表',time:'10-22',read:true}]);
+const unread=computed(()=>msgs.value.filter(m=>!m.read).length);
+const LV={p0:'bg-[#FEF2F2] text-[#DC2626]',p1:'bg-[#FFFBEB] text-[#D97706]',p2:'bg-[#EBF1FD] text-[#2F6FEB]'};
+function lvBg(lv){return LV[lv]||LV.p2}
+function homeOpen(id){homeOV.value=id}
+function homeClose(){homeOV.value=null}
+function readMsg(m){if(!m.read){m.read=true;toast('已标记为已读','info')}}
+
+/* ══ VEHICLES ══ */
+const vehOV=ref(null),vehMod=ref(null),vehShowModelSheet=ref(false),vehShowFS=ref(false);
+const vehLoading=ref(true),vehRefreshing=ref(false);
+const locked=ref(false),pressProgress=ref(0),lockJustDone=ref(false);
+let pressTimer=null,pressStart=0;const PRESS_DURATION=1500;
+const vehicles=ref([
+{vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30'},
+{vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15'},
+{vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00'},
+{vin:'LSVAU2Z0D00001000',ctrl:'860123456789040',model:'雅迪 Commuter S',plate:'京D·00001',status:'已报失',online:false,batteryMain:0,batterySub:0,time:'2024-10-23 09:00'}
+]);
+const vehModels=['雅迪 E-Bike Pro','雅迪 City Cruiser','雅迪 Mountain X','雅迪 Commuter S'];
+const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehFsModelC=ref(''),vehFsOnlineC=ref(null);
+const vehHasF=computed(()=>!!vehFsModel.value||vehFsOnline.value!==null);
+const pills=[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'},{l:'已报失',v:'已报失'}];
+const pillCnt=computed(()=>{const m={};vehicles.value.forEach(v=>{m[v.status]=(m[v.status]||0)+1});return{'':vehicles.value.length,'空闲':m['空闲']||0,'占用中':m['占用中']||0,'租用中':m['租用中']||0,'已报失':m['已报失']||0}});
+const filtered=computed(()=>vehicles.value.filter(v=>{if(vehPill.value&&v.status!==vehPill.value)return false;if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true}));
+const dv=ref({vin:'',ctrl:'',model:'',plate:'',status:'',online:true,batteryMain:0,batterySub:0,time:''});
+const armed=ref(false),lost=ref(false),findLoading=ref(false);
+
+const editCtrl=ref(''),editModel=ref(''),editPlate=ref('');
+function openVehEdit(){editCtrl.value=dv.value.ctrl;editModel.value=dv.value.model;editPlate.value=dv.value.plate;vehOV.value='edit'}
+function saveVehEdit(){
+dv.value.ctrl=editCtrl.value;dv.value.model=editModel.value;dv.value.plate=editPlate.value;
+const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);
+if(idx>=0){vehicles.value[idx].ctrl=editCtrl.value;vehicles.value[idx].model=editModel.value;vehicles.value[idx].plate=editPlate.value}
+vehOV.value='detail';toast('车辆信息已保存','success')
+}
+function vehOpenDetail(v){dv.value={...v};armed.value=false;lost.value=false;vehOV.value='detail'}
+function vehDoSearch(){if(vehQ.value)toast('搜索完成，'+filtered.value.length+' 条结果','info')}
+function startPress(e){e.preventDefault();pressStart=Date.now();pressProgress.value=0;const update=()=>{const now=Date.now();const elapsed=now-pressStart;pressProgress.value=Math.min((elapsed/PRESS_DURATION)*100,100);if(elapsed>=PRESS_DURATION){locked.value=!locked.value;pressProgress.value=0;lockJustDone.value=true;toast(locked.value?'已开锁，车辆已解锁':'已关锁，车辆已锁定','success');setTimeout(()=>lockJustDone.value=false,300);return}pressTimer=requestAnimationFrame(update)};pressTimer=requestAnimationFrame(update)}
+function endPress(){if(pressTimer){cancelAnimationFrame(pressTimer);pressTimer=null}const decay=()=>{if(pressProgress.value>0){pressProgress.value=Math.max(0,pressProgress.value-5);requestAnimationFrame(decay)}};requestAnimationFrame(decay)}
+function doFind(){if(findLoading.value)return;findLoading.value=true;setTimeout(()=>{findLoading.value=false;toast('寻车指令已发送，车辆正在闪烁鸣笛','success')},2500)}
+const vehModTitle=computed(()=>{if(vehMod.value==='arm')return armed.value?'确认解除设防':'确认设防';if(vehMod.value==='lost')return lost.value?'确认解除报失':'确认报失';return''});
+const vehModDesc=computed(()=>{if(vehMod.value==='arm')return armed.value?'确定要对车辆进行「解除设防」操作吗？':'确定要对车辆进行「设防」操作吗？';if(vehMod.value==='lost')return lost.value?'确定要对车辆进行「解除报失」操作吗？':'确定要对车辆进行「报失」操作吗？';return''});
+const vehModDanger=computed(()=>(vehMod.value==='arm'&&armed.value)||(vehMod.value==='lost'&&!lost.value));
+function vehConfirmMod(){if(vehMod.value==='arm'){armed.value=!armed.value;toast(armed.value?'设防成功，车辆已进入防护状态':'解除设防成功','success')}if(vehMod.value==='lost'){lost.value=!lost.value;toast(lost.value?'报失成功，已锁定车辆':'解除报失成功','success')}vehMod.value=null}
+const addModel=ref(''),addVin=ref(''),addCtrl=ref(''),modelQ=ref('');
+const filteredModels=computed(()=>modelQ.value?vehModels.filter(m=>m.toLowerCase().includes(modelQ.value.toLowerCase())):vehModels);
+const canSubmit=computed(()=>!!addModel.value&&!!addVin.value.trim()&&!!addCtrl.value.trim());
+function pickModel(m){if(vehOV.value==='edit'){editModel.value=m}else{addModel.value=m};vehShowModelSheet.value=false}
+function scanVin(){scanning.value=true}
+const scanning=ref(false);
+function doScan(){addVin.value='YD'+Math.floor(Math.random()*900000+100000);toast('扫码成功','success');scanning.value=false}
+function submitAdd(){if(!canSubmit.value)return;toast('车辆 '+addVin.value+' 新增成功！','success');vehOV.value=null;addModel.value='';addVin.value='';addCtrl.value=''}
+function vehOpenFS(){vehFsModelC.value=vehFsModel.value;vehFsOnlineC.value=vehFsOnline.value;vehShowFS.value=true}
+function vehToggleFSModel(m){vehFsModelC.value=vehFsModelC.value===m?'':m}
+function vehToggleFSOnline(v){vehFsOnlineC.value=vehFsOnlineC.value===v?null:v}
+function vehResetFS(){vehFsModelC.value='';vehFsOnlineC.value=null;toast('筛选已重置','info')}
+function vehApplyFS(){vehFsModel.value=vehFsModelC.value;vehFsOnline.value=vehFsOnlineC.value;vehShowFS.value=false;toast('筛选已应用','info')}
+function sc(s){return s==='空闲'?'#2F6FEB':s==='已报失'?'#DC2626':'#D97706'}
+function bi(n){return n>=80?'battery-full':n>=30?'battery-medium':'battery-low'}
+function bc(n){return n>=80?'#17A34A':n>=30?'#D97706':'#DC2626'}
+
+/* ══ ORDERS ══ */
+const ordersOV=ref(null),ordersMod=ref(null),ordersShowFS=ref(false),showRefund=ref(false),ordersLoading=ref(true),ordersRefreshing=ref(false);
+const ordersQ=ref(''),searchScope=ref('id'),ordersPill=ref('');
+const searchPH=computed(()=>({id:'搜索订单号',account:'搜索账号',phone:'搜索手机号',email:'搜索邮箱',vin:'搜索车架号'})[searchScope.value]||'搜索订单号');
+const orders=ref([{id:'#ORD2025012001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:'月租',amount:350,status:'created',payment:'2c2p',time:'下单 2025-01-20 09:00:00'},{id:'#ORD2025012002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:'月租',amount:560,status:'pendingPay',payment:'offline',time:'下单 2025-01-20 09:30:00'},{id:'#ORD2025012003',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:'月租',amount:280,status:'pickup',payment:'2c2p',time:'预约取车 2025-01-21 09:00:00'},{id:'#ORD2025011804',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:'月租 × 2个月',amount:420,status:'progress',payment:'2c2p',time:'取车 2025-01-18 14:00:00 · 还车 2025-01-20 14:00:00'},{id:'#ORD2025011705',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:'月租',amount:180,status:'return',payment:'offline',time:'取车 2025-01-17 08:00:00 · 应还 2025-01-20 18:00:00'},{id:'#ORD2025011506',vin:'LSVAU2Z0A77777000',customer:'Sun Qi',phone:'+86 13800007777',plan:'月租',amount:150,status:'overdue',payment:'2c2p',time:'取车 2025-01-15 10:00:00 · 应还 2025-01-18 10:00:00'},{id:'#ORD2025011007',vin:'LSVAU2Z0A88888000',customer:'Zhou Ba',phone:'+86 13800008888',plan:'月租 × 2个月',amount:620,status:'complete',payment:'offline',time:'取车 2025-01-10 09:00:00 · 还车 2025-03-10 09:00:00'},{id:'#ORD2025011908',vin:'LSVAU2Z0A99999000',customer:'Zheng Jiu',phone:'+86 13800009999',plan:'月租',amount:300,status:'cancelled',payment:'2c2p',time:'下单 2025-01-19 11:00:00 · 取消 2025-01-19 14:00:00'},{id:'#ORD2025010809',vin:'LSVAU2Z0A10101000',customer:'Wu Shi',phone:'+86 13900001010',plan:'月租',amount:450,status:'breach',payment:'offline',time:'取车 2025-01-08 08:00:00 · 应还 2025-01-10 08:00:00'}]);
+const allStatus=[{v:'created',l:'已创建'},{v:'pendingPay',l:'待支付'},{v:'pickup',l:'待取车'},{v:'progress',l:'进行中'},{v:'return',l:'待还车'},{v:'overdue',l:'已超期'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'},{v:'breach',l:'已违约'}];
+const paySts=[{v:'pending',l:'待支付'},{v:'processing',l:'支付中'},{v:'paid',l:'已支付'},{v:'refunding',l:'退款中'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
+const quickPills=[{l:'全部',v:''},{l:'待取车',v:'pickup'},{l:'进行中',v:'progress'},{l:'待还车',v:'return'},{l:'已超期',v:'overdue'}];
+const qCnt=computed(()=>{const m={};orders.value.forEach(o=>{m[o.status]=(m[o.status]||0)+1});return{'':orders.value.length,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
+const ordersFsSt=ref(''),ordersFsPay=ref(''),ordersFsPaySt=ref(''),ordersFsStart=ref(''),ordersFsEnd=ref('');
+const ordersFsStC=ref(''),ordersFsPayC=ref(''),ordersFsPayStC=ref(''),ordersFsStartC=ref(''),ordersFsEndC=ref('');
+const ordersHasF=computed(()=>!!ordersFsSt.value||!!ordersFsPay.value||!!ordersFsPaySt.value||!!ordersFsStart.value);
+const vehSts=['progress','return','overdue','complete','breach'];
+function hasVehicle(s){return vehSts.indexOf(s)!==-1}
+const oFiltered=computed(()=>orders.value.filter(o=>{if(ordersPill.value&&o.status!==ordersPill.value)return false;if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value){var m=o.time.match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
+function sl(s){var m={created:'已创建',pendingPay:'待支付',pickup:'待取车',progress:'进行中','return':'待还车',overdue:'已超期',complete:'已完成',cancelled:'已取消',breach:'已违约'};return m[s]||s}
+function stg(s){var m={created:{background:'#F0F4FF',color:'#5B7FEB',border:'1px solid #5B7FEB'},pendingPay:{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'},pickup:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},progress:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},'return':{background:'#FFF3E0',color:'#E67E22',border:'1px solid #E67E22'},overdue:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'},complete:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'},cancelled:{background:'#F6F7F9',color:'#BBB',border:'1px solid #DDD'},breach:{background:'#FEE2E2',color:'#991B1B',border:'1px solid #991B1B'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
+var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
+var dSt=ref(''),dPm=ref('online');
+var showPaid=computed(()=>vehSts.concat(['pickup']).indexOf(dSt.value)!==-1);
+var showVehicle=computed(()=>vehSts.indexOf(dSt.value)!==-1);
+var refundable=computed(()=>vehSts.concat(['pickup','cancelled']).indexOf(dSt.value)!==-1);
+var showActions=computed(()=>dSt.value!=='cancelled');
+var primaryLabel=computed(()=>{var isOff=dSt.value==='pendingPay'&&dPm.value==='offline';var m={created:'取消订单',pendingPay:isOff?'确认支付':'取消订单',pickup:'取消订单',progress:'归还车辆','return':'归还车辆',overdue:'归还车辆',complete:'退款',breach:'归还车辆'};return m[dSt.value]||''});
+var primaryDanger=computed(()=>['created','pendingPay','pickup'].indexOf(dSt.value)!==-1&&!(dSt.value==='pendingPay'&&dPm.value==='offline'));
+var dualMode=computed(()=>dSt.value==='overdue'||dSt.value==='breach'||(dSt.value==='pendingPay'&&dPm.value==='offline'));
+var dualIsCancel=computed(()=>dSt.value==='pendingPay'&&dPm.value==='offline');
+var dangerLabel=computed(()=>(dSt.value==='pendingPay'&&dPm.value==='offline')?'取消订单':'车辆报失');
+function ordersOpenDetail(o){do_.value=o;dSt.value=o.status;dPm.value='online';ordersOV.value='detail'}
+function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
+function ordersDoSearch(){toast('搜索完成，'+oFiltered.value.length+' 条结果','info')}
+var ordersSaving=ref(false);
+function ordersDoPrimary(){if(ordersSaving.value)return;var isOff=dSt.value==='pendingPay'&&dPm.value==='offline';if(isOff){ordersMod.value='confirmPay';return}if(['created','pendingPay','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
+function ordersDoDanger(){if(ordersSaving.value)return;if(dSt.value==='pendingPay'&&dPm.value==='offline'){ordersMod.value='cancel';return}ordersMod.value='lost'}
+var ordersModTitle=computed(()=>{var m={cancel:'确认取消订单',confirmPay:'确认支付',lost:'确认车辆报失',refundConfirm:refundMode.value==='return'?'确认归还车辆':'确认退款'};return m[ordersMod.value]||''});
+var ordersModDesc=computed(()=>{var m={cancel:'确定要取消该订单吗？取消后不可恢复。',confirmPay:'确认为该订单进行线下支付确认吗？',lost:'确定要对该车辆进行报失处理吗？',refundConfirm:'合计退款 ¥'+refundTotal.value.toFixed(2)+'，确定'+(refundMode.value==='return'?'归还车辆':'执行退款')+'吗？'};return m[ordersMod.value]||''});
+var ordersModDanger=computed(()=>ordersMod.value==='cancel'||ordersMod.value==='lost');
+function ordersConfirmMod(){var m=ordersMod.value;ordersMod.value=null;if(m==='cancel')toast('订单已取消','success');if(m==='confirmPay')toast('线下支付确认成功，订单已更新为待取车','success');if(m==='lost')toast('车辆报失已提交，已冻结该订单','success');if(m==='refundConfirm'){showRefund.value=false;toast(refundMode.value==='return'?'车辆已归还！退款已处理':'退款已完成！','success')}}
+var refundMode=ref('return'),rRent=ref(0),rDep=ref(0),rReason=ref('');
+var rRentErr=computed(()=>rRent.value>800),rDepErr=computed(()=>rDep.value>500);
+var refundTotal=computed(()=>{var r=rRent.value||0,d=rDep.value||0;if(r<0)r=0;if(d<0)d=0;if(r>800)r=800;if(d>500)d=500;return r+d});
+function clampRent(){if(rRent.value>800)rRent.value=800;if(rRent.value<0)rRent.value=0}
+function clampDep(){if(rDep.value>500)rDep.value=500;if(rDep.value<0)rDep.value=0}
+function openRefund(mode){refundMode.value=mode;rRent.value=0;rDep.value=0;rReason.value='';showRefund.value=true}
+var refundSaving=ref(false);
+function submitRefund(){if(refundSaving.value)return;refundSaving.value=true;setTimeout(function(){refundSaving.value=false;ordersMod.value='refundConfirm'},400)}
+function ordersOpenFS(){ordersFsStC.value=ordersFsSt.value;ordersFsPayC.value=ordersFsPay.value;ordersFsPayStC.value=ordersFsPaySt.value;ordersFsStartC.value=ordersFsStart.value;ordersFsEndC.value=ordersFsEnd.value;ordersShowFS.value=true}
+function ordersResetFS(){ordersFsStC.value='';ordersFsPayC.value='';ordersFsPayStC.value='';ordersFsStartC.value='';ordersFsEndC.value='';toast('筛选已重置','info')}
+function ordersApplyFS(){ordersFsSt.value=ordersFsStC.value;ordersFsPay.value=ordersFsPayC.value;ordersFsPaySt.value=ordersFsPayStC.value;ordersFsStart.value=ordersFsStartC.value;ordersFsEnd.value=ordersFsEndC.value;ordersShowFS.value=false;toast('筛选已应用','info')}
+
+/* ══ Order Supplementary Docs ══ */
+const orderDocs=ref({});
+const showDocSheet=ref(false);
+const docSheetTab=ref('image');
+const docText=ref('');
+const docImageTypes=[
+{label:'身份证',icon:'camera',color:'#2F6FEB'},
+{label:'驾驶证',icon:'file-text',color:'#17A34A'},
+{label:'合同',icon:'clipboard',color:'#D97706'},
+{label:'其他',icon:'paperclip',color:'#6B6B6B'}
+];
+const showDocCard=computed(()=>dSt.value==='pickup'||dSt.value==='progress');
+const curDocs=computed(()=>{const id=do_.value.id;return orderDocs.value[id]||[]});
+function openDocsPage(){ordersOV.value='docs'}
+function openDocSheet(){docSheetTab.value='image';docText.value='';showDocSheet.value=true}
+function addDocImage(img){
+const id=do_.value.id;if(!orderDocs.value[id])orderDocs.value[id]=[];
+orderDocs.value[id].push({id:Date.now(),type:'image',label:img.label,color:img.color,time:now()});
+showDocSheet.value=false;toast(img.label+' 已添加','success')
+}
+function addDocText(){
+if(!docText.value.trim())return;
+const id=do_.value.id;if(!orderDocs.value[id])orderDocs.value[id]=[];
+orderDocs.value[id].push({id:Date.now(),type:'text',content:docText.value.trim(),time:now()});
+docText.value='';showDocSheet.value=false;toast('文字备注已添加','success')
+}
+function deleteDoc(docId){
+const id=do_.value.id;
+if(orderDocs.value[id]){const idx=orderDocs.value[id].findIndex(d=>d.id===docId);if(idx>=0)orderDocs.value[id].splice(idx,1);toast('已删除','info')}
+}
+
+/* ══ PROFILE ══ */
+const profileOV=ref(null),profileSub=ref(null),profileMod=ref(null);
+function goBack(){if(profileSub.value)profileSub.value=null;else if(profileOV.value)profileOV.value=null}
+const hdrTitle=computed(()=>{const m={store:'门店列表',model:'车型管理',account:'账号管理',pos:'职位管理',cs:'客服信息',config:'订单配置'};const s={mEdit:'编辑车型',aDetail:'账号详情',aAdd:'新增账号',aEdit:'编辑账号',pDetail:'职位详情',pAdd:'新增职位',pEdit:'编辑职位',csEdit:csIdx.value===-1?'新增客服':'编辑客服'};return profileSub.value?(s[profileSub.value]||''):(m[profileOV.value]||'')});
+const hdrAction=computed(()=>{if(profileOV.value==='account')return{label:'新增',fn:()=>openAccAdd()};if(profileOV.value==='cs')return{label:'新增',fn:()=>openCsEdit(-1)};if(profileSub.value==='pDetail')return{label:'新增下级职位',fn:()=>openPosAdd(dp.value.name)};if(profileOV.value==='config')return{label:'保存',fn:saveCfg};return null});
+const curStore=ref('测试门店');
+const menuList=computed(()=>[{id:'store',label:'切换门店',icon:'building-2',sub:curStore.value},{id:'model',label:'车型管理',icon:'bike'},{id:'account',label:'账号管理',icon:'users'},{id:'pos',label:'职位管理',icon:'clock'},{id:'cs',label:'客服信息',icon:'headset'},{id:'config',label:'订单配置',icon:'settings'},{id:'_set',label:'设置',icon:'sliders-horizontal'}]);
+function openMenu(id){if(id==='_set'){toast('设置页面','info');return}profileOV.value=id}
+const stores=ref([{name:'测试门店',addr:''},{name:'望京店',addr:'北京市朝阳区望京SOHO T1'},{name:'陆家嘴店',addr:'上海市浦东新区陆家嘴环路166号'},{name:'天河店',addr:'广州市天河区天河路385号'}]);
+function doSwitch(n){if(n===curStore.value){profileOV.value=null;return}curStore.value=n;profileOV.value=null;toast('已切换至'+n+'，数据已刷新','success')}
+const mQ=ref('');
+const profileModels=ref([{name:'雅迪冠能Q7',count:15,rent:500,deposit:1200,sort:1,time:'2025-01-20 09:00:00'},{name:'雅迪小钢炮',count:8,rent:400,deposit:1000,sort:2,time:'2025-01-19 16:30:00'},{name:'雅迪乐跑版',count:22,rent:600,deposit:1500,sort:3,time:'2025-01-18 14:00:00'}]);
+const mFilter=computed(()=>mQ.value?profileModels.value.filter(m=>m.name.toLowerCase().includes(mQ.value.toLowerCase())):profileModels.value);
+const fm=ref({name:'',rent:0,deposit:0,sort:0});
+function openModelEdit(m){fm.value={...m};profileSub.value='mEdit'}
+var modelSaving=ref(false);
+function saveModel(){if(modelSaving.value)return;if(!fm.value.rent||fm.value.rent<=0){fE.value={rent:'请输入有效月租'};return}if(!fm.value.deposit||fm.value.deposit<=0){fE.value={deposit:'请输入有效押金'};return}modelSaving.value=true;setTimeout(function(){const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{rent:fm.value.rent,deposit:fm.value.deposit,sort:fm.value.sort,time:now()})}profileSub.value=null;fE.value={};toast(fm.value.name+' 已保存','success');modelSaving.value=false},400)}
+const aQ=ref(''),allRoles=['店长','管理员','员工','财务','运维'];
+const accounts=ref([{account:'Manager Wang',name:'Wang Jianguo',code:'+86',phone:'13871893628',email:'wang@test.com',roles:'店长、管理员',remark:'测试账号',status:'启用',created:'2024-10-01 09:00:00'},{account:'Staff Li',name:'Li Ming',code:'+86',phone:'13912341234',email:'li@test.com',roles:'员工',remark:'',status:'启用',created:'2024-10-15 14:30:00'},{account:'Finance Zhang',name:'Zhang Li',code:'+86',phone:'13756785678',email:'zhang@test.com',roles:'财务',remark:'负责结算',status:'启用',created:'2024-11-01 08:00:00'},{account:'Ops Zhao',name:'Zhao Qiang',code:'+86',phone:'13690129012',email:'zhao@test.com',roles:'运维',remark:'',status:'禁用',created:'2024-12-05 10:00:00'}]);
+const aFilter=computed(()=>{const q=aQ.value.toLowerCase();return q?accounts.value.filter(a=>(a.account+a.name+a.phone).toLowerCase().includes(q)):accounts.value});
+const fa=ref({account:'',name:'',code:'+86',phone:'',email:'',roles:[],remark:''});
+const da=ref({});
+const adRows=computed(()=>[{k:'账号',v:da.value.account},{k:'姓名',v:da.value.name},{k:'手机号',v:(da.value.code||'')+' '+(da.value.phone||'')},{k:'邮箱',v:da.value.email},{k:'备注',v:da.value.remark||'—'},{k:'创建时间',v:da.value.created}]);
+function mask(p){if(!p||p.length<11)return p;return p.slice(0,p.length-8)+'****'+p.slice(-4)}
+function togRole(arr,r){const i=arr.indexOf(r);i===-1?arr.push(r):arr.splice(i,1)}
+function openAccDetail(a){da.value={...a};profileSub.value='aDetail'}
+function openAccEdit(a){fa.value={account:a.account,name:a.name,code:a.code,phone:a.phone,email:a.email,roles:a.roles.split('、'),remark:a.remark};profileSub.value='aEdit'}
+function openAccAdd(){fa.value={account:'',name:'',code:'+86',phone:'',email:'',roles:['员工'],remark:''};profileSub.value='aAdd'}
+var accSaving=ref(false);
+function saveAccEdit(){if(accSaving.value)return;if(!vErr({name:fa.value.name,roles:fa.value.roles}))return;accSaving.value=true;setTimeout(function(){const i=accounts.value.findIndex(a=>a.account===fa.value.account);if(i>=0)Object.assign(accounts.value[i],{name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark});profileSub.value=null;fE.value={};toast(fa.value.account+' 已保存','success');accSaving.value=false},400)}
+function saveAccAdd(){if(accSaving.value)return;if(!vErr({account:fa.value.account,name:fa.value.name,roles:fa.value.roles}))return;accSaving.value=true;setTimeout(function(){accounts.value.push({account:fa.value.account,name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark,status:'启用',created:now()});profileSub.value=null;fE.value={};toast(fa.value.account+' 新增成功','success');accSaving.value=false},400)}
+let tgtAcc=null;
+function toggleAcc(a){tgtAcc=a;profileMod.value='toggle'}
+const pQ=ref('');
+const positions=ref([{name:'店长',level:'代理商门店',parent:'—',remark:'门店最高管理职位',created:'2024-10-01 09:00:00'},{name:'管理员',level:'代理商门店',parent:'店长',remark:'协助店长管理',created:'2024-10-01 09:00:00'},{name:'员工',level:'运营门店',parent:'管理员',remark:'日常运营',created:'2024-10-15 14:30:00'}]);
+const pFilter=computed(()=>{const q=pQ.value.toLowerCase();return q?positions.value.filter(p=>p.name.toLowerCase().includes(q)):positions.value});
+const dp=ref({});
+const pdRows=computed(()=>[{k:'职位名称',v:dp.value.name},{k:'门店级别',v:dp.value.level},{k:'上级职位',v:dp.value.parent},{k:'备注',v:dp.value.remark||'—'},{k:'创建时间',v:dp.value.created}]);
+const fp=ref({name:'',level:'代理商门店',parent:'—',remark:''});
+function mkP(){return[{name:'仪表盘',icon:'pie-chart',exp:false,items:[{n:'查看营收数据',c:false},{n:'查看车辆运营',c:false}]},{name:'订单管理',icon:'file-text',exp:false,items:[{n:'查看订单列表',c:false},{n:'查看订单详情',c:false},{n:'取消订单',c:false},{n:'归还车辆',c:false},{n:'退款处理',c:false}]}]}
+function mkPM(){return[{name:'仪表盘',icon:'pie-chart',exp:false,items:[{n:'查看营收数据',c:false},{n:'查看车辆运营',c:false}]},{name:'订单管理',icon:'file-text',exp:false,items:[{n:'查看订单列表',c:false},{n:'查看订单详情',c:false}]}]}
+const pTreeP=ref(mkP()),pTreeM=ref(mkPM());
+function rstPerm(){pTreeP.value=mkP();pTreeM.value=mkPM()}
+function gCb(g){const t=g.items.length,c=g.items.filter(x=>x.c).length;if(c===t)return'on';if(c>0)return'pt';return''}
+function togG(g){const all=g.items.every(x=>x.c);g.items.forEach(x=>x.c=!all);if(!all)g.exp=true}
+function selAll(tree){tree.forEach(g=>{g.items.forEach(c=>c.c=true);g.exp=true})}
+let tgtPos=null;
+function openPosDetail(p){dp.value={...p};pTreeP.value=mkP();pTreeM.value=mkPM();profileSub.value='pDetail'}
+function openPosEdit(p){fp.value={...p};rstPerm();profileSub.value='pEdit'}
+function openPosAdd(parent){fp.value={name:'',level:'代理商门店',parent:parent||'—',remark:''};rstPerm();profileSub.value='pAdd'}
+var posSaving=ref(false);
+function savePos(){if(posSaving.value)return;if(!vErr({name:fp.value.name}))return;posSaving.value=true;setTimeout(function(){const mode=profileSub.value;profileSub.value=null;fE.value={};if(mode==='pEdit'){const i=positions.value.findIndex(p=>p.name===dp.value.name);if(i>=0)Object.assign(positions.value[i],fp.value)}else{positions.value.push({...fp.value,created:now()})}toast(fp.value.name+(mode==='pEdit'?' 已保存':' 新增成功'),'success');posSaving.value=false},400)}
+function delPos(p){tgtPos=p;profileMod.value='delPos'}
+const csList=ref([{phone:'400-800-1234',code:'+86',sh:9,sm:0,eh:21,em:0,remark:'全国统一客服热线'},{phone:'010-56781234',code:'+86',sh:9,sm:0,eh:18,em:0,remark:'北京区域专线'},{phone:'021-68881234',code:'+86',sh:9,sm:0,eh:21,em:0,remark:'上海区域专线'},{phone:'020-38881234',code:'+86',sh:10,sm:0,eh:19,em:0,remark:'广州区域专线'}]);
+const csIdx=ref(-1);
+const fc=ref({phone:'',code:'+86',sh:9,sm:0,eh:21,em:0,remark:''});
+function openCsEdit(i){csIdx.value=i;fc.value=i===-1?{phone:'',code:'+86',sh:9,sm:0,eh:21,em:0,remark:''}:{...csList.value[i]};profileSub.value='csEdit'}
+var csSaving=ref(false);
+function saveCs(){if(csSaving.value)return;if(!vErr({phone:fc.value.phone}))return;if(fc.value.sh>fc.value.eh||(fc.value.sh===fc.value.eh&&fc.value.sm>=fc.value.em)){fE.value={time:'开始时间不能晚于或等于结束时间'};return}csSaving.value=true;setTimeout(function(){if(csIdx.value===-1){csList.value.push({...fc.value})}else{csList.value[csIdx.value]={...fc.value}}profileSub.value=null;fE.value={};toast('客服信息已'+(csIdx.value===-1?'新增':'编辑')+'成功','success');csSaving.value=false},400)}
+let delCsI=-1;
+function delCs(i){delCsI=i;profileMod.value='delCs'}
+const cfg=ref({pre:1,breach:3});
+var cfgSaving=ref(false);
+function saveCfg(){if(cfgSaving.value)return;cfgSaving.value=true;setTimeout(function(){toast('配置已保存：提前'+cfg.value.pre+'天待还车，超期'+cfg.value.breach+'天已违约','success');cfgSaving.value=false},400)}
+const profileMdT=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'确认禁用账号':'确认启用账号';if(profileMod.value==='delPos')return'确认删除职位';if(profileMod.value==='delCs')return'确认删除';return''});
+const profileMdD=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用后该账号将无法登录系统，确定要禁用吗？':'确定要重新启用该账号吗？启用后可正常登录。';if(profileMod.value==='delPos')return'确定要删除 '+((tgtPos&&tgtPos.name)||'')+' 吗？删除后不可恢复。';if(profileMod.value==='delCs')return'确定要删除该客服信息吗？删除后不可恢复。';return''});
+const profileMdDanger=computed(()=>(profileMod.value==='toggle'&&tgtAcc&&tgtAcc.status==='启用')||profileMod.value==='delPos'||profileMod.value==='delCs');
+function profileMdOk(){if(profileMod.value==='toggle'&&tgtAcc){tgtAcc.status=tgtAcc.status==='启用'?'禁用':'启用';toast(tgtAcc.account+' 已'+tgtAcc.status,'success')}if(profileMod.value==='delPos'&&tgtPos){const i=positions.value.findIndex(p=>p.name===tgtPos.name);if(i>=0)positions.value.splice(i,1);toast(tgtPos.name+' 已删除','success')}if(profileMod.value==='delCs'&&delCsI>=0){csList.value.splice(delCsI,1);toast('已删除','success')}profileMod.value=null}
+
+/* ══ Shared Utils ══ */
+function p2(n){return String(n).padStart(2,'0')}
+function now(){const d=new Date();return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes())+':'+p2(d.getSeconds())}
+
+/* ══ Paint & Init ══ */
+function initPillDrag(){document.querySelectorAll('.filter-tabs').forEach(function(t){var d=false,sx,sl;t.addEventListener('mousedown',function(e){d=true;t.style.cursor='grabbing';sx=e.pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('mouseleave',function(){d=false;t.style.cursor='grab'});t.addEventListener('mouseup',function(){d=false;t.style.cursor='grab'});t.addEventListener('mousemove',function(e){if(!d)return;e.preventDefault();t.scrollLeft=sl-(e.pageX-t.offsetLeft-sx)});t.addEventListener('touchstart',function(e){sx=e.touches[0].pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('touchmove',function(e){t.scrollLeft=sl-(e.touches[0].pageX-t.offsetLeft-sx)})})}
+function initPullToRefresh(containerId,indicatorId,setRefreshing){var c=document.getElementById(containerId),i=document.getElementById(indicatorId);if(!c||!i)return;var sy=0,pull=false;c.addEventListener('touchstart',function(e){if(c.scrollTop<=0){sy=e.touches[0].clientY;pull=true}else{pull=false}},{passive:true});c.addEventListener('touchmove',function(e){if(!pull||c.scrollTop>0){pull=false;return}var dy=e.touches[0].clientY-sy;if(dy>0){var off=Math.min(dy*0.4,60);i.style.height=off+'px';i.innerHTML='<span class="ptr-spinner"></span>'+(off>40?'释放刷新':'下拉刷新')+'</div>'}},{passive:true});c.addEventListener('touchend',function(e){if(!pull)return;pull=false;var dy=e.changedTouches[0].clientY-sy;if(dy>60){i.style.height='40px';i.innerHTML='<span class="ptr-spinner"></span>刷新中…';if(setRefreshing)setRefreshing(true);setTimeout(function(){i.style.height='0';i.innerHTML='<span class="ptr-text">下拉刷新</span>';if(setRefreshing)setRefreshing(false)},1200)}else{i.style.height='0'}},{passive:true})}
+function paint(){nextTick(()=>{initPillDrag()})}
+
+/* ══ Init demo docs ══ */
+orderDocs.value['#ORD2025011804']=[
+{id:1,type:'image',label:'身份证',color:'#2F6FEB',time:'2025-01-18 14:30:00'},
+{id:2,type:'text',content:'客户要求额外配备儿童座椅，已安排在取车时提供。',time:'2025-01-18 14:32:00'}
+];
+
+onMounted(()=>{setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;paint();initPullToRefresh('sc-home','ptr-home',function(v){homeRefreshing.value=v});initPullToRefresh('sc-veh','ptr-veh',function(v){vehRefreshing.value=v});initPullToRefresh('sc-ord','ptr-ord',function(v){ordersRefreshing.value=v})},800)});
+watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet],paint);
+onUpdated(paint);
+
+return{luci,tab,toasts,toast,
+homeOV,homeLoading,homeRefreshing,store,bizStats,vehStats,recent,allAlerts,msgs,unread,lvBg,homeOpen,homeClose,readMsg,
+vehOV,vehMod,vehShowModelSheet,vehShowFS,vehLoading,vehRefreshing,locked,pressProgress,lockJustDone,
+vehicles,vehModels,vehQ,vehPill,vehFsModel,vehFsOnline,vehFsModelC,vehFsOnlineC,vehHasF,pills,pillCnt,filtered,
+dv,armed,lost,findLoading,addModel,addVin,addCtrl,modelQ,filteredModels,canSubmit,
+vehModTitle,vehModDesc,vehModDanger,
+vehOpenDetail,vehDoSearch,startPress,endPress,doFind,vehConfirmMod,pickModel,scanVin,doScan,scanning,submitAdd,
+vehOpenFS,vehToggleFSModel,vehToggleFSOnline,vehResetFS,vehApplyFS,sc,bi,bc,
+editCtrl,editModel,editPlate,openVehEdit,saveVehEdit,
+ordersOV,ordersMod,ordersShowFS,showRefund,ordersLoading,ordersRefreshing,ordersQ,searchScope,ordersPill,searchPH,
+orders,allStatus,paySts,quickPills,qCnt,oFiltered,
+ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
+do_,dSt,dPm,showPaid,showVehicle,refundable,showActions,
+primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,
+ordersModTitle,ordersModDesc,ordersModDanger,
+refundMode,rRent,rDep,rReason,rRentErr,rDepErr,refundTotal,
+sl,stg,hasVehicle,ordersOpenDetail,copyId,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,
+openRefund,clampRent,clampDep,submitRefund,refundSaving,
+ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSaving,
+showDocCard,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,
+profileOV,profileSub,profileMod,goBack,hdrTitle,hdrAction,
+curStore,menuList,openMenu,stores,doSwitch,
+mQ,profileModels,mFilter,fm,openModelEdit,saveModel,modelSaving,
+aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,
+pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
+csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,cfg,saveCfg,cfgSaving,p2,
+profileMdT,profileMdD,profileMdDanger,profileMdOk,
+fE,vErr,vClr
+};
+}
+});
+app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
+app.mount('#app');
+</script>
+</body>
+</html>
