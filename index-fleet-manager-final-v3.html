@@ -1161,7 +1161,7 @@ function ordersApplyFS(){ordersFsSt.value=ordersFsStC.value;ordersFsPay.value=or
 const orderDocs=ref({});
 const showDocSheet=ref(false);const docSheetTab=ref('image');const docText=ref('');const docDeleteTarget=ref(null);const docDeleteMod=ref(false);const previewImage=ref(null);
 const docImageTypes=[{label:'身份证',icon:'camera',color:'#2F6FEB'},{label:'驾驶证',icon:'file-text',color:'#17A34A'},{label:'合同',icon:'clipboard',color:'#D97706'},{label:'其他',icon:'paperclip',color:'#6B6B6B'}];
-const showDocCard=computed(()=>dSt.value==='created'||dSt.value==='pendingPay'||dSt.value==='pickup'||dSt.value==='progress');
+const showDocCard=computed(()=>true);
 const canEditDocs=computed(()=>dSt.value==='created'||dSt.value==='pendingPay'||dSt.value==='pickup');
 const curDocs=computed(()=>{const id=do_.value.id;return orderDocs.value[id]||[]});
 function openDocsPage(){ordersOV.value='docs'}
@@ -1241,7 +1241,7 @@ function now(){const d=new Date();return d.getFullYear()+'-'+p2(d.getMonth()+1)+
 /* ══ Paint & Init ══ */
 function initPillDrag(){document.querySelectorAll('.filter-tabs').forEach(function(t){var d=false,sx,sl;t.addEventListener('mousedown',function(e){d=true;t.style.cursor='grabbing';sx=e.pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('mouseleave',function(){d=false;t.style.cursor='grab'});t.addEventListener('mouseup',function(){d=false;t.style.cursor='grab'});t.addEventListener('mousemove',function(e){if(!d)return;e.preventDefault();t.scrollLeft=sl-(e.pageX-t.offsetLeft-sx)});t.addEventListener('touchstart',function(e){sx=e.touches[0].pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('touchmove',function(e){t.scrollLeft=sl-(e.touches[0].pageX-t.offsetLeft-sx)})})}
 function initPullToRefresh(containerId,indicatorId,setRefreshing){var c=document.getElementById(containerId),i=document.getElementById(indicatorId);if(!c||!i)return;var sy=0,pull=false;c.addEventListener('touchstart',function(e){if(c.scrollTop<=0){sy=e.touches[0].clientY;pull=true}else{pull=false}},{passive:true});c.addEventListener('touchmove',function(e){if(!pull||c.scrollTop>0){pull=false;return}var dy=e.touches[0].clientY-sy;if(dy>0){var off=Math.min(dy*0.4,60);i.style.height=off+'px';i.innerHTML='<span class="ptr-spinner"></span>'+(off>40?'释放刷新':'下拉刷新')+'</div>'}},{passive:true});c.addEventListener('touchend',function(e){if(!pull)return;pull=false;var dy=e.changedTouches[0].clientY-sy;if(dy>60){i.style.height='40px';i.innerHTML='<span class="ptr-spinner"></span>刷新中…';if(setRefreshing)setRefreshing(true);setTimeout(function(){i.style.height='0';i.innerHTML='<span class="ptr-text">下拉刷新</span>';if(setRefreshing)setRefreshing(false)},1200)}else{i.style.height='0'}},{passive:true})}
-function paint(){nextTick(()=>{initPillDrag()})}
+function paint(){setTimeout(()=>{initPillDrag()},300)}
 onMounted(()=>{setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;paint();initPullToRefresh('sc-home','ptr-home',function(v){homeRefreshing.value=v});initPullToRefresh('sc-veh','ptr-veh',function(v){vehRefreshing.value=v});initPullToRefresh('sc-ord','ptr-ord',function(v){ordersRefreshing.value=v})},800)});
 watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage],paint);
 onUpdated(paint);
