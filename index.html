@@ -308,7 +308,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div @click.stop="toast('正在呼叫 Wang Wu…','info')" class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[#2F6FEB] cursor-pointer shrink-0 active:bg-[#2F6FEB] active:text-white"><span v-html="luci('phone','w-4 h-4')"></span></div>
 </div>
 <div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" style="background:#ECFDF3;color:#17A34A;border:1px solid #17A34A">在线</span></div>
+<div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><div class="flex items-center gap-2"><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.lost?{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ dv.lost?'已报失':'未报失' }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.online?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#FFFBEB',color:'#D97706',border:'1px solid #D97706'}">{{ dv.online?'在线':'离线' }}</span></div></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">中控编号</div><div class="text-[14px] font-semibold">{{ dv.ctrl }}</div></div></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车型</div><div class="text-[14px] font-semibold">{{ dv.model }}</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车牌号</div><div class="text-[14px] font-semibold">{{ dv.plate }}</div></div></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">电池电量</div><div class="text-[14px] font-semibold" :style="{color:bc(dv.batteryMain)}">主{{ dv.batteryMain }}% / 副{{ dv.batterySub }}%</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车辆状态</div><div class="text-[14px] font-semibold">{{ dv.status }}</div></div></div>
@@ -435,6 +435,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex flex-wrap gap-2">
 <div @click="vehToggleFSOnline(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===true?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">在线</div>
 <div @click="vehToggleFSOnline(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===false?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">离线</div>
+</div>
+</div>
+<div class="mb-4">
+<div class="text-[14px] font-semibold mb-2">报失状态</div>
+<div class="flex flex-wrap gap-2">
+<div @click="vehToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===false?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">未报失</div>
+<div @click="vehToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===true?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">已报失</div>
 </div>
 </div>
 </div>
@@ -1070,19 +1077,19 @@ const vehOV=ref(null),vehMod=ref(null),vehShowModelSheet=ref(false),vehShowFS=re
 const vehLoading=ref(true),vehRefreshing=ref(false);
 const locked=ref(false),pressProgress=ref(0),lockJustDone=ref(false);
 let pressTimer=null,pressStart=0;const PRESS_DURATION=1500;
-const vehicles=ref([{vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30'},{vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15'},{vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00'},{vin:'LSVAU2Z0D00001000',ctrl:'860123456789040',model:'雅迪 Commuter S',plate:'京D·00001',status:'已报失',online:false,batteryMain:0,batterySub:0,time:'2024-10-23 09:00'}]);
-const vehModels=['雅迪 E-Bike Pro','雅迪 City Cruiser','雅迪 Mountain X','雅迪 Commuter S'];
-const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehFsModelC=ref(''),vehFsOnlineC=ref(null);
-const vehHasF=computed(()=>!!vehFsModel.value||vehFsOnline.value!==null);
-const pills=[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'},{l:'已报失',v:'已报失'}];
-const pillCnt=computed(()=>{const m={};vehicles.value.forEach(v=>{m[v.status]=(m[v.status]||0)+1});return{'':vehicles.value.length,'空闲':m['空闲']||0,'占用中':m['占用中']||0,'租用中':m['租用中']||0,'已报失':m['已报失']||0}});
-const filtered=computed(()=>vehicles.value.filter(v=>{if(vehPill.value&&v.status!==vehPill.value)return false;if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true}));
-const dv=ref({vin:'',ctrl:'',model:'',plate:'',status:'',online:true,batteryMain:0,batterySub:0,time:''});
+const vehicles=ref([{vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30',lost:false},{vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15',lost:false},{vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00',lost:true}]);
+const vehModels=['雅迪 E-Bike Pro','雅迪 City Cruiser','雅迪 Mountain X'];
+const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehFsLost=ref(null),vehFsModelC=ref(''),vehFsOnlineC=ref(null),vehFsLostC=ref(null);
+const vehHasF=computed(()=>!!vehFsModel.value||vehFsOnline.value!==null||vehFsLost.value!==null);
+const pills=[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'}];
+const pillCnt=computed(()=>{const m={};vehicles.value.forEach(v=>{m[v.status]=(m[v.status]||0)+1});return{'':vehicles.value.length,'空闲':m['空闲']||0,'占用中':m['占用中']||0,'租用中':m['租用中']||0}});
+const filtered=computed(()=>vehicles.value.filter(v=>{if(vehPill.value&&v.status!==vehPill.value)return false;if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehFsLost.value!==null&&(v.lost||false)!==vehFsLost.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true}));
+const dv=ref({vin:'',ctrl:'',model:'',plate:'',status:'',online:true,batteryMain:0,batterySub:0,time:'',lost:false});
 const armed=ref(false),lost=ref(false),findLoading=ref(false);
 const editCtrl=ref(''),editModel=ref(''),editPlate=ref('');
 function openVehEdit(){editCtrl.value=dv.value.ctrl;editModel.value=dv.value.model;editPlate.value=dv.value.plate;vehOV.value='edit'}
 function saveVehEdit(){dv.value.ctrl=editCtrl.value;dv.value.model=editModel.value;dv.value.plate=editPlate.value;const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);if(idx>=0){vehicles.value[idx].ctrl=editCtrl.value;vehicles.value[idx].model=editModel.value;vehicles.value[idx].plate=editPlate.value}vehOV.value='detail';toast('车辆信息已保存','success')}
-function vehOpenDetail(v){dv.value={...v};armed.value=false;lost.value=false;vehOV.value='detail'}
+function vehOpenDetail(v){dv.value={...v};armed.value=false;lost.value=v.lost||false;vehOV.value='detail'}
 function vehDoSearch(){if(vehQ.value)toast('搜索完成，'+filtered.value.length+' 条结果','info')}
 function startPress(e){e.preventDefault();pressStart=Date.now();pressProgress.value=0;const update=()=>{const now=Date.now();const elapsed=now-pressStart;pressProgress.value=Math.min((elapsed/PRESS_DURATION)*100,100);if(elapsed>=PRESS_DURATION){locked.value=!locked.value;pressProgress.value=0;lockJustDone.value=true;toast(locked.value?'已开锁，车辆已解锁':'已关锁，车辆已锁定','success');setTimeout(()=>lockJustDone.value=false,300);return}pressTimer=requestAnimationFrame(update)};pressTimer=requestAnimationFrame(update)}
 function endPress(){if(pressTimer){cancelAnimationFrame(pressTimer);pressTimer=null}const decay=()=>{if(pressProgress.value>0){pressProgress.value=Math.max(0,pressProgress.value-5);requestAnimationFrame(decay)}};requestAnimationFrame(decay)}
@@ -1098,11 +1105,12 @@ function pickModel(m){if(vehOV.value==='edit'){editModel.value=m}else{addModel.v
 const scanning=ref(false);function scanVin(){scanning.value=true}
 function doScan(){addVin.value='YD'+Math.floor(Math.random()*900000+100000);toast('扫码成功','success');scanning.value=false}
 function submitAdd(){if(!canSubmit.value)return;toast('车辆 '+addVin.value+' 新增成功！','success');vehOV.value=null;addModel.value='';addVin.value='';addCtrl.value=''}
-function vehOpenFS(){vehFsModelC.value=vehFsModel.value;vehFsOnlineC.value=vehFsOnline.value;vehShowFS.value=true}
+function vehOpenFS(){vehFsModelC.value=vehFsModel.value;vehFsOnlineC.value=vehFsOnline.value;vehFsLostC.value=vehFsLost.value;vehShowFS.value=true}
 function vehToggleFSModel(m){vehFsModelC.value=vehFsModelC.value===m?'':m}
 function vehToggleFSOnline(v){vehFsOnlineC.value=vehFsOnlineC.value===v?null:v}
-function vehResetFS(){vehFsModelC.value='';vehFsOnlineC.value=null;toast('筛选已重置','info')}
-function vehApplyFS(){vehFsModel.value=vehFsModelC.value;vehFsOnline.value=vehFsOnlineC.value;vehShowFS.value=false;toast('筛选已应用','info')}
+function vehToggleFSLost(v){vehFsLostC.value=vehFsLostC.value===v?null:v}
+function vehResetFS(){vehFsModelC.value='';vehFsOnlineC.value=null;vehFsLostC.value=null;toast('筛选已重置','info')}
+function vehApplyFS(){vehFsModel.value=vehFsModelC.value;vehFsOnline.value=vehFsOnlineC.value;vehFsLost.value=vehFsLostC.value;vehShowFS.value=false;toast('筛选已应用','info')}
 function sc(s){return s==='空闲'?'#2F6FEB':s==='已报失'?'#DC2626':'#D97706'}
 function bi(n){return n>=80?'battery-full':n>=30?'battery-medium':'battery-low'}
 function bc(n){return n>=80?'#17A34A':n>=30?'#D97706':'#DC2626'}
