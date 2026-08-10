@@ -1,0 +1,734 @@
+{
+  "lang": {
+    "name": "Bahasa Indonesia",
+    "switch": "Bahasa",
+    "appName": "Sewa EV Merchant"
+  },
+  "login": {
+    "field": {
+      "phone": "Telepon",
+      "phonePlaceholder": "Masukkan nomor telepon",
+      "password": "Kata Sandi",
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "code": "Kode Verifikasi",
+      "codePlaceholder": "Masukkan kode"
+    },
+    "btn": {
+      "getCode": "Dapatkan Kode",
+      "submit": "Masuk"
+    },
+    "agreement": "Saya telah membaca dan menyetujui",
+    "agreementPolicy": "Kebijakan Privasi",
+    "switch": {
+      "sms": "Masuk via SMS",
+      "pwd": "Masuk via Kata Sandi",
+      "email": "Masuk via Email",
+      "account": "Masuk via Akun"
+    },
+    "mode": {
+      "email": "Email",
+      "emailPlaceholder": "Masukkan alamat email",
+      "emailCodePlaceholder": "Masukkan kode verifikasi email",
+      "account": "Akun",
+      "accountPlaceholder": "Masukkan akun"
+    },
+    "dial": {
+      "label": "Pilih Kode",
+      "search": "Cari negara atau kode",
+      "empty": "Tidak ada wilayah yang cocok"
+    }
+  },
+  "home": {
+    "pullRefresh": "Tarik untuk menyegarkan",
+    "stats": {
+      "business": "Data Bisnis",
+      "vehicle": "Operasi Kendaraan",
+      "todayRevenue": "Pendapatan Hari Ini",
+      "monthRevenue": "Pendapatan Bulanan",
+      "processingOrders": "Pesanan Diproses",
+      "pendingReturn": "Menunggu Pengembalian",
+      "onlineVehicles": "Kendaraan Online",
+      "offlineVehicles": "Kendaraan Offline"
+    },
+    "alert": {
+      "recent": "Peringatan Terbaru",
+      "viewAll": "Semua",
+      "vinLabel": "VIN: ",
+      "lastTrigger": "Terakhir Dipicu: ",
+      "countSuffix": "kali",
+      "noPending": "Tidak ada peringatan tertunda",
+      "center": "Pusat Peringatan",
+      "detail": "Detail Peringatan",
+      "fields": {
+        "vin": "VIN",
+        "firstTrigger": "Pertama Dipicu",
+        "lastTrigger": "Terakhir Dipicu",
+        "closedTime": "Waktu Ditutup",
+        "closeSource": "Metode Penutupan",
+        "duration": "Durasi",
+        "count": "Jumlah Pemicu",
+        "location": "Lokasi Terakhir",
+        "orderId": "Pesanan Terkait",
+        "ignoreReason": "Alasan Diabaikan"
+      },
+      "actions": {
+        "viewVehicle": "Lihat Kendaraan",
+        "viewVehicleDesc": "Ke detail kendaraan & kontrol",
+        "findVehicle": "Temukan Kendaraan",
+        "findVehicleDesc": "Kirim perintah lampu & klakson"
+      },
+      "history": {
+        "title": "Riwayat",
+        "total": "Total {n} catatan",
+        "empty": "Tidak ada catatan",
+        "expand": "Perluas semua {n} catatan",
+        "collapse": "Ciutkan"
+      },
+      "btn": {
+        "ignore": "Abaikan",
+        "start": "Mulai Proses",
+        "resolve": "Tandai Selesai",
+        "reopen": "Buka Kembali"
+      },
+      "ignore": {
+        "title": "Abaikan Peringatan",
+        "desc": "Pilih alasan mengabaikan. Peringatan yang diabaikan dapat dilihat di tab Diabaikan."
+      },
+      "status": {
+        "all": "Semua",
+        "pending": "Tertunda",
+        "processing": "Diproses",
+        "ignored": "Diabaikan",
+        "closed": "Ditutup"
+      },
+      "type": {
+        "all": "Semua Jenis",
+        "offline": "Kendaraan Offline",
+        "gpsLost": "Sinyal GPS Hilang",
+        "gpsStale": "GPS Kedaluwarsa",
+        "powerOff": "Kurang Daya"
+      },
+      "closeSource": {
+        "auto": "Pemulihan Otomatis",
+        "manual": "Manual"
+      },
+      "level": {
+        "p0": "Tinggi",
+        "p1": "Sedang",
+        "p2": "Rendah"
+      },
+      "timeline": {
+        "opened": "Peringatan Dibuat",
+        "triggered": "Pemicu #{n}",
+        "claimed": "Proses Dimulai",
+        "ignored": "Diabaikan",
+        "ignoredReason": "Diabaikan · ",
+        "reopened": "Dibuka Kembali",
+        "closed": "Ditutup · "
+      },
+      "empty": {
+        "noPending": "Tidak ada peringatan tertunda",
+        "noMatch": "Tidak ada peringatan cocok",
+        "noAlert": "Tidak ada peringatan",
+        "noMatchSub": "Tidak ada peringatan cocok dengan filter",
+        "allNormal": "Semua kendaraan beroperasi normal"
+      },
+      "ignoreReason": {
+        "falseAlarm": "Alarm Palsu",
+        "handled": "Ditangani di Tempat",
+        "duplicate": "Peringatan Duplikat",
+        "other": "Lainnya"
+      }
+    },
+    "toast": {
+      "startProcess": "Proses dimulai",
+      "resolved": "Ditutup",
+      "findVehicle": "Perintah temukan kendaraan terkirim"
+    }
+  },
+  "veh": {
+    "list": {
+      "searchPlaceholder": "Cari VIN",
+      "searchBtn": "Cari",
+      "emptyTitle": "Tidak Ada Kendaraan",
+      "emptyFilter": "Tidak ada kendaraan cocok",
+      "emptyAdd": "Ketuk + untuk menambah kendaraan pertama",
+      "noLocationBadge": "{n} tanpa lokasi, hanya daftar",
+      "clearFilter": "Bersihkan Filter"
+    },
+    "status": {
+      "all": "Semua",
+      "idle": "Idle",
+      "occupied": "Terisi",
+      "rented": "Disewa",
+      "online": "Online",
+      "offline": "Offline",
+      "lost": "Dilaporkan Hilang",
+      "unlost": "Tidak Hilang",
+      "locked": "Terkunci",
+      "sold": "Terjual"
+    },
+    "detail": {
+      "title": "Detail Kendaraan",
+      "edit": "Edit",
+      "vinLabel": "VIN",
+      "vinPrefix": "VIN: ",
+      "ctrlLabel": "No. Ctrl",
+      "ctrlPrefix": "No. Ctrl: ",
+      "modelLabel": "Model",
+      "plateLabel": "No. Polisi",
+      "batteryLabel": "Baterai",
+      "main": "Utama",
+      "sub": "Cadangan",
+      "statusLabel": "Status",
+      "lastSignal": "Sinyal Terakhir: ",
+      "lastSignalLabel": "Sinyal Terakhir",
+      "noPosition": "Tanpa posisi · Ketuk untuk melihat",
+      "historyTrack": "Riwayat Trek",
+      "longPressLock": "Tahan untuk Kunci",
+      "longPressUnlock": "Tahan untuk Buka Kunci",
+      "viewDetail": "Lihat Detail",
+      "locationUnknown": "Lokasi terakhir tidak diketahui",
+      "savedToast": "Info kendaraan disimpan"
+    },
+    "cmd": {
+      "find": "Temukan Kendaraan",
+      "finding": "Mencari...",
+      "arm": "Aktifkan",
+      "disarm": "Nonaktifkan",
+      "lost": "Laporkan Hilang",
+      "unlost": "Batalkan Laporan",
+      "lockSuccess": "Terkunci",
+      "unlockSuccess": "Terbuka",
+      "findSent": "Perintah temukan kendaraan terkirim",
+      "armSuccess": "Diaktifkan",
+      "disarmSuccess": "Dinonaktifkan",
+      "lostSuccess": "Dilaporkan hilang",
+      "unlostSuccess": "Laporan hilang dibatalkan"
+    },
+    "mod": {
+      "armTitle": "Konfirmasi Aktifkan",
+      "armTitleDis": "Konfirmasi Nonaktifkan",
+      "armDesc": "Aktifkan pengaman kendaraan ini?",
+      "armDescDis": "Nonaktifkan pengaman kendaraan ini?",
+      "lostTitle": "Laporkan Hilang",
+      "lostTitleDis": "Batalkan Laporan",
+      "lostDesc": "Laporkan kendaraan ini hilang?",
+      "lostDescDis": "Batalkan laporan hilang?"
+    },
+    "filter": {
+      "title": "Filter Kendaraan",
+      "modelLabel": "Model",
+      "onlineLabel": "Status Online",
+      "lostLabel": "Status Hilang",
+      "reset": "Atur Ulang"
+    },
+    "location": {
+      "title": "Lokasi Kendaraan",
+      "loading": "Memuat lokasi...",
+      "distance": "{n} m dari Anda",
+      "walkTime": "{n} menit jalan kaki"
+    },
+    "track": {
+      "title": "Trek Kendaraan",
+      "startLabel": "Waktu Mulai",
+      "endLabel": "Waktu Akhir",
+      "loading": "Memuat trek...",
+      "emptyTitle": "Tidak ada trek di periode ini",
+      "emptyDesc": "Sesuaikan rentang waktu dan coba lagi",
+      "startPoint": "Mulai",
+      "endPoint": "Akhir",
+      "pickStart": "Pilih Waktu Mulai",
+      "pickEnd": "Pilih Waktu Akhir",
+      "daySuffix": "",
+      "monthSuffix": "",
+      "yearSuffix": "",
+      "hourSuffix": "",
+      "minSuffix": ""
+    },
+    "map": {
+      "noLocation": "Tidak ada data lokasi",
+      "switchToList": "Beralih ke tampilan daftar"
+    },
+    "scan": {
+      "tip": "Sejajarkan kode QR VIN dengan bingkai",
+      "action": "Simulasikan Pemindaian"
+    },
+    "edit": {
+      "title": "Edit Kendaraan",
+      "ctrlPlaceholder": "Masukkan no. ctrl",
+      "modelPlaceholder": "Pilih Model",
+      "platePlaceholder": "Masukkan no. polisi"
+    },
+    "add": {
+      "title": "Tambah Kendaraan",
+      "vinPlaceholder": "Masukkan VIN",
+      "ctrlPlaceholder": "Masukkan no. ctrl",
+      "modelTitle": "Pilih Model",
+      "modelSearch": "Cari model",
+      "submitToast": "Kendaraan ditambahkan"
+    }
+  },
+  "order": {
+    "list": {
+      "searchBtn": "Cari",
+      "scope": {
+        "id": "No. Pesanan",
+        "account": "Akun",
+        "phone": "Telepon",
+        "email": "Email",
+        "vin": "VIN"
+      },
+      "ph": {
+        "id": "Cari no. pesanan",
+        "account": "Cari akun",
+        "phone": "Cari telepon",
+        "email": "Cari email",
+        "vin": "Cari VIN"
+      },
+      "pill": {
+        "all": "Semua",
+        "pickup": "Menunggu Pengambilan",
+        "progress": "Berjalan",
+        "return": "Menunggu Pengembalian",
+        "overdue": "Terlambat"
+      },
+      "emptyTitle": "Tidak ada pesanan",
+      "emptyFilter": "Pesanan tidak ditemukan. Coba sesuaikan pencarian.",
+      "emptyNone": "Belum ada pesanan",
+      "clearFilter": "Bersihkan Filter"
+    },
+    "detail": {
+      "title": "Detail Pesanan",
+      "refundRecords": "Catatan Pengembalian Dana",
+      "field": {
+        "id": "No. Pesanan",
+        "customer": "Pelanggan",
+        "start": "Waktu Mulai",
+        "end": "Waktu Selesai",
+        "plan": "Paket Sewa",
+        "status": "Status",
+        "cancelTime": "Waktu Batal",
+        "rent": "Sewa",
+        "deposit": "Deposit",
+        "paySt": "Pembayaran",
+        "paid": "Jumlah Dibayar",
+        "method": "Metode",
+        "payTime": "Waktu Bayar"
+      },
+      "onlineDot": "Online",
+      "btn": {
+        "cancel": "Batalkan Pesanan",
+        "confirmPay": "Konfirmasi Pembayaran",
+        "return": "Kembalikan Kendaraan",
+        "refund": "Pengembalian Dana",
+        "reportLost": "Lapor Hilang",
+        "unlost": "Batalkan Laporan"
+      }
+    },
+    "status": {
+      "created": "Dibuat",
+      "pendingPay": "Menunggu Bayar",
+      "pickup": "Menunggu Pengambilan",
+      "progress": "Berjalan",
+      "return": "Menunggu Pengembalian",
+      "overdue": "Terlambat",
+      "complete": "Selesai",
+      "cancelled": "Dibatalkan",
+      "breach": "Pelanggaran"
+    },
+    "paySt": {
+      "pending": "Menunggu",
+      "processing": "Memproses",
+      "paid": "Dibayar",
+      "refunding": "Mengembalikan Dana",
+      "partialRefund": "Sebagian Dikembalikan",
+      "fullRefund": "Dikembalikan Penuh"
+    },
+    "payField": {
+      "cancelled": "Dibatalkan",
+      "pending": "Menunggu",
+      "paid": "Dibayar"
+    },
+    "payMethod": {
+      "wechat": "WeChat Pay",
+      "offline": "Luring",
+      "online": "Daring",
+      "none": "—"
+    },
+    "plan": {
+      "monthly": "Bulanan",
+      "monthlyX2": "Bulanan × 2"
+    },
+    "refunds": {
+      "title": "Catatan Pengembalian Dana",
+      "emptyTitle": "Tidak ada catatan",
+      "emptyDesc": "Pesanan ini belum memiliki pengembalian dana",
+      "rent": "Pengembalian Sewa",
+      "deposit": "Pengembalian Deposit",
+      "operator": "Operator",
+      "source": "Sumber",
+      "reason": "Alasan",
+      "status": {
+        "success": "Berhasil",
+        "processing": "Memproses",
+        "failed": "Gagal"
+      },
+      "sourceLabel": {
+        "return": "Pengembalian",
+        "refund": "Pengembalian Dana"
+      }
+    },
+    "docs": {
+      "title": "Dokumen Pelanggan",
+      "count": "{n} item",
+      "empty": "Tidak ada dokumen",
+      "emptyEditable": "Ketuk tombol di bawah untuk menambah",
+      "emptyReadonly": "Hanya lihat di status saat ini",
+      "add": "Tambah Dokumen",
+      "previewClose": "Ketuk di mana saja untuk menutup"
+    },
+    "docSheet": {
+      "title": "Tambah Dokumen",
+      "image": "Foto",
+      "text": "Catatan",
+      "placeholder": "Masukkan catatan...",
+      "confirm": "Konfirmasi",
+      "type": {
+        "idCard": "KTP",
+        "license": "SIM",
+        "contract": "Kontrak",
+        "other": "Lainnya"
+      }
+    },
+    "deleteDoc": {
+      "title": "Konfirmasi Hapus",
+      "desc": "Hapus dokumen ini? Tidak dapat dibatalkan."
+    },
+    "refund": {
+      "title": {
+        "return": "Kembalikan Kendaraan",
+        "refund": "Pengembalian Dana"
+      },
+      "rent": "Pengembalian Sewa",
+      "deposit": "Pengembalian Deposit",
+      "max": "Maks dapat dikembalikan ¥{n}",
+      "reasonLabel": "Alasan",
+      "optional": "(Opsional)",
+      "reasonPh": "Masukkan alasan...",
+      "total": "Total Pengembalian"
+    },
+    "filter": {
+      "title": "Filter Pesanan",
+      "label": {
+        "status": "Status",
+        "channel": "Saluran",
+        "paySt": "Pembayaran",
+        "createTime": "Dibuat"
+      },
+      "channel": {
+        "offline": "Luring"
+      },
+      "to": "ke"
+    },
+    "datePicker": {
+      "start": "Pilih Tanggal Mulai",
+      "end": "Pilih Tanggal Selesai"
+    },
+    "modal": {
+      "title": {
+        "cancel": "Konfirmasi Pembatalan",
+        "confirmPay": "Konfirmasi Pembayaran",
+        "lost": "Konfirmasi Laporan Hilang",
+        "unlost": "Konfirmasi Batal Laporan",
+        "return": "Konfirmasi Pengembalian",
+        "refund": "Konfirmasi Pengembalian Dana"
+      },
+      "desc": {
+        "cancel": "Batalkan pesanan ini? Tidak dapat dibatalkan.",
+        "confirmPay": "Konfirmasi pembayaran luring untuk pesanan ini?",
+        "lost": "Laporkan kendaraan ini hilang?",
+        "unlost": "Batalkan laporan hilang untuk kendaraan ini?",
+        "refundReturn": "Total pengembalian ¥{total}. Konfirmasi pengembalian?",
+        "refundRefund": "Total pengembalian ¥{total}. Konfirmasi pengembalian dana?"
+      }
+    },
+    "toast": {
+      "copied": "No. pesanan disalin",
+      "cancelled": "Pesanan dibatalkan",
+      "paid": "Pembayaran dikonfirmasi",
+      "lost": "Dilaporkan hilang",
+      "unlost": "Laporan hilang dibatalkan",
+      "returned": "Kendaraan dikembalikan",
+      "refunded": "Pengembalian dana selesai"
+    }
+  },
+  "common": {
+    "cancel": "Batal",
+    "confirm": "Konfirmasi",
+    "search": "Cari",
+    "save": "Simpan",
+    "edit": "Edit",
+    "reset": "Atur Ulang",
+    "clearFilter": "Bersihkan Filter",
+    "viewDetail": "Lihat Detail",
+    "pullToRefresh": "Tarik untuk menyegarkan",
+    "ptrRelease": "Lepas untuk menyegarkan",
+    "ptrRefreshing": "Menyegarkan…"
+  },
+  "profile": {
+    "menu": {
+      "store": "Ganti Toko",
+      "model": "Model Kendaraan",
+      "account": "Akun",
+      "position": "Posisi",
+      "cs": "Layanan Pelanggan",
+      "config": "Konfigurasi Pesanan",
+      "settings": "Pengaturan"
+    },
+    "common": {
+      "title": "Aksi Cepat",
+      "info": "Profil",
+      "phone": "Telepon",
+      "email": "Alamat Email",
+      "unbound": "Belum terikat",
+      "pwd": "Kata Sandi",
+      "pwdModify": "Ubah Kata Sandi",
+      "pwdSet": "Atur Kata Sandi",
+      "currentBound": "Terikat saat ini: ",
+      "add": "Tambah",
+      "edit": "Edit",
+      "delete": "Hapus",
+      "createdAt": "Dibuat: ",
+      "updatedAt": "Diperbarui: ",
+      "remark": "Catatan: ",
+      "remarkEmpty": "Catatan: —",
+      "phoneLabel": "Telepon: ",
+      "emailLabel": "Email: ",
+      "nameLabel": "Nama: "
+    },
+    "info": {
+      "avatar": "Avatar",
+      "account": "Akun",
+      "name": "Nama"
+    },
+    "pwdVerify": {
+      "title": "Ubah Kata Sandi",
+      "codePh": "Masukkan kode",
+      "getCode": "Dapatkan Kode",
+      "codeRetry": "Kirim Ulang ({s}d)",
+      "next": "Selanjutnya",
+      "switchEmail": "Verifikasi Email",
+      "switchPhone": "Verifikasi Telepon"
+    },
+    "pwdReset": {
+      "title": "Atur Ulang Kata Sandi",
+      "new": "Kata sandi baru",
+      "newPh": "Masukkan 8-32 karakter",
+      "confirm": "Konfirmasi kata sandi baru",
+      "confirmPh": "Masukkan ulang kata sandi",
+      "submit": "Konfirmasi",
+      "errMismatch": "Kata sandi tidak cocok",
+      "errInvalid": "Kata sandi harus 8-32 karakter alfanumerik",
+      "toastSuccess": "Kata sandi diperbarui"
+    },
+    "pwdFlow": {
+      "errBindFirst": "Silakan ikat nomor telepon atau email terlebih dahulu",
+      "toastUpdated": "Kata sandi diperbarui"
+    },
+    "bindPhone": {
+      "title": "Ikat Telepon",
+      "ph": "Masukkan nomor telepon",
+      "submit": "Ikat",
+      "submitReplace": "Ganti",
+      "toastSuccess": "Telepon terikat",
+      "toastReplace": "Telepon berhasil diganti",
+      "errSame": "Masukkan nomor telepon baru"
+    },
+    "bindEmail": {
+      "title": "Ikat Email",
+      "ph": "Masukkan alamat email",
+      "submit": "Ikat",
+      "submitReplace": "Ganti",
+      "toastSuccess": "Email terikat",
+      "toastReplace": "Email berhasil diganti",
+      "errSame": "Masukkan alamat email baru"
+    },
+    "store": {
+      "title": "Daftar Toko"
+    },
+    "model": {
+      "title": "Model Kendaraan",
+      "search": "Cari nama model",
+      "countUnit": "{n} kendaraan",
+      "rentUnit": "Bulanan ¥{n}",
+      "depositUnit": "Deposit ¥{n}",
+      "emptyTitle": "Tidak ada model",
+      "emptyDesc": "Belum ada data model",
+      "emptySearch": "Model tidak ditemukan",
+      "emptySearchDesc": "Sesuaikan kata kunci",
+      "errRent": "Masukkan sewa bulanan valid",
+      "errDeposit": "Masukkan deposit valid",
+      "editTitle": "Edit Model",
+      "fieldName": "Nama Model",
+      "fieldRent": "Sewa Bulanan (¥)",
+      "fieldDeposit": "Deposit (¥)",
+      "fieldSort": "Urutan",
+      "savedToast": "{name} disimpan"
+    },
+    "account": {
+      "title": "Akun",
+      "search": "Cari akun/nama/telepon",
+      "status": {
+        "enabled": "Aktif",
+        "disabled": "Nonaktif"
+      },
+      "emptyTitle": "Tidak ada akun",
+      "emptyDesc": "Ketuk Tambah di kanan atas",
+      "emptySearch": "Akun tidak ditemukan",
+      "emptySearchDesc": "Sesuaikan kata kunci",
+      "detailTitle": "Detail Akun",
+      "basicInfo": "Info Dasar",
+      "permInfo": "Peran & Izin",
+      "addTitle": "Tambah Akun",
+      "editTitle": "Edit Akun",
+      "fieldAccount": "Akun",
+      "fieldName": "Nama",
+      "fieldPhone": "Telepon",
+      "fieldEmail": "Email",
+      "fieldRoles": "Peran",
+      "fieldStatus": "Status",
+      "phAccount": "Masukkan akun",
+      "phName": "Masukkan nama",
+      "phPhone": "Masukkan telepon",
+      "phEmail": "Masukkan email",
+      "phRemark": "Masukkan catatan",
+      "accState": {
+        "empty": "Akun kosong. Masukkan dulu.",
+        "exist": "Akun ada. Otomatis terisi.",
+        "new": "Akun tidak ada. Akan dibuat."
+      },
+      "savedToast": "{name} disimpan",
+      "addedToast": "{name} ditambahkan",
+      "toggledToast": "{name} {status}",
+      "modalDisable": "Nonaktifkan Akun?",
+      "modalDisableDesc": "Akun tidak dapat masuk setelah dinonaktifkan. Konfirmasi?",
+      "modalEnable": "Aktifkan Akun?",
+      "modalEnableDesc": "Akun dapat masuk setelah diaktifkan. Konfirmasi?",
+      "errAccount": "Masukkan akun",
+      "errName": "Masukkan nama",
+      "errRoles": "Pilih minimal satu peran",
+      "deletedToast": "Dihapus"
+    },
+    "role": {
+      "manager": "Manajer",
+      "admin": "Admin",
+      "staff": "Staf",
+      "finance": "Keuangan",
+      "ops": "Operasional"
+    },
+    "position": {
+      "title": "Posisi",
+      "search": "Cari nama posisi",
+      "level": {
+        "agent": "Toko Agen",
+        "operations": "Toko Operasi"
+      },
+      "parent": "Atasan: ",
+      "emptyTitle": "Tidak ada posisi",
+      "emptyDesc": "Belum ada data posisi",
+      "emptySearch": "Posisi tidak ditemukan",
+      "emptySearchDesc": "Sesuaikan kata kunci",
+      "detailTitle": "Detail Posisi",
+      "addChild": "Tambah Posisi Anak",
+      "fieldName": "Nama Posisi",
+      "fieldLevel": "Level Toko",
+      "fieldParent": "Posisi Atasan",
+      "fieldRemark": "Catatan",
+      "phName": "Masukkan nama posisi",
+      "phRemark": "Masukkan catatan",
+      "addTitle": "Tambah Posisi",
+      "editTitle": "Edit Posisi",
+      "savedToast": "{name} disimpan",
+      "addedToast": "{name} ditambahkan",
+      "deletedToast": "Dihapus",
+      "modalDelete": "Konfirmasi Hapus",
+      "modalDeleteDesc": "Hapus {name}? Tidak dapat dibatalkan.",
+      "modalDeleteFallback": "posisi ini",
+      "errName": "Masukkan nama posisi",
+      "permPlatform": "Izin Platform",
+      "permMerchant": "Izin Merchant",
+      "selAll": "Pilih Semua"
+    },
+    "cs": {
+      "title": "Layanan Pelanggan",
+      "emptyTitle": "Tidak ada info CS",
+      "emptyDesc": "Ketuk Tambah di kanan atas",
+      "serviceTime": "Jam: {start} - {end}",
+      "serviceTimeShort": "Jam: ",
+      "addTitle": "Tambah CS",
+      "editTitle": "Edit CS",
+      "fieldPhone": "Telepon CS",
+      "fieldStart": "Waktu Mulai",
+      "fieldEnd": "Waktu Selesai",
+      "phPhone": "Masukkan telepon CS",
+      "phRemark": "mis. hotline manajer",
+      "savedToast": "Info CS berhasil {action}",
+      "savedAction": {
+        "add": "ditambahkan",
+        "edit": "diperbarui"
+      },
+      "pickerTitle": "Pilih Waktu",
+      "pickerStart": "Pilih waktu mulai",
+      "pickerEnd": "Pilih waktu selesai",
+      "errTime": "Waktu mulai tidak boleh lebih dari atau sama dengan waktu akhir",
+      "pickerSuffix": {
+        "hour": "jam",
+        "min": "mnt"
+      },
+      "modalDeleteDesc": "Hapus info CS ini? Tidak dapat dibatalkan."
+    },
+    "config": {
+      "title": "Konfigurasi Pesanan",
+      "preLabel": "Hari sebelum pesanan berakhir",
+      "preMid": "{n} hari",
+      "preTail": "sampai status berubah ke Menunggu Pengembalian",
+      "preDesc": "Otomatis ubah status ke Menunggu Pengembalian sebelum sewa berakhir",
+      "breachLabel": "Hari setelah pesanan terlambat",
+      "breachMid": "{n} hari",
+      "breachTail": "sampai status berubah ke Pelanggaran (buka kunci dinonaktifkan)",
+      "breachDesc": "Otomatis ubah ke Pelanggaran dan kunci buka kunci jarak jauh",
+      "savedToast": "Konfigurasi disimpan"
+    },
+    "settings": {
+      "title": "Pengaturan",
+      "commonSection": "Umum",
+      "currentVersion": "Versi Saat Ini",
+      "logout": "Keluar"
+    },
+    "logout": {
+      "title": "Konfirmasi Keluar",
+      "desc": "Anda harus masuk lagi setelah keluar.",
+      "toast": "Telah keluar"
+    },
+    "form": {
+      "searchPh": "Cari",
+      "remarkEmpty": "—"
+    },
+    "login2": {
+      "phonePh": "Masukkan telepon",
+      "emailPh": "Masukkan email"
+    },
+    "err": {
+      "agreeFirst": "Baca dan setujui kebijakan privasi dulu",
+      "fillInfo": "Lengkapi info masuk",
+      "loginSuccess": "Berhasil masuk"
+    }
+  },
+  "tab": {
+    "home": "Beranda",
+    "vehicles": "Kendaraan",
+    "orders": "Pesanan",
+    "profile": "Saya"
+  }
+}

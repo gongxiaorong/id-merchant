@@ -1,0 +1,735 @@
+{
+  "lang": {
+    "name": "简体中文",
+    "switch": "切换语言",
+    "appName": "电动车租赁商家端"
+  },
+  "login": {
+    "field": {
+      "phone": "手机号",
+      "phonePlaceholder": "请输入手机号",
+      "password": "密码",
+      "passwordPlaceholder": "请输入密码",
+      "code": "验证码",
+      "codePlaceholder": "请输入验证码"
+    },
+    "btn": {
+      "getCode": "获取验证码",
+      "submit": "登录"
+    },
+    "agreement": "我已阅读并同意",
+    "agreementPolicy": "用户隐私政策",
+    "switch": {
+      "sms": "验证码登录",
+      "pwd": "密码登录",
+      "email": "邮箱登录",
+      "account": "账号登录"
+    },
+    "mode": {
+      "email": "邮箱",
+      "emailPlaceholder": "请输入邮箱地址",
+      "emailCodePlaceholder": "请输入邮箱验证码",
+      "account": "账号",
+      "accountPlaceholder": "请输入账号"
+    },
+    "dial": {
+      "label": "选择区号",
+      "search": "搜索国家/地区或区号",
+      "empty": "未找到匹配地区"
+    }
+  },
+  "home": {
+    "pullRefresh": "下拉刷新",
+    "stats": {
+      "business": "经营数据",
+      "vehicle": "车辆运营",
+      "todayRevenue": "今日收款",
+      "monthRevenue": "本月收款",
+      "processingOrders": "进行中订单",
+      "pendingReturn": "待还订单",
+      "onlineVehicles": "在线车辆",
+      "offlineVehicles": "离线车辆"
+    },
+    "alert": {
+      "recent": "最近告警",
+      "viewAll": "全部",
+      "vinLabel": "车架号：",
+      "lastTrigger": "最近触发：",
+      "countSuffix": "次",
+      "noPending": "暂无待处理告警",
+      "center": "告警中心",
+      "detail": "告警详情",
+      "fields": {
+        "vin": "车架号",
+        "firstTrigger": "首次触发",
+        "lastTrigger": "最近触发",
+        "closedTime": "关闭时间",
+        "closeSource": "关闭方式",
+        "duration": "持续时长",
+        "count": "触发次数",
+        "location": "最后位置",
+        "orderId": "关联订单",
+        "ignoreReason": "忽略原因"
+      },
+      "actions": {
+        "viewVehicle": "查看车辆",
+        "viewVehicleDesc": "跳转车辆详情与车控",
+        "findVehicle": "一键寻车",
+        "findVehicleDesc": "发送闪烁鸣笛指令"
+      },
+      "history": {
+        "title": "历史记录",
+        "total": "共 {n} 条",
+        "empty": "暂无记录",
+        "expand": "展开全部 {n} 条",
+        "collapse": "收起"
+      },
+      "btn": {
+        "ignore": "忽略",
+        "start": "开始处理",
+        "resolve": "标记已处理",
+        "reopen": "重新打开为待处理"
+      },
+      "ignore": {
+        "title": "忽略告警",
+        "desc": "请选择忽略原因，忽略后可从「已忽略」中查看。"
+      },
+      "status": {
+        "all": "全部",
+        "pending": "待处理",
+        "processing": "处理中",
+        "ignored": "已忽略",
+        "closed": "已关闭"
+      },
+      "type": {
+        "all": "全部类型",
+        "offline": "车辆离线",
+        "gpsLost": "GPS信号丢失",
+        "gpsStale": "GPS定位过时",
+        "powerOff": "疑似断电"
+      },
+      "closeSource": {
+        "auto": "自动恢复",
+        "manual": "人工处理"
+      },
+      "level": {
+        "p0": "高",
+        "p1": "中",
+        "p2": "低"
+      },
+      "timeline": {
+        "opened": "告警产生",
+        "triggered": "第 {n} 次触发",
+        "claimed": "开始处理",
+        "ignored": "已忽略",
+        "ignoredReason": "已忽略 · ",
+        "reopened": "重新打开为待处理",
+        "closed": "已关闭 · "
+      },
+      "empty": {
+        "noPending": "暂无待处理告警",
+        "noMatch": "暂无匹配告警",
+        "noAlert": "暂无告警",
+        "noMatchSub": "当前筛选下无匹配告警",
+        "allNormal": "所有车辆运营正常"
+      },
+      "ignoreReason": {
+        "falseAlarm": "误报",
+        "handled": "已现场处理",
+        "duplicate": "重复告警",
+        "other": "其他"
+      }
+    },
+    "toast": {
+      "startProcess": "已开始处理",
+      "resolved": "已关闭",
+      "findVehicle": "寻车指令已发送"
+    }
+  },
+  "veh": {
+    "list": {
+      "searchPlaceholder": "搜索车架号",
+      "searchBtn": "搜索",
+      "emptyTitle": "暂无车辆",
+      "emptyFilter": "未找到匹配的车辆，请调整搜索条件",
+      "emptyAdd": "点击右下角 + 添加第一辆车辆",
+      "noLocationBadge": "{n} 辆无定位，仅列表可见",
+      "clearFilter": "清除筛选"
+    },
+    "status": {
+      "all": "全部",
+      "idle": "空闲",
+      "occupied": "占用中",
+      "rented": "租用中",
+      "online": "在线",
+      "offline": "离线",
+      "lost": "已报失",
+      "unlost": "未报失",
+      "locked": "已锁定",
+      "sold": "已出售"
+    },
+    "detail": {
+      "title": "车辆详情",
+      "edit": "编辑",
+      "vinLabel": "车架号",
+      "vinPrefix": "车架号：",
+      "ctrlLabel": "中控编号",
+      "ctrlPrefix": "中控编号：",
+      "modelLabel": "车型",
+      "plateLabel": "车牌号",
+      "batteryLabel": "电池电量",
+      "main": "主",
+      "sub": "副",
+      "statusLabel": "车辆状态",
+      "lastSignal": "最后信号时间：",
+      "lastSignalLabel": "最后信号时间",
+      "noPosition": "暂无定位 · 点击查看",
+      "historyTrack": "历史轨迹",
+      "longPressLock": "长按关锁",
+      "longPressUnlock": "长按开锁",
+      "viewDetail": "查看详情",
+      "locationUnknown": "最后位置未知",
+      "savedToast": "车辆信息已保存"
+    },
+    "cmd": {
+      "find": "寻车",
+      "finding": "寻车中...",
+      "arm": "设防",
+      "disarm": "解除设防",
+      "lost": "报失",
+      "unlost": "解除报失",
+      "lockSuccess": "已关锁",
+      "unlockSuccess": "已开锁",
+      "findSent": "寻车指令已发送",
+      "armSuccess": "设防成功",
+      "disarmSuccess": "解除设防成功",
+      "lostSuccess": "报失成功",
+      "unlostSuccess": "解除报失成功"
+    },
+    "mod": {
+      "armTitle": "确认设防",
+      "armTitleDis": "确认解除设防",
+      "armDesc": "确定对车辆执行「设防」？",
+      "armDescDis": "确定对车辆执行「解除设防」？",
+      "lostTitle": "确认报失",
+      "lostTitleDis": "确认解除报失",
+      "lostDesc": "确定对车辆执行「报失」？",
+      "lostDescDis": "确定对车辆执行「解除报失」？"
+    },
+    "filter": {
+      "title": "车辆筛选",
+      "modelLabel": "车型",
+      "onlineLabel": "在线状态",
+      "lostLabel": "报失状态",
+      "reset": "重置"
+    },
+    "location": {
+      "title": "车辆位置",
+      "loading": "定位加载中…",
+      "distance": "距您 {n} 米",
+      "walkTime": "步行 {n} 分钟"
+    },
+    "track": {
+      "title": "车辆轨迹",
+      "startLabel": "起始时间",
+      "endLabel": "结束时间",
+      "loading": "轨迹加载中…",
+      "emptyTitle": "该时段暂无轨迹",
+      "emptyDesc": "请调整起止时间后重试",
+      "startPoint": "起",
+      "endPoint": "终",
+      "pickStart": "选择起始时间",
+      "pickEnd": "选择结束时间",
+      "daySuffix": "日",
+      "monthSuffix": "月",
+      "yearSuffix": "年",
+      "hourSuffix": "时",
+      "minSuffix": "分"
+    },
+    "map": {
+      "noLocation": "当前车辆暂无位置信息",
+      "switchToList": "可切换列表查看全部车辆"
+    },
+    "scan": {
+      "tip": "请将车架号二维码对准取景框",
+      "action": "点击模拟扫码"
+    },
+    "edit": {
+      "title": "编辑车辆信息",
+      "ctrlPlaceholder": "请输入中控编号",
+      "modelPlaceholder": "选择型号",
+      "platePlaceholder": "请输入车牌号"
+    },
+    "add": {
+      "title": "新增车辆",
+      "vinPlaceholder": "请输入车架号",
+      "ctrlPlaceholder": "请输入中控编号",
+      "modelTitle": "选择车型",
+      "modelSearch": "搜索车型",
+      "submitToast": "新增成功"
+    }
+  },
+  "order": {
+    "list": {
+      "searchBtn": "搜索",
+      "scope": {
+        "id": "订单号",
+        "account": "账号",
+        "phone": "手机号",
+        "email": "邮箱",
+        "vin": "车架号"
+      },
+      "ph": {
+        "id": "搜索订单号",
+        "account": "搜索账号",
+        "phone": "搜索手机号",
+        "email": "搜索邮箱",
+        "vin": "搜索车架号"
+      },
+      "pill": {
+        "all": "全部",
+        "pickup": "待取车",
+        "progress": "进行中",
+        "return": "待还车",
+        "overdue": "已超期"
+      },
+      "emptyTitle": "暂无订单",
+      "emptyFilter": "未找到匹配的订单，请调整搜索条件",
+      "emptyNone": "还没有订单记录",
+      "clearFilter": "清除筛选"
+    },
+    "detail": {
+      "title": "订单详情",
+      "refundRecords": "退款记录",
+      "field": {
+        "id": "订单编号",
+        "customer": "用户信息",
+        "start": "开始时间",
+        "end": "结束时间",
+        "plan": "租车方案",
+        "status": "当前状态",
+        "cancelTime": "取消时间",
+        "rent": "租金",
+        "deposit": "押金",
+        "paySt": "支付状态",
+        "paid": "实付金额",
+        "method": "支付方式",
+        "payTime": "支付时间"
+      },
+      "onlineDot": "在线",
+      "btn": {
+        "cancel": "取消订单",
+        "confirmPay": "确认支付",
+        "return": "归还车辆",
+        "refund": "退款",
+        "reportLost": "车辆报失",
+        "unlost": "解除报失"
+      }
+    },
+    "status": {
+      "created": "已创建",
+      "pendingPay": "待支付",
+      "pickup": "待取车",
+      "progress": "进行中",
+      "return": "待还车",
+      "overdue": "已超期",
+      "complete": "已完成",
+      "cancelled": "已取消",
+      "breach": "已违约"
+    },
+    "paySt": {
+      "pending": "待支付",
+      "processing": "支付中",
+      "paid": "已支付",
+      "refunding": "退款中",
+      "partialRefund": "部分退款",
+      "fullRefund": "全部退款"
+    },
+    "payField": {
+      "cancelled": "已取消",
+      "pending": "待支付",
+      "paid": "已支付"
+    },
+    "payMethod": {
+      "wechat": "微信支付",
+      "offline": "线下支付",
+      "online": "线上支付",
+      "none": "—"
+    },
+    "plan": {
+      "monthly": "月租",
+      "monthlyX2": "月租 × 2个月"
+    },
+    "refunds": {
+      "title": "退款记录",
+      "emptyTitle": "暂无退款记录",
+      "emptyDesc": "该订单尚未产生退款",
+      "rent": "租金退款",
+      "deposit": "押金退款",
+      "operator": "操作账号",
+      "source": "来源",
+      "reason": "原因",
+      "status": {
+        "success": "退款成功",
+        "processing": "退款中",
+        "failed": "退款失败"
+      },
+      "sourceLabel": {
+        "return": "归还",
+        "refund": "退款"
+      }
+    },
+    "docs": {
+      "title": "客户补充资料",
+      "count": "{n} 份资料",
+      "empty": "暂无补充资料",
+      "emptyEditable": "点击下方按钮添加客户资料",
+      "emptyReadonly": "当前状态仅支持查看",
+      "add": "添加资料",
+      "previewClose": "轻触任意位置关闭"
+    },
+    "docSheet": {
+      "title": "添加补充资料",
+      "image": "拍照上传",
+      "text": "文字备注",
+      "placeholder": "请输入备注内容...",
+      "confirm": "确认",
+      "type": {
+        "idCard": "身份证",
+        "license": "驾驶证",
+        "contract": "合同",
+        "other": "其他"
+      }
+    },
+    "deleteDoc": {
+      "title": "确认删除",
+      "desc": "确定删除该资料？删除后不可恢复。"
+    },
+    "refund": {
+      "title": {
+        "return": "归还车辆",
+        "refund": "退款"
+      },
+      "rent": "租金退款",
+      "deposit": "押金退款",
+      "max": "可退上限 ¥{n}",
+      "reasonLabel": "退款原因",
+      "optional": "（选填）",
+      "reasonPh": "请输入退款原因...",
+      "total": "合计退款"
+    },
+    "filter": {
+      "title": "订单筛选",
+      "label": {
+        "status": "订单状态",
+        "channel": "支付渠道",
+        "paySt": "支付状态",
+        "createTime": "创建时间"
+      },
+      "channel": {
+        "offline": "线下支付"
+      },
+      "to": "至"
+    },
+    "datePicker": {
+      "start": "选择开始日期",
+      "end": "选择结束日期"
+    },
+    "modal": {
+      "title": {
+        "cancel": "确认取消订单",
+        "confirmPay": "确认支付",
+        "lost": "确认报失",
+        "unlost": "确认解除报失",
+        "return": "确认归还车辆",
+        "refund": "确认退款"
+      },
+      "desc": {
+        "cancel": "确定取消该订单？取消后不可恢复。",
+        "confirmPay": "确定为该订单做线下支付确认？",
+        "lost": "确定对订单内车辆执行「报失」？",
+        "unlost": "确定解除订单内车辆的报失状态？",
+        "refundReturn": "合计退款 ¥{total}，确定归还车辆？",
+        "refundRefund": "合计退款 ¥{total}，确定执行退款？"
+      }
+    },
+    "toast": {
+      "copied": "订单编号已复制",
+      "cancelled": "订单已取消",
+      "paid": "支付确认成功",
+      "lost": "报失成功",
+      "unlost": "解除报失成功",
+      "returned": "车辆已归还",
+      "refunded": "退款已完成"
+    }
+  },
+  "common": {
+    "cancel": "取消",
+    "confirm": "确认",
+    "search": "搜索",
+    "save": "保存",
+    "edit": "编辑",
+    "reset": "重置",
+    "clearFilter": "清除筛选",
+    "viewDetail": "查看详情",
+    "pullToRefresh": "下拉刷新",
+    "ptrRelease": "释放刷新",
+    "ptrRefreshing": "刷新中…"
+  },
+  "profile": {
+    "menu": {
+      "store": "切换门店",
+      "model": "车型管理",
+      "account": "账号管理",
+      "position": "职位管理",
+      "cs": "客服信息",
+      "config": "订单配置",
+      "settings": "设置"
+    },
+    "common": {
+      "title": "常用功能",
+      "info": "个人信息",
+      "phone": "手机号",
+      "email": "邮箱地址",
+      "unbound": "未绑定",
+      "pwd": "密码管理",
+      "pwdModify": "修改密码",
+      "pwdSet": "设置密码",
+      "currentBound": "当前已绑定：",
+      "add": "新增",
+      "edit": "编辑",
+      "delete": "删除",
+      "createdAt": "创建时间：",
+      "updatedAt": "最后更新：",
+      "remark": "备注：",
+      "remarkEmpty": "备注：—",
+      "phoneLabel": "手机号：",
+      "emailLabel": "邮箱：",
+      "nameLabel": "姓名："
+    },
+    "info": {
+      "avatar": "头像",
+      "account": "账号",
+      "name": "姓名"
+    },
+    "pwdVerify": {
+      "title": "修改密码",
+      "codePh": "请输入验证码",
+      "getCode": "获取验证码",
+      "codeRetry": "重新获取 ({s}s)",
+      "next": "下一步",
+      "switchEmail": "邮箱验证",
+      "switchPhone": "手机号验证"
+    },
+    "pwdReset": {
+      "title": "重置密码",
+      "new": "新密码",
+      "newPh": "请输入 8-32 位新密码",
+      "confirm": "确认新密码",
+      "confirmPh": "请再次输入新密码",
+      "submit": "确认",
+      "errMismatch": "两次密码输入不一致",
+      "errInvalid": "密码需为 8-32 位字母数字组合",
+      "toastSuccess": "密码已修改"
+    },
+    "pwdFlow": {
+      "errBindFirst": "请先绑定手机号或邮箱",
+      "toastUpdated": "密码已更新"
+    },
+    "bindPhone": {
+      "title": "绑定手机号",
+      "ph": "请输入手机号",
+      "submit": "绑定",
+      "submitReplace": "确认替换",
+      "toastSuccess": "手机号已绑定",
+      "toastReplace": "手机号替换成功",
+      "errSame": "请输入新的手机号"
+    },
+    "bindEmail": {
+      "title": "绑定邮箱",
+      "ph": "请输入邮箱地址",
+      "submit": "绑定",
+      "submitReplace": "确认替换",
+      "toastSuccess": "邮箱已绑定",
+      "toastReplace": "邮箱替换成功",
+      "errSame": "请输入新的邮箱"
+    },
+    "store": {
+      "title": "门店列表"
+    },
+    "model": {
+      "title": "车型管理",
+      "search": "搜索车型名称",
+      "countUnit": "共 {n} 辆",
+      "rentUnit": "月租 ¥{n}",
+      "depositUnit": "押金 ¥{n}",
+      "emptyTitle": "暂无车型",
+      "emptyDesc": "还没有车型数据",
+      "emptySearch": "未找到匹配的车型",
+      "emptySearchDesc": "请调整搜索关键词",
+      "errRent": "请输入有效月租",
+      "errDeposit": "请输入有效押金",
+      "editTitle": "编辑车型",
+      "fieldName": "车型名称",
+      "fieldRent": "月租（¥）",
+      "fieldDeposit": "押金（¥）",
+      "fieldSort": "排序",
+      "savedToast": "{name} 已保存"
+    },
+    "account": {
+      "title": "账号管理",
+      "search": "搜索账号/姓名/手机号",
+      "status": {
+        "enabled": "启用",
+        "disabled": "禁用"
+      },
+      "emptyTitle": "暂无账号",
+      "emptyDesc": "点击右上角新增添加账号",
+      "emptySearch": "未找到匹配的账号",
+      "emptySearchDesc": "请调整搜索关键词",
+      "detailTitle": "账号详情",
+      "basicInfo": "基本信息",
+      "permInfo": "职位与权限",
+      "addTitle": "新增账号",
+      "editTitle": "编辑账号",
+      "fieldAccount": "账号",
+      "fieldName": "姓名",
+      "fieldPhone": "手机号",
+      "fieldEmail": "邮箱",
+      "fieldRoles": "职位",
+      "fieldStatus": "状态",
+      "fieldRemark": "备注",
+      "phAccount": "请输入账号",
+      "phName": "请输入姓名",
+      "phPhone": "请输入手机号",
+      "phEmail": "请输入邮箱",
+      "phRemark": "请输入备注",
+      "accState": {
+        "empty": "账号为空，请先输入账号",
+        "exist": "该账号已存在，已自动回填账号信息",
+        "new": "该账号不存在，将创建新的账号"
+      },
+      "savedToast": "{name} 已保存",
+      "addedToast": "{name} 新增成功",
+      "toggledToast": "{name} 已{status}",
+      "modalDisable": "确认禁用账号",
+      "modalDisableDesc": "禁用后该账号将无法登录，确定禁用？",
+      "modalEnable": "确认启用账号",
+      "modalEnableDesc": "确定重新启用该账号？启用后可正常登录。",
+      "errAccount": "请输入账号",
+      "errName": "请输入姓名",
+      "errRoles": "请至少选择一个职位",
+      "deletedToast": "已删除"
+    },
+    "role": {
+      "manager": "店长",
+      "admin": "管理员",
+      "staff": "员工",
+      "finance": "财务",
+      "ops": "运维"
+    },
+    "position": {
+      "title": "职位管理",
+      "search": "搜索职位名称",
+      "level": {
+        "agent": "代理商门店",
+        "operations": "运营门店"
+      },
+      "parent": "上级职位：",
+      "emptyTitle": "暂无职位",
+      "emptyDesc": "还没有职位数据",
+      "emptySearch": "未找到匹配的职位",
+      "emptySearchDesc": "请调整搜索关键词",
+      "detailTitle": "职位详情",
+      "addChild": "新增下级职位",
+      "fieldName": "职位名称",
+      "fieldLevel": "门店级别",
+      "fieldParent": "上级职位",
+      "fieldRemark": "备注",
+      "phName": "请输入职位名称",
+      "phRemark": "请输入备注",
+      "addTitle": "新增职位",
+      "editTitle": "编辑职位",
+      "savedToast": "{name} 已保存",
+      "addedToast": "{name} 新增成功",
+      "deletedToast": "已删除",
+      "modalDelete": "确认删除",
+      "modalDeleteDesc": "确定删除{name}？删除后不可恢复。",
+      "modalDeleteFallback": "该职位",
+      "errName": "请输入职位名称",
+      "permPlatform": "平台端权限",
+      "permMerchant": "商户端权限",
+      "selAll": "全选"
+    },
+    "cs": {
+      "title": "客服信息",
+      "emptyTitle": "暂无客服信息",
+      "emptyDesc": "点击右上角新增添加客服电话",
+      "serviceTime": "服务时段：{start} - {end}",
+      "serviceTimeShort": "服务时段：",
+      "addTitle": "新增客服",
+      "editTitle": "编辑客服",
+      "fieldPhone": "客服电话",
+      "fieldStart": "开始时间",
+      "fieldEnd": "结束时间",
+      "phPhone": "请输入客服电话号码",
+      "phRemark": "例如 值班经理热线",
+      "savedToast": "客服信息已{action}成功",
+      "savedAction": {
+        "add": "新增",
+        "edit": "编辑"
+      },
+      "pickerTitle": "选择时间",
+      "pickerStart": "选择开始时间",
+      "pickerEnd": "选择结束时间",
+      "errTime": "开始时间不能晚于或等于结束时间",
+      "pickerSuffix": {
+        "hour": "时",
+        "min": "分"
+      },
+      "modalDeleteDesc": "确定删除该客服信息？删除后不可恢复。"
+    },
+    "config": {
+      "title": "订单配置",
+      "preLabel": "订单结束前",
+      "preMid": "{n} 天",
+      "preTail": "天状态变更至待还车",
+      "preDesc": "租期到期前自动转为待还车状态，提醒用户及时归还",
+      "breachLabel": "订单超期",
+      "breachMid": "{n} 天",
+      "breachTail": "天状态变更至已违约且不可开锁",
+      "breachDesc": "到达设定超期天数后订单自动切换为已违约状态，车辆远程开锁功能锁定",
+      "savedToast": "配置已保存"
+    },
+    "settings": {
+      "title": "系统设置",
+      "commonSection": "通用设置",
+      "currentVersion": "当前版本",
+      "logout": "退出登录"
+    },
+    "logout": {
+      "title": "确认退出登录",
+      "desc": "退出后需重新登录。",
+      "toast": "已退出登录"
+    },
+    "form": {
+      "searchPh": "搜索",
+      "remarkEmpty": "—"
+    },
+    "login2": {
+      "phonePh": "请输入手机号",
+      "emailPh": "请输入邮箱地址"
+    },
+    "err": {
+      "agreeFirst": "请先阅读并同意隐私政策",
+      "fillInfo": "请完善登录信息",
+      "loginSuccess": "登录成功"
+    }
+  },
+  "tab": {
+    "home": "首页",
+    "vehicles": "车辆",
+    "orders": "订单",
+    "profile": "我的"
+  }
+}
