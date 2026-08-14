@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>电动车租赁商户管理端 · 首页</title>
 <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
-<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"
+        onerror="this.onerror=null;this.src='https://unpkg.com/vue@3/dist/vue.global.prod.js'"></script>
 <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
 <style>
 /* ══════ GLOBAL: reset · body · stage ══════ */
@@ -35,6 +36,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',sy
 .demo-ops-chip.is-on{background:#2F6FEB;border-color:#2F6FEB;color:#fff}
 .demo-ops-chip.is-on-warn{background:#FFFBEB;border-color:#F59E0B;color:#F59E0B}
 .demo-ops-chip.is-on-ok{background:#F0FDF4;border-color:#17A34A;color:#17A34A}
+.demo-ops-chip.is-on-danger{background:#FEF2F2;border-color:#DC2626;color:#DC2626}
 .demo-ops-section+.demo-ops-section{margin-top:4px;padding-top:12px;border-top:1px solid #E5E5E5}
 .demo-ops-chip.is-off{opacity:.55;text-decoration:line-through}
 .demo-ops-perm-g{margin-bottom:10px}
@@ -1122,9 +1124,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">租金</span><span class="text-[14px] font-semibold">¥{{ do_.amount }}</span></div>
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">押金</span><span class="text-[14px] font-semibold">¥500</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付状态</span><span class="text-[14px] font-semibold" :style="{color:dSt==='pendingPay'||dSt==='created'?'#F59E0B':dSt==='cancelled'?(dCanceledPaid==='paid'?'#17A34A':'#F59E0B'):'#17A34A'}">{{ payStatus }}</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付状态</span><span class="text-[14px] font-semibold" :style="{color:payStatusColor}">{{ payStatus }}</span></div>
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">实付金额</span><span class="text-[14px] font-bold" :class="showPaid?'text-[#17A34A]':'text-[#999]'">{{ showPaid?'¥'+(do_.amount+500):'—' }}</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付方式</span><span class="text-[14px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dSt==='pendingPay'?(dPm==='offline'?'线下支付':'微信支付'):dSt==='cancelled'?(dCanceledPaid==='paid'?'微信支付':'—'):'微信支付' }}</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">支付方式</span><span class="text-[14px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dPaySt==='pending'?(dPm==='offline'?'线下支付':'微信支付'):dSt==='cancelled'?(dCanceledPaid==='paid'?'微信支付':'—'):'微信支付' }}</span></div>
 <div class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">支付时间</span><span class="text-[14px] font-semibold" :class="showPaid?'text-[#111]':'text-[#999]'">{{ showPaid?'2025-01-18 13:30:00':'—' }}</span></div>
 
 </div>
@@ -1148,7 +1150,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-if="showOrderActionsBar" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
 <div class="flex gap-3">
 <button v-if="showPrimaryAction" @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="primaryDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">{{ primaryLabel }}</button>
-<button v-if="dualMode&&showDangerAction" @click="ordersDoDanger" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-colors" :style="dualIsCancel||orderLost?{background:'#E5E5E5',color:'#111'}:{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
+<button v-if="dualMode&&showDangerAction" @click="ordersDoDanger" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-colors" :style="{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
 </div></div>
 </div></transition>
 
@@ -1695,7 +1697,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-card">
-<div class="form-row"><div class="form-label">账号<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.account?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.account" @input="onAccInput" @blur="onAccBlur" placeholder="请输入账号" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.account" class="form-hint text-[#DC2626]">{{ fE.account }}</div><div v-if="!isAccEdit && accState==='EMPTY'" class="form-hint text-[#FAAD14]">账号为空，请先输入账号</div><div v-if="!isAccEdit && accState==='EXIST'" class="form-hint text-[#17A34A]">该账号已存在，已自动回填账号信息</div><div v-if="!isAccEdit && accState==='NEW'" class="form-hint text-[#2F6FEB]">该账号不存在，将创建新的账号</div></div>
+<div class="form-row"><div class="form-label">账号<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.account?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.account" @input="onAccInput" @blur="onAccBlur" placeholder="请输入账号" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.account" class="form-hint text-[#DC2626]">{{ fE.account }}</div></div>
 <div class="form-row"><div class="form-label">姓名<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.name" @input="vClr('name')" placeholder="请输入姓名" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
 <div class="form-row"><div class="form-label">手机号</div>
 <div class="flex items-stretch gap-2.5" :style="accBasicDisabled?{pointerEvents:'none',opacity:.75}:{}">
@@ -1703,14 +1705,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span class="text-[15px] font-semibold tabular-nums text-[#111]">{{ fa.code }}</span>
 <span class="text-[#9CA3AF]" v-html="luci('chevron-down','w-3.5 h-3.5')"></span>
 </div>
-<div class="login-field flex-1 relative flex items-center min-w-0" :style="accBasicDisabled?{background:'#F0F1F3'}:null">
-<input v-model="fa.phone" type="tel" placeholder="请输入手机号" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
+<div class="login-field flex-1 relative flex items-center min-w-0" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.phone?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]">
+<input v-model="fa.phone" type="tel" @input="vClr('phone')" placeholder="请输入手机号" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </div>
-</div></div>
-<div class="form-row"><div class="form-label">邮箱</div><div class="login-field relative flex items-center" :style="accBasicDisabled?{background:'#F0F1F3'}:null"><input v-model="fa.email" type="email" placeholder="请输入邮箱" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
+</div><div v-if="fE.phone" class="form-hint text-[#DC2626]">{{ fE.phone }}</div></div>
+<div class="form-row"><div class="form-label">邮箱</div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.email?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.email" type="email" @input="vClr('email')" placeholder="请输入邮箱" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.email" class="form-hint text-[#DC2626]">{{ fE.email }}</div></div>
 <div class="form-row"><div class="form-label">职位<span class="text-[#DC2626] ml-0.5">*</span></div>
 <div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
-<div class="form-row"><div class="form-label">备注</div><div class="login-field relative flex items-center" :style="accBasicDisabled?{background:'#F0F1F3'}:null"><input v-model="fa.remark" placeholder="请输入备注" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
+<div class="form-row"><div class="form-label">备注</div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.remark?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.remark" @input="vClr('remark')" placeholder="请输入备注" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.remark" class="form-hint text-[#DC2626]">{{ fE.remark }}</div></div>
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveAccAdd" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">保存</button></div>
@@ -1731,14 +1733,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span class="text-[15px] font-semibold tabular-nums text-[#111]">{{ fa.code }}</span>
 <span class="text-[#9CA3AF]" v-html="luci('chevron-down','w-3.5 h-3.5')"></span>
 </div>
-<div class="login-field flex-1 relative flex items-center min-w-0">
-<input v-model="fa.phone" type="tel" placeholder="请输入手机号" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
+<div class="login-field flex-1 relative flex items-center min-w-0" :style="fE.phone?{boxShadow:'inset 0 0 0 1px #DC2626'}:null">
+<input v-model="fa.phone" type="tel" @input="vClr('phone')" placeholder="请输入手机号" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </div>
-</div></div>
-<div class="form-row"><div class="form-label">邮箱</div><div class="login-field relative flex items-center"><input v-model="fa.email" type="email" placeholder="请输入邮箱" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
+</div><div v-if="fE.phone" class="form-hint text-[#DC2626]">{{ fE.phone }}</div></div>
+<div class="form-row"><div class="form-label">邮箱</div><div class="login-field relative flex items-center" :style="fE.email?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.email" type="email" @input="vClr('email')" placeholder="请输入邮箱" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.email" class="form-hint text-[#DC2626]">{{ fE.email }}</div></div>
 <div class="form-row"><div class="form-label">职位<span class="text-[#DC2626] ml-0.5">*</span></div>
 <div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
-<div class="form-row"><div class="form-label">备注</div><div class="login-field relative flex items-center"><input v-model="fa.remark" placeholder="请输入备注" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
+<div class="form-row"><div class="form-label">备注</div><div class="login-field relative flex items-center" :style="fE.remark?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.remark" @input="vClr('remark')" placeholder="请输入备注" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.remark" class="form-hint text-[#DC2626]">{{ fE.remark }}</div></div>
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveAccEdit" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">保存</button></div>
@@ -1756,7 +1758,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition-group v-if="pFilter.length" name="item">
 <div v-for="(p,i) in pFilter" :key="p.name" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
 <div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openPosDetail(p)">
-<div class="flex justify-between items-center mb-1"><span class="text-[15px] font-semibold">{{ p.name }}</span><span class="text-[11px] font-medium px-2 py-0.5 rounded" :style="p.level==='代理商门店'?{background:'#F0F4FF',color:'#5B7FEB'}:{background:'#FFF3E0',color:'#E67E22'}">{{ p.level }}</span></div>
+<div class="flex justify-between items-center mb-1"><span class="text-[15px] font-semibold">{{ p.name }}</span></div>
 <div class="text-xs text-[#999] mb-0.5">上级职位：{{ p.parent }}</div>
 <div class="text-xs text-[#999] mb-0.5">备注：{{ p.remark||'—' }}</div>
 <div class="text-[11px] text-[#999]">创建时间：{{ p.created }}</div>
@@ -1803,7 +1805,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="form-card mb-3">
 <div class="form-row"><div class="form-label">上级职位</div><div class="text-[15px] font-medium text-[#111] py-1">{{ fp.parent }}</div></div>
 <div class="form-row"><div class="form-label">职位名称<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fp.name" @input="vClr('name')" placeholder="请输入职位名称" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
-<div class="form-row"><div class="form-label">门店级别<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center"><select v-model="fp.level" class="w-full pl-3.5 pr-3 py-3.5 text-[15px] cursor-pointer"><option>代理商门店</option><option>运营门店</option></select></div></div>
 <div class="form-row"><div class="form-label">备注</div><div class="login-field relative flex items-center"><input v-model="fp.remark" placeholder="请输入备注" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
 </div>
 <div v-for="sec in [{l:'平台端权限',t:pTreeP},{l:'商户端权限',t:pTreeM}]" :key="sec.l">
@@ -1925,7 +1926,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row">
 <span class="flex-1 text-[15px] font-medium">当前版本</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.1.0</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
+<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.1.1</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
 </div>
 </div>
 </div>
@@ -1958,6 +1959,30 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div @click="profileMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div>
 <div @click="profileMdOk" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="profileMdDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">确认</div>
 </div></div>
+</div></transition>
+
+<!-- ═══ 新增账号成功 · 账号与初始密码 ═══ -->
+<transition name="fd"><div v-if="newAccCred" class="absolute inset-0 z-[810] flex items-center justify-center" style="background:rgba(0,0,0,.45)" data-od-id="acc-cred-modal">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="flex flex-col items-center mb-3">
+<div class="w-12 h-12 rounded-full flex items-center justify-center mb-2" style="background:#ECFDF3"><span v-html="luci('check','w-6 h-6 text-[#17A34A]')"></span></div>
+<div class="text-[17px] font-bold text-center">账号创建成功</div>
+<div class="text-[13px] text-[#999] text-center mt-1 leading-relaxed">请妥善保管以下账号信息</div>
+</div>
+<div class="rounded-xl mb-4" style="background:#F7F8FA;border:1px solid #E5E5E5">
+<div class="flex items-center justify-between px-3.5 py-3" style="border-bottom:1px dashed #E5E5E5">
+<div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">账号</span><span class="text-[15px] font-semibold text-[#111] truncate">{{ newAccCred.account }}</span></div>
+<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('acc')" v-html="luci('copy','w-4 h-4 text-[#2F6FEB] cursor-pointer')"></span>
+</div>
+<div class="flex items-center justify-between px-3.5 py-3">
+<div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">初始密码</span><span class="text-[15px] font-semibold text-[#111] font-mono tracking-wide">{{ newAccCred.password }}</span></div>
+<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('pwd')" v-html="luci('copy','w-4 h-4 text-[#2F6FEB] cursor-pointer')"></span>
+</div>
+</div>
+<div class="flex flex-col gap-2.5">
+<div @click="closeAccCred()" class="py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:#2F6FEB">我知道了</div>
+</div>
+</div>
 </div></transition>
 </template>
 
@@ -2006,7 +2031,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span v-html="luci('check','w-7 h-7 text-[#2F6FEB]')"></span>
 </div>
 <div class="text-[17px] font-bold mb-1">已是最新版本</div>
-<div class="text-[13px] text-[#666]">V1.1.0</div>
+<div class="text-[13px] text-[#666]">V1.1.1</div>
 </div>
 <div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:#2F6FEB">知道了</div>
 </template>
@@ -2088,11 +2113,24 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <div v-for="s in allStatus" :key="'demo-st-'+s.v" class="demo-ops-chip" :class="{'is-on':dSt===s.v}" @click="dSt=s.v">{{ s.l }}</div>
         </div>
       </div>
-      <div v-if="dSt==='pendingPay'" class="demo-ops-section" data-od-id="demo-order-pay">
+      <div v-if="dPaySt==='pending'&&dSt!=='pickup'&&dSt!=='progress'&&dSt!=='return'&&dSt!=='overdue'&&dSt!=='breach'||dSt==='complete'" class="demo-ops-section" data-od-id="demo-order-pay">
         <div class="demo-ops-label">支付方式</div>
         <div class="demo-ops-chips">
           <div class="demo-ops-chip" :class="{'is-on-warn':dPm==='online'}" @click="dPm='online'">线上支付</div>
           <div class="demo-ops-chip" :class="{'is-on-warn':dPm==='offline'}" @click="dPm='offline'">线下支付</div>
+        </div>
+      </div>
+      <div class="demo-ops-section" data-od-id="demo-order-payst" v-if="!['created','pendingPay','pickup','progress','return','overdue','breach','cancelled','complete'].includes(dSt)||(dSt==='complete'&&dPm==='online')">
+        <div class="demo-ops-label">支付状态</div>
+        <div class="demo-ops-chips">
+          <div v-for="p in filteredDemoPaySts" :key="'demo-pst-'+p.v" class="demo-ops-chip" :class="{'is-on':dPaySt===p.v}" @click="dPaySt=p.v">{{ p.l }}</div>
+        </div>
+      </div>
+      <div v-if="['overdue','breach'].includes(dSt)" class="demo-ops-section" data-od-id="demo-order-lost">
+        <div class="demo-ops-label">报失状态</div>
+        <div class="demo-ops-chips">
+          <div class="demo-ops-chip" :class="{'is-on-ok':!orderLost}" @click="orderLost=false">未报失</div>
+          <div class="demo-ops-chip" :class="{'is-on-danger':orderLost}" @click="orderLost=true">已报失</div>
         </div>
       </div>
       <div v-if="dSt==='cancelled'" class="demo-ops-section" data-od-id="demo-order-cancel-pay">
@@ -2120,7 +2158,7 @@ function luci(n,c){if(!window.lucide||!n||!lucide.icons)return'';try{var p=(s)=>
 const toasts=ref([]);let tid=0;
 function toast(msg,type='info'){const id=++tid;toasts.value.push({id,msg,type});setTimeout(()=>{const i=toasts.value.findIndex(t=>t.id===id);if(i>=0)toasts.value.splice(i,1)},2000)}
 const fE=ref({});
-function vErr(o){const e={};for(const[k,v]of Object.entries(o))if(!v||(Array.isArray(v)&&!v.length))e[k]='必填项';Object.assign(fE.value,e);return!Object.keys(e).length}
+function vErr(o,m){const e={};for(const[k,v]of Object.entries(o))if(!v||(Array.isArray(v)&&!v.length))e[k]=(m&&m[k])||'必填项';Object.assign(fE.value,e);return!Object.keys(e).length}
 function vClr(k){if(fE.value[k]){const o={...fE.value};delete o[k];fE.value=o}}
 
 /* ══ HOME ══ */
@@ -2697,24 +2735,25 @@ function setTab(t){
   if(t==='home'&&protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()
 }
 const showPrimaryAction=computed(()=>{
-  const isOff=dSt.value==='pendingPay'&&dPm.value==='offline';
-  if(dSt.value==='created'||(dSt.value==='pendingPay'&&!isOff)||dSt.value==='pickup')return can('order.operate.cancel');
+  const isOff=dPaySt.value==='pending'&&dPm.value==='offline';
+  if(dSt.value==='created'||(dPaySt.value==='pending'&&!isOff)||dSt.value==='pickup')return can('order.operate.cancel');
   if(isOff)return can('order.operate.confirm_payment');
   if(['progress','return','overdue','breach'].includes(dSt.value))return can('order.operate.return_vehicle');
-  if(dSt.value==='complete')return can('order.refund.create');
+  if(dSt.value==='complete'&&dPm.value==='online'&&(dPaySt.value==='paid'||dPaySt.value==='partialRefund'))return can('order.refund.create');
   return false;
 });
 const showDangerAction=computed(()=>{
-  if(dSt.value==='pendingPay'&&dPm.value==='offline')return can('order.operate.cancel');
+  if(dPaySt.value==='pending'&&dPm.value==='offline')return can('order.operate.cancel');
   if(dSt.value==='overdue'||dSt.value==='breach')return orderLost.value?can('order.status.report_unlost'):can('order.status.report_lost');
   return false;
 });
 const showOrderActionsBar=computed(()=>showActions.value&&(showPrimaryAction.value||(dualMode.value&&showDangerAction.value)));
 const ordersQ=ref(''),searchScope=ref('id'),ordersPill=ref('');
 const searchPH=computed(()=>({id:'搜索订单号',account:'搜索账号',phone:'搜索手机号',email:'搜索邮箱',vin:'搜索车架号'})[searchScope.value]||'搜索订单号');
-const orders=ref([{id:'#ORD2026072001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:'月租',amount:350,status:'created',payment:'2c2p',time:'下单 2026-07-20 09:00:00'},{id:'#ORD2026072002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:'月租',amount:560,status:'pendingPay',payment:'offline',time:'下单 2026-07-20 09:30:00'},{id:'#ORD2026072103',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:'月租',amount:280,status:'pickup',payment:'2c2p',time:'预约取车 2026-07-21 09:00:00'},{id:'#ORD2026071804',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:'月租 × 2个月',amount:420,status:'progress',payment:'2c2p',time:'取车 2026-07-18 14:00:00 · 还车 2026-07-20 14:00:00'},{id:'#ORD2026071705',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:'月租',amount:180,status:'return',payment:'offline',time:'取车 2026-07-17 08:00:00 · 应还 2026-07-20 18:00:00'},{id:'#ORD2026071506',vin:'LSVAU2Z0A77777000',customer:'Sun Qi',phone:'+86 13800007777',plan:'月租',amount:150,status:'overdue',payment:'2c2p',time:'取车 2026-07-15 10:00:00 · 应还 2026-07-18 10:00:00'},{id:'#ORD2026071007',vin:'LSVAU2Z0A88888000',customer:'Zhou Ba',phone:'+86 13800008888',plan:'月租 × 2个月',amount:620,status:'complete',payment:'offline',time:'取车 2026-07-10 09:00:00 · 还车 2026-07-22 09:00:00'},{id:'#ORD2026071908',vin:'LSVAU2Z0A99999000',customer:'Zheng Jiu',phone:'+86 13800009999',plan:'月租',amount:300,status:'cancelled',payment:'2c2p',time:'下单 2026-07-19 11:00:00 · 取消 2026-07-19 14:00:00'},{id:'#ORD2026070809',vin:'LSVAU2Z0A10101000',customer:'Wu Shi',phone:'+86 13900001010',plan:'月租',amount:450,status:'breach',payment:'offline',time:'取车 2026-07-08 08:00:00 · 应还 2026-07-10 08:00:00'}]);
+const orders=ref([{id:'#ORD2026072001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:'月租',amount:350,status:'created',payment:'2c2p',time:'下单 2026-07-20 09:00:00'},{id:'#ORD2026072002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:'月租',amount:560,status:'pendingPay',payment:'offline',time:'下单 2026-07-20 09:30:00'},{id:'#ORD2026072103',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:'月租',amount:280,status:'pickup',payment:'2c2p',time:'预约取车 2026-07-21 09:00:00'},{id:'#ORD2026071804',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:'月租 × 2个月',amount:420,status:'progress',payment:'2c2p',time:'取车 2026-07-18 14:00:00 · 还车 2026-07-20 14:00:00'},{id:'#ORD2026071705',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:'月租',amount:180,status:'return',payment:'offline',time:'取车 2026-07-17 08:00:00 · 应还 2026-07-20 18:00:00'},{id:'#ORD2026071506',vin:'LSVAU2Z0A77777000',customer:'Sun Qi',phone:'+86 13800007777',plan:'月租',amount:150,status:'overdue',payment:'2c2p',time:'取车 2026-07-15 10:00:00 · 应还 2026-07-18 10:00:00'},{id:'#ORD2026071007',vin:'LSVAU2Z0A88888000',customer:'Zhou Ba',phone:'+86 13800008888',plan:'月租 × 2个月',amount:620,status:'complete',payment:'offline',time:'取车 2026-07-25 09:00:00 · 还车 2026-07-30 09:00:00'},{id:'#ORD2026071908',vin:'LSVAU2Z0A99999000',customer:'Zheng Jiu',phone:'+86 13800009999',plan:'月租',amount:300,status:'cancelled',payment:'2c2p',time:'下单 2026-07-19 11:00:00 · 取消 2026-07-19 14:00:00'},{id:'#ORD2026070809',vin:'LSVAU2Z0A10101000',customer:'Wu Shi',phone:'+86 13900001010',plan:'月租',amount:450,status:'breach',payment:'offline',time:'取车 2026-07-28 08:00:00 · 应还 2026-07-30 08:00:00'}]);
 const allStatus=[{v:'created',l:'已创建'},{v:'pendingPay',l:'待支付'},{v:'pickup',l:'待取车'},{v:'progress',l:'进行中'},{v:'return',l:'待还车'},{v:'overdue',l:'已超期'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'},{v:'breach',l:'已违约'}];
 const paySts=[{v:'pending',l:'待支付'},{v:'processing',l:'支付中'},{v:'paid',l:'已支付'},{v:'refunding',l:'退款中'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
+const demoPaySts=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
 const quickPills=[{l:'全部',v:''},{l:'待取车',v:'pickup'},{l:'进行中',v:'progress'},{l:'待还车',v:'return'},{l:'已超期',v:'overdue'}];
 const qCnt=computed(()=>{const m={};orders.value.forEach(o=>{m[o.status]=(m[o.status]||0)+1});return{'':orders.value.length,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
 function fmtYmd(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
@@ -2751,24 +2790,26 @@ const oFiltered=computed(()=>orders.value.filter(o=>{if(ordersFsSt.value&&o.stat
 function sl(s){var m={created:'已创建',pendingPay:'待支付',pickup:'待取车',progress:'进行中','return':'待还车',overdue:'已超期',complete:'已完成',cancelled:'已取消',breach:'已违约'};return m[s]||s}
 function stg(s){var m={created:{background:'#F0F4FF',color:'#5B7FEB',border:'1px solid #5B7FEB'},pendingPay:{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'},pickup:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},progress:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},'return':{background:'#FFF3E0',color:'#E67E22',border:'1px solid #E67E22'},overdue:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'},complete:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'},cancelled:{background:'#F6F7F9',color:'#BBB',border:'1px solid #DDD'},breach:{background:'#FEE2E2',color:'#991B1B',border:'1px solid #991B1B'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
 var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
-var dSt=ref(''),dPm=ref('online'),dCanceledPaid=ref('paid');
-var payStatus=computed(()=>{if(dSt.value==='cancelled')return'已取消';if(dSt.value==='pendingPay'||dSt.value==='created')return'待支付';return'已支付'});
+var dSt=ref(''),dPm=ref('online'),dCanceledPaid=ref('paid'),dPaySt=ref('paid');
+var filteredDemoPaySts=computed(()=>{if(['created','pendingPay'].includes(dSt.value))return[{v:'pending',l:'待支付'}];if(dSt.value==='complete')return[{v:'paid',l:'已支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];return demoPaySts});
+var payStatus=computed(()=>{var m={pending:'待支付',processing:'支付中',paid:'已支付',refunding:'退款中',partialRefund:'部分退款',fullRefund:'全部退款'};return m[dPaySt.value]||'已支付'});
+var payStatusColor=computed(()=>{var m={pending:'#F59E0B',processing:'#F59E0B',paid:'#17A34A',refunding:'#F59E0B',partialRefund:'#E67E22',fullRefund:'#999'};return m[dPaySt.value]||'#17A34A'});
 var showPaid=computed(()=>vehSts.concat(['pickup']).indexOf(dSt.value)!==-1||(dSt.value==='cancelled'&&dCanceledPaid.value==='paid'));
 var showVehicle=computed(()=>vehSts.indexOf(dSt.value)!==-1);
 var refundable=computed(()=>dSt.value==='complete'||dSt.value==='cancelled');
 var showActions=computed(()=>dSt.value!=='cancelled');
-var primaryLabel=computed(()=>{var isOff=dSt.value==='pendingPay'&&dPm.value==='offline';var m={created:'取消订单',pendingPay:isOff?'确认支付':'取消订单',pickup:'取消订单',progress:'归还车辆','return':'归还车辆',overdue:'归还车辆',complete:'退款',breach:'归还车辆'};return m[dSt.value]||''});
-var primaryDanger=computed(()=>['created','pendingPay','pickup'].indexOf(dSt.value)!==-1&&!(dSt.value==='pendingPay'&&dPm.value==='offline'));
-var dualMode=computed(()=>dSt.value==='overdue'||dSt.value==='breach'||(dSt.value==='pendingPay'&&dPm.value==='offline'));
-var dualIsCancel=computed(()=>dSt.value==='pendingPay'&&dPm.value==='offline');
+var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return'确认支付';var m={created:'取消订单',pendingPay:'取消订单',pickup:'取消订单',progress:'归还车辆','return':'归还车辆',overdue:'归还车辆',complete:'退款',breach:'归还车辆'};return m[dSt.value]||''});
+var primaryDanger=computed(()=>['created','pendingPay','pickup'].indexOf(dSt.value)!==-1&&!(dPaySt.value==='pending'&&dPm.value==='offline'));
+var dualMode=computed(()=>dSt.value==='overdue'||dSt.value==='breach'||(dPaySt.value==='pending'&&dPm.value==='offline'));
+var dualIsCancel=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline');
 var orderLost=ref(false);
-var dangerLabel=computed(()=>{if(dSt.value==='pendingPay'&&dPm.value==='offline')return'取消订单';return orderLost.value?'解除报失':'车辆报失'});
-function ordersOpenDetail(o){if(!can('order.detail')){deny();return}do_.value=o;dSt.value=o.status;dPm.value='online';dCanceledPaid.value='paid';orderLost.value=!!o.lost;ordersOV.value='detail'}
+var dangerLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return'取消订单';return orderLost.value?'解除报失':'车辆报失'});
+function ordersOpenDetail(o){if(!can('order.detail')){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='pendingPay'||o.status==='created'?'pending':'paid');dPm.value='online';dCanceledPaid.value='paid';orderLost.value=!!o.lost;ordersOV.value='detail'}
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
 function ordersDoSearch(){}
 var ordersSaving=ref(false);
-function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dSt.value==='pendingPay'&&dPm.value==='offline';if(isOff){ordersMod.value='confirmPay';return}if(['created','pendingPay','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
-function ordersDoDanger(){if(ordersSaving.value)return;if(!showDangerAction.value){deny();return}if(dSt.value==='pendingPay'&&dPm.value==='offline'){ordersMod.value='cancel';return}ordersMod.value='lost'}
+function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dPaySt.value==='pending'&&dPm.value==='offline';if(isOff){ordersMod.value='confirmPay';return}if(['created','pendingPay','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
+function ordersDoDanger(){if(ordersSaving.value)return;if(!showDangerAction.value){deny();return}if(dPaySt.value==='pending'&&dPm.value==='offline'){ordersMod.value='cancel';return}ordersMod.value='lost'}
 var ordersModTitle=computed(()=>{var m={cancel:'确认取消订单',confirmPay:'确认支付',lost:orderLost.value?'确认解除报失':'确认报失',refundConfirm:refundMode.value==='return'?'确认归还车辆':'确认退款'};return m[ordersMod.value]||''});
 var ordersModDesc=computed(()=>{var m={cancel:'确定取消该订单？取消后不可恢复。',confirmPay:'确定为该订单做线下支付确认？',lost:orderLost.value?'确定解除订单内车辆的报失状态？':'确定对订单内车辆执行「报失」？',refundConfirm:'合计退款 ¥'+refundTotal.value.toFixed(2)+'，确定'+(refundMode.value==='return'?'归还车辆':'执行退款')+'？'};return m[ordersMod.value]||''});
 var ordersModDanger=computed(()=>ordersMod.value==='cancel'||(ordersMod.value==='lost'&&!orderLost.value));
@@ -3154,15 +3195,21 @@ function onAccInput(){accState.value='INITIAL';vClr('account');}
 function openAccEdit(a){if(!can('account.edit')){deny();return}fa.value={account:a.account,name:a.name,code:a.code,phone:a.phone,email:a.email,roles:a.roles.split('、'),remark:a.remark};accState.value='INITIAL';profileSub.value='aEdit'}
 function openAccAdd(){if(!can('account.add')){deny();return}fa.value={account:'',name:'',code:'+86',phone:'',email:'',roles:['员工'],remark:''};accState.value='EMPTY';profileSub.value='aAdd'}
 var accSaving=ref(false);
-function saveAccEdit(){if(accSaving.value)return;if(!vErr({name:fa.value.name,roles:fa.value.roles}))return;accSaving.value=true;setTimeout(function(){const i=accounts.value.findIndex(a=>a.account===fa.value.account);if(i>=0)Object.assign(accounts.value[i],{name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark});profileSub.value=null;fE.value={};toast(fa.value.account+' 已保存','success');accSaving.value=false},400)}
-function saveAccAdd(){if(accSaving.value)return;if(!vErr({account:fa.value.account,name:fa.value.name,roles:fa.value.roles}))return;accSaving.value=true;setTimeout(function(){accounts.value.push({account:fa.value.account,name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark,status:'启用',created:now()});profileSub.value=null;fE.value={};toast(fa.value.account+' 新增成功','success');accSaving.value=false},400)}
+function accValid(isEdit){var e={};var a=fa.value;if(!isEdit){if(!a.account)e.account='请输入账号';else if(!/^[a-zA-Z]/.test(a.account)||a.account.length<4||a.account.length>20)e.account='账号必须以字母开头，长度为4-20位';}if(!a.name)e.name='请输入姓名';else if(a.name.length>64)e.name='姓名不能超过64个字符';if(a.phone&&!/^\d+$/.test(a.phone))e.phone='手机号仅允许数字';if(a.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email))e.email='邮箱格式不正确';if(a.remark&&a.remark.length>64)e.remark='备注不能超过64个字符';if(!a.roles||!a.roles.length)e.roles='请选择职位';var o={...fE.value};['account','name','phone','email','remark','roles'].forEach(function(k){delete o[k]});Object.assign(o,e);fE.value=o;return Object.keys(e).length===0;}
+function saveAccEdit(){if(accSaving.value)return;if(!accValid(true))return;accSaving.value=true;setTimeout(function(){const i=accounts.value.findIndex(a=>a.account===fa.value.account);if(i>=0)Object.assign(accounts.value[i],{name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark});profileSub.value=null;fE.value={};toast(fa.value.account+' 已保存','success');accSaving.value=false},400)}
+// 新增账号成功后弹窗展示账号 + 系统生成的初始密码
+var newAccCred=ref(null);
+function genPwd(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';let s='';for(let i=0;i<8;i++)s+=chars.charAt(Math.floor(Math.random()*chars.length));return s}
+function saveAccAdd(){if(accSaving.value)return;if(!accValid(false))return;accSaving.value=true;setTimeout(function(){const pwd=genPwd();accounts.value.push({account:fa.value.account,name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark,status:'启用',created:now()});fE.value={};accSaving.value=false;newAccCred.value={account:fa.value.account,password:pwd}},400)}
+function closeAccCred(){newAccCred.value=null;profileSub.value=null;fE.value={}}
+function copyCred(t){if(!newAccCred.value)return;const c=newAccCred.value;const txt=t==='acc'?c.account:t==='pwd'?c.password:(c.account+' '+c.password);navigator.clipboard.writeText(txt);toast(t==='acc'?'账号已复制':t==='pwd'?'密码已复制':'账号和密码已复制','success')}
 let tgtAcc=null;function toggleAcc(a){const need=a.status==='启用'?'account.status.disable':'account.status.enable';if(!can(need)){deny();return}tgtAcc=a;profileMod.value='toggle'}
 const pQ=ref('');
-const positions=ref([{name:'店长',level:'代理商门店',parent:'—',remark:'门店最高管理职位',created:'2024-10-01 09:00:00'},{name:'管理员',level:'代理商门店',parent:'店长',remark:'协助店长管理',created:'2024-10-01 09:00:00'},{name:'员工',level:'运营门店',parent:'管理员',remark:'日常运营',created:'2024-10-15 14:30:00'}]);
+const positions=ref([{name:'店长',parent:'—',level:'门店',remark:'门店最高管理职位',created:'2024-10-01 09:00:00'},{name:'管理员',parent:'店长',level:'门店',remark:'协助店长管理',created:'2024-10-01 09:00:00'},{name:'员工',parent:'管理员',level:'门店',remark:'日常运营',created:'2024-10-15 14:30:00'}]);
 const pFilter=computed(()=>{const q=pQ.value.toLowerCase();return q?positions.value.filter(p=>p.name.toLowerCase().includes(q)):positions.value});
 const dp=ref({});
-const pdRows=computed(()=>[{k:'职位名称',v:dp.value.name},{k:'门店级别',v:dp.value.level},{k:'上级职位',v:dp.value.parent},{k:'备注',v:dp.value.remark||'—'},{k:'创建时间',v:dp.value.created}]);
-const fp=ref({name:'',level:'代理商门店',parent:'—',remark:''});
+const pdRows=computed(()=>[{k:'职位名称',v:dp.value.name},{k:'门店级别',v:dp.value.level||'—'},{k:'上级职位',v:dp.value.parent},{k:'备注',v:dp.value.remark||'—'},{k:'创建时间',v:dp.value.created}]);
+const fp=ref({name:'',parent:'—',remark:''});
 function mkP(){return[{name:'仪表盘',icon:'pie-chart',exp:false,items:[{n:'查看营收数据',c:false},{n:'查看车辆运营',c:false}]},{name:'订单管理',icon:'file-text',exp:false,items:[{n:'查看订单列表',c:false},{n:'查看订单详情',c:false},{n:'取消订单',c:false},{n:'归还车辆',c:false},{n:'退款处理',c:false}]}]}
 function mkPM(){return[{name:'仪表盘',icon:'pie-chart',exp:false,items:[{n:'查看营收数据',c:false},{n:'查看车辆运营',c:false}]},{name:'订单管理',icon:'file-text',exp:false,items:[{n:'查看订单列表',c:false},{n:'查看订单详情',c:false}]}]}
 const pTreeP=ref(mkP()),pTreeM=ref(mkPM());function rstPerm(){pTreeP.value=mkP();pTreeM.value=mkPM()}
@@ -3172,7 +3219,7 @@ function selAll(tree){tree.forEach(g=>{g.items.forEach(c=>c.c=true);g.exp=true})
 let tgtPos=null;
 function openPosDetail(p){if(!can('position.detail')){deny();return}dp.value={...p};pTreeP.value=mkP();pTreeM.value=mkPM();profileSub.value='pDetail'}
 function openPosEdit(p){if(!can('position.edit')){deny();return}fp.value={...p};rstPerm();profileSub.value='pEdit'}
-function openPosAdd(parent){if(!can('position.add')){deny();return}fp.value={name:'',level:'代理商门店',parent:parent||'—',remark:''};rstPerm();profileSub.value='pAdd'}
+function openPosAdd(parent){if(!can('position.add')){deny();return}fp.value={name:'',parent:parent||'—',remark:''};rstPerm();profileSub.value='pAdd'}
 var posSaving=ref(false);
 function savePos(){if(posSaving.value)return;if(!vErr({name:fp.value.name}))return;posSaving.value=true;setTimeout(function(){const mode=profileSub.value;profileSub.value=null;fE.value={};if(mode==='pEdit'){const i=positions.value.findIndex(p=>p.name===dp.value.name);if(i>=0)Object.assign(positions.value[i],fp.value)}else{positions.value.push({...fp.value,created:now()})}toast(fp.value.name+(mode==='pEdit'?' 已保存':' 新增成功'),'success');posSaving.value=false},400)}
 function delPos(p){if(!can('position.delete')){deny();return}tgtPos=p;profileMod.value='delPos'}
@@ -3242,6 +3289,7 @@ function paint(){setTimeout(()=>{initPillDrag()},300)}
 watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){setTimeout(()=>checkVersion(),100)}});
 onMounted(()=>{setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;paint();initPullToRefresh('sc-home','ptr-home',function(v){homeRefreshing.value=v});initPullToRefresh('sc-veh','ptr-veh',function(v){vehRefreshing.value=v});initPullToRefresh('sc-ord','ptr-ord',function(v){ordersRefreshing.value=v});if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)});
 watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited],paint);
+watch(dSt,(v)=>{if(v==='created'||v==='pendingPay')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
 onUpdated(paint);
 
 return{luci,tab,setTab,toasts,toast,can,deny,perms,permGroups,togglePerm,setPermGroup,setAllPerms,
@@ -3262,11 +3310,11 @@ trackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins
 openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,onTrackWheelScroll,
 trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,
 ordersOV,ordersMod,ordersShowFS,showRefund,ordersLoading,ordersRefreshing,ordersQ,searchScope,ordersPill,searchPH,
-orders,allStatus,paySts,quickPills,qCnt,oFiltered,
+orders,allStatus,paySts,demoPaySts,filteredDemoPaySts,quickPills,qCnt,oFiltered,
 ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
-do_,dSt,dPm,dCanceledPaid,demoOpsActive,payStatus,showPaid,showVehicle,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,
+do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid,showVehicle,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,
 primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,orderLost,
 ordersModTitle,ordersModDesc,ordersModDanger,
 refundMode,rRent,rDep,rReason,rRentErr,rDepErr,refundTotal,
@@ -3279,7 +3327,7 @@ sl,stg,hasVehicle,ordersOpenDetail,copyId,ordersDoSearch,ordersDoPrimary,ordersD
   curStore,menuList,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,doLogout,
 mQ,profileModels,mFilter,fm,openModelEdit,saveModel,modelSaving,
-aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,
+aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
 csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,cfg,saveCfg,cfgSaving,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
