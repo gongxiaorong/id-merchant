@@ -1126,7 +1126,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.deposit') }}</span><span class="text-[14px] font-semibold">¥500</span></div>
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.payStatus') }}</span><span class="text-[14px] font-semibold" :style="{color:payStatusColor}">{{ payStatus }}</span></div>
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.paidAmount') }}</span><span class="text-[14px] font-bold" :class="showPaid?'text-[#17A34A]':'text-[#999]'">{{ showPaid?'¥'+(do_.amount+500):'—' }}</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.payment') }}</span><span class="text-[14px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dPaySt==='pending'?(dPm==='offline'?t('orders.paymentOffline'):t('orders.paymentWechat')):dSt==='cancelled'?(dCanceledPaid==='paid'?t('orders.paymentWechat'):'—'):t('orders.paymentWechat') }}</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.payment') }}</span><span class="text-[14px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dPaySt==='pending'?(dPm==='offline'?t('orders.paymentOffline'):t('orders.payment2c2p')):dSt==='cancelled'?(dCanceledPaid==='paid'?t('orders.payment2c2p'):'—'):t('orders.payment2c2p') }}</span></div>
 <div class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">{{ t('orders.payTime') }}</span><span class="text-[14px] font-semibold" :class="showPaid?'text-[#111]':'text-[#999]'">{{ showPaid?'2025-01-18 13:30:00':'—' }}</span></div>
 
 </div>
@@ -1236,8 +1236,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-3 mb-2" style="background:#CCC;border-radius:3px"></div>
 <div class="text-center text-[18px] font-bold pb-4 px-5 shrink-0">{{ refundMode==='return'?t('orders.actionReturn'):t('orders.refund') }}</div>
 <div class="flex-1 overflow-y-auto px-5 hid" style="max-height:45vh">
-<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundRent') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalRentLimit') }}</div></div>
-<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundDeposit') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalDepositLimit') }}</div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundRent') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalRentLimit',{amount:'¥800.00'}) }}</div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundDeposit') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalDepositLimit',{amount:'¥500.00'}) }}</div></div>
 <div class="mb-4"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundReason') }} <span class="font-normal text-[#999]">{{ t('orders.refundModalOptional') }}</span></div><textarea v-model="rReason" :placeholder="t('orders.refundModalReasonPlaceholder')" class="w-full p-4 rounded-xl text-[15px] outline-none resize-none min-h-[90px] transition-colors" style="border:1px solid #E5E5E5;font-family:inherit"></textarea></div>
 </div>
 <div class="px-5 pb-8 shrink-0"><div class="flex justify-between items-center py-3" style="border-top:1px solid #E5E5E5"><span class="text-[16px] font-semibold">{{ t('orders.refundModalTotalLabel') }}</span><span class="text-[22px] font-bold text-[#17A34A]">¥{{ refundTotal.toFixed(2) }}</span></div><button @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#17A34A">{{ t('orders.refundModalConfirm') }}</button></div>
@@ -2031,7 +2031,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span v-html="luci('check','w-7 h-7 text-[#2F6FEB]')"></span>
 </div>
 <div class="text-[17px] font-bold mb-1">{{ t('version.latest') }}</div>
-<div class="text-[13px] text-[#666]">{{ t('version.versionLabel') }}</div>
+<div class="text-[13px] text-[#666]">{{ 'V1.1.1' }}</div>
 </div>
 <div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:#2F6FEB">{{ t('version.gotIt') }}</div>
 </template>
@@ -2528,11 +2528,11 @@ function fmtTrackTime(t){return t.year+'-'+p2(t.month)+'-'+p2(t.day)+' '+p2(t.ho
 const trackStartLabel=computed(()=>fmtTrackTime(trackStart.value));
 const trackEndLabel=computed(()=>fmtTrackTime(trackEnd.value));
 const trackPois=[
-  {label:t('vehicles.trackPoiRegulator'),x:22,y:28},
-  {label:t('vehicles.trackPoiCommercial'),x:68,y:24},
-  {label:t('vehicles.trackPoiParking'),x:48,y:52},
-  {label:t('vehicles.trackPoiRestaurant'),x:74,y:62},
-  {label:t('vehicles.trackPoiOffice'),x:30,y:70}
+  {label:'监管机构',x:22,y:28},
+  {label:'商业楼宇',x:68,y:24},
+  {label:'停车场',x:48,y:52},
+  {label:'餐饮门店',x:74,y:62},
+  {label:'写字楼',x:30,y:70}
 ];
 function trackToXY(pts){
   if(!pts.length)return[];
@@ -2862,12 +2862,12 @@ function submitRefund(){if(refundSaving.value)return;refundSaving.value=true;set
  /* ══ Order Refund Records ══ */
   const orderRefunds=ref({
 '#ORD2026072001':[
-{id:1002,mode:'refund',rent:200,deposit:0,total:200,status:'success',source:t('orders.refundSourcePlatform'),channel:t('orders.refundChannelOnline'),reason:t('orders.refundReasonEarlyReturn'),operator:'Staff Li',time:'2026-07-21 14:30:00'},
+{id:1002,mode:'refund',rent:200,deposit:0,total:200,status:'success',source:t('orders.refundSourcePlatform'),channel:t('orders.refundChannelOnline'),reason:'提前还车，租金差额退还',operator:'Staff Li',time:'2026-07-21 14:30:00'},
      {id:1004,mode:'refund',rent:0,deposit:300,total:300,status:'failed',source:t('orders.refundSourceUser'),channel:t('orders.refundChannelOnline'),reason:t('orders.refundReasonUserDeposit'),operator:t('orders.refundSourcePlatform'),time:'2026-07-20 11:05:00'},
-     {id:1005,mode:'refund',rent:80,deposit:0,total:80,status:'processing',source:t('orders.refundSourceMerchant'),channel:t('orders.refundChannelOffline'),reason:t('orders.refundReasonMerchantDiscount'),operator:'Merchant Shop A',time:'2026-07-19 16:42:00'}
+     {id:1005,mode:'refund',rent:80,deposit:0,total:80,status:'processing',source:t('orders.refundSourceMerchant'),channel:t('orders.refundChannelOffline'),reason:'商户优惠减免补偿',operator:'Merchant Shop A',time:'2026-07-19 16:42:00'}
     ],
     '#ORD2026071908':[
-{id:1003,mode:'refund',rent:300,deposit:500,total:800,status:'success',source:t('orders.refundSourcePlatform'),channel:t('orders.refundChannelOnline'),reason:t('orders.refundReasonUserCancel'),operator:t('orders.refundCurrentOperator'),time:'2026-07-19 15:30:00'}
+{id:1003,mode:'refund',rent:300,deposit:500,total:800,status:'success',source:t('orders.refundSourcePlatform'),channel:t('orders.refundChannelOnline'),reason:'用户取消订单',operator:t('orders.refundCurrentOperator'),time:'2026-07-19 15:30:00'}
     ]
   });
  const curRefunds=computed(()=>{
@@ -3025,7 +3025,7 @@ hasNewVersion.value=false; updating.value=false; return
 updating.value=false;
 hasNewVersion.value=true;
 latestVersion.value='1.2.0';
-updateDesc.value=t('version.updateDesc')
+updateDesc.value='- 优化车辆定位精度\n- 新增版本检测功能\n- 修复已知问题'
 }
 function goUpdate(){
 updating.value=1;
@@ -3244,7 +3244,7 @@ const pQ=ref('');
 const positions=ref([]);
 const pFilter=computed(()=>{const q=pQ.value.toLowerCase();return q?positions.value.filter(p=>p.name.toLowerCase().includes(q)):positions.value});
 const dp=ref({});
-const pdRows=computed(()=>[{k:t('profile.positionName'),v:dp.value.name},{k:t('profile.storeLevel'),v:dp.value.level||'—'},{k:t('profile.parentPosition'),v:dp.value.parent},{k:t('profile.remark'),v:dp.value.remark||'—'},{k:t('profile.createdTime'),v:dp.value.created}]);
+const pdRows=computed(()=>[{k:t('profile.positionName'),v:dp.value.name},{k:t('profile.storeLevelLabel'),v:dp.value.level||'—'},{k:t('profile.parentPosition'),v:dp.value.parent},{k:t('profile.remark'),v:dp.value.remark||'—'},{k:t('profile.createdTime'),v:dp.value.created}]);
 const fp=ref({name:'',parent:'—',remark:''});
 function mkP(){return[{name:t('perm.permDashboard'),icon:'pie-chart',exp:false,items:[{n:t('perm.permViewRevenue'),c:false},{n:t('perm.permViewVehOps'),c:false}]},{name:t('perm.permOrderManage'),icon:'file-text',exp:false,items:[{n:t('perm.permViewOrderList'),c:false},{n:t('perm.permViewOrderDetail'),c:false},{n:t('perm.permCancelOrder'),c:false},{n:t('perm.permReturnVehicle'),c:false},{n:t('perm.permRefundProcess'),c:false}]}]}
 function mkPM(){return[{name:t('perm.permDashboard'),icon:'pie-chart',exp:false,items:[{n:t('perm.permViewRevenue'),c:false},{n:t('perm.permViewVehOps'),c:false}]},{name:t('perm.permOrderManage'),icon:'file-text',exp:false,items:[{n:t('perm.permViewOrderList'),c:false},{n:t('perm.permViewOrderDetail'),c:false}]}]}
@@ -3353,9 +3353,9 @@ function initI18nData(){
     {account:'Ops Zhao',name:'Zhao Qiang',code:'+86',phone:'13690129012',email:'zhao@test.com',roles:'运维',remark:'',status:t('profile.statusDisabled'),created:'2024-12-05 10:00:00'}
   ];
   positions.value=[
-    {name:'店长',parent:'—',level:t('profile.storeLevel'),remark:'门店最高管理职位',created:'2024-10-01 09:00:00'},
-    {name:'管理员',parent:'店长',level:t('profile.storeLevel'),remark:'协助店长管理',created:'2024-10-01 09:00:00'},
-    {name:'员工',parent:'管理员',level:t('profile.storeLevel'),remark:'日常运营',created:'2024-10-15 14:30:00'}
+    {name:'店长',parent:'—',level:t('profile.storeLevel.operated'),remark:'门店最高管理职位',created:'2024-10-01 09:00:00'},
+    {name:'管理员',parent:'店长',level:t('profile.storeLevel.agent'),remark:'协助店长管理',created:'2024-10-01 09:00:00'},
+    {name:'员工',parent:'管理员',level:t('profile.storeLevel.agent'),remark:'日常运营',created:'2024-10-15 14:30:00'}
   ];
   csList.value=[
     {phone:'400-800-1234',code:'+86',sh:9,sm:0,eh:21,em:0,remark:'全国统一客服热线'},
