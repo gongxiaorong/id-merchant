@@ -296,7 +296,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <!-- 协议 -->
 <div class="flex items-start gap-2.5 mb-4 cursor-pointer" @click="loginAgree=!loginAgree" data-od-id="login-agree">
 <div class="login-cb" :class="loginAgree?'on':''"><span v-if="loginAgree" v-html="luci('check','w-3 h-3')"></span></div>
-<div class="text-[12px] text-[#6B6B6B] leading-relaxed">{{ t('login.agreePrefix') }}<span class="login-link" @click.stop>{{ t('login.privacyPolicy') }}</span></div>
+<div class="text-[12px] text-[#6B6B6B] leading-relaxed">{{ t('login.agreePrefix') }}<span class="login-link" @click.stop>《{{ t('login.privacyPolicy') }}》</span></div>
 </div>
 
 <div class="form-actions">
