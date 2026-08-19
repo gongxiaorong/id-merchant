@@ -378,7 +378,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 <div class="ptr-indicator" id="ptr-home"><span class="ptr-text">{{ t('common.pullToRefresh') }}</span></div>
-<div id="sc-home" class="flex-1 overflow-y-auto min-h-0 px-5 pt-4 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div id="sc-home" @vue:mounted="()=>initPullToRefresh('sc-home','ptr-home',refreshHome)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-4 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
 
 <template v-if="can('home.stats.business')">
 <div class="flex justify-between items-center mb-3"><span class="text-[15px] font-semibold">{{ t('home.bizStatsTitle') }}</span></div>
@@ -452,10 +452,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div class="bg-white shrink-0 px-4 pt-3 pb-2" style="border-bottom:1px solid #E5E5E5">
 <div class="filter-tabs mb-2.5">
-<div v-for="t in alertStatusTabs" :key="t.v" class="filter-pill" :style="alertStatus===t.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}" @click="alertStatus=t.v">{{ t.l }}<span v-if="t.v!==''&&alertStatusCnt[t.v]" class="ml-1 text-[11px] opacity-80">{{ alertStatusCnt[t.v] }}</span></div>
+<div v-for="t in alertStatusTabs" :key="t.v" class="filter-pill" :style="alertStatus===t.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}" @click="alertStatus=t.v">{{ t.l }}<span v-if="t.v!==''&&alertStatusCnt[t.v]" class="ml-1 text-[11px] opacity-80">{{ alertStatusCnt[t.v] }}</span></div>
 </div>
 <div class="filter-tabs">
-<div v-for="t in alertTypeTabs" :key="t.v" class="filter-pill" :style="alertType===t.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}" @click="alertType=t.v">{{ t.l }}</div>
+<div v-for="t in alertTypeTabs" :key="t.v" class="filter-pill" :style="alertType===t.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}" @click="alertType=t.v">{{ t.l }}</div>
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
@@ -561,7 +561,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <button v-if="true" data-od-id="alert-btn-resolve" @click="resolveAlert" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none" style="background:var(--accent)">{{ t('alert.actionResolve') }}</button>
  </div>
   <div v-else-if="curAlert.status==='ignored'" class="absolute bottom-0 left-0 right-0 bg-white px-5 pt-3 pb-8" style="border-top:1px solid #E5E5E5">
-  <button data-od-id="alert-btn-reopen" @click="reopenAlert" class="w-full py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer" style="background:#fff;color:var(--link);border:1px solid var(--accent)">{{ t('alert.timelineReopened') }}</button>
+  <button data-od-id="alert-btn-reopen" @click="reopenAlert" class="w-full py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer" style="background:#fff;color:var(--link);border:1px solid var(--link)">{{ t('alert.timelineReopened') }}</button>
   </div>
  </div>
 </transition>
@@ -571,7 +571,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[17px] font-bold text-center">{{ t('alert.ignoreTitle') }}</div>
 <div class="text-[14px] text-[#666] text-center leading-relaxed">{{ t('alert.ignoreDesc') }}</div>
 <div class="flex flex-col gap-2">
-<div v-for="r in ignoreReasons" :key="r" @click="ignoreReasonPick=r" class="px-3 py-2.5 rounded-xl text-[13px] font-medium cursor-pointer transition-all" :style="ignoreReasonPick===r?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}">{{ ignoreReasonLabel(r) }}</div>
+<div v-for="r in ignoreReasons" :key="r" @click="ignoreReasonPick=r" class="px-3 py-2.5 rounded-xl text-[13px] font-medium cursor-pointer transition-all" :style="ignoreReasonPick===r?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}">{{ ignoreReasonLabel(r) }}</div>
 </div>
 <div class="flex gap-3 mt-1">
 <div @click="alertMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;background:#fff">{{ t('common.cancel') }}</div>
@@ -593,7 +593,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <input v-model="vehQ" type="text" :placeholder="t('vehicles.searchPlaceholder')" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="vehDoSearch">
 <div @click="vehDoSearch" class="h-8 px-3 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-xs font-semibold">{{ t('common.search') }}</div>
 </div>
-<div @click="vehOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="vehHasF?{background:'#EBF1FD',border:'1px solid var(--accent)',color:'var(--accent)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}">
+<div @click="vehOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="vehHasF?{background:'#FFF3E0',border:'1px solid var(--accent-2)',color:'var(--accent-2)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}">
 <span v-html="luci('sliders-horizontal','w-4 h-4')"></span>
 </div>
 </div>
@@ -605,7 +605,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
  <div class="ptr-indicator" id="ptr-veh"><span class="ptr-text">{{ t('common.pullToRefresh') }}</span></div>
  <template v-if="vehView==='list'">
- <div id="sc-veh" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+ <div id="sc-veh" @vue:mounted="()=>initPullToRefresh('sc-veh','ptr-veh',refreshVeh)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
  <template v-if="vehLoading">
  <div v-for="n in 3" :key="'sk-'+n" class="bg-white rounded-xl p-4 mb-2.5" style="border:1px solid #E5E5E5">
  <div class="skeleton h-4 rounded w-28 mb-3"></div>
@@ -644,7 +644,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  </div>
  <div class="text-[15px] font-semibold text-[#111] mb-1">{{ t('vehicles.noResults') }}</div>
  <div class="text-[13px] text-[#999] mb-4">{{ vehQ||vehHasF ? t('vehicles.noMatchingAdjustSearch') : t('vehicles.addFirstVehicle') }}</div>
- <div v-if="vehQ||vehHasF" @click="vehQ='';vehResetFS()" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--accent)">{{ t('vehicles.clearFilter') }}</div>
+ <div v-if="vehQ||vehHasF" @click="vehQ='';vehResetFS()" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">{{ t('vehicles.clearFilter') }}</div>
  </div>
  </div>
  </template>
@@ -712,7 +712,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-if="vehOV==='detail'" v-swipe-close="()=>vehOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('vehicles.detail') }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('vehicles.detail') }}</div>
 <span v-if="can('vehicle.edit')" class="text-[14px] font-medium text-[var(--link)] cursor-pointer shrink-0 active:opacity-70" @click="openVehEdit">{{ t('vehicles.actionEdit') }}</span>
 <span v-else class="min-w-[2rem] shrink-0" aria-hidden="true"></span>
 </div>
@@ -1035,21 +1035,21 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="mb-5">
 <div class="text-[14px] font-semibold mb-2">{{ t('vehicles.filterModel') }}</div>
 <div class="flex flex-wrap gap-2">
-<div v-for="m in vehModels" :key="m.name" @click="vehToggleFSModel(m.name)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsModelC===m.name?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ m.name }}</div>
+<div v-for="m in vehModels" :key="m.name" @click="vehToggleFSModel(m.name)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsModelC===m.name?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ m.name }}</div>
 </div>
 </div>
 <div class="mb-4">
 <div class="text-[14px] font-semibold mb-2">{{ t('vehicles.filterOnline') }}</div>
 <div class="flex flex-wrap gap-2">
-<div @click="vehToggleFSOnline(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOnline') }}</div>
-<div @click="vehToggleFSOnline(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOffline') }}</div>
+<div @click="vehToggleFSOnline(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOnline') }}</div>
+<div @click="vehToggleFSOnline(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOffline') }}</div>
 </div>
 </div>
 <div class="mb-4">
 <div class="text-[14px] font-semibold mb-2">{{ t('vehicles.filterLostLabel') }}</div>
 <div class="flex flex-wrap gap-2">
-<div @click="vehToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterNotLost') }}</div>
-<div @click="vehToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterLost') }}</div>
+<div @click="vehToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterNotLost') }}</div>
+<div @click="vehToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterLost') }}</div>
 </div>
 </div>
 </div>
@@ -1080,20 +1080,33 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="pt-14 px-5 pb-2 bg-white shrink-0">
 <div class="flex gap-2 items-center">
 <div class="flex-1 rounded-full flex items-center py-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:6px;padding-right:4px">
-<select v-model="searchScope" class="bg-transparent border-none text-[11px] font-medium outline-none pl-1.5 pr-3 mr-1 cursor-pointer appearance-none truncate" style="border-right:1px solid #E5E5E5;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%2710%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23999%27 stroke-width=%272%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 0 center;max-width:62px"><option value="id">{{ t('orders.searchId') }}</option><option value="account">{{ t('orders.searchAccount') }}</option><option value="phone">{{ t('orders.searchPhone') }}</option><option value="email">{{ t('orders.searchEmail') }}</option><option value="vin">{{ t('orders.searchVin') }}</option></select>
+<div class="relative shrink-0" @click.stop>
+<button @click="searchScopeOpen=!searchScopeOpen" type="button" class="flex items-center gap-1.5 text-[12px] font-medium text-[#333] bg-transparent border-0 outline-none pl-2 pr-2.5 mr-1.5 py-1 cursor-pointer transition-colors hover:bg-[#EFEFF1]" style="border-right:1px solid #E5E5E5">
+<span class="truncate max-w-[60px]">{{ searchScopeLabel }}</span>
+<svg class="w-3 h-3 text-[#999] transition-transform" :class="searchScopeOpen?'rotate-180':''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+</button>
+<div v-if="searchScopeOpen" @click.stop class="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#EEE] py-1 z-50 min-w-[100px]">
+<div v-for="opt in searchScopeOpts" :key="opt.v" @click="setSearchScope(opt.v)" class="px-3 py-2 text-[12px] cursor-pointer hover:bg-[#F6F7F9]" :style="opt.v===searchScope?{color:'var(--link)',fontWeight:600,background:'#EBF1FD'}:{color:'#333'}">{{ opt.l }}</div>
+</div>
+</div>
 <input v-model="ordersQ" type="text" :placeholder="searchPH" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="ordersDoSearch">
 <div @click="ordersDoSearch" class="h-7 px-2.5 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-[11px] font-semibold">{{ t('common.search') }}</div>
 </div>
-<div @click="ordersOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="ordersHasF?{background:'#EBF1FD',border:'1px solid var(--accent)',color:'var(--accent)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
+<div @click="ordersOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="ordersHasF?{background:'#FFF3E0',border:'1px solid var(--accent-2)',color:'var(--accent-2)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
 </div>
 </div>
-<div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
+<div class="bg-white shrink-0" style="padding:0 20px 6px">
+<div class="flex" id="orderTypeRow">
+<div v-for="tp in typePills" :key="'ty-'+tp.v" @click="ordersSetType(tp.v)" class="flex-1 text-center py-3 text-[14px] cursor-pointer select-none relative" :style="ordersTypeActive(tp)?{color:'var(--accent)',fontWeight:600}:{color:'#666'}">{{ tp.l }}<span v-if="ordersTypeActive(tp)" class="absolute left-1/2 -translate-x-1/2 bottom-0 w-8 h-[3px] rounded-full" style="background:var(--accent)"></span></div>
+</div>
+</div>
+<div class="bg-white shrink-0" style="padding:12px 20px 10px">
 <div class="filter-tabs" id="orderPillRow">
 <div v-for="p in quickPills" :key="p.v" @click="ordersSetPill(p.v)" class="filter-pill" :style="ordersPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ qCnt[p.v]||0 }})</div>
 </div>
 </div>
 <div class="ptr-indicator" id="ptr-ord"><span class="ptr-text">{{ t('common.pullToRefresh') }}</span></div>
-<div id="sc-ord" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hid" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div id="sc-ord" @vue:mounted="()=>initPullToRefresh('sc-ord','ptr-ord',refreshOrd)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
 <template v-if="ordersLoading">
 <div v-for="n in 4" :key="'sk'+n" class="bg-white rounded-xl p-4 mb-2.5" style="border:1px solid #E5E5E5">
 <div class="flex justify-between items-center mb-2"><div class="sk h-3.5 rounded w-28"></div><div class="sk h-5 rounded w-12"></div></div>
@@ -1103,47 +1116,53 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </template>
 <template v-else-if="oFiltered.length">
-<div v-for="(o,i) in oFiltered" :key="o.id" @click="ordersOpenDetail(o)" class="bg-white rounded-xl p-4 mb-2.5 cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms',opacity:o.status==='cancelled'?0.6:1}">
-<div class="flex justify-between items-center mb-2"><span class="text-[13px] font-semibold">{{ o.id }}</span><span class="text-[12px] font-semibold" :style="stg(o.status)">{{ sl(o.status) }}</span></div>
-<div v-if="hasVehicle(o.status)" class="flex justify-between items-center text-[12px] mb-1"><span class="text-[#666]">{{ o.vin }}</span><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
-<div v-else class="flex justify-end items-center text-[12px] mb-1"><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
-<div class="flex justify-between items-center text-[12px] mb-2"><span class="text-[#666]">{{ o.customer }} {{ o.phone }}</span><span class="text-[#999]">{{ o.plan }}</span></div>
-<div class="text-[11px] text-[#999]">{{ o.time }}</div>
+<div v-for="(o,i) in oFiltered" :key="o.id" @click="ordersOpenDetail(o)" class="bg-white rounded-2xl p-4 mb-3 cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04)',transitionDelay:i*50+'ms'}">
+<div class="flex items-center justify-between mb-2"><span class="text-[13px] font-semibold text-[#333] truncate pr-2">{{ o.id }}</span><span class="text-[14px] font-semibold" :style="stg(o.status)">{{ sl(o.status) }}</span></div>
+<div class="flex gap-3 mb-2">
+<div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0" style="background:#F6F7F9"><span v-html="luci('bike','w-8 h-8 text-[#666]')"></span></div>
+<div class="flex-1 min-w-0">
+<div class="text-[14px] font-medium text-[#1A1A1A] truncate">{{ o.customer }} {{ o.phone }}</div>
+<div class="text-[12px] text-[#999] mt-0.5 truncate">{{ o.item }}</div>
+<div class="text-[12px] text-[#999] mt-0.5 flex gap-1"><span class="text-[#bbb]">{{ t('orders.createdTime') }}:</span><span class="truncate">{{ o.created }}</span></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2" style="border-top:1px solid #F0F0F0"><span class="text-[12px] text-[#999]">{{ o.plan }}</span><span class="text-[15px] font-semibold shrink-0" style="color:#FF6A00">{{ fmtRp(o.amount) }}</span></div>
 </div>
 </template>
 <div v-else class="flex flex-col items-center justify-center py-16">
 <div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('file-text','w-8 h-8 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ t('orders.noResults') }}</div>
 <div class="text-[13px] text-[#999] mb-4">{{ ordersQ||ordersHasF ? t('orders.noResultsFiltered') : t('orders.noResultsSub') }}</div>
-<div v-if="ordersQ||ordersHasF" @click="ordersClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--accent)">{{ t('common.reset') }}</div>
+<div v-if="ordersQ||ordersHasF" @click="ordersClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">{{ t('common.reset') }}</div>
 </div>
 </div>
 </template>
 <transition name="sl"><div v-if="ordersOV==='detail'" v-swipe-close="()=>ordersOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('orders.detail') }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('orders.detail') }}</div>
 <span v-if="refundable&&can('order.refund.list')" class="text-[14px] font-medium cursor-pointer shrink-0 text-[var(--link)] active:opacity-70 min-w-[4rem] text-right" @click="openRefundRecords">{{ t('orders.refundRecords') }}</span>
 <span v-else class="min-w-[4rem] shrink-0" aria-hidden="true"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
-<div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.orderId') }}</span><span class="flex items-center text-[14px] font-semibold">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 ml-1.5 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.customer') }}</span><span class="flex items-center"><span class="text-[14px] font-semibold">{{ do_.customer }} {{ do_.phone }}</span><div class="w-7 h-7 rounded-full bg-[#EBF1FD] flex items-center justify-center ml-2 text-[var(--accent)] shrink-0"><span v-html="luci('phone','w-3.5 h-3.5')"></span></div></span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('vehicles.trackStart') }}</span><span class="text-[14px] font-semibold">2025-01-18 14:00:00</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.endTime') }}</span><span class="text-[14px] font-semibold">2025-01-20 14:00:00</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.plan') }}</span><span class="text-[14px] font-semibold">{{ do_.plan }}</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.status') }}</span><span class="text-[12px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
-<div v-if="dSt==='complete'" class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.finishTime') }}</span><span class="text-[14px] font-semibold text-[#999]">2025-01-20 14:30:00</span></div>
-<div v-if="dSt==='cancelled'" class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">{{ t('orders.cancelTime') }}</span><span class="text-[14px] font-semibold text-[#999]">2025-01-18 10:15:00</span></div>
+<div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">{{ t('orders.basicInfo') }}</div><span class="text-[13px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.orderId') }}</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.customer') }}</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.customer }} {{ do_.phone }}<span v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.plan') }}</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.plan }}</span></div>
+<div class="flex items-start gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0 leading-[1.5]">{{ t('orders.rentTime') }}</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]">2025-01-18 14:00:00<br>2025-01-20 14:00:00</span></div>
+<div v-if="dSt==='complete'" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.finishTime') }}</span><span class="flex-1 text-right text-[13px] font-semibold text-[#999]">2025-01-20 14:30:00</span></div>
+<div v-if="dSt==='cancelled'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.cancelTime') }}</span><span class="flex-1 text-right text-[13px] font-semibold text-[#999]">2025-01-18 10:15:00</span></div>
 </div>
-<div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.rent') }}</span><span class="text-[14px] font-semibold">¥{{ do_.amount }}</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.deposit') }}</span><span class="text-[14px] font-semibold">¥500</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.payStatus') }}</span><span class="text-[14px] font-semibold" :style="{color:payStatusColor}">{{ payStatus }}</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.paidAmount') }}</span><span class="text-[14px] font-bold" :class="showPaid?'text-[#17A34A]':'text-[#999]'">{{ showPaid?'¥'+(do_.amount+500):'—' }}</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.payment') }}</span><span class="text-[14px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dPaySt==='pending'?(dPm==='offline'?t('orders.paymentOffline'):t('orders.payment2c2p')):dSt==='cancelled'?(dCanceledPaid==='paid'?t('orders.payment2c2p'):'—'):t('orders.payment2c2p') }}</span></div>
-<div class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">{{ t('orders.payTime') }}</span><span class="text-[14px] font-semibold" :class="showPaid?'text-[#111]':'text-[#999]'">{{ showPaid?'2025-01-18 13:30:00':'—' }}</span></div>
+<div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="text-[14px] font-bold text-[#1A1A1A] mb-2">{{ t('orders.feeDetail') }}</div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.rent') }}</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(do_.amount) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.deposit') }}</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(500) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.total') }}</span><span class="flex-1 text-right text-[16px] font-bold text-[#FF6A00]">{{ fmtRp(do_.amount+500) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.payStatus') }}</span><span class="flex-1 text-right text-[13px] font-semibold" :style="{color:payStatusColor}">{{ payStatus }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.paidAmount') }}</span><span class="flex-1 text-right text-[13px] font-bold" :class="showPaid?'text-[#17A34A]':'text-[#999]'">{{ showPaid?fmtRp(do_.amount+500):'—' }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.payment') }}</span><span class="flex-1 text-right text-[13px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dPaySt==='pending'?(dPm==='offline'?t('orders.paymentOffline'):t('orders.payment2c2p')):dSt==='cancelled'?(dCanceledPaid==='paid'?t('orders.payment2c2p'):'—'):t('orders.payment2c2p') }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">{{ t('orders.payTime') }}</span><span class="flex-1 text-right text-[13px] font-semibold" :class="showPaid?'text-[#111]':'text-[#999]'">{{ showPaid?'2025-01-18 13:30:00':'—' }}</span></div>
 
 </div>
 <div v-if="showVehicle" class="bg-white rounded-xl p-4 mb-3 flex items-center" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
@@ -1193,8 +1212,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded shrink-0" :style="refundStg(r.status)">{{ refundStLabel(r.status) }}</span>
   </div>
   <div class="flex flex-col gap-2.5">
-  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">{{ t('orders.refundRent') }}</span><span class="text-[14px] font-semibold">¥{{ r.rent.toFixed(2) }}</span></div>
-  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">{{ t('orders.refundDeposit') }}</span><span class="text-[14px] font-semibold">¥{{ r.deposit.toFixed(2) }}</span></div>
+  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">{{ t('orders.refundRent') }}</span><span class="text-[14px] font-semibold">{{ fmtRp(r.rent,2) }}</span></div>
+  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">{{ t('orders.refundDeposit') }}</span><span class="text-[14px] font-semibold">{{ fmtRp(r.deposit,2) }}</span></div>
   <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">{{ t('orders.refundOperator') }}</span><span class="text-[14px] font-medium text-right">{{ r.operator || '—' }}</span></div>
   <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">{{ t('orders.refundSource') }}</span><span class="text-[14px] font-medium text-right">{{ refundSourceLabel(r) }}</span></div>
   <div class="flex justify-between items-start gap-3"><span class="text-[13px] text-[#999] shrink-0">{{ t('orders.refundReasonLabel') }}</span><span class="text-[14px] font-medium text-right">{{ r.reason || '—' }}</span></div>
@@ -1252,11 +1271,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-3 mb-2" style="background:#CCC;border-radius:3px"></div>
 <div class="text-center text-[18px] font-bold pb-4 px-5 shrink-0">{{ refundMode==='return'?t('orders.actionReturn'):t('orders.refund') }}</div>
 <div class="flex-1 overflow-y-auto px-5 hid" style="max-height:45vh">
-<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundRent') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalRentLimit',{amount:'¥800.00'}) }}</div></div>
-<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundDeposit') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">¥</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalDepositLimit',{amount:'¥500.00'}) }}</div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundRent') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalRentLimit',{amount:'Rp 800.00'}) }}</div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundDeposit') }}</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">{{ t('orders.refundModalDepositLimit',{amount:'Rp 500.00'}) }}</div></div>
 <div class="mb-4"><div class="text-[14px] font-semibold mb-2">{{ t('orders.refundReason') }} <span class="font-normal text-[#999]">{{ t('orders.refundModalOptional') }}</span></div><textarea v-model="rReason" :placeholder="t('orders.refundModalReasonPlaceholder')" class="w-full p-4 rounded-xl text-[15px] outline-none resize-none min-h-[90px] transition-colors" style="border:1px solid #E5E5E5;font-family:inherit"></textarea></div>
 </div>
-<div class="px-5 pb-8 shrink-0"><div class="flex justify-between items-center py-3" style="border-top:1px solid #E5E5E5"><span class="text-[16px] font-semibold">{{ t('orders.refundModalTotalLabel') }}</span><span class="text-[22px] font-bold text-[#17A34A]">¥{{ refundTotal.toFixed(2) }}</span></div><button @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#17A34A">{{ t('orders.refundModalConfirm') }}</button></div>
+<div class="px-5 pb-8 shrink-0"><div class="flex justify-between items-center py-3" style="border-top:1px solid #E5E5E5"><span class="text-[16px] font-semibold">{{ t('orders.refundModalTotalLabel') }}</span><span class="text-[22px] font-bold text-[#17A34A]">{{ fmtRp(refundTotal,2) }}</span></div><button @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#17A34A">{{ t('orders.refundModalConfirm') }}</button></div>
 </div></transition>
 
 <!-- ═══ ADD DOC SHEET ═══ -->
@@ -1319,9 +1338,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">{{ t('orders.filterSheetTitle') }}</div>
 <div class="flex-1 overflow-y-auto px-5 pb-3 hid" style="min-height:0">
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" @click="ordersFsStC=ordersFsStC===s.v?'':s.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsStC===s.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPaymentChannel') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div @click="ordersFsPayC=ordersFsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='2c2p'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div @click="ordersFsPayC=ordersFsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='offline'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('orders.paymentOffline') }}</div></div></div>
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPayStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" @click="ordersFsPayStC=ordersFsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayStC===p.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" @click="ordersFsStC=ordersFsStC===s.v?'':s.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsStC===s.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPaymentChannel') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div @click="ordersFsPayC=ordersFsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='2c2p'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div @click="ordersFsPayC=ordersFsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='offline'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('orders.paymentOffline') }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPayStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" @click="ordersFsPayStC=ordersFsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayStC===p.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
  <div style="margin-bottom:16px" data-od-id="orders-fs-create-time">
   <div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterCreateDate') }}</div>
   <div style="display:flex;gap:8px;align-items:center">
@@ -1406,7 +1425,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <template v-if="profileOV||profileSub">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-16 flex items-center"><div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD] transition-colors" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ hdrTitle }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-16">{{ hdrTitle }}</div>
 <div class="w-16 flex items-center justify-end"><span v-if="hdrAction" class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="hdrAction.fn">{{ hdrAction.label }}</span></div>
 </div>
   </template>
@@ -1628,7 +1647,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-for="(m,i) in mFilter" :key="m.name" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
 <div class="p-4 flex items-center">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[var(--accent)]')"></span></div>
-<div class="flex-1"><div class="text-[15px] font-semibold mb-1">{{ m.name }}</div><div class="flex gap-3 text-xs text-[#666]"><span>{{ t('profile.modelCount',{n:m.count}) }}</span><span>{{ t('profile.modelRentLabel',{n:m.rent}) }}</span><span>{{ t('profile.modelDepositLabel',{n:m.deposit}) }}</span></div><div class="text-[11px] text-[#999] mt-1">{{ t('profile.lastUpdateLabel',{time:m.time}) }}</div></div>
+<div class="flex-1"><div class="text-[15px] font-semibold mb-1">{{ m.name }}</div><div class="flex gap-3 text-xs text-[#666]"><span>{{ t('profile.modelCount',{n:m.count}) }}</span><span>{{ mPlanText(m) }}</span><span>{{ t('profile.modelDepositLabel',{n:fmtRp(m.deposit)}) }}</span></div><div class="text-[11px] text-[#999] mt-1">{{ t('profile.lastUpdateLabel',{time:m.time}) }}</div></div>
 </div>
 <div v-if="can('model.edit')" class="card-actions"><div class="card-action-btn" style="color:var(--link)" @click="openModelEdit(m)">{{ t('vehicles.actionEdit') }}</div></div>
 </div>
@@ -1644,14 +1663,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl"><div v-if="profileSub==='mEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.modelEdit') }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.modelEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-card">
 <div class="form-row"><div class="form-label">{{ t('profile.modelName') }}</div><div class="text-[15px] font-semibold text-[#111] py-1">{{ fm.name }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.modelRent') }}<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.rent?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model.number="fm.rent" type="number" @input="vClr('rent')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.rent" class="form-hint text-[#DC2626]">{{ fE.rent }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.modelDeposit') }}<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.deposit?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model.number="fm.deposit" type="number" @input="vClr('deposit')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.deposit" class="form-hint text-[#DC2626]">{{ fE.deposit }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.modelSort') }}</div><div class="login-field relative flex items-center"><input v-model.number="fm.sort" type="number" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
+<div class="form-row"><div class="form-label">{{ t('profile.rentPlan') }}</div>
+<div class="flex flex-wrap gap-2"><div v-for="p in modelPlanOpts" :key="p.v" @click="fm.plans[p.v]=!fm.plans[p.v]" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fm.plans[p.v]?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE[p.v]?'#DC2626':'#EBEDF0')}">{{ t('profile.'+p.l) }}</div></div></div>
+<template v-for="p in modelPlanOpts" :key="'pr-'+p.v"><div v-if="fm.plans[p.v]" class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.'+modelPriceKey[p.v]) }}</div><div class="login-field relative flex items-center" :style="fE[p.v]?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span><input v-model.number="fm[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 bg-transparent border-none text-[15px] font-medium outline-none px-2 py-3.5 text-[#333]"></div><div v-if="fE[p.v]" class="form-hint text-[#DC2626]">{{ fE[p.v] }}</div></div></template>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.modelDeposit') }}</div><div class="login-field relative flex items-center" :style="fE.deposit?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span><input v-model.number="fm.deposit" type="number" min="0" @input="vClr('deposit')" class="flex-1 bg-transparent border-none text-[15px] font-medium outline-none px-2 py-3.5"></div><div v-if="fE.deposit" class="form-hint text-[#DC2626]">{{ fE.deposit }}</div></div>
+<div class="form-row"><div class="form-label">{{ t('profile.modelSort') }}</div><div class="login-field relative flex items-center"><input v-model.number="fm.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.sort" class="form-hint text-[#DC2626]">{{ fE.sort }}</div></div>
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveModel" :disabled="modelSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ t('common.save') }}</button></div>
@@ -1709,12 +1730,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl"><div v-if="profileSub==='aAdd'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.accountAdd') }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.accountAdd') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-card">
-<div class="form-row"><div class="form-label">{{ t('profile.accountField') }}<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.account?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.account" @input="onAccInput" @blur="onAccBlur" :placeholder="t('profile.accountInputPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.account" class="form-hint text-[#DC2626]">{{ fE.account }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.name') }}<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.name" @input="vClr('name')" :placeholder="t('profile.namePlaceholder')" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.accountField') }}</div><div class="login-field relative flex items-center" :style="fE.account?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.account" @input="onAccInput" @blur="onAccBlur" :placeholder="t('profile.accountInputPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.account" class="form-hint text-[#DC2626]">{{ fE.account }}</div></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.name') }}</div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.name" @input="vClr('name')" :placeholder="t('profile.namePlaceholder')" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.phone') }}</div>
 <div class="flex items-stretch gap-2.5" :style="accBasicDisabled?{pointerEvents:'none',opacity:.75}:{}">
 <div @click="!accBasicDisabled&&openDialCode('account')" class="login-field login-field-dial flex items-center justify-center" :style="accBasicDisabled?{background:'#F0F1F3'}:null" data-od-id="acc-add-dial-trigger">
@@ -1726,8 +1747,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div><div v-if="fE.phone" class="form-hint text-[#DC2626]">{{ fE.phone }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.email') }}</div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.email?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.email" type="email" @input="vClr('email')" :placeholder="t('profile.emailPlaceholder')" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.email" class="form-hint text-[#DC2626]">{{ fE.email }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.position') }}<span class="text-[#DC2626] ml-0.5">*</span></div>
-<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.position') }}</div>
+<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.remark') }}</div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.remark?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.remark" @input="vClr('remark')" :placeholder="t('profile.remarkPlaceholder')" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.remark" class="form-hint text-[#DC2626]">{{ fE.remark }}</div></div>
 </div>
 </div>
@@ -1737,12 +1758,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl"><div v-if="profileSub==='aEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.accountEdit') }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.accountEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-card">
-<div class="form-row"><div class="form-label">{{ t('profile.accountField') }}<span class="text-[#DC2626] ml-0.5">*</span></div><div class="text-[15px] font-semibold text-[#111] py-1">{{ fa.account }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.name') }}<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.name" @input="vClr('name')" :placeholder="t('profile.namePlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.accountField') }}</div><div class="text-[15px] font-semibold text-[#111] py-1">{{ fa.account }}</div></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.name') }}</div><div class="login-field relative flex items-center" :style="fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.name" @input="vClr('name')" :placeholder="t('profile.namePlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.phone') }}</div>
 <div class="flex items-stretch gap-2.5">
 <div @click="openDialCode('account')" class="login-field login-field-dial flex items-center justify-center" data-od-id="acc-edit-dial-trigger">
@@ -1754,8 +1775,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div><div v-if="fE.phone" class="form-hint text-[#DC2626]">{{ fE.phone }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.email') }}</div><div class="login-field relative flex items-center" :style="fE.email?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.email" type="email" @input="vClr('email')" :placeholder="t('profile.emailPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.email" class="form-hint text-[#DC2626]">{{ fE.email }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.position') }}<span class="text-[#DC2626] ml-0.5">*</span></div>
-<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.position') }}</div>
+<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.remark') }}</div><div class="login-field relative flex items-center" :style="fE.remark?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.remark" @input="vClr('remark')" :placeholder="t('profile.remarkPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.remark" class="form-hint text-[#DC2626]">{{ fE.remark }}</div></div>
 </div>
 </div>
@@ -1815,12 +1836,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl"><div v-if="profileSub==='pAdd'||profileSub==='pEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ profileSub==='pAdd'?t('profile.positionAdd'):t('profile.positionEdit') }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ profileSub==='pAdd'?t('profile.positionAdd'):t('profile.positionEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-card mb-3">
 <div class="form-row"><div class="form-label">{{ t('profile.parentPosition') }}</div><div class="text-[15px] font-medium text-[#111] py-1">{{ fp.parent }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.positionName') }}<span class="text-[#DC2626] ml-0.5">*</span></div><div class="login-field relative flex items-center" :style="fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fp.name" @input="vClr('name')" :placeholder="t('profile.positionNamePlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.positionName') }}</div><div class="login-field relative flex items-center" :style="fE.name?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fp.name" @input="vClr('name')" :placeholder="t('profile.positionNamePlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.name" class="form-hint text-[#DC2626]">{{ fE.name }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.remark') }}</div><div class="login-field relative flex items-center"><input v-model="fp.remark" :placeholder="t('profile.remarkPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
 </div>
 <div v-for="sec in [{l:t('profile.platformPerms'),t:pTreeP},{l:t('profile.merchantPerms'),t:pTreeM}]" :key="sec.l">
@@ -1866,11 +1887,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl"><div v-if="profileSub==='csEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ csIdx===-1?t('profile.csAdd'):t('profile.csEdit') }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ csIdx===-1?t('profile.csAdd'):t('profile.csEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-card">
-<div class="form-row"><div class="form-label">{{ t('profile.csPhone') }}<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.csPhone') }}</div>
 <div class="flex items-stretch gap-2.5">
 <div @click="openDialCode('cs')" class="login-field login-field-dial flex items-center justify-center" data-od-id="cs-dial-trigger">
 <span class="text-[15px] font-semibold tabular-nums text-[#111]">{{ fc.code }}</span>
@@ -1880,14 +1901,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <input v-model="fc.phone" @input="vClr('phone')" type="tel" :placeholder="t('profile.csPhonePlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </div>
 </div><div v-if="fE.phone" class="form-hint text-[#DC2626]">{{ fE.phone }}</div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.startTime') }}<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.startTime') }}</div>
 <div class="flex items-center gap-2">
 <div role="button" @click.stop="openHmPicker('start')" class="login-field flex items-center justify-center min-w-[64px] px-3 cursor-pointer select-none active:bg-[#EEE]" data-od-id="cs-start-hour"><span class="text-[15px] font-semibold tabular-nums text-[#111]">{{ p2(fc.sh) }}</span></div>
 <span class="text-sm font-medium text-[#111]">{{ t('profile.hour') }}</span>
 <div role="button" @click.stop="openHmPicker('start')" class="login-field flex items-center justify-center min-w-[64px] px-3 cursor-pointer select-none active:bg-[#EEE]" data-od-id="cs-start-min"><span class="text-[15px] font-semibold tabular-nums text-[#111]">{{ p2(fc.sm) }}</span></div>
 <span class="text-sm font-medium text-[#111]">{{ t('profile.minute') }}</span>
 </div></div>
-<div class="form-row"><div class="form-label">{{ t('profile.endTime') }}<span class="text-[#DC2626] ml-0.5">*</span></div>
+<div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ t('profile.endTime') }}</div>
 <div class="flex items-center gap-2">
 <div role="button" @click.stop="openHmPicker('end')" class="login-field flex items-center justify-center min-w-[64px] px-3 cursor-pointer select-none active:bg-[#EEE]" :style="fE.time?{boxShadow:'inset 0 0 0 1px #DC2626'}:null" data-od-id="cs-end-hour"><span class="text-[15px] font-semibold tabular-nums text-[#111]">{{ p2(fc.eh) }}</span></div>
 <span class="text-sm font-medium text-[#111]">{{ t('profile.hour') }}</span>
@@ -2182,10 +2203,11 @@ function vClr(k){if(fE.value[k]){const o={...fE.value};delete o[k];fE.value=o}}
 const messages=ref({});
 const localeCache={};
 let localeLoading=ref(false);
-const brandLoading=ref(true);
+const brandLoading=ref(false);
 function _tGet(obj,path){const ks=path.split('.');let v=obj;for(const k of ks){if(v==null)return undefined;v=v[k]}return v}
 function _tInterpolate(str,params){if(!params||!str)return str;return str.replace(/\{(\w+)\}/g,(_,k)=>params[k]!=null?String(params[k]):'{'+k+'}')}
 function t(key,params){const cur=_tGet(messages.value[appLang.value],key);if(cur!=null)return _tInterpolate(cur,params);const fb=_tGet(messages.value['zh-CN'],key);if(fb!=null)return _tInterpolate(fb,params);return key}
+function fmtRp(n,dec){var v=Number(n);if(v!==v||v==null)v=0;if(dec==null)return 'Rp '+v.toLocaleString('en-US');return 'Rp '+v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})}
 /* ══ I18N · 枚举翻译 ══ */
 const _ALERT_TYPE_MAP={'车辆离线':'home.alertTypeOffline','GPS信号丢失':'home.alertTypeGpsLost','GPS定位过时':'home.alertTypeGpsStale','疑似断电':'home.alertTypePowerOff'};
 const _VEH_STATUS_MAP={'空闲':'vehicles.statusIdle','占用中':'vehicles.statusOccupied','租用中':'vehicles.statusRented','已锁定':'vehicles.statusLocked','已出售':'vehicles.statusSold'};
@@ -2217,7 +2239,7 @@ async function loadLocale(lang){
 /* ══ HOME ══ */
 const homeOV=ref(null);const homeLoading=ref(true),homeRefreshing=ref(false);
 const store=computed(()=>({name:'测试门店'}));
-const bizStats=computed(()=>[{label:t('home.bizStats.todayRevenue'),value:'¥3,240',trend:null},{label:t('home.bizStats.monthRevenue'),value:'¥28,500',trend:null},{label:t('home.bizStats.activeOrders'),value:'18',trend:null},{label:t('home.bizStats.pendingReturn'),value:'8',trend:null}]);
+const bizStats=computed(()=>[{label:t('home.bizStats.todayRevenue'),value:'Rp 3,240',trend:null},{label:t('home.bizStats.monthRevenue'),value:'Rp 28,500',trend:null},{label:t('home.bizStats.activeOrders'),value:'18',trend:null},{label:t('home.bizStats.pendingReturn'),value:'8',trend:null}]);
  const vehStats=computed(()=>[{label:t('home.vehStats.online'),value:'42',online:true},{label:t('home.vehStats.offline'),value:'8',danger:true,online:false}]);
  function goHomeVehStat(s){if(!can('home.stats.vehicle')){deny();return}if(!can('vehicle.list')){deny();return}homeOV.value=null;curAlert.value=null;alertMod.value=null;vehOV.value=null;vehQ.value='';vehPill.value='';vehFsModel.value='';vehFsLost.value=null;vehFsOnline.value=s.online===true?true:s.online===false?false:null;tab.value='vehicles'}
  const ALERTS_SEED=[
@@ -2280,8 +2302,8 @@ const bizStats=computed(()=>[{label:t('home.bizStats.todayRevenue'),value:'¥3,2
  const pendingAlertCount=computed(()=>allAlerts.value.filter(a=>a.status==='pending'||a.status==='processing').length);
  const alertStatus=ref('pending');
  const alertType=ref('');
- const alertStatusTabs=[{l:t('home.alertFilterAll'),v:''},{l:t('home.alertFilterPending'),v:'pending'},{l:t('home.alertFilterProcessing'),v:'processing'},{l:t('home.alertFilterIgnored'),v:'ignored'},{l:t('home.alertFilterClosed'),v:'closed'}];
- const alertTypeTabs=[{l:t('home.alertTypeAll'),v:''},{l:t('home.alertTypeOffline'),v:'车辆离线'},{l:t('home.alertTypeGpsLost'),v:'GPS信号丢失'},{l:t('home.alertTypeGpsStale'),v:'GPS定位过时'},{l:t('home.alertTypePowerOff'),v:'疑似断电'}];
+ const alertStatusTabs=computed(()=>[{l:t('home.alertFilterAll'),v:''},{l:t('home.alertFilterPending'),v:'pending'},{l:t('home.alertFilterProcessing'),v:'processing'},{l:t('home.alertFilterIgnored'),v:'ignored'},{l:t('home.alertFilterClosed'),v:'closed'}]);
+ const alertTypeTabs=computed(()=>[{l:t('home.alertTypeAll'),v:''},{l:t('home.alertTypeOffline'),v:'车辆离线'},{l:t('home.alertTypeGpsLost'),v:'GPS信号丢失'},{l:t('home.alertTypeGpsStale'),v:'GPS定位过时'},{l:t('home.alertTypePowerOff'),v:'疑似断电'}]);
  const alertStatusCnt=computed(()=>{const m={pending:0,processing:0,ignored:0,closed:0};allAlerts.value.forEach(a=>{if(m[a.status]!==undefined)m[a.status]++});return m});
  const filteredAlerts=computed(()=>allAlerts.value.filter(a=>{if(alertStatus.value&&a.status!==alertStatus.value)return false;if(alertType.value&&a.type!==alertType.value)return false;return true}).slice().sort((a,b)=>(b.time||'').localeCompare(a.time||'')));
  const alertEmptyTitle=computed(()=>{
@@ -2801,15 +2823,21 @@ const showDangerAction=computed(()=>{
   return false;
 });
 const showOrderActionsBar=computed(()=>showActions.value&&(showPrimaryAction.value||(dualMode.value&&showDangerAction.value)));
-const ordersQ=ref(''),searchScope=ref('id'),ordersPill=ref('');
+const ordersQ=ref(''),searchScope=ref('id'),ordersPill=ref(''),ordersType=ref(''),searchScopeOpen=ref(false);
+const searchScopeOpts=computed(()=>[{v:'id',l:t('orders.searchId')},{v:'account',l:t('orders.searchAccount')},{v:'phone',l:t('orders.searchPhone')},{v:'email',l:t('orders.searchEmail')},{v:'vin',l:t('orders.searchVin')},{v:'battNo',l:t('orders.searchBattNo')}]);
+const searchScopeLabel=computed(()=>(searchScopeOpts.value.find(o=>o.v===searchScope.value)||{}).l||t('orders.searchId'));
+function setSearchScope(v){searchScope.value=v;searchScopeOpen.value=false}
+document.addEventListener('click',function(){searchScopeOpen.value=false})
 const searchPH=computed(()=>({id:t('orders.searchId'),account:t('orders.searchAccount'),phone:t('orders.searchPhone'),email:t('orders.searchEmail'),vin:t('orders.searchVin')})[searchScope.value]||t('orders.searchId'));
 const orders=ref([]);
 const allStatus=computed(()=>[{v:'created',l:t('orders.statusCreated')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')},{v:'complete',l:t('orders.statusComplete')},{v:'cancelled',l:t('orders.statusCancelled')},{v:'breach',l:t('orders.statusBreach')}]);
 const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'},{v:'breach',l:'已违约'}];
 const paySts=computed(()=>[{v:'pending',l:t('orders.payPending')},{v:'processing',l:t('orders.payProcessing')},{v:'paid',l:t('orders.payPaid')},{v:'refunding',l:t('orders.payRefunding')},{v:'partialRefund',l:t('orders.payPartialRefund')},{v:'fullRefund',l:t('orders.payFullRefund')}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
-const quickPills=computed(()=>[{l:t('orders.quickAll'),v:''},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')}]);
-  const qCnt=computed(()=>{const m={};orders.value.forEach(o=>{m[o.status]=(m[o.status]||0)+1});return{'':orders.value.length,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
+const quickPills=computed(()=>[{l:t('orders.quickAll'),v:''},{v:'created',l:t('orders.statusCreated')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')}]);
+  const qCnt=computed(()=>{const m={};let n=0;orders.value.forEach(o=>{if(ordersType.value&&o.type!==ordersType.value)return;m[o.status]=(m[o.status]||0)+1;n++});return{'':n,created:m['created']||0,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
+const typePills=computed(()=>[{l:t('orders.typeAll'),v:''},{v:'vehicle',l:t('orders.typeVehicle')},{v:'battery',l:t('orders.typeBattery')},{v:'package',l:t('orders.typePackage')}]);
+const typeCnt=computed(()=>{const m={};orders.value.forEach(o=>{const ty=o.type||'vehicle';m[ty]=(m[ty]||0)+1});return{'':orders.value.length,vehicle:m['vehicle']||0,battery:m['battery']||0,package:m['package']||0}});
 function fmtYmd(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
 function defaultOrdersDateRange(){
   var end=new Date();
@@ -2840,7 +2868,7 @@ const ordersDateDays=computed(()=>{
 const ordersHasF=computed(()=>!!ordersFsSt.value||!!ordersFsPay.value||!!ordersFsPaySt.value);
 const vehSts=['progress','return','overdue','complete','breach'];
 function hasVehicle(s){return vehSts.indexOf(s)!==-1}
-const oFiltered=computed(()=>orders.value.filter(o=>{if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=o.time.match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
+const oFiltered=computed(()=>orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=o.time.match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
 function sl(s){var m={created:t('orders.statusCreated'),pickup:t('orders.statusPickup'),progress:t('orders.statusProgress'),'return':t('orders.statusReturn'),overdue:t('orders.statusOverdue'),complete:t('orders.statusComplete'),cancelled:t('orders.statusCancelled'),breach:t('orders.statusBreach')};return m[s]||s}
 function stg(s){var m={created:'#FF8C1B',pickup:'#FF8C1B',progress:'#22D098','return':'#1A82F4',overdue:'#FF4343',complete:'#333333',cancelled:'#666666',breach:'#FF4343'};return {color:m[s]||'#333333'}}
 var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
@@ -2937,6 +2965,12 @@ function ordersSetPill(v){
 function ordersPillActive(p){
   if(!ordersFsSt.value)return p.v==='';
   return p.v===ordersFsSt.value;
+}
+function ordersSetType(v){
+  ordersType.value=v;
+}
+function ordersTypeActive(p){
+  return p.v===ordersType.value;
 }
 function ordersResetFS(){
   ordersFsStC.value='';
@@ -3223,10 +3257,13 @@ function doSwitch(n){if(n===curStore.value){profileOV.value=null;return}curStore
 const mQ=ref('');
 const profileModels=ref([]);
 const mFilter=computed(()=>mQ.value?profileModels.value.filter(m=>m.name.toLowerCase().includes(mQ.value.toLowerCase())):profileModels.value);
-const fm=ref({name:'',rent:0,deposit:0,sort:0});
-function openModelEdit(m){if(!can('model.edit')){deny();return}fm.value={...m};profileSub.value='mEdit'}
+const fm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0});
+const modelPlanOpts=[{v:'hour',l:'planHour'},{v:'day',l:'planDay'},{v:'week',l:'planWeek'},{v:'month',l:'planMonth'}];
+const modelPriceKey={hour:'priceHour',day:'priceDay',week:'priceWeek',month:'priceMonth'};
+function openModelEdit(m){if(!can('model.edit')){deny();return}fm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0};profileSub.value='mEdit'}
 var modelSaving=ref(false);
-function saveModel(){if(modelSaving.value)return;if(!fm.value.rent||fm.value.rent<=0){fE.value={rent:t('profile.modelRentError')};return}if(!fm.value.deposit||fm.value.deposit<=0){fE.value={deposit:t('profile.modelDepositError')};return}modelSaving.value=true;setTimeout(function(){const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{rent:fm.value.rent,deposit:fm.value.deposit,sort:fm.value.sort,time:now()})}profileSub.value=null;fE.value={};toast(t('profile.modelSaved'),'success');modelSaving.value=false},400)}
+function saveModel(){if(modelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fm.value.plans[p]&&(fm.value[k]===null||fm.value[k]===undefined||fm.value[k]==='')){e[p]=t('profile.priceRequired')}else if(fm.value.plans[p]&&fm.value[k]<0){e[p]=t('profile.priceNotNegative')}});if(fm.value.deposit<0){e.deposit=t('profile.depositNotNegative')}if(fm.value.sort<0){e.sort=t('profile.sortNotNegative')}if(Object.keys(e).length){fE.value=e;return}fE.value={};modelSaving.value=true;setTimeout(function(){const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{plans:Object.assign({},fm.value.plans),priceHour:fm.value.priceHour,priceDay:fm.value.priceDay,priceWeek:fm.value.priceWeek,priceMonth:fm.value.priceMonth,deposit:fm.value.deposit,sort:fm.value.sort,time:now()})}profileSub.value=null;fE.value={};toast(t('profile.modelSaved'),'success');modelSaving.value=false},400)}
+function mPlanText(m){var map={hour:'planHour',day:'planDay',week:'planWeek',month:'planMonth'};var s=[];['hour','day','week','month'].forEach(function(p){if(m.plans&&m.plans[p])s.push(t('profile.'+map[p]))});return s.length?s.join('、'):'-'}
 const aQ=ref(''),allRoles=computed(()=>['店长','管理员','员工','财务','运维']);
 const accounts=ref([]);
 const aFilter=computed(()=>{const q=aQ.value.toLowerCase();return q?accounts.value.filter(a=>(a.account+a.name+a.phone).toLowerCase().includes(q)):accounts.value});
@@ -3337,20 +3374,41 @@ function now(){const d=new Date();return d.getFullYear()+'-'+p2(d.getMonth()+1)+
 
 /* ══ Paint & Init ══ */
 function initPillDrag(){document.querySelectorAll('.filter-tabs').forEach(function(t){var d=false,sx,sl;t.addEventListener('mousedown',function(e){d=true;t.style.cursor='grabbing';sx=e.pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('mouseleave',function(){d=false;t.style.cursor='grab'});t.addEventListener('mouseup',function(){d=false;t.style.cursor='grab'});t.addEventListener('mousemove',function(e){if(!d)return;e.preventDefault();t.scrollLeft=sl-(e.pageX-t.offsetLeft-sx)});t.addEventListener('touchstart',function(e){sx=e.touches[0].pageX-t.offsetLeft;sl=t.scrollLeft});t.addEventListener('touchmove',function(e){t.scrollLeft=sl-(e.touches[0].pageX-t.offsetLeft-sx)})})}
-function initPullToRefresh(containerId,indicatorId,setRefreshing){var c=document.getElementById(containerId),i=document.getElementById(indicatorId);if(!c||!i)return;var sy=0,pull=false;c.addEventListener('touchstart',function(e){if(c.scrollTop<=0){sy=e.touches[0].clientY;pull=true}else{pull=false}},{passive:true});c.addEventListener('touchmove',function(e){if(!pull||c.scrollTop>0){pull=false;return}var dy=e.touches[0].clientY-sy;if(dy>0){var off=Math.min(dy*0.4,60);i.style.height=off+'px';i.innerHTML='<span class="ptr-spinner"></span>'+(off>40?t('common.releaseToRefresh'):t('common.pullToRefresh'))+'</div>'}},{passive:true});c.addEventListener('touchend',function(e){if(!pull)return;pull=false;var dy=e.changedTouches[0].clientY-sy;if(dy>60){i.style.height='40px';i.innerHTML='<span class="ptr-spinner"></span>'+t('common.refreshing');if(setRefreshing)setRefreshing(true);setTimeout(function(){i.style.height='0';i.innerHTML='<span class="ptr-text">'+t('common.pullToRefresh')+'</span>';if(setRefreshing)setRefreshing(false)},1200)}else{i.style.height='0'}},{passive:true})}
+function initPullToRefresh(containerId,indicatorId,onRefresh){var c=document.getElementById(containerId),i=document.getElementById(indicatorId);if(!c||!i)return;var sy=0,pull=false,active=false;function stY(e){return e.touches&&e.touches[0]?e.touches[0].clientY:e.clientY}function cuY(e){return e.changedTouches&&e.changedTouches[0]?e.changedTouches[0].clientY:e.clientY}c.addEventListener('touchstart',function(e){if(c.scrollTop<=0){sy=stY(e);pull=true;active=true}else{pull=false}},{passive:true});c.addEventListener('touchmove',function(e){if(!active||!pull)return;if(c.scrollTop>0){pull=false;return}e.preventDefault();var dy=cuY(e)-sy;var off=Math.min(dy*0.4,60);if(off<0)off=0;i.style.height=off+'px';i.innerHTML='<span class="ptr-spinner"></span>'+(off>40?t('common.releaseToRefresh'):t('common.pullToRefresh'))},{passive:false});c.addEventListener('touchend',function(e){if(!active)return;active=false;if(!pull)return;pull=false;var dy=cuY(e)-sy;if(dy>60){i.style.height='40px';i.innerHTML='<span class="ptr-spinner"></span>'+t('common.refreshing');if(onRefresh)onRefresh();setTimeout(function(){i.style.height='0';i.innerHTML='<span class="ptr-text">'+t('common.pullToRefresh')+'</span>'},1200)}else{i.style.height='0'}},{passive:true});c.addEventListener('mousedown',function(e){if(c.scrollTop<=0){sy=e.clientY;pull=true;active=true}else{pull=false}});c.addEventListener('mousemove',function(e){if(!active||!pull)return;if(c.scrollTop>0){pull=false;return}e.preventDefault();var dy=e.clientY-sy;var off=Math.min(dy*0.4,60);if(off<0)off=0;i.style.height=off+'px';i.innerHTML='<span class="ptr-spinner"></span>'+(off>40?t('common.releaseToRefresh'):t('common.pullToRefresh'))});c.addEventListener('mouseup',function(e){if(!active)return;active=false;if(!pull)return;pull=false;var dy=e.clientY-sy;if(dy>60){i.style.height='40px';i.innerHTML='<span class="ptr-spinner"></span>'+t('common.refreshing');if(onRefresh)onRefresh();setTimeout(function(){i.style.height='0';i.innerHTML='<span class="ptr-text">'+t('common.pullToRefresh')+'</span>'},1200)}else{i.style.height='0'}});c.addEventListener('mouseleave',function(){if(active){active=false;pull=false;i.style.height='0'}})}
+function refreshHome(){homeLoading.value=true;setTimeout(()=>{homeLoading.value=false},800)}
+function refreshVeh(){vehLoading.value=true;setTimeout(()=>{vehLoading.value=false},800)}
+function refreshOrd(){ordersLoading.value=true;setTimeout(()=>{ordersLoading.value=false},800)}
 function paint(){setTimeout(()=>{initPillDrag()},300)}
 function initI18nData(){
   curStore.value='测试门店';
   orders.value=[
-    {id:'#ORD2026072001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:t('orders.planMonthly'),amount:350,status:'created',payment:'2c2p',time:t('orders.timeOrdered')+' 2026-07-20 09:00:00'},
-    {id:'#ORD2026072002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:t('orders.planMonthly'),amount:560,status:'created',payment:'offline',time:t('orders.timeOrdered')+' 2026-07-20 09:30:00'},
-    {id:'#ORD2026072103',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:t('orders.planMonthly'),amount:280,status:'pickup',payment:'2c2p',time:t('orders.timeApptPickup')+' 2026-07-21 09:00:00'},
-    {id:'#ORD2026071804',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:t('orders.planMonthlyMonths',{n:2}),amount:420,status:'progress',payment:'2c2p',time:t('orders.timePickup')+' 2026-07-22 14:00:00 · '+t('orders.timeReturn')+' 2026-07-24 14:00:00'},
-    {id:'#ORD2026071705',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:t('orders.planMonthly'),amount:180,status:'return',payment:'offline',time:t('orders.timePickup')+' 2026-07-21 08:00:00 · '+t('orders.timeDueReturn')+' 2026-07-24 18:00:00'},
-    {id:'#ORD2026071506',vin:'LSVAU2Z0A77777000',customer:'Sun Qi',phone:'+86 13800007777',plan:t('orders.planMonthly'),amount:150,status:'overdue',payment:'2c2p',time:t('orders.timePickup')+' 2026-07-23 10:00:00 · '+t('orders.timeDueReturn')+' 2026-07-26 10:00:00'},
-    {id:'#ORD2026071007',vin:'LSVAU2Z0A88888000',customer:'Zhou Ba',phone:'+86 13800008888',plan:t('orders.planMonthlyMonths',{n:2}),amount:620,status:'complete',payment:'offline',time:t('orders.timePickup')+' 2026-07-25 09:00:00 · '+t('orders.timeReturn')+' 2026-07-30 09:00:00'},
-    {id:'#ORD2026071908',vin:'LSVAU2Z0A99999000',customer:'Zheng Jiu',phone:'+86 13800009999',plan:t('orders.planMonthly'),amount:300,status:'cancelled',payment:'2c2p',time:t('orders.timeOrdered')+' 2026-07-25 11:00:00 · '+t('orders.timeCancel')+' 2026-07-25 14:00:00'},
-    {id:'#ORD2026070809',vin:'LSVAU2Z0A10101000',customer:'Wu Shi',phone:'+86 13900001010',plan:t('orders.planMonthly'),amount:450,status:'breach',payment:'offline',time:t('orders.timePickup')+' 2026-07-28 08:00:00 · '+t('orders.timeDueReturn')+' 2026-07-30 08:00:00'}
+    {id:'#ORD2026072101',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:t('orders.planMonthlyMonths',{n:1}),amount:350,status:'created',type:'vehicle',item:'乐迪SAA',created:'2026-07-21 09:00:00',payment:'2c2p',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 09:00:00',rentStart:'2026-07-21 09:00:00',rentEnd:'2026-08-21 09:00:00'},
+    {id:'#ORD2026072102',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:t('orders.planMonthlyMonths',{n:1}),amount:560,status:'created',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-07-22 10:00:00',payment:'offline',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 09:30:00',rentStart:'2026-07-21 09:30:00',rentEnd:'2026-08-21 09:30:00'},
+    {id:'#ORD2026072103',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:t('orders.planMonthlyMonths',{n:1}),amount:420,status:'pickup',type:'vehicle',item:'乐迪E8',created:'2026-07-23 11:00:00',payment:'2c2p',paySt:'paid',time:t('orders.timeApptPickup')+' 2026-07-21 09:00:00',rentStart:'2026-07-21 09:00:00',rentEnd:'2026-08-21 09:00:00'},
+    {id:'#ORD2026071804',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:t('orders.planMonthlyMonths',{n:2}),amount:420,status:'progress',type:'vehicle',item:'雅迪DE2',created:'2026-07-24 12:00:00',payment:'2c2p',paySt:'paid',time:t('orders.timePickup')+' 2026-07-22 14:00:00 · '+t('orders.timeReturn')+' 2026-07-24 14:00:00',rentStart:'2026-07-22 14:00:00',rentEnd:'2026-09-24 14:00:00'},
+    {id:'#ORD2026071705',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:t('orders.planMonthlyMonths',{n:1}),amount:350,status:'return',type:'vehicle',item:'乐迪E10',created:'2026-07-25 13:00:00',payment:'offline',paySt:'paid',time:t('orders.timePickup')+' 2026-07-21 08:00:00 · '+t('orders.timeDueReturn')+' 2026-07-24 18:00:00',rentStart:'2026-07-21 08:00:00',rentEnd:'2026-08-24 18:00:00'},
+    {id:'#ORD2026071506',vin:'LSVAU2Z0A77777000',customer:'Sun Qi',phone:'+86 13800007777',plan:t('orders.planMonthlyMonths',{n:1}),amount:350,status:'overdue',type:'vehicle',item:'乐迪SAA',created:'2026-07-26 14:00:00',payment:'2c2p',paySt:'paid',time:t('orders.timePickup')+' 2026-07-23 10:00:00 · '+t('orders.timeDueReturn')+' 2026-07-26 10:00:00',rentStart:'2026-07-23 10:00:00',rentEnd:'2026-08-26 10:00:00'},
+    {id:'#ORD2026071007',vin:'LSVAU2Z0A88888000',customer:'Zhou Ba',phone:'+86 13800008888',plan:t('orders.planMonthlyMonths',{n:2}),amount:620,status:'complete',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-07-27 15:00:00',payment:'offline',paySt:'partialRefund',time:t('orders.timePickup')+' 2026-07-25 09:00:00 · '+t('orders.timeReturn')+' 2026-07-30 09:00:00',rentStart:'2026-07-25 09:00:00',rentEnd:'2026-09-30 09:00:00'},
+    {id:'#ORD2026071908',vin:'LSVAU2Z0A99999000',customer:'Zheng Jiu',phone:'+86 13800009999',plan:t('orders.planMonthlyMonths',{n:1}),amount:300,status:'cancelled',type:'vehicle',item:'乐迪E8',created:'2026-07-28 16:00:00',payment:'2c2p',paySt:'fullRefund',time:t('orders.timeOrdered')+' 2026-07-25 11:00:00 · '+t('orders.timeCancel')+' 2026-07-25 14:00:00',rentStart:'2026-07-25 11:00:00',rentEnd:'2026-08-25 11:00:00'},
+    {id:'#ORD2026070809',vin:'LSVAU2Z0A10101000',customer:'Wu Shi',phone:'+86 13900001010',plan:t('orders.planMonthlyMonths',{n:1}),amount:350,status:'breach',type:'vehicle',item:'雅迪DE2',created:'2026-07-29 17:00:00',payment:'offline',paySt:'paid',time:t('orders.timePickup')+' 2026-07-28 08:00:00 · '+t('orders.timeDueReturn')+' 2026-07-30 08:00:00',rentStart:'2026-07-28 08:00:00',rentEnd:'2026-08-30 08:00:00'},
+    {id:'#ORD2026072201',vin:'LSVAU2Z0A11112000',customer:'Qian Qi',phone:'+86 13800002111',plan:t('orders.planMonthlyMonths',{n:1}),amount:180,status:'created',type:'battery',item:'天能锂电72V20Ah',created:'2026-07-30 09:00:00',battNo:'BATT-YD1000',payment:'2c2p',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 10:00:00',rentStart:'2026-07-21 10:00:00',rentEnd:'2026-08-21 10:00:00'},
+    {id:'#ORD2026072202',vin:'LSVAU2Z0A22222001',customer:'Sun Er',phone:'+86 13800002222',plan:t('orders.planMonthlyMonths',{n:1}),amount:260,status:'created',type:'battery',item:'超威黑金72V32Ah',created:'2026-07-31 10:00:00',battNo:'BATT-YD1001',payment:'offline',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 10:30:00',rentStart:'2026-07-21 10:30:00',rentEnd:'2026-08-21 10:30:00'},
+    {id:'#ORD2026072203',vin:'LSVAU2Z0A33333001',customer:'Li Si',phone:'+86 13800003333',plan:t('orders.planMonthlyMonths',{n:1}),amount:200,status:'pickup',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-01 11:00:00',battNo:'BATT-YD1002',payment:'2c2p',paySt:'paid',time:t('orders.timeApptPickup')+' 2026-07-21 11:00:00',rentStart:'2026-07-21 11:00:00',rentEnd:'2026-08-21 11:00:00'},
+    {id:'#ORD2026071801',vin:'LSVAU2Z0A55555001',customer:'Wang San',phone:'+86 13800005555',plan:t('orders.planMonthlyMonths',{n:2}),amount:180,status:'progress',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-02 12:00:00',battNo:'BATT-YD1003',payment:'2c2p',paySt:'paid',time:t('orders.timePickup')+' 2026-07-22 15:00:00 · '+t('orders.timeReturn')+' 2026-07-24 15:00:00',rentStart:'2026-07-22 15:00:00',rentEnd:'2026-09-24 15:00:00'},
+    {id:'#ORD2026071701',vin:'LSVAU2Z0A66666001',customer:'Zhao Si',phone:'+86 13800006666',plan:t('orders.planMonthlyMonths',{n:1}),amount:180,status:'return',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-03 13:00:00',battNo:'BATT-YD1004',payment:'offline',paySt:'paid',time:t('orders.timePickup')+' 2026-07-21 09:00:00 · '+t('orders.timeDueReturn')+' 2026-07-24 19:00:00',rentStart:'2026-07-21 09:00:00',rentEnd:'2026-08-24 19:00:00'},
+    {id:'#ORD2026071501',vin:'LSVAU2Z0A77777001',customer:'Sun Wu',phone:'+86 13800007777',plan:t('orders.planMonthlyMonths',{n:1}),amount:180,status:'overdue',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-04 14:00:00',battNo:'BATT-YD1005',payment:'2c2p',paySt:'paid',time:t('orders.timePickup')+' 2026-07-23 11:00:00 · '+t('orders.timeDueReturn')+' 2026-07-26 11:00:00',rentStart:'2026-07-23 11:00:00',rentEnd:'2026-08-26 11:00:00'},
+    {id:'#ORD2026071001',vin:'LSVAU2Z0A88888001',customer:'Zhou Liu',phone:'+86 13800008888',plan:t('orders.planMonthlyMonths',{n:2}),amount:180,status:'complete',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-05 15:00:00',battNo:'BATT-YD1006',payment:'offline',paySt:'partialRefund',time:t('orders.timePickup')+' 2026-07-25 10:00:00 · '+t('orders.timeReturn')+' 2026-07-30 10:00:00',rentStart:'2026-07-25 10:00:00',rentEnd:'2026-09-30 10:00:00'},
+    {id:'#ORD2026071901',vin:'LSVAU2Z0A99999001',customer:'Zheng Qi',phone:'+86 13800009999',plan:t('orders.planMonthlyMonths',{n:1}),amount:180,status:'cancelled',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-06 16:00:00',battNo:'BATT-YD1007',payment:'2c2p',paySt:'fullRefund',time:t('orders.timeOrdered')+' 2026-07-25 12:00:00 · '+t('orders.timeCancel')+' 2026-07-25 15:00:00',rentStart:'2026-07-25 12:00:00',rentEnd:'2026-08-25 12:00:00'},
+    {id:'#ORD2026070801',vin:'LSVAU2Z0A10101001',customer:'Wu Ba',phone:'+86 13900001010',plan:t('orders.planMonthlyMonths',{n:1}),amount:180,status:'breach',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-07 17:00:00',battNo:'BATT-YD1008',payment:'offline',paySt:'paid',time:t('orders.timePickup')+' 2026-07-28 09:00:00 · '+t('orders.timeDueReturn')+' 2026-07-30 09:00:00',rentStart:'2026-07-28 09:00:00',rentEnd:'2026-08-30 09:00:00'},
+    {id:'#ORD2026072301',vin:'LSVAU2Z0A11113000',customer:'Zhou Yi',phone:'+86 13800003111',plan:t('orders.planMonthlyMonths',{n:1}),amount:620,status:'created',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-08 09:00:00',payment:'2c2p',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 13:00:00',rentStart:'2026-07-21 13:00:00',rentEnd:'2026-08-21 13:00:00'},
+    {id:'#ORD2026072302',vin:'LSVAU2Z0A22223001',customer:'Wu Er',phone:'+86 13800003222',plan:t('orders.planMonthlyMonths',{n:1}),amount:720,status:'created',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-09 10:00:00',payment:'offline',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 13:30:00',rentStart:'2026-07-21 13:30:00',rentEnd:'2026-08-21 13:30:00'},
+    {id:'#ORD2026072303',vin:'LSVAU2Z0A33333002',customer:'Sun San',phone:'+86 13800003334',plan:t('orders.planMonthlyMonths',{n:1}),amount:650,status:'pickup',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-10 11:00:00',payment:'2c2p',paySt:'paid',time:t('orders.timeApptPickup')+' 2026-07-21 14:00:00',rentStart:'2026-07-21 14:00:00',rentEnd:'2026-08-21 14:00:00'},
+    {id:'#ORD2026071802',vin:'LSVAU2Z0A55555002',customer:'Zhao Si',phone:'+86 13800005556',plan:t('orders.planMonthlyMonths',{n:2}),amount:620,status:'progress',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-11 12:00:00',payment:'2c2p',paySt:'paid',time:t('orders.timePickup')+' 2026-07-22 16:00:00 · '+t('orders.timeReturn')+' 2026-07-24 16:00:00',rentStart:'2026-07-22 16:00:00',rentEnd:'2026-09-24 16:00:00'},
+    {id:'#ORD2026071702',vin:'LSVAU2Z0A66666002',customer:'Qian Wu',phone:'+86 13800006667',plan:t('orders.planMonthlyMonths',{n:1}),amount:620,status:'return',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-12 13:00:00',payment:'offline',paySt:'paid',time:t('orders.timePickup')+' 2026-07-21 10:00:00 · '+t('orders.timeDueReturn')+' 2026-07-24 20:00:00',rentStart:'2026-07-21 10:00:00',rentEnd:'2026-08-24 20:00:00'},
+    {id:'#ORD2026071502',vin:'LSVAU2Z0A77777002',customer:'Li Liu',phone:'+86 13800007778',plan:t('orders.planMonthlyMonths',{n:1}),amount:620,status:'overdue',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-13 14:00:00',payment:'2c2p',paySt:'paid',time:t('orders.timePickup')+' 2026-07-23 12:00:00 · '+t('orders.timeDueReturn')+' 2026-07-26 12:00:00',rentStart:'2026-07-23 12:00:00',rentEnd:'2026-08-26 12:00:00'},
+    {id:'#ORD2026071002',vin:'LSVAU2Z0A88888002',customer:'Wang Qi',phone:'+86 13800008889',plan:t('orders.planMonthlyMonths',{n:2}),amount:620,status:'complete',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-14 15:00:00',payment:'offline',paySt:'partialRefund',time:t('orders.timePickup')+' 2026-07-25 11:00:00 · '+t('orders.timeReturn')+' 2026-07-30 11:00:00',rentStart:'2026-07-25 11:00:00',rentEnd:'2026-09-30 11:00:00'},
+    {id:'#ORD2026071902',vin:'LSVAU2Z0A99999002',customer:'Sun Ba',phone:'+86 13800009990',plan:t('orders.planMonthlyMonths',{n:1}),amount:620,status:'cancelled',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-07-21 16:00:00',payment:'2c2p',paySt:'fullRefund',time:t('orders.timeOrdered')+' 2026-07-25 13:00:00 · '+t('orders.timeCancel')+' 2026-07-25 16:00:00',rentStart:'2026-07-25 13:00:00',rentEnd:'2026-08-25 13:00:00'},
+    {id:'#ORD2026070802',vin:'LSVAU2Z0A10101002',customer:'Zhao Jiu',phone:'+86 13900001011',plan:t('orders.planMonthlyMonths',{n:1}),amount:620,status:'breach',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-07-22 17:00:00',payment:'offline',paySt:'paid',time:t('orders.timePickup')+' 2026-07-28 10:00:00 · '+t('orders.timeDueReturn')+' 2026-07-30 10:00:00',rentStart:'2026-07-28 10:00:00',rentEnd:'2026-08-30 10:00:00'}
   ];
   stores.value=[
     {name:'测试门店',addr:''},
@@ -3359,9 +3417,9 @@ function initI18nData(){
     {name:'天河店',addr:'广州市天河区天河路385号'}
   ];
   profileModels.value=[
-    {name:'雅迪冠能Q7',count:15,rent:500,deposit:1200,sort:1,time:'2025-01-20 09:00:00'},
-    {name:'雅迪小钢炮',count:8,rent:400,deposit:1000,sort:2,time:'2025-01-19 16:30:00'},
-    {name:'雅迪乐跑版',count:22,rent:600,deposit:1500,sort:3,time:'2025-01-18 14:00:00'}
+    {name:'雅迪冠能Q7',count:15,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1200000,deposit:500000,sort:1,time:'2025-01-20 09:00:00'},
+    {name:'雅迪小钢炮',count:8,plans:{hour:true,day:true,week:true,month:true},priceHour:20000,priceDay:120000,priceWeek:700000,priceMonth:2800000,deposit:400000,sort:2,time:'2025-01-19 16:30:00'},
+    {name:'雅迪乐跑版',count:22,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:150000,priceWeek:800000,priceMonth:3200000,deposit:600000,sort:3,time:'2025-01-18 14:00:00'}
   ];
   accounts.value=[
     {account:'Manager Wang',name:'Wang Jianguo',code:'+86',phone:'13871893628',email:'wang@test.com',roles:'店长'+'、'+'管理员',remark:'测试账号',status:t('profile.statusEnabled'),created:'2024-10-01 09:00:00'},
@@ -3383,12 +3441,12 @@ function initI18nData(){
 }
 watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){setTimeout(()=>checkVersion(),100)}});
 watch(appLang,()=>{document.title=t('login.title')});
-onMounted(()=>{loadLocale('zh-CN').then(()=>{if(appLang.value!=='zh-CN')return loadLocale(appLang.value)}).finally(()=>{initI18nData();setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;brandLoading.value=false;paint();initPullToRefresh('sc-home','ptr-home',function(v){homeRefreshing.value=v});initPullToRefresh('sc-veh','ptr-veh',function(v){vehRefreshing.value=v});initPullToRefresh('sc-ord','ptr-ord',function(v){ordersRefreshing.value=v});if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)})});
+onMounted(()=>{loadLocale('zh-CN').then(()=>{if(appLang.value!=='zh-CN')return loadLocale(appLang.value)}).finally(()=>{initI18nData();setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;brandLoading.value=false;paint();if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)})});
 watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited],paint);
 watch(dSt,(v)=>{if(v==='created')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
 onUpdated(paint);
 
-return{luci,t,alertTypeLabel,vehStatusLabel,ignoreReasonLabel,tab,setTab,toasts,toast,can,deny,perms,permGroups,togglePerm,setPermGroup,setAllPerms,
+return{luci,t,alertTypeLabel,vehStatusLabel,ignoreReasonLabel,initPullToRefresh,refreshHome,refreshVeh,refreshOrd,tab,setTab,toasts,toast,can,deny,perms,permGroups,togglePerm,setPermGroup,setAllPerms,
  TAB_PERM_CODES,tabPermItems,demoPagePermGroups,demoPagePermTitle,demoPagePermCodes,
  homeOV,homeLoading,homeRefreshing,store,bizStats,vehStats,goHomeVehStat,recent,allAlerts,pendingAlertCount,alertStatus,alertType,alertStatusTabs,alertTypeTabs,alertStatusCnt,filteredAlerts,alertEmptyTitle,alertEmptySub,demoHasAlerts,demoSetHasAlerts,curAlert,alertMod,ignoreReasonPick,ignoreReasons,lvBg,stBg,stLabel,closeSourceLabel,lvLabel,timelineLabel,timelineDotClass,curAlertTimeline,curAlertTimelineHasMore,alertTimelineExpanded,homeOpen,homeClose,openAlertDetail,closeAlertDetail,startProcessAlert,resolveAlert,confirmIgnoreAlert,reopenAlert,demoOpsActive,demoSetAlertCloseSource,goAlertVehicle,doFindFromAlert,
 vehOV,vehMod,vehShowModelSheet,vehShowFS,vehLoading,vehRefreshing,locked,pressProgress,lockJustDone,
@@ -3405,8 +3463,9 @@ openVehTrack,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolylin
 trackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,
 openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,onTrackWheelScroll,
 trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,
-ordersOV,ordersMod,ordersShowFS,showRefund,ordersLoading,ordersRefreshing,ordersQ,searchScope,ordersPill,searchPH,
+ordersOV,ordersMod,ordersShowFS,showRefund,ordersLoading,ordersRefreshing,ordersQ,searchScope,searchScopeOpen,searchScopeOpts,searchScopeLabel,setSearchScope,ordersPill,searchPH,
 orders,allStatus,demoAllStatus,paySts,demoPayStsFixed,filteredDemoPaySts,quickPills,qCnt,oFiltered,
+ordersType,typePills,typeCnt,ordersSetType,ordersTypeActive,
 ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
@@ -3414,7 +3473,7 @@ do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid
 primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,orderLost,
 ordersModTitle,ordersModDesc,ordersModDanger,
 refundMode,rRent,rDep,rReason,rRentErr,rDepErr,refundTotal,
-sl,stg,hasVehicle,ordersOpenDetail,copyId,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,
+sl,stg,hasVehicle,fmtRp,ordersOpenDetail,copyId,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,
  openRefund,clampRent,clampDep,submitRefund,refundSaving,
   openRefundRecords,curRefunds,refundStLabel,refundStg,refundSourceLabel,
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
@@ -3422,7 +3481,7 @@ sl,stg,hasVehicle,ordersOpenDetail,copyId,ordersDoSearch,ordersDoPrimary,ordersD
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,
   curStore,menuList,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,doLogout,
-mQ,profileModels,mFilter,fm,openModelEdit,saveModel,modelSaving,
+mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,modelSaving,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
 csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,cfg,saveCfg,cfgSaving,p2,
