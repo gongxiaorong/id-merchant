@@ -43,9 +43,9 @@
     "alertTypeOffline": "車輛離線",
     "alertTypePowerOff": "疑似斷電",
     "bizStats": {
-      "activeOrders": "進行中訂單",
+      "activeOrders": "進行中",
       "monthRevenue": "本月收款",
-      "pendingReturn": "待歸還訂單",
+      "pendingReturn": "待歸還",
       "todayRevenue": "今日收款"
     },
     "bizStatsTitle": "經營數據",
