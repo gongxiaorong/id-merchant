@@ -11,6 +11,13 @@
 <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
 <style>
 /* ══════ GLOBAL: reset · body · stage ══════ */
+:root{
+  --bg:#F6F7F9;--surface:#FFFFFF;--fg:#111111;--muted:#999999;
+  --border:#E5E5E5;--accent:#2B3F5F;--accent-2:#FF6A00;
+  --success:#17A34A;--danger:#DC2626;--link:#2F6FEB;
+  --font-display:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC',system-ui,sans-serif;
+  --font-body:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',system-ui,sans-serif;
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',system-ui,sans-serif;background:#E8EAED;min-height:100vh;display:flex;justify-content:center;align-items:center;color:#111;padding:24px}
 .od-stage{display:flex;align-items:stretch;justify-content:center;gap:32px;max-width:100%}
@@ -34,9 +41,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',sy
 .demo-ops-chip{padding:6px 10px;border-radius:8px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid #E5E5E5;background:#fff;color:#666;transition:background .15s,border-color .15s,color .15s,opacity .15s;user-select:none}
 .demo-ops-chip:hover{background:#F6F7F9}
 .demo-ops-chip.is-on{background:#2F6FEB;border-color:#2F6FEB;color:#fff}
-.demo-ops-chip.is-on-warn{background:#FFFBEB;border-color:#F59E0B;color:#F59E0B}
-.demo-ops-chip.is-on-ok{background:#F0FDF4;border-color:#17A34A;color:#17A34A}
-.demo-ops-chip.is-on-danger{background:#FEF2F2;border-color:#DC2626;color:#DC2626}
+.demo-ops-chip.is-on-warn{background:#2F6FEB;border-color:#2F6FEB;color:#fff}
+.demo-ops-chip.is-on-ok{background:#2F6FEB;border-color:#2F6FEB;color:#fff}
+.demo-ops-chip.is-on-danger{background:#2F6FEB;border-color:#2F6FEB;color:#fff}
 .demo-ops-section+.demo-ops-section{margin-top:4px;padding-top:12px;border-top:1px solid #E5E5E5}
 .demo-ops-chip.is-off{opacity:.55;text-decoration:line-through}
 .demo-ops-perm-g{margin-bottom:10px}
@@ -60,33 +67,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',sy
 .item-enter-active{transition:all .35s cubic-bezier(.32,.72,0,1)}.item-enter-from{opacity:0;transform:translateY(12px)}
 .toast-wrap{position:absolute;top:50px;left:16px;right:16px;z-index:99999;display:flex;flex-direction:column;align-items:center;pointer-events:none}
 .toast-item{padding:10px 20px;border-radius:12px;font-size:14px;font-weight:500;color:#fff;pointer-events:auto;backdrop-filter:blur(10px);text-align:center;max-width:80%;line-height:1.4}
-.toast-success{background:rgba(23,163,74,.9)}.toast-error{background:rgba(220,38,38,.9)}.toast-info{background:rgba(47,111,235,.9)}.toast-warn{background:rgba(217,119,6,.9)}
+.toast-success{background:rgba(23,163,74,.9)}.toast-error{background:rgba(220,38,38,.9)}.toast-info{background:rgba(43,63,95,.9)}.toast-warn{background:rgba(217,119,6,.9)}
 .toast-enter-active{transition:all .3s cubic-bezier(.32,.72,0,1)}.toast-leave-active{transition:all .25s ease-in}
 .toast-enter-from{opacity:0;transform:translateY(-20px) scale(.9)}.toast-leave-to{opacity:0;transform:translateY(-10px) scale(.95)}
 input[type=date],select{font-family:inherit}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield}
 .cb{width:20px;height:20px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid #E5E5E5;transition:all .15s}
-.cb.on{background:#2F6FEB;border-color:#2F6FEB;color:#fff}.cb.pt{border-color:#2F6FEB;color:#2F6FEB;background:#fff}
+.cb.on{background:var(--accent);border-color:var(--accent);color:#fff}.cb.pt{border-color:var(--accent);color:var(--link);background:#fff}
 .card-actions{display:flex;border-top:1px solid #E5E5E5;margin-top:0}
 .card-action-btn{flex:1;padding:10px 0;font-size:13px;font-weight:600;text-align:center;cursor:pointer;user-select:none;transition:opacity .15s}
 .card-action-btn:active{opacity:.8}
 .card-action-btn + .card-action-btn{border-left:1px solid #E5E5E5}
 .ptr-indicator{overflow:hidden;transition:height .2s;height:0;text-align:center;font-size:12px;color:#999;line-height:40px;flex-shrink:0}
-.ptr-indicator .ptr-spinner{display:inline-block;width:16px;height:16px;border:2px solid #E5E5E5;border-top-color:#2F6FEB;border-radius:50%;vertical-align:middle;margin-right:6px;animation:ptr-spin .6s linear infinite}
+.ptr-indicator .ptr-spinner{display:inline-block;width:16px;height:16px;border:2px solid #E5E5E5;border-top-color:var(--accent);border-radius:50%;vertical-align:middle;margin-right:6px;animation:ptr-spin .6s linear infinite}
 @keyframes ptr-spin{to{transform:rotate(360deg)}}
 .tab-fade-enter-active,.tab-fade-leave-active{transition:opacity .2s ease,transform .2s ease}
 .tab-fade-enter-from{opacity:0;transform:translateY(6px)}
 .tab-fade-leave-to{opacity:0;transform:translateY(-6px)}
 /* ══════ TAB: vehicles — 扫码 + track-map ══════ */
 .scan-frame{width:220px;height:220px;border:2px solid rgba(255,255,255,.6);border-radius:16px;position:relative;overflow:hidden}
-.scan-line{position:absolute;left:4px;right:4px;height:2px;background:#2F6FEB;animation:scan-move 2s ease-in-out infinite}
+.scan-line{position:absolute;left:4px;right:4px;height:2px;background:var(--accent);animation:scan-move 2s ease-in-out infinite}
 @keyframes scan-move{0%{top:4px}50%{top:212px}100%{top:4px}}
-.track-map{background:#E8EEF5;background-image:linear-gradient(rgba(47,111,235,.06)1px,transparent 1px),linear-gradient(90deg,rgba(47,111,235,.06)1px,transparent 1px);background-size:28px 28px}
+.track-map{background:#E8EEF5;background-image:linear-gradient(rgba(43,63,95,.06)1px,transparent 1px),linear-gradient(90deg,rgba(43,63,95,.06)1px,transparent 1px);background-size:28px 28px}
 .track-wheel-col{flex:1;height:180px;overflow-y:auto;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;mask-image:linear-gradient(to bottom,transparent,black 28%,black 72%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,black 28%,black 72%,transparent)}
 .track-wheel-col::-webkit-scrollbar{display:none}
 .track-wheel-item{height:36px;display:flex;align-items:center;justify-content:center;scroll-snap-align:center;font-size:16px;color:#999;flex-shrink:0}
 .track-wheel-item.is-on{color:#111;font-weight:600;font-size:17px}
-.track-wheel-mask{position:absolute;left:0;right:0;top:50%;height:36px;margin-top:-18px;pointer-events:none;border-top:1px solid #E5E5E5;border-bottom:1px solid #E5E5E5;background:rgba(47,111,235,.04)}
+.track-wheel-mask{position:absolute;left:0;right:0;top:50%;height:36px;margin-top:-18px;pointer-events:none;border-top:1px solid #E5E5E5;border-bottom:1px solid #E5E5E5;background:rgba(43,63,95,.04)}
 .track-poi{position:absolute;display:flex;flex-direction:column;align-items:center;pointer-events:none;z-[5]}
 .track-poi-dot{width:8px;height:8px;border-radius:50%;background:#6B6B6B;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .track-poi-label{margin-top:3px;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:500;color:#6B6B6B;background:rgba(255,255,255,.92);border:1px solid #E5E5E5;white-space:nowrap;max-width:72px;overflow:hidden;text-overflow:ellipsis}
@@ -104,25 +111,30 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .form-card .form-hint{font-size:12px;margin-top:6px}
 .form-card .form-actions{margin:4px 0 8px}
 .login-code-btn{border:none;min-width:7.25rem;min-height:48px;background:#F0F1F3;color:#9CA3AF;border-radius:12px;transition:background .15s,color .15s}
-.login-code-btn.is-on{background:#EBF1FD;color:#2F6FEB}
+.login-code-btn.is-on{background:#EBF1FD;color:var(--link)}
 .login-code-btn.is-cd{background:#F5F6F8;color:#6B6B6B}
 .login-code-btn:disabled,.login-code-btn.is-off{background:#F0F1F3;color:#9CA3AF;cursor:not-allowed}
 .login-nav-btn{width:2.25rem;height:2.25rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#111;background:transparent;transition:background .15s}
 .login-nav-btn:active{background:#F0F1F3}
 .login-lang-chip{display:inline-flex;align-items:center;gap:4px;max-width:8.5rem;height:2.25rem;padding:0 10px;border-radius:9999px;font-size:12px;font-weight:600;color:#111;background:#F5F6F8;cursor:pointer;transition:background .15s}
 .login-lang-chip:active{background:#EBECEF}
-.login-brand-mark{width:4.5rem;height:4.5rem;border-radius:1.25rem;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#2F6FEB 0%,#1E56C9 100%);box-shadow:0 8px 20px rgba(47,111,235,.28);color:#fff}
+.login-brand-mark{width:4.5rem;height:4.5rem;border-radius:1.25rem;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--accent) 0%,var(--accent) 100%);box-shadow:0 8px 20px rgba(43,63,95,.28);color:#fff}
 .login-cb{width:18px;height:18px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid #D0D0D0;background:#fff;transition:all .15s;margin-top:1px}
 .login-cb.on{background:#FF6A00;border-color:#FF6A00;color:#fff}
 .login-link{color:#FF6A00;font-weight:500}
 .login-submit{width:100%;padding:14px 16px;border-radius:12px;font-size:16px;font-weight:700;border:none;transition:background .15s,color .15s,opacity .15s}
-.login-submit.is-on{background:#1E56C9;color:#fff;cursor:pointer}
+.login-submit.is-on{background:var(--accent);color:#fff;cursor:pointer}
 .login-submit.is-on:active{background:#1847A8}
 .login-submit.is-off{background:#E8E8EC;color:#A0A0A8;cursor:not-allowed}
-.login-switch-primary{color:#2F6FEB;font-weight:600;font-size:14px;cursor:pointer}
+.login-switch-primary{color:var(--link);font-weight:600;font-size:14px;cursor:pointer}
 .login-switch-sec{display:inline-flex;align-items:center;gap:5px;color:#6B6B6B;font-size:13px;cursor:pointer}
 .login-switch-sec:active{opacity:.7}
 .login-clear{width:20px;height:20px;border-radius:9999px;background:#D8D8DC;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+/* ══════ BRAND LOADING: yadi-ring 橙色渐变圆环 + logo（参考项目A） ══════ */
+.yadi-loading{position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px}
+.yadi-loading .yadi-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(transparent 0 15%,#FF6A00 15% 70%,#FF9A4D 70% 85%,transparent 85% 100%);-webkit-mask:radial-gradient(circle,transparent 64%,#000 65%);mask:radial-gradient(circle,transparent 64%,#000 65%);animation:brand-spin 1.2s linear infinite}
+.yadi-loading .yadi-logo{position:relative;z-index:1;width:24px;height:24px;object-fit:contain}
+@keyframes brand-spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -130,6 +142,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-[393px] h-[852px] bg-black rounded-[55px] p-3 relative shrink-0" style="box-shadow:0 0 0 2px #333,0 30px 60px rgba(0,0,0,.35)">
 <div class="absolute top-[23px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-black rounded-[20px] z-[2000]"></div>
 <div class="w-full h-full bg-[#F6F7F9] rounded-[44px] overflow-hidden flex flex-col relative">
+
+<!-- ═══ BRAND LOADING: 全屏品牌 loading 遮罩（橙色圆环 + logo，参考项目A） ═══ -->
+<transition name="fd"><div v-if="brandLoading" class="absolute inset-0 z-[3000] flex items-center justify-center bg-white/70 rounded-[44px]" data-od-id="brand-loading-overlay"><div class="yadi-loading"><span class="yadi-ring"></span><img class="yadi-logo" src="images/logo.png" alt="logo"></div></div></transition>
 
 <!-- ═══ Toast ═══ -->
 <div class="toast-wrap"><transition-group name="toast"><div v-for="t in toasts" :key="t.id" class="toast-item" :class="'toast-'+t.type">{{ t.msg }}</div></transition-group></div>
@@ -147,11 +162,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex-1 overflow-y-auto hide-scroll px-3 py-2">
 <div v-for="c in dialFiltered" :key="c.code+c.name" @click="pickDial(c)"
   class="flex items-center gap-3 px-3.5 py-3.5 mb-1.5 rounded-xl cursor-pointer"
-  :style="activeDialCode===c.code ? 'background:#EBF2FF;box-shadow:inset 0 0 0 1px #2F6FEB' : 'background:#fff'"
+  :style="activeDialCode===c.code ? 'background:#EBF2FF;box-shadow:inset 0 0 0 1px var(--accent)' : 'background:#fff'"
   :data-od-id="'dial-'+c.code">
 <span class="text-[22px] w-8 text-center shrink-0">{{ c.flag }}</span>
-<span class="flex-1 text-[15px] min-w-0" :class="activeDialCode===c.code ? 'font-semibold text-[#2F6FEB]' : 'font-medium text-[#111]'">{{ c.name }}</span>
-<span class="text-[14px] tabular-nums shrink-0" :class="activeDialCode===c.code ? 'font-semibold text-[#2F6FEB]' : 'text-[#6B6B6B]'">{{ c.code }}</span>
+<span class="flex-1 text-[15px] min-w-0" :class="activeDialCode===c.code ? 'font-semibold text-[var(--link)]' : 'font-medium text-[#111]'">{{ c.name }}</span>
+<span class="text-[14px] tabular-nums shrink-0" :class="activeDialCode===c.code ? 'font-semibold text-[var(--link)]' : 'text-[#6B6B6B]'">{{ c.code }}</span>
 </div>
   <div v-if="!dialFiltered.length" class="py-16 text-center text-[14px] text-[#999]">{{ t('dialcode.noResults') }}</div>
 </div>
@@ -164,7 +179,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex items-center justify-between px-5 pt-4 pb-3 shrink-0">
 <span class="text-[15px] text-[#6B6B6B] cursor-pointer active:opacity-70" @click="cancelHmPicker">{{ t('common.cancel') }}</span>
 <span class="text-[16px] font-semibold text-[#111]">{{ hmPicker==='start'?t('profile.startTime'):t('profile.endTime') }}</span>
-<span class="text-[15px] font-semibold text-[#2F6FEB] cursor-pointer active:opacity-70" @click="confirmHmPicker">{{ t('common.confirm') }}</span>
+<span class="text-[15px] font-semibold text-[var(--link)] cursor-pointer active:opacity-70" @click="confirmHmPicker">{{ t('common.confirm') }}</span>
 </div>
 <div class="relative px-2 pb-8">
 <div class="track-wheel-mask"></div>
@@ -345,7 +360,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="mt-3 mx-4 rounded-xl overflow-hidden bg-white" style="border:1px solid #E5E5E5">
 <div v-for="(l,i) in langOptions" :key="l.id" @click="selectLangFromLogin(l.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?'border-bottom:1px solid #EDEDED':''">
 <span class="flex-1 text-[15px] font-medium">{{ l.label }}</span>
-<span v-if="appLang===l.id" class="text-[#2F6FEB]" v-html="luci('check','w-5 h-5')"></span>
+<span v-if="appLang===l.id" class="text-[var(--accent)]" v-html="luci('check','w-5 h-5')"></span>
 </div>
 </div>
 </div>
@@ -399,7 +414,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <template v-if="can('home.alert.recent')">
 <div class="flex justify-between items-center mb-3 mt-5">
 <span class="text-[15px] font-semibold">{{ t('home.recentAlerts') }}</span>
-<span v-if="true" class="flex items-center gap-0.5 text-sm text-[#2F6FEB] font-medium cursor-pointer select-none active:opacity-70" @click="homeOpen('alerts')">
+<span v-if="true" class="flex items-center gap-0.5 text-sm text-[var(--link)] font-medium cursor-pointer select-none active:opacity-70" @click="homeOpen('alerts')">
 {{ t('home.viewAllAlerts') }}<span v-if="pendingAlertCount" class="ml-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10px] font-semibold flex items-center justify-center">{{ pendingAlertCount>99?'99+':pendingAlertCount }}</span>
 <span v-html="luci('chevron-right','w-4 h-4')"></span>
 </span>
@@ -432,15 +447,15 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="homeOV==='alerts'" v-swipe-close="homeClose" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="homeClose"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="homeClose"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('home.alertCenter') }}</div>
 </div>
 <div class="bg-white shrink-0 px-4 pt-3 pb-2" style="border-bottom:1px solid #E5E5E5">
 <div class="filter-tabs mb-2.5">
-<div v-for="t in alertStatusTabs" :key="t.v" class="filter-pill" :style="alertStatus===t.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}" @click="alertStatus=t.v">{{ t.l }}<span v-if="t.v!==''&&alertStatusCnt[t.v]" class="ml-1 text-[11px] opacity-80">{{ alertStatusCnt[t.v] }}</span></div>
+<div v-for="t in alertStatusTabs" :key="t.v" class="filter-pill" :style="alertStatus===t.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}" @click="alertStatus=t.v">{{ t.l }}<span v-if="t.v!==''&&alertStatusCnt[t.v]" class="ml-1 text-[11px] opacity-80">{{ alertStatusCnt[t.v] }}</span></div>
 </div>
 <div class="filter-tabs">
-<div v-for="t in alertTypeTabs" :key="t.v" class="filter-pill" :style="alertType===t.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}" @click="alertType=t.v">{{ t.l }}</div>
+<div v-for="t in alertTypeTabs" :key="t.v" class="filter-pill" :style="alertType===t.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}" @click="alertType=t.v">{{ t.l }}</div>
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
@@ -473,7 +488,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="curAlert" v-swipe-close="closeAlertDetail" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="closeAlertDetail"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="closeAlertDetail"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('alert.detail') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-28 hide-scroll">
@@ -499,13 +514,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <div class="flex justify-between gap-3"><span class="text-[#6B6B6B] shrink-0">{{ t('alert.duration') }}</span><span class="font-medium text-right">{{ curAlert.duration }}</span></div>
           <div class="flex justify-between gap-3"><span class="text-[#6B6B6B] shrink-0">{{ t('alert.triggerCount') }}</span><span class="font-medium text-right">{{ t('alert.triggerCountSuffix', {n: curAlert.count}) }}</span></div>
           <div class="flex justify-between gap-3"><span class="text-[#6B6B6B] shrink-0">{{ t('alert.lastLocation') }}</span><span class="font-medium text-right">{{ curAlert.location }}</span></div>
-          <div v-if="curAlert.orderId" class="flex justify-between gap-3"><span class="text-[#6B6B6B] shrink-0">{{ t('alert.orderId') }}</span><span class="font-medium text-right text-[#2F6FEB]">{{ curAlert.orderId }}</span></div>
+          <div v-if="curAlert.orderId" class="flex justify-between gap-3"><span class="text-[#6B6B6B] shrink-0">{{ t('alert.orderId') }}</span><span class="font-medium text-right text-[#333]">{{ curAlert.orderId }}</span></div>
           <div v-if="curAlert.ignoreReason" class="flex justify-between gap-3"><span class="text-[#6B6B6B] shrink-0">{{ t('alert.ignoreReason') }}</span><span class="font-medium text-right">{{ ignoreReasonLabel(curAlert.ignoreReason) }}</span></div>
         </div>
 </div>
 <div class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden mb-3" data-od-id="alert-quick-actions">
         <div v-if="true" class="flex items-center gap-3 px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #E5E5E5" @click="goAlertVehicle">
-          <div class="w-9 h-9 rounded-[10px] bg-[#EBF1FD] flex items-center justify-center shrink-0"><span v-html="luci('bike','w-[18px] h-[18px] text-[#2F6FEB]')"></span></div>
+          <div class="w-9 h-9 rounded-[10px] bg-[#EBF1FD] flex items-center justify-center shrink-0"><span v-html="luci('bike','w-[18px] h-[18px] text-[var(--accent)]')"></span></div>
           <div class="flex-1 min-w-0"><div class="text-sm font-semibold">{{ t('alert.actionGoVehicle') }}</div><div class="text-xs text-[#999]">{{ t('alert.goVehicleSub') }}</div></div>
           <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')"></span>
         </div>
@@ -532,21 +547,21 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
               <div class="text-[12px] text-[#999] mt-0.5 font-mono">{{ ev.at }}</div>
             </div>
           </div>
-          <div v-if="curAlertTimelineHasMore" @click="alertTimelineExpanded=true" class="text-[13px] text-[#2F6FEB] font-medium pl-6 py-1 cursor-pointer active:opacity-70">{{ t('alert.expandAll', {n: curAlert.timeline.length}) }}</div>
+          <div v-if="curAlertTimelineHasMore" @click="alertTimelineExpanded=true" class="text-[13px] text-[var(--link)] font-medium pl-6 py-1 cursor-pointer active:opacity-70">{{ t('alert.expandAll', {n: curAlert.timeline.length}) }}</div>
           <div v-else-if="curAlert.timeline.length>3&&alertTimelineExpanded" @click="alertTimelineExpanded=false" class="text-[13px] text-[#6B6B6B] font-medium pl-6 py-1 cursor-pointer active:opacity-70">{{ t('alert.timelineCollapse') }}</div>
         </div>
       </div>
 </div>
 <div v-if="curAlert.status==='pending'" class="absolute bottom-0 left-0 right-0 bg-white px-5 pt-3 pb-8 flex gap-3" style="border-top:1px solid #E5E5E5;box-shadow:0 -2px 8px rgba(0,0,0,.04)">
  <button v-if="true" data-od-id="alert-btn-ignore" @click="alertMod='ignore'" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer" style="background:#fff;color:#111;border:1px solid #E5E5E5">{{ t('alert.actionIgnore') }}</button>
- <button v-if="true" data-od-id="alert-btn-start" @click="startProcessAlert" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none" style="background:#2F6FEB">{{ t('alert.actionStartProcess') }}</button>
+ <button v-if="true" data-od-id="alert-btn-start" @click="startProcessAlert" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none" style="background:var(--accent)">{{ t('alert.actionStartProcess') }}</button>
  </div>
  <div v-else-if="curAlert.status==='processing'" class="absolute bottom-0 left-0 right-0 bg-white px-5 pt-3 pb-8 flex gap-3" style="border-top:1px solid #E5E5E5;box-shadow:0 -2px 8px rgba(0,0,0,.04)">
  <button v-if="true" data-od-id="alert-btn-ignore-proc" @click="alertMod='ignore'" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer" style="background:#fff;color:#111;border:1px solid #E5E5E5">{{ t('alert.actionIgnore') }}</button>
- <button v-if="true" data-od-id="alert-btn-resolve" @click="resolveAlert" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none" style="background:#2F6FEB">{{ t('alert.actionResolve') }}</button>
+ <button v-if="true" data-od-id="alert-btn-resolve" @click="resolveAlert" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none" style="background:var(--accent)">{{ t('alert.actionResolve') }}</button>
  </div>
   <div v-else-if="curAlert.status==='ignored'" class="absolute bottom-0 left-0 right-0 bg-white px-5 pt-3 pb-8" style="border-top:1px solid #E5E5E5">
-  <button data-od-id="alert-btn-reopen" @click="reopenAlert" class="w-full py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer" style="background:#fff;color:#2F6FEB;border:1px solid #2F6FEB">{{ t('alert.timelineReopened') }}</button>
+  <button data-od-id="alert-btn-reopen" @click="reopenAlert" class="w-full py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer" style="background:#fff;color:var(--link);border:1px solid var(--accent)">{{ t('alert.timelineReopened') }}</button>
   </div>
  </div>
 </transition>
@@ -556,11 +571,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[17px] font-bold text-center">{{ t('alert.ignoreTitle') }}</div>
 <div class="text-[14px] text-[#666] text-center leading-relaxed">{{ t('alert.ignoreDesc') }}</div>
 <div class="flex flex-col gap-2">
-<div v-for="r in ignoreReasons" :key="r" @click="ignoreReasonPick=r" class="px-3 py-2.5 rounded-xl text-[13px] font-medium cursor-pointer transition-all" :style="ignoreReasonPick===r?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}">{{ ignoreReasonLabel(r) }}</div>
+<div v-for="r in ignoreReasons" :key="r" @click="ignoreReasonPick=r" class="px-3 py-2.5 rounded-xl text-[13px] font-medium cursor-pointer transition-all" :style="ignoreReasonPick===r?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}">{{ ignoreReasonLabel(r) }}</div>
 </div>
 <div class="flex gap-3 mt-1">
 <div @click="alertMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;background:#fff">{{ t('common.cancel') }}</div>
-<div @click="confirmIgnoreAlert" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:#2F6FEB">{{ t('common.confirm') }}</div>
+<div @click="confirmIgnoreAlert" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">{{ t('common.confirm') }}</div>
 </div>
 </div>
 </div>
@@ -576,16 +591,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex-1 rounded-full flex items-center py-1.5 gap-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:14px;padding-right:4px">
 <span v-html="luci('search','w-4 h-4 text-[#999] shrink-0')"></span>
 <input v-model="vehQ" type="text" :placeholder="t('vehicles.searchPlaceholder')" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="vehDoSearch">
-<div @click="vehDoSearch" class="h-8 px-3 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-xs font-semibold">{{ t('common.search') }}</div>
+<div @click="vehDoSearch" class="h-8 px-3 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-xs font-semibold">{{ t('common.search') }}</div>
 </div>
-<div @click="vehOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="vehHasF?{background:'#EBF1FD',border:'1px solid #2F6FEB',color:'#2F6FEB'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}">
+<div @click="vehOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="vehHasF?{background:'#EBF1FD',border:'1px solid var(--accent)',color:'var(--accent)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}">
 <span v-html="luci('sliders-horizontal','w-4 h-4')"></span>
 </div>
 </div>
 </div>
 <div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
 <div class="filter-tabs" id="vehiclePillRow">
-<div v-for="p in pills" :key="p.v" @click="vehPill=p.v" class="filter-pill" :style="vehPill===p.v?{background:'#2F6FEB',color:'#fff',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ pillCnt[p.v] }})</div>
+<div v-for="p in pills" :key="p.v" @click="vehPill=p.v" class="filter-pill" :style="vehPill===p.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ pillCnt[p.v] }})</div>
 </div>
 </div>
  <div class="ptr-indicator" id="ptr-veh"><span class="ptr-text">{{ t('common.pullToRefresh') }}</span></div>
@@ -625,18 +640,18 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  </template>
  <div v-else class="flex flex-col items-center justify-center py-16">
  <div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4">
- <span v-html="luci('bike','w-8 h-8 text-[#2F6FEB]')"></span>
+ <span v-html="luci('bike','w-8 h-8 text-[var(--accent)]')"></span>
  </div>
  <div class="text-[15px] font-semibold text-[#111] mb-1">{{ t('vehicles.noResults') }}</div>
  <div class="text-[13px] text-[#999] mb-4">{{ vehQ||vehHasF ? t('vehicles.noMatchingAdjustSearch') : t('vehicles.addFirstVehicle') }}</div>
- <div v-if="vehQ||vehHasF" @click="vehQ='';vehResetFS()" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:#2F6FEB;border:1px solid #2F6FEB">{{ t('vehicles.clearFilter') }}</div>
+ <div v-if="vehQ||vehHasF" @click="vehQ='';vehResetFS()" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--accent)">{{ t('vehicles.clearFilter') }}</div>
  </div>
  </div>
  </template>
  <template v-else>
  <div class="flex-1 min-h-0 relative flex flex-col overflow-hidden">
   <div v-if="!vehLoading && filtered.length && vehNoLocationCount>0" class="absolute top-2 left-3 right-3 z-[20] px-3 py-2 rounded-xl text-[12px] font-medium text-[#6B6B6B] bg-white/95" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.06)">{{ vehNoLocationCount>99?'99+':vehNoLocationCount }} {{ t('vehicles.noLocationCount', {n: ''}).replace(' ', '') }}{{ t('vehicles.noLocationCount', {n: ''}) }}</div>
-  <div class="flex-1 relative min-h-0 cursor-pointer" style="background:#E8EEF5;background-image:linear-gradient(rgba(47,111,235,.06)1px,transparent 1px),linear-gradient(90deg,rgba(47,111,235,.06)1px,transparent 1px);background-size:28px 28px" @click="vehMapSelect(null)">
+  <div class="flex-1 relative min-h-0 cursor-pointer" style="background:#E8EEF5;background-image:linear-gradient(rgba(43,63,95,.06)1px,transparent 1px),linear-gradient(90deg,rgba(43,63,95,.06)1px,transparent 1px);background-size:28px 28px" @click="vehMapSelect(null)">
    <template v-if="vehLoading">
     <div class="absolute inset-0 flex items-center justify-center"><div class="skeleton h-8 w-28 rounded"></div></div>
    </template>
@@ -656,7 +671,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
    <template v-else>
     <div v-for="(v,i) in mapVehicles" :key="v.vin" class="absolute z-[10] -translate-x-1/2 -translate-y-full cursor-pointer" :style="vehMapPinStyle(v,i)" @click.stop="vehMapSelect(v)">
      <div class="flex flex-col items-center">
-      <div class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md transition-transform" :style="{background:v.lost?'#DC2626':(v.online?'#17A34A':'#D97706'),transform:mapSelectedVin===v.vin?'scale(1.15)':'scale(1)',boxShadow:mapSelectedVin===v.vin?'0 0 0 3px rgba(47,111,235,.35)':''}">
+      <div class="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md transition-transform" :style="{background:v.lost?'#DC2626':(v.online?'#17A34A':'#D97706'),transform:mapSelectedVin===v.vin?'scale(1.15)':'scale(1)',boxShadow:mapSelectedVin===v.vin?'0 0 0 3px rgba(43,63,95,.35)':''}">
        <span v-html="luci('map-pin','w-4 h-4')"></span>
       </div>
       <div class="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] border-l-transparent border-r-transparent" :style="{borderTopColor:v.lost?'#DC2626':(v.online?'#17A34A':'#D97706')}"></div>
@@ -679,7 +694,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     </div>
     <div class="mt-3 pt-3 flex items-center justify-between" style="border-top:1px solid #E5E5E5">
      <span class="text-[11px] text-[#999]">{{ t('vehicles.lastSignalTime') }}：{{ mapSelectedVeh.time }}</span>
-     <span class="text-[13px] font-medium text-[#2F6FEB] flex items-center gap-0.5">{{ t('vehicles.viewDetail') }}<span v-html="luci('chevron-right','w-3.5 h-3.5')"></span></span>
+     <span class="text-[13px] font-medium text-[var(--link)] flex items-center gap-0.5">{{ t('vehicles.viewDetail') }}<span v-html="luci('chevron-right','w-3.5 h-3.5')"></span></span>
     </div>
    </div>
   </div>
@@ -688,7 +703,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div v-if="true" @click="vehToggleViewSafe" class="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform bg-white text-[#111]" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)">
      <span v-html="luci(vehView==='list'?'map':'list','w-5 h-5')"></span>
     </div>
-   <div v-if="can('vehicle.add')" @click="vehOpenAdd" class="w-14 h-14 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
+   <div v-if="can('vehicle.add')" @click="vehOpenAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
   </div>
  </template>
 
@@ -696,22 +711,22 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="vehOV==='detail'" v-swipe-close="()=>vehOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ t('vehicles.detail') }}</div>
-<span v-if="can('vehicle.edit')" class="text-[14px] font-medium text-[#2F6FEB] cursor-pointer shrink-0 active:opacity-70" @click="openVehEdit">{{ t('vehicles.actionEdit') }}</span>
+<span v-if="can('vehicle.edit')" class="text-[14px] font-medium text-[var(--link)] cursor-pointer shrink-0 active:opacity-70" @click="openVehEdit">{{ t('vehicles.actionEdit') }}</span>
 <span v-else class="min-w-[2rem] shrink-0" aria-hidden="true"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll" style="touch-action:pan-y">
 <div class="mb-3 rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="veh-detail-map-track-block">
-<div class="w-full h-[170px] relative cursor-pointer active:opacity-95" style="background:#E8EEF5;background-image:linear-gradient(rgba(47,111,235,.06)1px,transparent 1px),linear-gradient(90deg,rgba(47,111,235,.06)1px,transparent 1px);background-size:28px 28px" data-od-id="veh-detail-open-location" @click="openVehLocation">
+<div class="w-full h-[170px] relative cursor-pointer active:opacity-95" style="background:#E8EEF5;background-image:linear-gradient(rgba(43,63,95,.06)1px,transparent 1px),linear-gradient(90deg,rgba(43,63,95,.06)1px,transparent 1px);background-size:28px 28px" data-od-id="veh-detail-open-location" @click="openVehLocation">
 <template v-if="dv.lat!=null">
 <div class="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-full z-[5] pointer-events-none">
-<div class="w-8 h-8 rounded-full bg-[#2F6FEB] flex items-center justify-center text-white shadow-md"><span v-html="luci('bike','w-4 h-4')"></span></div>
-<div class="w-0 h-0 mx-auto border-l-[5px] border-r-[5px] border-t-[6px] border-l-transparent border-r-transparent" style="border-top-color:#2F6FEB"></div>
+<div class="w-8 h-8 rounded-full bg-[var(--accent)] flex items-center justify-center text-white shadow-md"><span v-html="luci('bike','w-4 h-4')"></span></div>
+<div class="w-0 h-0 mx-auto border-l-[5px] border-r-[5px] border-t-[6px] border-l-transparent border-r-transparent" style="border-top-color:var(--accent)"></div>
 </div>
 </template>
 <div v-else class="absolute inset-0 flex flex-col items-center justify-center gap-1.5 pointer-events-none">
-<span v-html="luci('map-pin','w-7 h-7 text-[#2F6FEB]')"></span>
+<span v-html="luci('map-pin','w-7 h-7 text-[var(--accent)]')"></span>
 <span class="text-[12px] text-[#6B6B6B]">{{ t('vehicles.noLocationTap') }}</span>
 </div>
 </div>
@@ -720,7 +735,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <div class="text-[14px] font-medium text-[#111] truncate">{{ dv.location || t('vehicles.lastLocationUnknown') }}</div>
   </div>
   <div class="shrink-0 px-3.5 py-3.5 flex items-center justify-center gap-0.5 cursor-pointer active:bg-[#F6F7F9] min-w-[88px]" data-od-id="veh-detail-history-track" @click="openVehTrack">
-  <span class="text-[14px] font-semibold text-[#2F6FEB]">{{ t('vehicles.historyTrack') }}</span>
+  <span class="text-[14px] font-semibold text-[#333]">{{ t('vehicles.historyTrack') }}</span>
   <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')"></span>
   </div>
   </div>
@@ -747,9 +762,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 <div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[#2F6FEB]')"></span></div>
+<div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">Wang Wu</div><div class="text-[13px] text-[#666]">+86 13800005555</div></div>
-<div class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[#2F6FEB] shrink-0"><span v-html="luci('phone','w-4 h-4')"></span></div>
+<div class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[var(--accent)] shrink-0"><span v-html="luci('phone','w-4 h-4')"></span></div>
 </div>
 <div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">{{ t('vehicles.vin') }}</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><div class="flex items-center gap-2"><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.lost?{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ dv.lost?t('vehicles.filterLost'):t('vehicles.filterNotLost') }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.online?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#FFFBEB',color:'#D97706',border:'1px solid #D97706'}">{{ dv.online?t('vehicles.online'):t('vehicles.offline') }}</span></div></div>
@@ -766,43 +781,43 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="vehOV==='location'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="veh-location-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5" data-od-id="veh-location-nav">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[15px] font-semibold mr-8 truncate px-1" data-od-id="veh-location-title">{{ dv.vin || t('vehicles.location') }}</div>
 </div>
 <div class="flex-1 min-h-0 relative track-map overflow-hidden" data-od-id="veh-location-map">
 <div v-if="locLoading" class="absolute inset-0 flex items-center justify-center z-20 bg-[#E8EEF5]/90">
 <div class="flex flex-col items-center gap-2">
-<div class="w-8 h-8 rounded-full border-2 border-[#E5E5E5] border-t-[#2F6FEB] anim-spin"></div>
+<div class="w-8 h-8 rounded-full border-2 border-[#E5E5E5] border-t-[var(--accent)] anim-spin"></div>
 <span class="text-[13px] text-[#6B6B6B]">{{ t('vehicles.locationLoading') }}</span>
 </div>
 </div>
 <template v-else>
 <svg class="absolute inset-0 w-full h-full z-[8] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
 <!-- 用户 ↔ 车辆直线 -->
-<line :x1="locUserPt.x" :y1="locUserPt.y" :x2="locVehPt.x" :y2="locVehPt.y" stroke="#2F6FEB" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2.2 1.6" vector-effect="non-scaling-stroke" opacity="0.95"/>
+<line :x1="locUserPt.x" :y1="locUserPt.y" :x2="locVehPt.x" :y2="locVehPt.y" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2.2 1.6" vector-effect="non-scaling-stroke" opacity="0.95"/>
 </svg>
 <div v-for="(p,i) in trackPois" :key="'lpoi-'+i" class="track-poi" :style="{left:p.x+'%',top:p.y+'%',transform:'translate(-50%,-50%)'}">
 <div class="track-poi-dot"></div>
 <div class="track-poi-label">{{ p.label }}</div>
 </div>
 <div class="absolute z-[14] -translate-x-1/2 -translate-y-1/2 transition-all duration-300" :style="{left:locUserPt.x+'%',top:locUserPt.y+'%'}" data-od-id="veh-location-user-dot">
-<div class="w-3.5 h-3.5 rounded-full bg-white" style="border:2.5px solid #2F6FEB;box-shadow:0 0 0 5px rgba(47,111,235,.18),0 1px 4px rgba(0,0,0,.12)"></div>
+<div class="w-3.5 h-3.5 rounded-full bg-white" style="border:2.5px solid var(--accent);box-shadow:0 0 0 5px rgba(43,63,95,.18),0 1px 4px rgba(0,0,0,.12)"></div>
 </div>
 <div v-if="locVehPt" class="absolute z-[15] -translate-x-1/2 -translate-y-full transition-all duration-300" :style="{left:locVehPt.x+'%',top:locVehPt.y+'%'}" data-od-id="veh-location-veh-pin">
 <div class="flex flex-col items-center">
 <div class="mb-1 px-2 py-0.5 rounded-md text-[11px] font-medium text-[#111] bg-white max-w-[140px] truncate" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.1)">{{ locAddressShort }}</div>
-<div class="w-11 h-11 rounded-full flex items-center justify-center text-white" style="background:#2F6FEB;box-shadow:0 2px 10px rgba(47,111,235,.4)">
+<div class="w-11 h-11 rounded-full flex items-center justify-center text-white" style="background:var(--accent);box-shadow:0 2px 10px rgba(43,63,95,.4)">
 <span v-html="luci('bike','w-5 h-5')"></span>
 </div>
-<div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[7px] border-l-transparent border-r-transparent" style="border-top-color:#2F6FEB"></div>
+<div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[7px] border-l-transparent border-r-transparent" style="border-top-color:var(--accent)"></div>
 </div>
 </div>
 </template>
 <div class="absolute right-3 top-1/2 -translate-y-1/2 z-[25] flex flex-col gap-2.5" data-od-id="veh-location-side-actions">
-<div @click="locFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='user'?{borderColor:'#2F6FEB',color:'#2F6FEB'}:{color:'#111'}" data-od-id="veh-location-btn-user">
+<div @click="locFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='user'?{borderColor:'var(--accent)',color:'var(--accent)'}:{color:'#111'}" data-od-id="veh-location-btn-user">
 <span v-html="luci('navigation','w-5 h-5')"></span>
 </div>
-<div @click="locFocusVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='vehicle'?{borderColor:'#2F6FEB',color:'#2F6FEB'}:{color:'#111'}" data-od-id="veh-location-btn-vehicle">
+<div @click="locFocusVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='vehicle'?{borderColor:'var(--accent)',color:'var(--accent)'}:{color:'#111'}" data-od-id="veh-location-btn-vehicle">
 <span v-html="luci('bike','w-5 h-5')"></span>
 </div>
 <div @click="locRingVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locRinging?{borderColor:'#E67E22',color:'#E67E22',background:'#FFF7ED'}:{color:'#111'}" data-od-id="veh-location-btn-ring">
@@ -832,7 +847,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="vehOV==='track'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[520] flex flex-col" data-od-id="veh-track-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('vehicles.track') }}</div>
 </div>
 <div class="bg-white px-4 py-3 shrink-0 flex items-center gap-2" style="border-bottom:1px solid #E5E5E5" data-od-id="veh-track-time-bar">
@@ -855,7 +870,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex-1 min-h-0 relative track-map overflow-hidden" data-od-id="veh-track-map">
 <div v-if="trackLoading" class="absolute inset-0 flex items-center justify-center z-20 bg-[#E8EEF5]/90">
 <div class="flex flex-col items-center gap-2">
-<div class="w-8 h-8 rounded-full border-2 border-[#E5E5E5] border-t-[#2F6FEB] anim-spin"></div>
+<div class="w-8 h-8 rounded-full border-2 border-[#E5E5E5] border-t-[var(--accent)] anim-spin"></div>
 <span class="text-[13px] text-[#6B6B6B]">{{ t('vehicles.trackLoading') }}</span>
 </div>
 </div>
@@ -868,7 +883,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 <template v-else>
 <svg class="absolute inset-0 w-full h-full z-[8] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-<polyline :points="trackPolyline" fill="none" stroke="#2F6FEB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+<polyline :points="trackPolyline" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
 </svg>
 <div v-for="(p,i) in trackPois" :key="'poi-'+i" class="track-poi" :style="{left:p.x+'%',top:p.y+'%',transform:'translate(-50%,-50%)'}">
 <div class="track-poi-dot"></div>
@@ -882,8 +897,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
  <div v-if="trackEndPt" class="absolute z-[12] -translate-x-1/2 -translate-y-full" :style="{left:trackEndPt.x+'%',top:trackEndPt.y+'%'}">
  <div class="flex flex-col items-center">
- <div class="track-end-pin" style="background:#2F6FEB">{{ t('vehicles.trackEndPin') }}</div>
- <div class="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] border-l-transparent border-r-transparent" style="border-top-color:#2F6FEB"></div>
+ <div class="track-end-pin" style="background:var(--accent)">{{ t('vehicles.trackEndPin') }}</div>
+ <div class="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] border-l-transparent border-r-transparent" style="border-top-color:var(--accent)"></div>
  </div>
  </div>
   </template>
@@ -898,7 +913,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex items-center justify-between px-5 pt-4 pb-3 shrink-0">
 <span class="text-[15px] text-[#6B6B6B] cursor-pointer active:opacity-70" @click="cancelTrackTimePicker">{{ t('common.cancel') }}</span>
 <span class="text-[16px] font-semibold text-[#111]">{{ trackTimePicker==='start'?t('vehicles.selectStartTime'):t('vehicles.selectEndTime') }}</span>
-<span class="text-[15px] font-semibold text-[#2F6FEB] cursor-pointer active:opacity-70" @click="confirmTrackTimePicker">{{ t('common.confirm') }}</span>
+<span class="text-[15px] font-semibold text-[var(--link)] cursor-pointer active:opacity-70" @click="confirmTrackTimePicker">{{ t('common.confirm') }}</span>
 </div>
 <div class="relative px-2 pb-8">
 <div class="track-wheel-mask"></div>
@@ -937,7 +952,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="vehOV==='edit'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('vehicles.editVehicleInfo') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-28 hide-scroll">
@@ -945,8 +960,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="form-row"><div class="form-label">{{ t('vehicles.vin') }}</div><div class="text-[15px] font-semibold text-[#111] py-1">{{ dv.vin }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('vehicles.status') }}</div><div class="text-[15px] font-semibold py-1" :style="{color:dv.online?'#17A34A':'#D97706'}">{{ dv.online?t('vehicles.online'):t('vehicles.offline') }} · {{ vehStatusLabel(dv.status) }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('vehicles.model') }}</div>
-<div @click="vehShowModelSheet=true" class="flex items-center p-3 rounded-xl cursor-pointer active:bg-[#dce8fb]" style="border:2px dashed #2F6FEB;background:#EBF1FD">
-<div class="w-11 h-11 rounded-lg bg-white flex items-center justify-center mr-3 shrink-0" style="border:1px solid #E5E5E5"><span v-html="luci('bike','w-6 h-6 text-[#2F6FEB]')"></span></div>
+<div @click="vehShowModelSheet=true" class="flex items-center p-3 rounded-xl cursor-pointer active:bg-[#dce8fb]" style="border:2px dashed var(--accent);background:#EBF1FD">
+<div class="w-11 h-11 rounded-lg bg-white flex items-center justify-center mr-3 shrink-0" style="border:1px solid #E5E5E5"><span v-html="luci('bike','w-6 h-6 text-[var(--accent)]')"></span></div>
 <span class="flex-1 text-[15px]" :style="editModel?{color:'#111',fontWeight:500}:{color:'#999'}">{{ editModel||t('vehicles.selectModelType') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
 </div></div>
@@ -954,7 +969,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5">
-<button @click="saveVehEdit" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:#2F6FEB">{{ t('vehicles.save') }}</button>
+<button @click="saveVehEdit" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:var(--accent)">{{ t('vehicles.save') }}</button>
 </div>
 </div>
 </transition>
@@ -963,14 +978,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="vehOV==='add'" v-swipe-close="()=>{vehOV=null;addModel='';addVin='';addCtrl=''}" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="vehOV=null;addModel='';addVin='';addCtrl=''"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV=null;addModel='';addVin='';addCtrl=''"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('vehicles.add') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-28 hide-scroll">
 <div class="form-card">
 <div class="form-row"><div class="form-label">{{ t('vehicles.model') }}</div>
-<div @click="vehShowModelSheet=true" class="flex items-center p-3 rounded-xl cursor-pointer active:bg-[#dce8fb]" style="border:2px dashed #2F6FEB;background:#EBF1FD">
-<div class="w-11 h-11 rounded-lg bg-white flex items-center justify-center mr-3 shrink-0" style="border:1px solid #E5E5E5"><span v-html="luci('bike','w-6 h-6 text-[#2F6FEB]')"></span></div>
+<div @click="vehShowModelSheet=true" class="flex items-center p-3 rounded-xl cursor-pointer active:bg-[#dce8fb]" style="border:2px dashed var(--accent);background:#EBF1FD">
+<div class="w-11 h-11 rounded-lg bg-white flex items-center justify-center mr-3 shrink-0" style="border:1px solid #E5E5E5"><span v-html="luci('bike','w-6 h-6 text-[var(--accent)]')"></span></div>
 <span class="flex-1 text-[15px]" :style="addModel?{color:'#111',fontWeight:500}:{color:'#999'}">{{ addModel||t('vehicles.selectModelType') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
 </div></div>
@@ -979,7 +994,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5">
-<button @click="submitAdd" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" :style="canSubmit?{background:'#2F6FEB'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">{{ t('vehicles.confirm') }}</button>
+<button @click="submitAdd" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" :style="canSubmit?{background:'var(--accent)'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">{{ t('vehicles.confirm') }}</button>
 </div>
 </div>
 </transition>
@@ -995,7 +1010,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div class="flex-1 overflow-y-auto pb-8">
 <div v-for="m in filteredModels" :key="m.name" @click="pickModel(m)" class="flex items-center px-5 py-4 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED">
-<div class="w-12 h-12 rounded-lg bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="w-12 h-12 rounded-lg bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-7 h-7 text-[var(--accent)]')"></span></div>
 <span class="flex-1 text-[15px] font-medium">{{ m.name }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
 </div>
@@ -1007,7 +1022,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="fd"><div v-if="scanning" class="absolute inset-0 z-[700] flex flex-col items-center justify-center" style="background:rgba(0,0,0,.85)">
 <div class="scan-frame"><div class="scan-line"></div><div class="absolute inset-0 flex items-center justify-center"><span v-html="luci('scan','w-10 h-10 text-white/20')"></span></div></div>
 <div class="text-white/50 text-[13px] mt-5 mb-6">{{ t('vehicles.scanVinHint') }}</div>
-<div @click="doScan" class="px-10 py-3 rounded-full text-[15px] font-semibold text-white cursor-pointer active:opacity-70" style="background:#2F6FEB">{{ t('vehicles.simulateScan') }}</div>
+<div @click="doScan" class="px-10 py-3 rounded-full text-[15px] font-semibold text-white cursor-pointer active:opacity-70" style="background:var(--accent)">{{ t('vehicles.simulateScan') }}</div>
 <div @click="scanning=false" class="mt-4 text-white/40 text-[13px] cursor-pointer active:opacity-60">{{ t('common.cancel') }}</div>
 </div></transition>
 
@@ -1020,27 +1035,27 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="mb-5">
 <div class="text-[14px] font-semibold mb-2">{{ t('vehicles.filterModel') }}</div>
 <div class="flex flex-wrap gap-2">
-<div v-for="m in vehModels" :key="m.name" @click="vehToggleFSModel(m.name)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsModelC===m.name?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ m.name }}</div>
+<div v-for="m in vehModels" :key="m.name" @click="vehToggleFSModel(m.name)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsModelC===m.name?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ m.name }}</div>
 </div>
 </div>
 <div class="mb-4">
 <div class="text-[14px] font-semibold mb-2">{{ t('vehicles.filterOnline') }}</div>
 <div class="flex flex-wrap gap-2">
-<div @click="vehToggleFSOnline(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===true?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOnline') }}</div>
-<div @click="vehToggleFSOnline(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===false?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOffline') }}</div>
+<div @click="vehToggleFSOnline(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOnline') }}</div>
+<div @click="vehToggleFSOnline(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsOnlineC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterOffline') }}</div>
 </div>
 </div>
 <div class="mb-4">
 <div class="text-[14px] font-semibold mb-2">{{ t('vehicles.filterLostLabel') }}</div>
 <div class="flex flex-wrap gap-2">
-<div @click="vehToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===false?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterNotLost') }}</div>
-<div @click="vehToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===true?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterLost') }}</div>
+<div @click="vehToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterNotLost') }}</div>
+<div @click="vehToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('vehicles.filterLost') }}</div>
 </div>
 </div>
 </div>
 <div class="flex gap-3 px-5 pb-8 shrink-0">
 <button @click="vehResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">{{ t('vehicles.filterReset') }}</button>
-<button @click="vehApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:#2F6FEB">{{ t('vehicles.filterConfirm') }}</button>
+<button @click="vehApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:var(--accent)">{{ t('vehicles.filterConfirm') }}</button>
 </div>
 </div>
 </transition>
@@ -1052,7 +1067,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[14px] text-[#666] text-center leading-relaxed">{{ vehModDesc }}</div>
 <div class="flex gap-3 mt-2">
 <div @click="vehMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">{{ t('common.cancel') }}</div>
-<div @click="vehConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" :style="vehModDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">{{ t('common.confirm') }}</div>
+<div @click="vehConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" style="background:var(--accent)">{{ t('common.confirm') }}</div>
 </div>
 </div>
 </div>
@@ -1067,14 +1082,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex-1 rounded-full flex items-center py-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:6px;padding-right:4px">
 <select v-model="searchScope" class="bg-transparent border-none text-[11px] font-medium outline-none pl-1.5 pr-3 mr-1 cursor-pointer appearance-none truncate" style="border-right:1px solid #E5E5E5;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%2710%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23999%27 stroke-width=%272%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 0 center;max-width:62px"><option value="id">{{ t('orders.searchId') }}</option><option value="account">{{ t('orders.searchAccount') }}</option><option value="phone">{{ t('orders.searchPhone') }}</option><option value="email">{{ t('orders.searchEmail') }}</option><option value="vin">{{ t('orders.searchVin') }}</option></select>
 <input v-model="ordersQ" type="text" :placeholder="searchPH" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="ordersDoSearch">
-<div @click="ordersDoSearch" class="h-7 px-2.5 bg-[#2F6FEB] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-[11px] font-semibold">{{ t('common.search') }}</div>
+<div @click="ordersDoSearch" class="h-7 px-2.5 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-[11px] font-semibold">{{ t('common.search') }}</div>
 </div>
-<div @click="ordersOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="ordersHasF?{background:'#EBF1FD',border:'1px solid #2F6FEB',color:'#2F6FEB'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
+<div @click="ordersOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="ordersHasF?{background:'#EBF1FD',border:'1px solid var(--accent)',color:'var(--accent)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
 </div>
 </div>
 <div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
 <div class="filter-tabs" id="orderPillRow">
-<div v-for="p in quickPills" :key="p.v" @click="ordersSetPill(p.v)" class="filter-pill" :style="ordersPillActive(p)?{background:'#2F6FEB',color:'#fff',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ qCnt[p.v]||0 }})</div>
+<div v-for="p in quickPills" :key="p.v" @click="ordersSetPill(p.v)" class="filter-pill" :style="ordersPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ qCnt[p.v]||0 }})</div>
 </div>
 </div>
 <div class="ptr-indicator" id="ptr-ord"><span class="ptr-text">{{ t('common.pullToRefresh') }}</span></div>
@@ -1089,7 +1104,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 <template v-else-if="oFiltered.length">
 <div v-for="(o,i) in oFiltered" :key="o.id" @click="ordersOpenDetail(o)" class="bg-white rounded-xl p-4 mb-2.5 cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms',opacity:o.status==='cancelled'?0.6:1}">
-<div class="flex justify-between items-center mb-2"><span class="text-[13px] font-semibold">{{ o.id }}</span><span class="text-[11px] font-semibold px-2 py-0.5 rounded" :style="stg(o.status)">{{ sl(o.status) }}</span></div>
+<div class="flex justify-between items-center mb-2"><span class="text-[13px] font-semibold">{{ o.id }}</span><span class="text-[12px] font-semibold" :style="stg(o.status)">{{ sl(o.status) }}</span></div>
 <div v-if="hasVehicle(o.status)" class="flex justify-between items-center text-[12px] mb-1"><span class="text-[#666]">{{ o.vin }}</span><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
 <div v-else class="flex justify-end items-center text-[12px] mb-1"><span class="text-[18px] font-bold">¥{{ o.amount }}</span></div>
 <div class="flex justify-between items-center text-[12px] mb-2"><span class="text-[#666]">{{ o.customer }} {{ o.phone }}</span><span class="text-[#999]">{{ o.plan }}</span></div>
@@ -1097,29 +1112,30 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </template>
 <div v-else class="flex flex-col items-center justify-center py-16">
-<div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('file-text','w-8 h-8 text-[#2F6FEB]')"></span></div>
+<div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('file-text','w-8 h-8 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ t('orders.noResults') }}</div>
 <div class="text-[13px] text-[#999] mb-4">{{ ordersQ||ordersHasF ? t('orders.noResultsFiltered') : t('orders.noResultsSub') }}</div>
-<div v-if="ordersQ||ordersHasF" @click="ordersClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:#2F6FEB;border:1px solid #2F6FEB">{{ t('common.reset') }}</div>
+<div v-if="ordersQ||ordersHasF" @click="ordersClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--accent)">{{ t('common.reset') }}</div>
 </div>
 </div>
 </template>
 <transition name="sl"><div v-if="ordersOV==='detail'" v-swipe-close="()=>ordersOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="ordersOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ t('orders.detail') }}</div>
-<span v-if="refundable&&can('order.refund.list')" class="text-[14px] font-medium cursor-pointer shrink-0 text-[#2F6FEB] active:opacity-70 min-w-[4rem] text-right" @click="openRefundRecords">{{ t('orders.refundRecords') }}</span>
+<span v-if="refundable&&can('order.refund.list')" class="text-[14px] font-medium cursor-pointer shrink-0 text-[var(--link)] active:opacity-70 min-w-[4rem] text-right" @click="openRefundRecords">{{ t('orders.refundRecords') }}</span>
 <span v-else class="min-w-[4rem] shrink-0" aria-hidden="true"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
 <div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.orderId') }}</span><span class="flex items-center text-[14px] font-semibold">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 ml-1.5 text-[#999] cursor-pointer active:text-[#2F6FEB]')" @click="copyId"></span></span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.customer') }}</span><span class="flex items-center"><span class="text-[14px] font-semibold">{{ do_.customer }} {{ do_.phone }}</span><div class="w-7 h-7 rounded-full bg-[#EBF1FD] flex items-center justify-center ml-2 text-[#2F6FEB] shrink-0"><span v-html="luci('phone','w-3.5 h-3.5')"></span></div></span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.orderId') }}</span><span class="flex items-center text-[14px] font-semibold">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 ml-1.5 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.customer') }}</span><span class="flex items-center"><span class="text-[14px] font-semibold">{{ do_.customer }} {{ do_.phone }}</span><div class="w-7 h-7 rounded-full bg-[#EBF1FD] flex items-center justify-center ml-2 text-[var(--accent)] shrink-0"><span v-html="luci('phone','w-3.5 h-3.5')"></span></div></span></div>
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('vehicles.trackStart') }}</span><span class="text-[14px] font-semibold">2025-01-18 14:00:00</span></div>
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.endTime') }}</span><span class="text-[14px] font-semibold">2025-01-20 14:00:00</span></div>
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.plan') }}</span><span class="text-[14px] font-semibold">{{ do_.plan }}</span></div>
-<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.status') }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
-<div class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">{{ t('orders.cancelTime') }}</span><span class="text-[14px] font-semibold text-[#999]">{{ dSt==='cancelled'?'2025-01-18 10:15:00':'—' }}</span></div>
+<div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.status') }}</span><span class="text-[12px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
+<div v-if="dSt==='complete'" class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.finishTime') }}</span><span class="text-[14px] font-semibold text-[#999]">2025-01-20 14:30:00</span></div>
+<div v-if="dSt==='cancelled'" class="flex justify-between items-center py-2.5"><span class="text-[12px] text-[#999]">{{ t('orders.cancelTime') }}</span><span class="text-[14px] font-semibold text-[#999]">2025-01-18 10:15:00</span></div>
 </div>
 <div class="bg-white rounded-xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex justify-between items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[12px] text-[#999]">{{ t('orders.rent') }}</span><span class="text-[14px] font-semibold">¥{{ do_.amount }}</span></div>
@@ -1131,14 +1147,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 </div>
 <div v-if="showVehicle" class="bg-white rounded-xl p-4 mb-3 flex items-center" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[#2F6FEB]')"></span></div>
+<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0"><div class="text-[13px] font-semibold mb-0.5">{{ t('orders.vinLabel') }}{{ do_.vin }}</div><div class="text-[12px] text-[#666] flex items-center gap-1">{{ do_.model }} <span class="w-1.5 h-1.5 rounded-full bg-[#17A34A]"></span> {{ t('orders.vehicleOnline') }}</div></div>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999] shrink-0')"></span>
 </div>
 
 <!-- ═══ 客户补充资料 · 入口卡片 ═══ -->
 <div v-if="showDocCard" @click="openDocsPage" class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('folder-open','w-5 h-5 text-[#2F6FEB]')"></span></div>
+<div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('folder-open','w-5 h-5 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0">
 <div class="text-[14px] font-semibold">{{ t('orders.customerDocs') }}</div>
 <div class="text-[12px] text-[#999] mt-0.5">{{ curDocs.length ? t('orders.docCount',{n:curDocs.length}) : t('orders.docNoDataYet') }}</div>
@@ -1149,7 +1165,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div v-if="showOrderActionsBar" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
 <div class="flex gap-3">
-<button v-if="showPrimaryAction" @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="primaryDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">{{ primaryLabel }}</button>
+<button v-if="showPrimaryAction" @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="primaryDanger?{background:'#DC2626'}:{background:'var(--accent)'}">{{ primaryLabel }}</button>
 <button v-if="dualMode&&showDangerAction" @click="ordersDoDanger" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-colors" :style="{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
 </div></div>
 </div></transition>
@@ -1158,7 +1174,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <transition name="sl">
  <div v-if="ordersOV==='refunds'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="order-refund-records">
  <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
- <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+ <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
  <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('orders.refundRecords') }}</div>
  </div>
  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
@@ -1194,7 +1210,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <transition name="sl">
  <div v-if="ordersOV==='docs'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
  <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
- <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+ <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
  <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('orders.customerDocsTitle') }}</div>
  </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-24 hid">
@@ -1226,7 +1242,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 </div>
 <div class="absolute bottom-7 left-5 right-5">
-<button v-if="canEditDocs" @click="openDocSheet" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:#2F6FEB">{{ t('orders.docAddButton') }}</button>
+<button v-if="canEditDocs" @click="openDocSheet" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:var(--accent)">{{ t('orders.docAddButton') }}</button>
 </div>
 </div>
 </transition>
@@ -1264,7 +1280,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 <template v-else>
 <textarea v-model="docText" :placeholder="t('orders.docTextPlaceholder')" class="w-full p-4 rounded-xl text-[15px] outline-none resize-none min-h-[120px]" style="border:1px solid #E5E5E5;font-family:inherit"></textarea>
-<div @click="addDocText" class="mt-3 w-full py-3 rounded-xl text-[15px] font-semibold text-white text-center cursor-pointer transition-colors" :style="docText.trim()?{background:'#2F6FEB'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">{{ t('orders.refundModalConfirm') }}</div>
+<div @click="addDocText" class="mt-3 w-full py-3 rounded-xl text-[15px] font-semibold text-white text-center cursor-pointer transition-colors" :style="docText.trim()?{background:'var(--accent)'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">{{ t('orders.refundModalConfirm') }}</div>
 </template>
 </div>
 </div>
@@ -1303,9 +1319,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">{{ t('orders.filterSheetTitle') }}</div>
 <div class="flex-1 overflow-y-auto px-5 pb-3 hid" style="min-height:0">
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" @click="ordersFsStC=ordersFsStC===s.v?'':s.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsStC===s.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPaymentChannel') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div @click="ordersFsPayC=ordersFsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='2c2p'?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div @click="ordersFsPayC=ordersFsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='offline'?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('orders.paymentOffline') }}</div></div></div>
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPayStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" @click="ordersFsPayStC=ordersFsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayStC===p.v?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" @click="ordersFsStC=ordersFsStC===s.v?'':s.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsStC===s.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPaymentChannel') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div @click="ordersFsPayC=ordersFsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='2c2p'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div @click="ordersFsPayC=ordersFsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='offline'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t('orders.paymentOffline') }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterPayStatus') }}</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" @click="ordersFsPayStC=ordersFsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayStC===p.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
  <div style="margin-bottom:16px" data-od-id="orders-fs-create-time">
   <div class="text-[14px] font-semibold" style="margin-bottom:8px">{{ t('orders.filterCreateDate') }}</div>
   <div style="display:flex;gap:8px;align-items:center">
@@ -1321,7 +1337,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
    </div>
   </div>
  </div>
- <div class="flex gap-3 px-5 pb-8 shrink-0"><button @click="ordersResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">{{ t('orders.filterReset') }}</button><button @click="ordersApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:#2F6FEB">{{ t('orders.filterConfirm') }}</button></div>
+ <div class="flex gap-3 px-5 pb-8 shrink-0"><button @click="ordersResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">{{ t('orders.filterReset') }}</button><button @click="ordersApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:var(--accent)">{{ t('orders.filterConfirm') }}</button></div>
  </div></transition>
 
  <!-- ═══ ORDERS CREATE-TIME DATE PICKER ═══ -->
@@ -1331,7 +1347,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <div class="flex items-center justify-between px-5 pt-4 pb-3 shrink-0">
  <span class="text-[15px] text-[#6B6B6B] cursor-pointer active:opacity-70" @click="cancelOrdersDatePicker">{{ t('orders.datePickerCancel') }}</span>
 <span class="text-[16px] font-semibold text-[#111]">{{ ordersDatePicker==='start'?t('orders.datePickerStart'):t('orders.datePickerEnd') }}</span>
-<span class="text-[15px] font-semibold text-[#2F6FEB] cursor-pointer active:opacity-70" @click="confirmOrdersDatePicker">{{ t('orders.datePickerConfirm') }}</span>
+<span class="text-[15px] font-semibold text-[var(--link)] cursor-pointer active:opacity-70" @click="confirmOrdersDatePicker">{{ t('orders.datePickerConfirm') }}</span>
  </div>
  <div class="relative px-2 pb-8">
  <div class="track-wheel-mask"></div>
@@ -1361,7 +1377,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
 <div class="text-[17px] font-bold text-center">{{ ordersModTitle }}</div>
 <div class="text-[14px] text-[#666] text-center leading-relaxed">{{ ordersModDesc }}</div>
-<div class="flex gap-3 mt-2"><div @click="ordersMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">{{ t('orders.ordersModalCancel') }}</div><div @click="ordersConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" :style="ordersModDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">{{ t('orders.ordersModalConfirm') }}</div></div>
+<div class="flex gap-3 mt-2"><div @click="ordersMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">{{ t('orders.ordersModalCancel') }}</div><div @click="ordersConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" style="background:var(--accent)">{{ t('orders.ordersModalConfirm') }}</div></div>
 </div>
 </div></transition>
 </template>
@@ -1389,15 +1405,15 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <template v-if="profileOV||profileSub">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-16 flex items-center"><div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD] transition-colors" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div></div>
+<div class="w-16 flex items-center"><div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD] transition-colors" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ hdrTitle }}</div>
-<div class="w-16 flex items-center justify-end"><span v-if="hdrAction" class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="hdrAction.fn">{{ hdrAction.label }}</span></div>
+<div class="w-16 flex items-center justify-end"><span v-if="hdrAction" class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="hdrAction.fn">{{ hdrAction.label }}</span></div>
 </div>
   </template>
   
   <transition name="sl"><div v-if="profileOV==='info'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
   <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-  <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+  <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
   <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.personalInfo') }}</div>
   </div>
   <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -1437,7 +1453,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
     <transition name="sl"><div v-if="profileSub==='pwdVerify'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="pwd-verify-page">
       <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-        <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+        <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
         <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.changePassword') }}</div>
       </div>
       <div class="px-4 pt-4 flex-1 overflow-y-auto flex flex-col">
@@ -1481,7 +1497,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
    <transition name="sl"><div v-if="profileSub==='pwdReset'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="pwd-reset-page">
      <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub='pwdVerify'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub='pwdVerify'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
         <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.resetPassword') }}</div>
      </div>
      <div class="px-4 pt-4 flex-1 overflow-y-auto">
@@ -1515,7 +1531,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
    <transition name="sl"><div v-if="profileSub==='bindPhone'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="bind-phone-page">
      <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
        <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.bindNewPhone') }}</div>
      </div>
      <div v-if="hasPhone" class="bg-[#FFF8E6] px-4 py-2.5 text-[13px] text-[#B07B00] shrink-0">{{ t('profile.phoneBound') }}{{ boundPhone }}</div>
@@ -1553,7 +1569,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
    <transition name="sl"><div v-if="profileSub==='bindEmail'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="bind-email-page">
      <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
        <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.bindNewEmail') }}</div>
      </div>
      <div v-if="hasEmail" class="bg-[#FFF8E6] px-4 py-2.5 text-[13px] text-[#B07B00] shrink-0">{{ t('profile.emailBound') }}{{ boundEmail }}</div>
@@ -1585,15 +1601,15 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   
   <transition name="sl"><div v-if="profileOV==='store'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.storeList') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <transition-group name="item">
 <div v-for="(s,i) in stores" :key="s.name" @click="doSwitch(s.name)" class="bg-white rounded-xl p-4 mb-2.5 flex items-center cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
-<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('building-2','w-5 h-5 text-[#2F6FEB]')"></span></div>
+<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('building-2','w-5 h-5 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ s.name }}</div><div class="text-xs text-[#999] truncate">{{ s.addr }}</div></div>
-<span v-if="curStore===s.name" v-html="luci('check','w-5 h-5 text-[#2F6FEB] shrink-0')"></span>
+<span v-if="curStore===s.name" v-html="luci('check','w-5 h-5 text-[var(--accent)] shrink-0')"></span>
 </div>
 </transition-group>
 </div>
@@ -1601,7 +1617,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="sl"><div v-if="profileOV==='model'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.modelManage') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -1611,14 +1627,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition-group v-if="mFilter.length" name="item">
 <div v-for="(m,i) in mFilter" :key="m.name" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
 <div class="p-4 flex items-center">
-<div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[#2F6FEB]')"></span></div>
+<div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[var(--accent)]')"></span></div>
 <div class="flex-1"><div class="text-[15px] font-semibold mb-1">{{ m.name }}</div><div class="flex gap-3 text-xs text-[#666]"><span>{{ t('profile.modelCount',{n:m.count}) }}</span><span>{{ t('profile.modelRentLabel',{n:m.rent}) }}</span><span>{{ t('profile.modelDepositLabel',{n:m.deposit}) }}</span></div><div class="text-[11px] text-[#999] mt-1">{{ t('profile.lastUpdateLabel',{time:m.time}) }}</div></div>
 </div>
-<div v-if="can('model.edit')" class="card-actions"><div class="card-action-btn" style="color:#2F6FEB" @click="openModelEdit(m)">{{ t('vehicles.actionEdit') }}</div></div>
+<div v-if="can('model.edit')" class="card-actions"><div class="card-action-btn" style="color:var(--link)" @click="openModelEdit(m)">{{ t('vehicles.actionEdit') }}</div></div>
 </div>
 </transition-group>
 <div v-else class="flex flex-col items-center py-16">
-<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('bike','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('bike','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ mQ ? t('profile.noMatchingModels') : t('profile.noModels') }}</div>
 <div class="text-[13px] text-[#999]">{{ mQ ? t('profile.adjustModelSearch') : t('profile.noModelsSub') }}</div>
 </div>
@@ -1627,7 +1643,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="sl"><div v-if="profileSub==='mEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.modelEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -1638,13 +1654,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="form-row"><div class="form-label">{{ t('profile.modelSort') }}</div><div class="login-field relative flex items-center"><input v-model.number="fm.sort" type="number" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button @click="saveModel" :disabled="modelSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">{{ t('common.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveModel" :disabled="modelSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ t('common.save') }}</button></div>
 </div></transition>
 
 <transition name="sl"><div v-if="profileOV==='account'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.accountManage') }}</div><span v-if="can('account.add')" class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="openAccAdd()">{{ t('common.add') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.accountManage') }}</div><span v-if="can('account.add')" class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="openAccAdd()">{{ t('common.add') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <div class="rounded-full flex items-center px-3.5 py-2 gap-1.5 mb-3" style="background:#fff;border:1px solid #E5E5E5">
@@ -1655,17 +1671,17 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openAccDetail(a)">
 <div class="flex justify-between items-center mb-2"><span class="text-[15px] font-semibold">{{ a.account }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="a.status===t('profile.statusEnabled')?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ a.status }}</span></div>
 <div class="grid grid-cols-2 gap-x-3 gap-y-0.5 text-xs text-[#666] mb-2"><div>{{ t('profile.phone') }}：{{ mask(a.code+a.phone) }}</div><div>{{ t('profile.email') }}：{{ a.email }}</div><div>{{ t('profile.name') }}：{{ a.name }}</div><div>{{ t('profile.remark') }}：{{ a.remark||'—' }}</div></div>
-<div class="flex gap-1 mb-1"><span v-for="r in a.roles.split('、')" :key="r" class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#EBF1FD] text-[#2F6FEB]">{{ r }}</span></div>
+<div class="flex gap-1 mb-1"><span v-for="r in a.roles.split('、')" :key="r" class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#EBF1FD] text-[#333]">{{ r }}</span></div>
 <div class="text-[11px] text-[#999]">{{ t('profile.createdTime') }}：{{ a.created }}</div>
 </div>
 <div class="card-actions">
-<div v-if="can('account.edit')" class="card-action-btn" style="color:#2F6FEB" @click="openAccEdit(a)">{{ t('common.edit') }}</div>
+<div v-if="can('account.edit')" class="card-action-btn" style="color:var(--link)" @click="openAccEdit(a)">{{ t('common.edit') }}</div>
 <div v-if="(a.status===t('profile.statusEnabled')&&can('account.status.disable'))||(a.status!==t('profile.statusEnabled')&&can('account.status.enable'))" class="card-action-btn" :style="{color:a.status===t('profile.statusEnabled')?'#D97706':'#17A34A'}" @click="toggleAcc(a)">{{ a.status===t('profile.statusEnabled')?t('profile.statusDisabled'):t('profile.statusEnabled') }}</div>
 </div>
 </div>
 </transition-group>
 <div v-else class="flex flex-col items-center py-16">
-<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('users','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('users','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ aQ ? t('profile.noMatchingAccounts') : t('profile.noAccounts') }}</div>
 <div class="text-[13px] text-[#999]">{{ aQ ? t('profile.adjustAccountSearch') : t('profile.accountNoDataSub') }}</div>
 </div>
@@ -1674,7 +1690,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="sl"><div v-if="profileSub==='aDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.accountDetail') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -1692,7 +1708,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="sl"><div v-if="profileSub==='aAdd'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.accountAdd') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -1711,16 +1727,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div><div v-if="fE.phone" class="form-hint text-[#DC2626]">{{ fE.phone }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.email') }}</div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.email?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.email" type="email" @input="vClr('email')" :placeholder="t('profile.emailPlaceholder')" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.email" class="form-hint text-[#DC2626]">{{ fE.email }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.position') }}<span class="text-[#DC2626] ml-0.5">*</span></div>
-<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
+<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.remark') }}</div><div class="login-field relative flex items-center" :style="[accBasicDisabled?{background:'#F0F1F3'}:null,fE.remark?{boxShadow:'inset 0 0 0 1px #DC2626'}:null]"><input v-model="fa.remark" @input="vClr('remark')" :placeholder="t('profile.remarkPlaceholder')" :disabled="accBasicDisabled" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.remark" class="form-hint text-[#DC2626]">{{ fE.remark }}</div></div>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button @click="saveAccAdd" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">{{ t('common.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveAccAdd" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ t('common.save') }}</button></div>
 </div></transition>
 
 <transition name="sl"><div v-if="profileSub==='aEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.accountEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -1739,16 +1755,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div><div v-if="fE.phone" class="form-hint text-[#DC2626]">{{ fE.phone }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.email') }}</div><div class="login-field relative flex items-center" :style="fE.email?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.email" type="email" @input="vClr('email')" :placeholder="t('profile.emailPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.email" class="form-hint text-[#DC2626]">{{ fE.email }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.position') }}<span class="text-[#DC2626] ml-0.5">*</span></div>
-<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
+<div class="flex flex-wrap gap-2"><div v-for="r in allRoles" :key="r" @click="togRole(fa.roles,r);vClr('roles')" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fa.roles.includes(r)?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--accent)'}:{background:'#F7F8FA',color:'#666',border:'1px solid '+(fE.roles?'#DC2626':'#EBEDF0')}">{{ r }}</div></div><div v-if="fE.roles" class="form-hint text-[#DC2626]">{{ fE.roles }}</div></div>
 <div class="form-row"><div class="form-label">{{ t('profile.remark') }}</div><div class="login-field relative flex items-center" :style="fE.remark?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><input v-model="fa.remark" @input="vClr('remark')" :placeholder="t('profile.remarkPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.remark" class="form-hint text-[#DC2626]">{{ fE.remark }}</div></div>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button @click="saveAccEdit" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">{{ t('common.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveAccEdit" :disabled="accSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ t('common.save') }}</button></div>
 </div></transition>
 
 <transition name="sl"><div v-if="profileOV==='pos'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.positionManage') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -1764,13 +1780,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[11px] text-[#999]">{{ t('profile.createdTime') }}：{{ p.created }}</div>
 </div>
 <div class="card-actions">
-<div v-if="can('position.edit')" class="card-action-btn" style="color:#2F6FEB" @click="openPosEdit(p)">{{ t('common.edit') }}</div>
+<div v-if="can('position.edit')" class="card-action-btn" style="color:var(--link)" @click="openPosEdit(p)">{{ t('common.edit') }}</div>
 <div v-if="can('position.delete')" class="card-action-btn" style="color:#DC2626" @click="delPos(p)">{{ t('common.delete') }}</div>
 </div>
 </div>
 </transition-group>
 <div v-else class="flex flex-col items-center py-16">
-<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('briefcase','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('briefcase','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ pQ ? t('profile.noMatchingPositions') : t('profile.noPositions') }}</div>
 <div class="text-[13px] text-[#999]">{{ pQ ? t('profile.adjustPositionSearch') : t('profile.noPositionsSub') }}</div>
 </div>
@@ -1779,8 +1795,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="sl"><div v-if="profileSub==='pDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.positionDetail') }}</div><span v-if="can('position.add')" class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="openPosAdd(dp.name)">{{ t('profile.addSubPosition') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.positionDetail') }}</div><span v-if="can('position.add')" class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="openPosAdd(dp.name)">{{ t('profile.addSubPosition') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
@@ -1798,7 +1814,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="sl"><div v-if="profileSub==='pAdd'||profileSub==='pEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ profileSub==='pAdd'?t('profile.positionAdd'):t('profile.positionEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -1808,7 +1824,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="form-row"><div class="form-label">{{ t('profile.remark') }}</div><div class="login-field relative flex items-center"><input v-model="fp.remark" :placeholder="t('profile.remarkPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
 </div>
 <div v-for="sec in [{l:t('profile.platformPerms'),t:pTreeP},{l:t('profile.merchantPerms'),t:pTreeM}]" :key="sec.l">
-<div class="flex justify-between items-center mb-2 px-0.5"><span class="text-sm font-semibold">{{ sec.l }}</span><span class="text-[13px] font-medium text-[#2F6FEB] cursor-pointer" @click="selAll(sec.t)">{{ t('profile.selectAll') }}</span></div>
+<div class="flex justify-between items-center mb-2 px-0.5"><span class="text-sm font-semibold">{{ sec.l }}</span><span class="text-[13px] font-medium text-[var(--link)] cursor-pointer" @click="selAll(sec.t)">{{ t('profile.selectAll') }}</span></div>
 <div class="bg-white rounded-xl overflow-hidden mb-4" style="border:1px solid #E5E5E5">
 <div v-for="g in sec.t" :key="g.name">
 <div class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border-bottom:1px solid #E5E5E5" @click="g.exp=!g.exp">
@@ -1818,13 +1834,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-show="g.exp" class="pl-10 pr-4 pb-2"><div v-for="c in g.items" :key="c.n" class="flex items-center gap-2.5 py-2 cursor-pointer" @click="c.c=!c.c"><div class="cb" :class="c.c?'on':''"><span v-html="luci('check','w-3 h-3')"></span></div><span class="text-[13px]" :style="{color:c.c?'#111':'#666',fontWeight:c.c?500:400}">{{ c.n }}</span></div></div>
 </div></div></div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button @click="savePos" :disabled="posSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">{{ t('common.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="savePos" :disabled="posSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ t('common.save') }}</button></div>
 </div></transition>
 
 <transition name="sl"><div v-if="profileOV==='cs'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.csInfo') }}</div><span v-if="can('cs_info.add')" class="text-sm font-medium text-[#2F6FEB] cursor-pointer shrink-0" @click="openCsEdit(-1)">{{ t('common.add') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.csInfo') }}</div><span v-if="can('cs_info.add')" class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="openCsEdit(-1)">{{ t('common.add') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <transition-group v-if="csList.length" name="item">
@@ -1834,13 +1850,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="grid grid-cols-2 gap-0.5 text-xs text-[#666]"><div>{{ t('profile.servicePeriod',{start:p2(c.sh)+':'+p2(c.sm),end:p2(c.eh)+':'+p2(c.em)}) }}</div><div style="grid-column:1/-1">{{ t('profile.remarkLabel',{remark:c.remark||'—'}) }}</div></div>
 </div>
 <div class="card-actions">
-<div v-if="can('cs_info.edit')" class="card-action-btn" style="color:#2F6FEB" @click="openCsEdit(i)">{{ t('common.edit') }}</div>
+<div v-if="can('cs_info.edit')" class="card-action-btn" style="color:var(--link)" @click="openCsEdit(i)">{{ t('common.edit') }}</div>
 <div v-if="can('cs_info.delete')" class="card-action-btn" style="color:#DC2626" @click="delCs(i)">{{ t('common.delete') }}</div>
 </div>
 </div>
 </transition-group>
 <div v-else class="flex flex-col items-center py-16">
-<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('headset','w-7 h-7 text-[#2F6FEB]')"></span></div>
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('headset','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ t('profile.noCSInfo') }}</div>
 <div class="text-[13px] text-[#999]">{{ t('profile.noCSInfoSub') }}</div>
 </div>
@@ -1849,7 +1865,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="sl"><div v-if="profileSub==='csEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">{{ csIdx===-1?t('profile.csAdd'):t('profile.csEdit') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -1881,13 +1897,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="form-row"><div class="form-label">{{ t('profile.remark') }}</div><div class="login-field relative flex items-center"><input v-model="fc.remark" :placeholder="t('profile.csRemarkPlaceholder')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button @click="saveCs" :disabled="csSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#2F6FEB">{{ t('common.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button @click="saveCs" :disabled="csSaving" class="w-full py-4 rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ t('common.save') }}</button></div>
 </div></transition>
 
 <transition name="sl"><div v-if="profileOV==='config'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.orderConfig') }}</div><span v-if="can('order_config.edit')" class="text-sm font-medium cursor-pointer shrink-0" :style="cfgSaving?{color:'#999',pointerEvents:'none'}:{color:'#2F6FEB'}" @click="saveCfg">{{ t('common.save') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">{{ t('profile.orderConfig') }}</div><span v-if="can('order_config.edit')" class="text-sm font-medium cursor-pointer shrink-0" :style="cfgSaving?{color:'#999',pointerEvents:'none'}:{color:'var(--link)'}" @click="saveCfg">{{ t('common.save') }}</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
  <div class="form-card" data-od-id="order-config-form">
@@ -1914,7 +1930,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <!-- 系统设置 -->
 <transition name="sl"><div v-if="profileOV==='settings'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="settings-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.settings') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-28 hid">
@@ -1938,14 +1954,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <!-- 切换语言 -->
 <transition name="sl"><div v-if="profileSub==='lang'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="settings-lang-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2F6FEB] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('profile.languageSwitch') }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
 <div v-for="(lg,i) in langOptions" :key="lg.id" @click="selectLang(lg.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
 <span class="flex-1 text-[15px] font-medium">{{ lg.label }}</span>
-<span v-if="appLang===lg.id" v-html="luci('check','w-5 h-5 text-[#2F6FEB]')"></span>
+<span v-if="appLang===lg.id" v-html="luci('check','w-5 h-5 text-[var(--accent)]')"></span>
 </div>
 </div>
 </div>
@@ -1957,7 +1973,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-if="profileMdD" class="text-sm text-[#666] text-center leading-relaxed">{{ profileMdD }}</div>
 <div class="flex gap-3 mt-2">
 <div @click="profileMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">{{ t('profile.cancel') }}</div>
-<div @click="profileMdOk" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="profileMdDanger?{background:'#DC2626'}:{background:'#2F6FEB'}">{{ t('profile.confirm') }}</div>
+<div @click="profileMdOk" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:var(--accent)">{{ t('profile.confirm') }}</div>
 </div></div>
 </div></transition>
 
@@ -1972,15 +1988,15 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="rounded-xl mb-4" style="background:#F7F8FA;border:1px solid #E5E5E5">
 <div class="flex items-center justify-between px-3.5 py-3" style="border-bottom:1px dashed #E5E5E5">
 <div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">{{ t('profile.accountCredAccount') }}</span><span class="text-[15px] font-semibold text-[#111] truncate">{{ newAccCred.account }}</span></div>
-<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('acc')" v-html="luci('copy','w-4 h-4 text-[#2F6FEB] cursor-pointer')"></span>
+<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('acc')" v-html="luci('copy','w-4 h-4 text-[var(--accent)] cursor-pointer')"></span>
 </div>
 <div class="flex items-center justify-between px-3.5 py-3">
 <div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">{{ t('profile.accountCredPassword') }}</span><span class="text-[15px] font-semibold text-[#111] font-mono tracking-wide">{{ newAccCred.password }}</span></div>
-<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('pwd')" v-html="luci('copy','w-4 h-4 text-[#2F6FEB] cursor-pointer')"></span>
+<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('pwd')" v-html="luci('copy','w-4 h-4 text-[var(--accent)] cursor-pointer')"></span>
 </div>
 </div>
 <div class="flex flex-col gap-2.5">
-<div @click="closeAccCred()" class="py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:#2F6FEB">{{ t('profile.iKnow') }}</div>
+<div @click="closeAccCred()" class="py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:var(--accent)">{{ t('profile.iKnow') }}</div>
 </div>
 </div>
 </div></transition>
@@ -1991,16 +2007,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ UNIFIED TAB BAR ═══ -->
 <div v-if="!showLogin" class="absolute bottom-0 left-0 right-0 h-[83px] bg-white/90 backdrop-blur-[20px] flex pb-[22px] z-[100]" style="border-top:1px solid #E5E5E5">
-<div v-if="can('home.view')" @click="setTab('home')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='home'?'text-[#2F6FEB]':'text-[#999]'">
+<div v-if="can('home.view')" @click="setTab('home')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='home'?'text-[var(--accent)]':'text-[#999]'">
 <span v-html="luci('home','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">{{ t('tab.home') }}</span>
 </div>
-<div v-if="can('vehicle.list')" @click="setTab('vehicles')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='vehicles'?'text-[#2F6FEB]':'text-[#999]'">
+<div v-if="can('vehicle.list')" @click="setTab('vehicles')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='vehicles'?'text-[var(--accent)]':'text-[#999]'">
 <span v-html="luci('bike','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">{{ t('tab.vehicles') }}</span>
 </div>
-<div v-if="can('order.list')" @click="setTab('orders')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='orders'?'text-[#2F6FEB]':'text-[#999]'">
+<div v-if="can('order.list')" @click="setTab('orders')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='orders'?'text-[var(--accent)]':'text-[#999]'">
 <span v-html="luci('file-text','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">{{ t('tab.orders') }}</span>
 </div>
-<div @click="setTab('profile')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='profile'?'text-[#2F6FEB]':'text-[#999]'">
+<div @click="setTab('profile')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='profile'?'text-[var(--accent)]':'text-[#999]'">
 <span v-html="luci('user','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">{{ t('tab.profile') }}</span>
 </div>
 </div>
@@ -2014,26 +2030,26 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-[#F6F7F9] rounded-lg px-4 py-3 mb-4 text-[13px] text-[#555] leading-relaxed">{{ updateDesc }}</div>
 <template v-if="protoForceUpdate==='force'">
 <div class="flex gap-3">
-<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'#7EADF5':'#2F6FEB'}">{{ updating ? t('version.downloading') : t('version.updateNow') }}</div>
+<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'var(--accent)':'var(--accent)'}">{{ updating ? t('version.downloading') : t('version.updateNow') }}</div>
 <div @click="exitApp" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">{{ t('version.exitApp') }}</div>
 </div>
 </template>
 <template v-else>
 <div class="flex gap-3">
 <div @click="showVersionCheck=false" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">{{ t('version.later') }}</div>
-<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'#7EADF5':'#2F6FEB'}">{{ updating ? t('version.downloading') : t('version.updateNow') }}</div>
+<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'var(--accent)':'var(--accent)'}">{{ updating ? t('version.downloading') : t('version.updateNow') }}</div>
 </div>
 </template>
 </template>
 <template v-else>
 <div class="flex flex-col items-center py-6">
 <div class="w-14 h-14 rounded-full flex items-center justify-center mb-3" style="background:#EBF1FD">
-<span v-html="luci('check','w-7 h-7 text-[#2F6FEB]')"></span>
+<span v-html="luci('check','w-7 h-7 text-[var(--accent)]')"></span>
 </div>
 <div class="text-[17px] font-bold mb-1">{{ t('version.latest') }}</div>
 <div class="text-[13px] text-[#666]">{{ 'V1.1.1' }}</div>
 </div>
-<div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:#2F6FEB">{{ t('version.gotIt') }}</div>
+<div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:var(--accent)">{{ t('version.gotIt') }}</div>
 </template>
 </div></div></transition>
 <transition name="fd"><div v-if="appExited" class="absolute inset-0 z-[950] bg-black flex flex-col items-center justify-center rounded-[44px]" data-od-id="app-exited-overlay">
@@ -2166,6 +2182,7 @@ function vClr(k){if(fE.value[k]){const o={...fE.value};delete o[k];fE.value=o}}
 const messages=ref({});
 const localeCache={};
 let localeLoading=ref(false);
+const brandLoading=ref(true);
 function _tGet(obj,path){const ks=path.split('.');let v=obj;for(const k of ks){if(v==null)return undefined;v=v[k]}return v}
 function _tInterpolate(str,params){if(!params||!str)return str;return str.replace(/\{(\w+)\}/g,(_,k)=>params[k]!=null?String(params[k]):'{'+k+'}')}
 function t(key,params){const cur=_tGet(messages.value[appLang.value],key);if(cur!=null)return _tInterpolate(cur,params);const fb=_tGet(messages.value['zh-CN'],key);if(fb!=null)return _tInterpolate(fb,params);return key}
@@ -2283,7 +2300,7 @@ const alertMod=ref(null);
 const ignoreReasonPick=ref('误报');
 const ignoreReasons=['误报','已现场处理','重复告警','其他'];
 
-const LV={p0:'bg-[#FEF2F2] text-[#DC2626]',p1:'bg-[#FFFBEB] text-[#D97706]',p2:'bg-[#EBF1FD] text-[#2F6FEB]'};
+const LV={p0:'bg-[#FEF2F2] text-[#DC2626]',p1:'bg-[#FFFBEB] text-[#D97706]',p2:'bg-[#EBF1FD] text-[var(--accent)]'};
 const ST={pending:'bg-[#FEF2F2] text-[#DC2626]',processing:'bg-[#FFFBEB] text-[#D97706]',ignored:'bg-[#F6F7F9] text-[#6B6B6B]',closed:'bg-[#ECFDF3] text-[#17A34A]'};
 const ST_L=computed(()=>({pending:t('alert.statusPending'),processing:t('alert.statusProcessing'),ignored:t('alert.statusIgnored'),closed:t('alert.statusClosed')}));
 const CLOSE_SRC_L=computed(()=>({auto:t('alert.closeSourceAuto'),manual:t('alert.closeSourceManual')}));
@@ -2317,8 +2334,8 @@ function timelineLabel(ev){
 }
 function timelineDotClass(ev){
   if(!ev)return 'bg-[#CCC]';
-  if(ev.kind==='closed')return ev.source==='auto'?'bg-[#17A34A]':'bg-[#2F6FEB]';
-  if(ev.kind==='claimed'||ev.kind==='reopened')return 'bg-[#2F6FEB]';
+  if(ev.kind==='closed')return ev.source==='auto'?'bg-[#17A34A]':'bg-[var(--accent)]';
+  if(ev.kind==='claimed'||ev.kind==='reopened')return 'bg-[var(--accent)]';
   if(ev.kind==='ignored')return 'bg-[#9CA3AF]';
   if(ev.kind==='triggered'||ev.kind==='opened')return 'bg-[#6B6B6B]';
   return 'bg-[#CCC]';
@@ -2650,7 +2667,7 @@ function vehToggleFSOnline(v){vehFsOnlineC.value=vehFsOnlineC.value===v?null:v}
 function vehToggleFSLost(v){vehFsLostC.value=vehFsLostC.value===v?null:v}
 function vehResetFS(){vehFsModelC.value='';vehFsOnlineC.value=null;vehFsLostC.value=null}
 function vehApplyFS(){vehFsModel.value=vehFsModelC.value;vehFsOnline.value=vehFsOnlineC.value;vehFsLost.value=vehFsLostC.value;vehShowFS.value=false}
-function sc(s){return s===t('vehicles.statusIdle')?'#2F6FEB':s===t('vehicles.filterLost')?'#DC2626':s===t('vehicles.statusLocked')?'#6B6B6B':s===t('vehicles.statusSold')?'#8B5CF6':'#D97706'}
+function sc(s){return s===t('vehicles.statusIdle')?'#2B3F5F':s===t('vehicles.filterLost')?'#DC2626':s===t('vehicles.statusLocked')?'#6B6B6B':s===t('vehicles.statusSold')?'#8B5CF6':'#D97706'}
 function bi(n){return n>=80?'battery-full':n>=30?'battery-medium':'battery-low'}
 function bc(n){return n>=80?'#17A34A':n>=30?'#D97706':'#DC2626'}
 
@@ -2825,7 +2842,7 @@ const vehSts=['progress','return','overdue','complete','breach'];
 function hasVehicle(s){return vehSts.indexOf(s)!==-1}
 const oFiltered=computed(()=>orders.value.filter(o=>{if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=o.time.match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
 function sl(s){var m={created:t('orders.statusCreated'),pickup:t('orders.statusPickup'),progress:t('orders.statusProgress'),'return':t('orders.statusReturn'),overdue:t('orders.statusOverdue'),complete:t('orders.statusComplete'),cancelled:t('orders.statusCancelled'),breach:t('orders.statusBreach')};return m[s]||s}
-function stg(s){var m={created:{background:'#F0F4FF',color:'#5B7FEB',border:'1px solid #5B7FEB'},pickup:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},progress:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},'return':{background:'#FFF3E0',color:'#E67E22',border:'1px solid #E67E22'},overdue:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'},complete:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'},cancelled:{background:'#F6F7F9',color:'#BBB',border:'1px solid #DDD'},breach:{background:'#FEE2E2',color:'#991B1B',border:'1px solid #991B1B'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
+function stg(s){var m={created:'#FF8C1B',pickup:'#FF8C1B',progress:'#22D098','return':'#1A82F4',overdue:'#FF4343',complete:'#333333',cancelled:'#666666',breach:'#FF4343'};return {color:m[s]||'#333333'}}
 var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
 var dSt=ref(''),dPm=ref('online'),dCanceledPaid=ref('paid'),dPaySt=ref('paid');
 var filteredDemoPaySts=computed(()=>{if(dSt.value==='created')return[{v:'pending',l:'待支付'}];if(dSt.value==='complete')return[{v:'paid',l:'已支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];return demoPayStsFixed});
@@ -3002,7 +3019,7 @@ function onOrdersDateWheelScroll(kind,e){
 /* ══ Order Supplementary Docs ══ */
 const orderDocs=ref({});
 const showDocSheet=ref(false);const docSheetTab=ref('image');const docText=ref('');const docDeleteTarget=ref(null);const docDeleteMod=ref(false);const previewImage=ref(null);
-const docImageTypes=computed(()=>[{label:t('orders.docIdCard'),icon:'camera',color:'#2F6FEB'},{label:t('orders.docLicense'),icon:'file-text',color:'#17A34A'},{label:t('orders.docContract'),icon:'clipboard',color:'#D97706'},{label:t('orders.docOther'),icon:'paperclip',color:'#6B6B6B'}]);
+const docImageTypes=computed(()=>[{label:t('orders.docIdCard'),icon:'camera',color:'var(--accent)'},{label:t('orders.docLicense'),icon:'file-text',color:'#17A34A'},{label:t('orders.docContract'),icon:'clipboard',color:'#D97706'},{label:t('orders.docOther'),icon:'paperclip',color:'#6B6B6B'}]);
 const showDocCard=computed(()=>true);
 const canEditDocs=computed(()=>(dSt.value==='created'||dSt.value==='pickup')&&true);
 const curDocs=computed(()=>{const id=do_.value.id;return orderDocs.value[id]||[]});
@@ -3366,7 +3383,7 @@ function initI18nData(){
 }
 watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){setTimeout(()=>checkVersion(),100)}});
 watch(appLang,()=>{document.title=t('login.title')});
-onMounted(()=>{loadLocale('zh-CN').then(()=>{if(appLang.value!=='zh-CN')return loadLocale(appLang.value)}).finally(()=>{initI18nData();setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;paint();initPullToRefresh('sc-home','ptr-home',function(v){homeRefreshing.value=v});initPullToRefresh('sc-veh','ptr-veh',function(v){vehRefreshing.value=v});initPullToRefresh('sc-ord','ptr-ord',function(v){ordersRefreshing.value=v});if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)})});
+onMounted(()=>{loadLocale('zh-CN').then(()=>{if(appLang.value!=='zh-CN')return loadLocale(appLang.value)}).finally(()=>{initI18nData();setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;brandLoading.value=false;paint();initPullToRefresh('sc-home','ptr-home',function(v){homeRefreshing.value=v});initPullToRefresh('sc-veh','ptr-veh',function(v){vehRefreshing.value=v});initPullToRefresh('sc-ord','ptr-ord',function(v){ordersRefreshing.value=v});if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)})});
 watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited],paint);
 watch(dSt,(v)=>{if(v==='created')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
 onUpdated(paint);
@@ -3402,7 +3419,7 @@ sl,stg,hasVehicle,ordersOpenDetail,copyId,ordersDoSearch,ordersDoPrimary,ordersD
   openRefundRecords,curRefunds,refundStLabel,refundStg,refundSourceLabel,
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
-  profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,checkVersion,goUpdate,exitApp,relaunchApp,goBack,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,
+  profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,
   curStore,menuList,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,doLogout,
 mQ,profileModels,mFilter,fm,openModelEdit,saveModel,modelSaving,

@@ -208,6 +208,7 @@
     "actionRefund": "執行退款",
     "actionReturn": "歸還車輛",
     "cancelOrder": "取消訂單",
+    "finishTime": "完成時間",
     "cancelTime": "取消時間",
     "confirmCancelDesc": "確定取消該訂單？",
     "confirmCancelTitle": "取消訂單",

@@ -208,6 +208,7 @@
     "actionRefund": "执行退款",
     "actionReturn": "归还车辆",
     "cancelOrder": "取消订单",
+    "finishTime": "完成时间",
     "cancelTime": "取消时间",
     "confirmCancelDesc": "确定取消该订单？取消后不可恢复。",
     "confirmCancelTitle": "取消订单",

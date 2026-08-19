@@ -208,6 +208,7 @@
     "actionRefund": "Process Refund",
     "actionReturn": "Return Vehicle",
     "cancelOrder": "Cancel Order",
+    "finishTime": "Finish Time",
     "cancelTime": "Cancellation Time",
     "confirmCancelDesc": "Are you sure you want to cancel this order?",
     "confirmCancelTitle": "Cancel Order",
