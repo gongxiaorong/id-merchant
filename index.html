@@ -57,7 +57,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',sy
 .filter-tabs{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain;user-select:none;width:100%;flex-wrap:nowrap;white-space:nowrap;cursor:grab}
 .filter-tabs::-webkit-scrollbar{display:none}.filter-tabs:active{cursor:grabbing}
 .filter-pill{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0}
-#orderPillRow{flex-wrap:wrap;overflow-x:visible;overflow-y:visible;white-space:normal;width:100%}
 .item-enter-active{transition:all .35s cubic-bezier(.32,.72,0,1)}.item-enter-from{opacity:0;transform:translateY(12px)}
 .toast-wrap{position:absolute;top:50px;left:16px;right:16px;z-index:99999;display:flex;flex-direction:column;align-items:center;pointer-events:none}
 .toast-item{padding:10px 20px;border-radius:12px;font-size:14px;font-weight:500;color:#fff;pointer-events:auto;backdrop-filter:blur(10px);text-align:center;max-width:80%;line-height:1.4}
@@ -2121,7 +2120,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <div class="demo-ops-chip" :class="{'is-on-warn':dPm==='offline'}" @click="dPm='offline'">线下支付</div>
         </div>
       </div>
-      <div class="demo-ops-section" data-od-id="demo-order-payst" v-if="!['created','pendingPay','pickup','progress','return','overdue','breach','cancelled','complete'].includes(dSt)||(dSt==='complete'&&dPm==='online')">
+      <div class="demo-ops-section" data-od-id="demo-order-payst" v-if="!['created','pickup','progress','return','overdue','breach','cancelled','complete'].includes(dSt)||(dSt==='complete'&&dPm==='online')">
         <div class="demo-ops-label">支付状态</div>
         <div class="demo-ops-chips">
           <div v-for="p in filteredDemoPaySts" :key="'demo-pst-'+p.v" class="demo-ops-chip" :class="{'is-on':dPaySt===p.v}" @click="dPaySt=p.v">{{ p.l }}</div>
@@ -2788,12 +2787,12 @@ const showOrderActionsBar=computed(()=>showActions.value&&(showPrimaryAction.val
 const ordersQ=ref(''),searchScope=ref('id'),ordersPill=ref('');
 const searchPH=computed(()=>({id:t('orders.searchId'),account:t('orders.searchAccount'),phone:t('orders.searchPhone'),email:t('orders.searchEmail'),vin:t('orders.searchVin')})[searchScope.value]||t('orders.searchId'));
 const orders=ref([]);
-const allStatus=computed(()=>[{v:'created',l:t('orders.statusCreated')},{v:'pendingPay',l:t('orders.statusPendingPay')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')},{v:'complete',l:t('orders.statusComplete')},{v:'cancelled',l:t('orders.statusCancelled')},{v:'breach',l:t('orders.statusBreach')}]);
-const demoAllStatus=[{v:'created',l:'已创建'},{v:'pendingPay',l:'待支付'},{v:'pickup',l:'待取车'},{v:'progress',l:'进行中'},{v:'return',l:'待还车'},{v:'overdue',l:'已超期'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'},{v:'breach',l:'已违约'}];
+const allStatus=computed(()=>[{v:'created',l:t('orders.statusCreated')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')},{v:'complete',l:t('orders.statusComplete')},{v:'cancelled',l:t('orders.statusCancelled')},{v:'breach',l:t('orders.statusBreach')}]);
+const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'},{v:'breach',l:'已违约'}];
 const paySts=computed(()=>[{v:'pending',l:t('orders.payPending')},{v:'processing',l:t('orders.payProcessing')},{v:'paid',l:t('orders.payPaid')},{v:'refunding',l:t('orders.payRefunding')},{v:'partialRefund',l:t('orders.payPartialRefund')},{v:'fullRefund',l:t('orders.payFullRefund')}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
-const quickPills=computed(()=>[{l:t('orders.quickAll'),v:''},{v:'created',l:t('orders.statusCreated')},{v:'pendingPay',l:t('orders.statusPendingPay')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')},{v:'complete',l:t('orders.statusComplete')},{v:'cancelled',l:t('orders.statusCancelled')},{v:'breach',l:t('orders.statusBreach')}]);
-const qCnt=computed(()=>{const m={};orders.value.forEach(o=>{m[o.status]=(m[o.status]||0)+1});return{'':orders.value.length,created:m['created']||0,pendingPay:m['pendingPay']||0,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0,complete:m['complete']||0,cancelled:m['cancelled']||0,breach:m['breach']||0}});
+const quickPills=computed(()=>[{l:t('orders.quickAll'),v:''},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')}]);
+  const qCnt=computed(()=>{const m={};orders.value.forEach(o=>{m[o.status]=(m[o.status]||0)+1});return{'':orders.value.length,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
 function fmtYmd(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
 function defaultOrdersDateRange(){
   var end=new Date();
@@ -2825,28 +2824,28 @@ const ordersHasF=computed(()=>!!ordersFsSt.value||!!ordersFsPay.value||!!ordersF
 const vehSts=['progress','return','overdue','complete','breach'];
 function hasVehicle(s){return vehSts.indexOf(s)!==-1}
 const oFiltered=computed(()=>orders.value.filter(o=>{if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=o.time.match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
-function sl(s){var m={created:t('orders.statusCreated'),pendingPay:t('orders.statusPendingPay'),pickup:t('orders.statusPickup'),progress:t('orders.statusProgress'),'return':t('orders.statusReturn'),overdue:t('orders.statusOverdue'),complete:t('orders.statusComplete'),cancelled:t('orders.statusCancelled'),breach:t('orders.statusBreach')};return m[s]||s}
-function stg(s){var m={created:{background:'#F0F4FF',color:'#5B7FEB',border:'1px solid #5B7FEB'},pendingPay:{background:'#FFFBEB',color:'#F59E0B',border:'1px solid #F59E0B'},pickup:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},progress:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},'return':{background:'#FFF3E0',color:'#E67E22',border:'1px solid #E67E22'},overdue:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'},complete:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'},cancelled:{background:'#F6F7F9',color:'#BBB',border:'1px solid #DDD'},breach:{background:'#FEE2E2',color:'#991B1B',border:'1px solid #991B1B'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
+function sl(s){var m={created:t('orders.statusCreated'),pickup:t('orders.statusPickup'),progress:t('orders.statusProgress'),'return':t('orders.statusReturn'),overdue:t('orders.statusOverdue'),complete:t('orders.statusComplete'),cancelled:t('orders.statusCancelled'),breach:t('orders.statusBreach')};return m[s]||s}
+function stg(s){var m={created:{background:'#F0F4FF',color:'#5B7FEB',border:'1px solid #5B7FEB'},pickup:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},progress:{background:'#EBF1FD',color:'#2F6FEB',border:'1px solid #2F6FEB'},'return':{background:'#FFF3E0',color:'#E67E22',border:'1px solid #E67E22'},overdue:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'},complete:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'},cancelled:{background:'#F6F7F9',color:'#BBB',border:'1px solid #DDD'},breach:{background:'#FEE2E2',color:'#991B1B',border:'1px solid #991B1B'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
 var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
 var dSt=ref(''),dPm=ref('online'),dCanceledPaid=ref('paid'),dPaySt=ref('paid');
-var filteredDemoPaySts=computed(()=>{if(['created','pendingPay'].includes(dSt.value))return[{v:'pending',l:'待支付'}];if(dSt.value==='complete')return[{v:'paid',l:'已支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];return demoPayStsFixed});
+var filteredDemoPaySts=computed(()=>{if(dSt.value==='created')return[{v:'pending',l:'待支付'}];if(dSt.value==='complete')return[{v:'paid',l:'已支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];return demoPayStsFixed});
 var payStatus=computed(()=>{var m={pending:t('orders.payPending'),processing:t('orders.payProcessing'),paid:t('orders.payPaid'),refunding:t('orders.payRefunding'),partialRefund:t('orders.payPartialRefund'),fullRefund:t('orders.payFullRefund')};return m[dPaySt.value]||t('orders.payPaid')});
 var payStatusColor=computed(()=>{var m={pending:'#F59E0B',processing:'#F59E0B',paid:'#17A34A',refunding:'#F59E0B',partialRefund:'#E67E22',fullRefund:'#999'};return m[dPaySt.value]||'#17A34A'});
 var showPaid=computed(()=>vehSts.concat(['pickup']).indexOf(dSt.value)!==-1||(dSt.value==='cancelled'&&dCanceledPaid.value==='paid'));
 var showVehicle=computed(()=>vehSts.indexOf(dSt.value)!==-1);
 var refundable=computed(()=>dSt.value==='complete'||dSt.value==='cancelled');
 var showActions=computed(()=>dSt.value!=='cancelled');
-var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return t('orders.confirmPay');var m={created:t('orders.cancelOrder'),pendingPay:t('orders.cancelOrder'),pickup:t('orders.cancelOrder'),progress:t('orders.returnVehicle'),'return':t('orders.returnVehicle'),overdue:t('orders.returnVehicle'),complete:t('orders.refund'),breach:t('orders.returnVehicle')};return m[dSt.value]||''});
-var primaryDanger=computed(()=>['created','pendingPay','pickup'].indexOf(dSt.value)!==-1&&!(dPaySt.value==='pending'&&dPm.value==='offline'));
+var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return t('orders.confirmPay');var m={created:t('orders.cancelOrder'),pickup:t('orders.cancelOrder'),progress:t('orders.returnVehicle'),'return':t('orders.returnVehicle'),overdue:t('orders.returnVehicle'),complete:t('orders.refund'),breach:t('orders.returnVehicle')};return m[dSt.value]||''});
+var primaryDanger=computed(()=>['created','pickup'].indexOf(dSt.value)!==-1&&!(dPaySt.value==='pending'&&dPm.value==='offline'));
 var dualMode=computed(()=>dSt.value==='overdue'||dSt.value==='breach'||(dPaySt.value==='pending'&&dPm.value==='offline'));
 var dualIsCancel=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline');
 var orderLost=ref(false);
 var dangerLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return t('orders.cancelOrder');return orderLost.value?t('orders.reportUnlost'):t('orders.reportLost')});
-function ordersOpenDetail(o){if(!can('order.detail')){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='pendingPay'||o.status==='created'?'pending':'paid');dPm.value='online';dCanceledPaid.value='paid';orderLost.value=!!o.lost;ordersOV.value='detail'}
+function ordersOpenDetail(o){if(!can('order.detail')){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='created'?'pending':'paid');dPm.value='online';dCanceledPaid.value='paid';orderLost.value=!!o.lost;ordersOV.value='detail'}
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast(t('orders.idCopied'),'success')}
 function ordersDoSearch(){}
 var ordersSaving=ref(false);
-function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dPaySt.value==='pending'&&dPm.value==='offline';if(isOff){ordersMod.value='confirmPay';return}if(['created','pendingPay','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
+function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dPaySt.value==='pending'&&dPm.value==='offline';if(isOff){ordersMod.value='confirmPay';return}if(['created','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
 function ordersDoDanger(){if(ordersSaving.value)return;if(!showDangerAction.value){deny();return}if(dPaySt.value==='pending'&&dPm.value==='offline'){ordersMod.value='cancel';return}ordersMod.value='lost'}
 var ordersModTitle=computed(()=>{var m={cancel:t('orders.confirmCancelTitle'),confirmPay:t('orders.confirmPayTitle'),lost:orderLost.value?t('orders.confirmUnlostTitle'):t('orders.confirmLostTitle'),refundConfirm:refundMode.value==='return'?t('orders.confirmReturnTitle'):t('orders.confirmRefundTitle')};return m[ordersMod.value]||''});
 var ordersModDesc=computed(()=>{var m={cancel:t('orders.confirmCancelDesc'),confirmPay:t('orders.confirmPayDesc'),lost:orderLost.value?t('orders.confirmUnlostDesc'):t('orders.confirmLostDesc'),refundConfirm:t('orders.confirmRefundDesc',{total:refundTotal.value.toFixed(2),action:refundMode.value==='return'?t('orders.actionReturn'):t('orders.actionRefund')})};return m[ordersMod.value]||''});
@@ -3005,7 +3004,7 @@ const orderDocs=ref({});
 const showDocSheet=ref(false);const docSheetTab=ref('image');const docText=ref('');const docDeleteTarget=ref(null);const docDeleteMod=ref(false);const previewImage=ref(null);
 const docImageTypes=computed(()=>[{label:t('orders.docIdCard'),icon:'camera',color:'#2F6FEB'},{label:t('orders.docLicense'),icon:'file-text',color:'#17A34A'},{label:t('orders.docContract'),icon:'clipboard',color:'#D97706'},{label:t('orders.docOther'),icon:'paperclip',color:'#6B6B6B'}]);
 const showDocCard=computed(()=>true);
-const canEditDocs=computed(()=>(dSt.value==='created'||dSt.value==='pendingPay'||dSt.value==='pickup')&&true);
+const canEditDocs=computed(()=>(dSt.value==='created'||dSt.value==='pickup')&&true);
 const curDocs=computed(()=>{const id=do_.value.id;return orderDocs.value[id]||[]});
 function openDocsPage(){if(!true){deny();return}ordersOV.value='docs'}
 function openDocSheet(){docSheetTab.value='image';docText.value='';showDocSheet.value=true}
@@ -3327,7 +3326,7 @@ function initI18nData(){
   curStore.value='测试门店';
   orders.value=[
     {id:'#ORD2026072001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:t('orders.planMonthly'),amount:350,status:'created',payment:'2c2p',time:t('orders.timeOrdered')+' 2026-07-20 09:00:00'},
-    {id:'#ORD2026072002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:t('orders.planMonthly'),amount:560,status:'pendingPay',payment:'offline',time:t('orders.timeOrdered')+' 2026-07-20 09:30:00'},
+    {id:'#ORD2026072002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:t('orders.planMonthly'),amount:560,status:'created',payment:'offline',time:t('orders.timeOrdered')+' 2026-07-20 09:30:00'},
     {id:'#ORD2026072103',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:t('orders.planMonthly'),amount:280,status:'pickup',payment:'2c2p',time:t('orders.timeApptPickup')+' 2026-07-21 09:00:00'},
     {id:'#ORD2026071804',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:t('orders.planMonthlyMonths',{n:2}),amount:420,status:'progress',payment:'2c2p',time:t('orders.timePickup')+' 2026-07-22 14:00:00 · '+t('orders.timeReturn')+' 2026-07-24 14:00:00'},
     {id:'#ORD2026071705',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:t('orders.planMonthly'),amount:180,status:'return',payment:'offline',time:t('orders.timePickup')+' 2026-07-21 08:00:00 · '+t('orders.timeDueReturn')+' 2026-07-24 18:00:00'},
@@ -3369,7 +3368,7 @@ watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){s
 watch(appLang,()=>{document.title=t('login.title')});
 onMounted(()=>{loadLocale('zh-CN').then(()=>{if(appLang.value!=='zh-CN')return loadLocale(appLang.value)}).finally(()=>{initI18nData();setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;paint();initPullToRefresh('sc-home','ptr-home',function(v){homeRefreshing.value=v});initPullToRefresh('sc-veh','ptr-veh',function(v){vehRefreshing.value=v});initPullToRefresh('sc-ord','ptr-ord',function(v){ordersRefreshing.value=v});if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)})});
 watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited],paint);
-watch(dSt,(v)=>{if(v==='created'||v==='pendingPay')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
+watch(dSt,(v)=>{if(v==='created')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
 onUpdated(paint);
 
 return{luci,t,alertTypeLabel,vehStatusLabel,ignoreReasonLabel,tab,setTab,toasts,toast,can,deny,perms,permGroups,togglePerm,setPermGroup,setAllPerms,
