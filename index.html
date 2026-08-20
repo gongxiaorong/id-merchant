@@ -1171,7 +1171,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999] shrink-0')"></span>
 </div>
 
-<!-- ═══ 客户补充资料 · 入口卡片 ═══ -->
+<!-- ═══ 客户资料 · 入口卡片 ═══ -->
 <div v-if="showDocCard" @click="openDocsPage" class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('folder-open','w-5 h-5 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0">
@@ -1228,30 +1228,31 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <!-- ═══ ORDER DOCS SUB-PAGE ═══ -->
  <transition name="sl">
  <div v-if="ordersOV==='docs'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
- <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+ <div class="pt-14 px-4 pb-3 flex items-center justify-between bg-white shrink-0" style="border-bottom:1px solid #F0F0F0">
  <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
- <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ t('orders.customerDocsTitle') }}</div>
+ <span class="text-[17px] font-semibold text-[#1A1A1A]">{{ t('orders.customerDocsTitle') }}</span>
+ <span class="w-8 h-8"></span>
  </div>
-<div class="flex-1 overflow-y-auto px-5 pt-4 pb-24 hid">
-<template v-if="!curDocs.length">
-<div class="flex flex-col items-center py-16">
-<div class="w-14 h-14 rounded-full bg-[#F6F7F9] flex items-center justify-center mb-3"><span v-html="luci('file-plus','w-7 h-7 text-[#999]')"></span></div>
+ <div class="flex-1 overflow-y-auto min-h-0 px-4 pt-3 pb-24 hid">
+ <template v-if="!curDocs.length">
+ <div class="flex flex-col items-center py-16">
+ <div class="w-14 h-14 rounded-full flex items-center justify-center mb-3" style="background:#F6F7F9;border:1px solid #E5E5E5"><span v-html="luci('file-plus','w-7 h-7 text-[#999]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ t('orders.docNoDataYet') }}</div>
 <div class="text-[13px] text-[#999]">{{ canEditDocs ? t('orders.docAddEditMode') : t('orders.docViewOnlyMode') }}</div>
 </div>
 </template>
 <template v-else>
 <div class="flex flex-col gap-2.5">
-<div v-for="doc in curDocs" :key="doc.id" class="bg-white rounded-xl p-4 flex items-start gap-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div v-for="doc in curDocs" :key="doc.id" class="bg-white rounded-xl p-4 flex items-center gap-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)">
 <!-- ══ 图片资料 ══ -->
-<div v-if="doc.type==='image'" class="w-12 h-12 rounded-lg shrink-0 flex items-center justify-center text-[10px] font-semibold" :style="{background:doc.color+'15',color:doc.color,border:'1px solid '+doc.color+'30'}">{{ doc.label }}</div>
-<div v-if="doc.type==='image'" class="flex-1 min-w-0 cursor-pointer" @click="previewImage=doc">
-<div class="text-[14px] font-semibold mb-1">{{ doc.label }}</div>
+<div v-if="doc.type==='image'" class="w-12 h-12 rounded-lg shrink-0 flex items-center justify-center text-[10px] font-semibold cursor-pointer" :style="{background:doc.color+'15',color:doc.color,border:'1px solid '+doc.color+'50'}" @click="previewImage=doc">{{ doc.label }}</div>
+<div v-if="doc.type==='image'" class="flex-1 min-w-0">
+<div class="text-[14px] font-semibold text-[#1A1A1A] mb-1">{{ doc.label }}</div>
 <div class="text-[12px] text-[#999]">{{ doc.time }}</div>
 </div>
 <!-- ══ 文字资料 ══ -->
-<div v-if="doc.type==='text'" class="flex-1 min-w-0 p-3 rounded-lg" style="background:#F6F7F9;border:1px solid #E5E5E5">
-<div class="text-[14px] leading-relaxed mb-1.5">{{ doc.content }}</div>
+<div v-if="doc.type==='text'" class="flex-1 min-w-0 p-3 rounded-lg break-all" style="background:#F6F7F9;border:1px solid #E5E5E5">
+<div class="text-[14px] leading-relaxed text-[#1A1A1A] mb-1.5 whitespace-pre-wrap break-all">{{ doc.content }}</div>
 <div class="text-[12px] text-[#999]">{{ doc.time }}</div>
 </div>
 <!-- ══ 删除按钮 ══ -->
@@ -1260,8 +1261,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </template>
 </div>
-<div class="absolute bottom-7 left-5 right-5">
-<button v-if="canEditDocs" @click="openDocSheet" class="w-full py-4 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" style="background:var(--accent)">{{ t('orders.docAddButton') }}</button>
+<div v-if="canEditDocs" class="absolute bottom-0 left-0 right-0 px-4 pt-3 pb-5" style="background:#fff;border-top:1px solid #F0F0F0;padding-bottom:max(20px,env(safe-area-inset-bottom))">
+<button @click="openDocSheet" class="w-full py-3.5 rounded-xl text-white text-[16px] font-semibold cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)">{{ t('orders.docAddButton') }}</button>
 </div>
 </div>
 </transition>
@@ -2830,8 +2831,8 @@ function setSearchScope(v){searchScope.value=v;searchScopeOpen.value=false}
 document.addEventListener('click',function(){searchScopeOpen.value=false})
 const searchPH=computed(()=>({id:t('orders.searchId'),account:t('orders.searchAccount'),phone:t('orders.searchPhone'),email:t('orders.searchEmail'),vin:t('orders.searchVin')})[searchScope.value]||t('orders.searchId'));
 const orders=ref([]);
-const allStatus=computed(()=>[{v:'created',l:t('orders.statusCreated')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')},{v:'complete',l:t('orders.statusComplete')},{v:'cancelled',l:t('orders.statusCancelled')},{v:'breach',l:t('orders.statusBreach')}]);
-const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'},{v:'breach',l:'已违约'}];
+const allStatus=computed(()=>[{v:'created',l:t('orders.statusCreated')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')},{v:'breach',l:t('orders.statusBreach')},{v:'complete',l:t('orders.statusComplete')},{v:'cancelled',l:t('orders.statusCancelled')}]);
+const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'},{v:'breach',l:'已违约'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}];
 const paySts=computed(()=>[{v:'pending',l:t('orders.payPending')},{v:'processing',l:t('orders.payProcessing')},{v:'paid',l:t('orders.payPaid')},{v:'refunding',l:t('orders.payRefunding')},{v:'partialRefund',l:t('orders.payPartialRefund')},{v:'fullRefund',l:t('orders.payFullRefund')}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
 const quickPills=computed(()=>[{l:t('orders.quickAll'),v:''},{v:'created',l:t('orders.statusCreated')},{v:'pickup',l:t('orders.statusPickup')},{v:'progress',l:t('orders.statusProgress')},{v:'return',l:t('orders.statusReturn')},{v:'overdue',l:t('orders.statusOverdue')}]);
@@ -2854,7 +2855,7 @@ function parseYmd(s){
 }
 function ymdFromParts(t){return t.year+'-'+p2(t.month)+'-'+p2(t.day)}
 var _ordDateDef=defaultOrdersDateRange();
-const ordersFsSt=ref(''),ordersFsPay=ref(''),ordersFsPaySt=ref(''),ordersFsStart=ref(_ordDateDef.start),ordersFsEnd=ref(_ordDateDef.end);
+const ordersFsSt=ref(''),ordersFsPay=ref(''),ordersFsPaySt=ref(''),ordersFsStart=ref(''),ordersFsEnd=ref('');
 const ordersFsStC=ref(''),ordersFsPayC=ref(''),ordersFsPayStC=ref(''),ordersFsStartC=ref(_ordDateDef.start),ordersFsEndC=ref(_ordDateDef.end);
 const ordersDatePicker=ref(null);
 const ordersDateDraft=ref({year:2025,month:1,day:1});
@@ -2999,10 +3000,9 @@ function ordersClearFilters(){
   ordersQ.value='';
   ordersPill.value='';
   ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';
-  var def=defaultOrdersDateRange();
-  ordersFsStart.value=def.start;ordersFsEnd.value=def.end;
+  ordersFsStart.value='';ordersFsEnd.value='';
   ordersFsStC.value='';ordersFsPayC.value='';ordersFsPayStC.value='';
-  ordersFsStartC.value=def.start;ordersFsEndC.value=def.end;
+  ordersFsStartC.value='';ordersFsEndC.value='';
 }
 function openOrdersDatePicker(which){
   var src=which==='start'?ordersFsStartC.value:ordersFsEndC.value;
@@ -3381,6 +3381,7 @@ function refreshOrd(){ordersLoading.value=true;setTimeout(()=>{ordersLoading.val
 function paint(){setTimeout(()=>{initPillDrag()},300)}
 function initI18nData(){
   curStore.value='测试门店';
+  const statusRank={created:0,pickup:1,progress:2,return:3,overdue:4,breach:5,complete:6,cancelled:7};
   orders.value=[
     {id:'#ORD2026072101',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:t('orders.planMonthlyMonths',{n:1}),amount:350,status:'created',type:'vehicle',item:'乐迪SAA',created:'2026-07-21 09:00:00',payment:'2c2p',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 09:00:00',rentStart:'2026-07-21 09:00:00',rentEnd:'2026-08-21 09:00:00'},
     {id:'#ORD2026072102',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:t('orders.planMonthlyMonths',{n:1}),amount:560,status:'created',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-07-22 10:00:00',payment:'offline',paySt:'pending',time:t('orders.timeOrdered')+' 2026-07-21 09:30:00',rentStart:'2026-07-21 09:30:00',rentEnd:'2026-08-21 09:30:00'},
@@ -3409,7 +3410,7 @@ function initI18nData(){
     {id:'#ORD2026071002',vin:'LSVAU2Z0A88888002',customer:'Wang Qi',phone:'+86 13800008889',plan:t('orders.planMonthlyMonths',{n:2}),amount:620,status:'complete',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-14 15:00:00',payment:'offline',paySt:'partialRefund',time:t('orders.timePickup')+' 2026-07-25 11:00:00 · '+t('orders.timeReturn')+' 2026-07-30 11:00:00',rentStart:'2026-07-25 11:00:00',rentEnd:'2026-09-30 11:00:00'},
     {id:'#ORD2026071902',vin:'LSVAU2Z0A99999002',customer:'Sun Ba',phone:'+86 13800009990',plan:t('orders.planMonthlyMonths',{n:1}),amount:620,status:'cancelled',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-07-21 16:00:00',payment:'2c2p',paySt:'fullRefund',time:t('orders.timeOrdered')+' 2026-07-25 13:00:00 · '+t('orders.timeCancel')+' 2026-07-25 16:00:00',rentStart:'2026-07-25 13:00:00',rentEnd:'2026-08-25 13:00:00'},
     {id:'#ORD2026070802',vin:'LSVAU2Z0A10101002',customer:'Zhao Jiu',phone:'+86 13900001011',plan:t('orders.planMonthlyMonths',{n:1}),amount:620,status:'breach',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-07-22 17:00:00',payment:'offline',paySt:'paid',time:t('orders.timePickup')+' 2026-07-28 10:00:00 · '+t('orders.timeDueReturn')+' 2026-07-30 10:00:00',rentStart:'2026-07-28 10:00:00',rentEnd:'2026-08-30 10:00:00'}
-  ];
+  ].sort((a,b)=>(statusRank[a.status]??99)-(statusRank[b.status]??99));
   stores.value=[
     {name:'测试门店',addr:''},
     {name:'望京店',addr:'北京市朝阳区望京SOHO T1'},
