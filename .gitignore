@@ -11,3 +11,7 @@
 Thumbs.db
 node_modules/
 dist/
+
+# Open Design 渲染日志（工具自动生成，非源码）
+.render-stdout.txt
+.render-stderr.txt
