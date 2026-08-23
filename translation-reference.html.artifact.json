@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "translation-reference.html",
+  "entry": "translation-reference.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-08-21T07:25:43.292Z",
+  "updatedAt": "2026-08-21T07:25:43.292Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}
