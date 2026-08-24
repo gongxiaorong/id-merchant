@@ -733,7 +733,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ VEHICLE DETAIL ═══ -->
 <transition name="sl">
-<div v-if="vehOV==='detail'" v-swipe-close="()=>vehOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div v-if="vehOV==='detail'" v-swipe-close="()=>vehOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[560] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">车辆详情</div>
@@ -780,15 +780,22 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span v-html="luci('shield-check','w-7 h-7 transition-all')"></span>
 <span class="text-[13px] font-semibold">{{ armed?'解除设防':'设防' }}</span>
 </div>
-<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehOpenLost">
+<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehOpenMotorLock">
 <span v-html="luci('alert-triangle','w-7 h-7 transition-all')"></span>
-<span class="text-[13px] font-semibold">{{ lost?'解除锁车':'锁车' }}</span>
+<span class="text-[13px] font-semibold">{{ motorLocked?'解除锁车':'锁车' }}</span>
 </div>
+</div>
+<div @click="vehOpenLost" class="bg-white rounded-xl px-4 py-3 mb-3 flex items-center gap-3 cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="veh-detail-report-lost-card">
+<div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all" :style="lost?{background:'#FEF2F2',color:'#DC2626'}:{background:'#FFFBEB',color:'#D97706'}">
+<span v-html="luci('alert-triangle','w-5 h-5')"></span>
+</div>
+<span class="flex-1 text-[15px] font-semibold" :style="lost?{color:'#DC2626'}:{color:'#111'}">{{ lost?'解除报失':'报失' }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#CCC] shrink-0')"></span>
 </div>
 <div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
-<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">Wang Wu</div><div class="text-[13px] text-[#666]">+86 13800005555</div></div>
-<div class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[var(--accent)] shrink-0"><span v-html="luci('phone','w-4 h-4')"></span></div>
+<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ dv.account }}</div><div v-if="dv.phone||dv.email" class="text-[13px] text-[#666]">{{ dv.phone || dv.email }}</div></div>
+<div v-if="dv.phone||dv.email" class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[var(--accent)] shrink-0"><span v-html="luci(dv.phone?'phone':'mail','w-4 h-4')"></span></div>
 </div>
 <div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><div class="flex items-center gap-2"><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.lost?{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ dv.lost?'已报失':'未报失' }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.online?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#FFFBEB',color:'#D97706',border:'1px solid #D97706'}">{{ dv.online?'在线':'离线' }}</span></div></div>
@@ -1343,10 +1350,17 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span class="text-[15px] font-semibold text-[#111] mt-0.5">{{ battDischarge?'禁止放电':'允许放电' }}</span>
 <span class="text-[12px] text-[#999]">{{ battDischarge?'当前允许放电，点击可禁止':'当前已禁止放电，点击可恢复' }}</span>
 </div>
+<div @click="battOpenReportLost" class="bg-white rounded-xl px-4 py-3 mb-3 flex items-center gap-3 cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-report-lost-card">
+<div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all" :style="curBatt.lost?{background:'#FEF2F2',color:'#DC2626'}:{background:'#FFFBEB',color:'#D97706'}">
+<span v-html="luci('alert-triangle','w-5 h-5')"></span>
+</div>
+<span class="flex-1 text-[15px] font-semibold" :style="curBatt.lost?{color:'#DC2626'}:{color:'#111'}">{{ curBatt.lost?'解除报失':'报失' }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#CCC] shrink-0')"></span>
+</div>
 <div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-user-card">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
-<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">Wang Wu</div><div class="text-[13px] text-[#666]">+86 13800005555</div></div>
-<div class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[var(--accent)] shrink-0"><span v-html="luci('phone','w-4 h-4')"></span></div>
+<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ curBatt.account }}</div><div v-if="curBatt.phone||curBatt.email" class="text-[13px] text-[#666]">{{ curBatt.phone || curBatt.email }}</div></div>
+<div v-if="curBatt.phone||curBatt.email" class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[var(--accent)] shrink-0"><span v-html="luci(curBatt.phone?'phone':'mail','w-4 h-4')"></span></div>
 </div>
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-info-card">
 <div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5">
@@ -1370,7 +1384,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[14px] text-[#666] text-center leading-relaxed">{{ battModDesc }}</div>
 <div class="flex gap-3 mt-2">
 <div @click="battMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div>
-<div @click="battConfirmDischarge" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" style="background:var(--accent)">确认</div>
+<div @click="battConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" style="background:var(--accent)">确认</div>
 </div>
 </div>
 </div>
@@ -1646,40 +1660,43 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </transition>
 
-<transition name="sl"><div v-if="ordersOV==='detail'" v-swipe-close="()=>ordersOV='olist'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="ordersOV==='detail' && vehOV!=='detail'" v-swipe-close="()=>ordersOV='olist'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='olist'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold mr-8">订单详情</div>
-<span v-if="refundable&&can('order.refund.list')" class="text-[14px] font-medium cursor-pointer shrink-0 text-[var(--link)] active:opacity-70 min-w-[4rem] text-right" @click="openRefundRecords">退款记录</span>
-<span v-else class="min-w-[4rem] shrink-0" aria-hidden="true"></span>
+<div class="flex-1 text-center text-[17px] font-semibold">订单详情</div>
+<span class="w-8 h-8 shrink-0" aria-hidden="true"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">基本信息</div><span class="text-[13px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.customer }} {{ do_.phone }}<span v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ orderCustomerText(do_) }}<span v-if="do_.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span><span v-else-if="do_.email" v-html="luci('mail','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">租赁方案</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.plan }}</span></div>
 <div class="flex items-start gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]">2025-01-18 14:00:00<br>2025-01-20 14:00:00</span></div>
-<div v-if="dSt==='complete'" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#999]">2025-01-20 14:30:00</span></div>
-<div v-if="dSt==='cancelled'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">取消时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#999]">2025-01-18 10:15:00</span></div>
+<div class="flex items-center gap-2 py-2.5" :style="(dSt==='complete'||dSt==='cancelled')?'border-bottom:1px dashed #E5E5E5':''"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.created }}</span></div>
+<div v-if="dSt==='complete'" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">2025-01-20 14:30:00</span></div>
+<div v-if="dSt==='cancelled'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">取消时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">2025-01-18 10:15:00</span></div>
 </div>
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="text-[14px] font-bold text-[#1A1A1A] mb-2">费用明细</div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">租金</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(do_.amount) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">押金</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(500) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">合计</span><span class="flex-1 text-right text-[16px] font-bold text-[#FF6A00]">{{ fmtRp(do_.amount+500) }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">支付状态</span><span class="flex-1 text-right text-[13px] font-semibold" :style="{color:payStatusColor}">{{ payStatus }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">实付金额</span><span class="flex-1 text-right text-[13px] font-bold" :class="showPaid?'text-[#17A34A]':'text-[#999]'">{{ showPaid?fmtRp(do_.amount+500):'—' }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">支付方式</span><span class="flex-1 text-right text-[13px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dPaySt==='pending'?(dPm==='offline'?'线下支付':'2C2P'):dSt==='cancelled'?(dCanceledPaid==='paid'?'2C2P':'—'):'2C2P' }}</span></div>
-<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] font-semibold" :class="showPaid?'text-[#111]':'text-[#999]'">{{ showPaid?'2025-01-18 13:30:00':'—' }}</span></div>
+<div class="flex items-center gap-2 py-2.5" :style="dSt==='created'?'':'border-bottom:1px dashed #E5E5E5'"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">支付方式</span><span class="flex-1 text-right text-[13px] font-semibold" :class="dSt==='cancelled'&&dCanceledPaid==='unpaid'?'text-[#999]':''">{{ dPaySt==='pending'?(dPm==='offline'?'线下支付':'2C2P'):dSt==='cancelled'?(dCanceledPaid==='paid'?'2C2P':'—'):'2C2P' }}</span></div>
+<div v-if="dSt!=='created'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] font-semibold" :class="showPaid?'text-[#111]':'text-[#999]'">{{ showPaid?'2025-01-18 13:30:00':'—' }}</span></div>
 
 </div>
-<div v-if="showVehicle" class="bg-white rounded-xl p-4 mb-3 flex items-center" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-6 h-6 text-[var(--accent)]')"></span></div>
-<div class="flex-1 min-w-0"><div class="text-[13px] font-semibold mb-0.5">车架号：{{ do_.vin }}</div><div class="text-[12px] text-[#666] flex items-center gap-1">{{ do_.model }} <span class="w-1.5 h-1.5 rounded-full bg-[#17A34A]"></span> 在线</div></div>
-<span v-html="luci('chevron-right','w-4 h-4 text-[#999] shrink-0')"></span>
+<!-- ═══ 退款明细 · 卡片（仿参考项目，费用明细下方） ═══ -->
+<div v-if="dSt==='complete'||dSt==='cancelled'" class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="mb-3 flex items-center justify-between">
+<span class="text-[14px] font-bold text-[#1A1A1A]">退款明细</span>
+<span v-if="refundable&&can('order.refund.list')" class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70" @click="openRefundRecords">退款记录</span>
 </div>
-
+<div class="text-[13px] space-y-2.5">
+<div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">租金</span><span class="flex-1 text-right text-[#333]">{{ fmtRp(do_.amount,2) }}</span></div>
+<div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">押金</span><span class="flex-1 text-right text-[#333]">{{ fmtRp(500,2) }}</span></div>
+</div>
+</div>
 <!-- ═══ 用户资料 · 入口卡片 ═══ -->
 <div v-if="showDocCard" @click="openDocsPage" class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('folder-open','w-5 h-5 text-[var(--accent)]')"></span></div>
@@ -1690,10 +1707,30 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999] shrink-0')"></span>
 </div>
 
+<!-- ═══ 车辆信息 · 卡片（仿参考项目，用户资料下方） ═══ -->
+<div v-if="do_.type!=='battery'" class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex items-center justify-between mb-3"><span class="text-[14px] font-bold text-[#1A1A1A]">车辆信息</span><span v-if="['progress','return','overdue','breach'].indexOf(dSt)!==-1" @click="openOrderPick('changeVehicle')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('refresh-cw','w-3.5 h-3.5')"></span><span v-else-if="dSt==='pickup'" @click="openOrderPick('assignVehicle')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('link','w-3.5 h-3.5')"></span></div>
+<div class="text-[13px] space-y-2.5">
+<div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">车型</span><span class="flex-1 text-right text-[#333] truncate">{{ do_.type==='package'?do_.item.split('+')[0]:do_.item }}</span></div>
+<div v-if="dSt!=='created'&&dSt!=='pickup'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">车架号</span><span class="flex-1 text-right text-[#333] flex items-center justify-end gap-1.5 truncate"><span v-if="do_.vin" class="text-[var(--link)] cursor-pointer active:opacity-70" @click="goVehicleDetail(do_.vin)">{{ do_.vin }}</span><span v-else>—</span><span v-if="do_.vin" class="shrink-0" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(do_.vin,'车架号')"></span></span></div>
+<div v-if="dSt!=='created'&&dSt!=='pickup'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">取用时间</span><span class="flex-1 text-right text-[#333] truncate">{{ do_.rentStart }}</span></div>
+</div>
+</div>
+
+<!-- ═══ 电池信息 · 卡片（仿参考项目，用户资料下方） ═══ -->
+<div v-if="do_.type!=='vehicle'" class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex items-center justify-between mb-3"><span class="text-[14px] font-bold text-[#1A1A1A]">电池信息</span><span v-if="['progress','return','overdue','breach'].indexOf(dSt)!==-1" @click="openOrderPick('changeBattery')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('refresh-cw','w-3.5 h-3.5')"></span><span v-else-if="dSt==='pickup'" @click="openOrderPick('assignBattery')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('link','w-3.5 h-3.5')"></span></div>
+<div class="text-[13px] space-y-2.5">
+<div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">型号</span><span class="flex-1 text-right text-[#333] truncate">{{ do_.type==='package'?do_.item.split('+')[1]:do_.item }}</span></div>
+<div v-if="dSt!=='created'&&dSt!=='pickup'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">电池编号</span><span class="flex-1 text-right text-[#333] flex items-center justify-end gap-1.5 truncate"><span v-if="do_.battNo" class="text-[var(--link)] cursor-pointer active:opacity-70" @click="goBatteryDetail(do_.battNo)">{{ do_.battNo }}</span><span v-else>—</span><span v-if="do_.battNo" class="shrink-0" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(do_.battNo,'电池编号')"></span></span></div>
+<div v-if="dSt!=='created'&&dSt!=='pickup'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">取用时间</span><span class="flex-1 text-right text-[#333] truncate">{{ do_.rentStart }}</span></div>
+</div>
+</div>
+
 </div>
 <div v-if="showOrderActionsBar" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
 <div class="flex gap-3">
-<button v-if="showPrimaryAction" @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="primaryDanger?{background:'#DC2626'}:{background:'var(--accent)'}">{{ primaryLabel }}</button>
+<button v-if="showPrimaryAction" @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="(primaryDanger&&primaryLabel!=='取消订单')?{background:'#DC2626'}:{background:'var(--accent)'}">{{ primaryLabel }}</button>
 <button v-if="dualMode&&showDangerAction" @click="ordersDoDanger" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-colors" :style="{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
 </div></div>
 </div></transition>
@@ -1721,8 +1758,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded shrink-0" :style="refundStg(r.status)">{{ refundStLabel(r.status) }}</span>
   </div>
   <div class="flex flex-col gap-2.5">
-  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">退款租金</span><span class="text-[14px] font-semibold">{{ fmtRp(r.rent,2) }}</span></div>
-  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">退款押金</span><span class="text-[14px] font-semibold">{{ fmtRp(r.deposit,2) }}</span></div>
+  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">租金</span><span class="text-[14px] font-semibold">{{ fmtRp(r.rent,2) }}</span></div>
+  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">押金</span><span class="text-[14px] font-semibold">{{ fmtRp(r.deposit,2) }}</span></div>
   <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">操作账号</span><span class="text-[14px] font-medium text-right">{{ r.operator || '—' }}</span></div>
   <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">来源</span><span class="text-[14px] font-medium text-right">{{ refundSourceLabel(r) }}</span></div>
   <div class="flex justify-between items-start gap-3"><span class="text-[13px] text-[#999] shrink-0">原因</span><span class="text-[14px] font-medium text-right">{{ r.reason || '—' }}</span></div>
@@ -1778,14 +1815,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <transition name="fd"><div v-if="showRefund" class="absolute inset-0 z-[900]" style="background:rgba(0,0,0,.5)" @click="showRefund=false"></div></transition>
 <transition name="sh"><div v-if="showRefund" class="absolute bottom-0 left-0 right-0 bg-white z-[901] rounded-t-[20px] max-h-[92%] flex flex-col">
-<div class="w-9 h-[5px] mx-auto mt-3 mb-2" style="background:#CCC;border-radius:3px"></div>
-<div class="text-center text-[18px] font-bold pb-4 px-5 shrink-0">{{ refundMode==='return'?'归还车辆':'退款' }}</div>
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">{{ refundMode==='return'?'结束订单':'退款' }}</div>
 <div class="flex-1 overflow-y-auto px-5 hid" style="max-height:45vh">
-<div class="mb-6"><div class="text-[14px] font-semibold mb-2">退款租金</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">{{ '可退上限 ' + ('Rp 800.00') }}</div></div>
-<div class="mb-6"><div class="text-[14px] font-semibold mb-2">退款押金</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">{{ '可退上限 ' + ('Rp 500.00') }}</div></div>
-<div class="mb-4"><div class="text-[14px] font-semibold mb-2">退款原因 <span class="font-normal text-[#999]">（选填）</span></div><div class="relative"><textarea v-model="rReason" maxlength="255" :placeholder="'请输入退款原因...'" class="w-full p-4 pb-8 rounded-xl text-[15px] outline-none resize-none min-h-[90px] transition-colors" style="border:1px solid #E5E5E5;font-family:inherit"></textarea><div class="absolute right-3 bottom-2 text-[12px] text-[#999] pointer-events-none">{{ (rReason||'').length }}/255</div></div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">租金</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rRentErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="rRent" type="number" min="0" max="800" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampRent"></div><div class="text-[12px] text-[#999] mt-1">{{ '可退 ' + ('Rp 800.00') }}</div></div>
+<div class="mb-6"><div class="text-[14px] font-semibold mb-2">押金</div><div class="flex items-center rounded-xl overflow-hidden transition-colors" :style="rDepErr?{border:'1px solid #DC2626',background:'#FEF2F2'}:{border:'1px solid #E5E5E5'}"><span class="pl-4 text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="rDep" type="number" min="0" max="500" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2 py-3.5" @input="clampDep"></div><div class="text-[12px] text-[#999] mt-1">{{ '可退 ' + ('Rp 500.00') }}</div></div>
+<div class="mb-4"><div class="text-[14px] font-semibold mb-2">退款原因</div><div class="relative"><textarea v-model="rReason" maxlength="255" :placeholder="'请输入退款原因...'" class="w-full p-4 pb-8 rounded-xl text-[15px] outline-none resize-none min-h-[90px] transition-colors" style="border:1px solid #E5E5E5;font-family:inherit"></textarea><div class="absolute right-3 bottom-2 text-[12px] text-[#999] pointer-events-none">{{ (rReason||'').length }}/255</div></div></div>
 </div>
-<div class="px-5 pb-8 shrink-0"><div class="flex justify-between items-center py-3" style="border-top:1px solid #E5E5E5"><span class="text-[16px] font-semibold">合计退款</span><span class="text-[22px] font-bold text-[#17A34A]">{{ fmtRp(refundTotal,2) }}</span></div><button @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:#17A34A">确认</button></div>
+<div class="px-5 pb-8 shrink-0"><button @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">确认</button></div>
 </div></transition>
 
 <!-- ═══ ADD DOC SHEET ═══ -->
@@ -1902,13 +1939,46 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  </transition>
 
  <!-- ═══ MODAL ═══ -->
- <transition name="fd"><div v-if="ordersMod" class="absolute inset-0 z-[999] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
+ <transition name="fd"><div v-if="ordersMod && !orderPickActive" class="absolute inset-0 z-[999] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
 <div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
 <div class="text-[17px] font-bold text-center">{{ ordersModTitle }}</div>
 <div class="text-[14px] text-[#666] text-center leading-relaxed">{{ ordersModDesc }}</div>
 <div class="flex gap-3 mt-2"><div @click="ordersMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div><div @click="ordersConfirmMod" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" style="background:var(--accent)">确认</div></div>
 </div>
 </div></transition>
+
+<!-- ═══ 绑定 / 更换 车辆·电池 选择弹窗（仅展示空闲，样式参照新增车型弹窗） ═══ -->
+<transition name="fd"><div v-if="orderPickActive" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="closeOrderPick"></div></transition>
+<transition name="sh">
+<div v-if="orderPickActive" data-od-id="order-pick-modal" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] max-h-[70%] flex flex-col">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="px-5 pt-2 pb-1 shrink-0">
+<span class="block text-center text-[17px] font-semibold">{{ ordersModTitle }}</span>
+</div>
+<div class="relative mx-5 mb-3 rounded-full flex items-center px-4 py-2.5 gap-2 shrink-0" style="background:#F6F7F9;border:1px solid #E5E5E5">
+<span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
+<input v-model="orderPickQ" type="text" :placeholder="orderPickIsBatt?'搜索电池编号':'搜索车架号'" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 pr-8 placeholder:text-[#999]">
+<button @click="orderPickScan" type="button" aria-label="扫码" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button>
+</div>
+<div class="flex-1 overflow-y-auto pb-4">
+<div v-for="x in orderPickList" :key="x.key" @click="orderPickSel=x" class="flex items-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="orderPickSel&&orderPickSel.key===x.key?{background:'#EBF1FD'}:{background:'#fff'}" style="border-bottom:1px solid #EDEDED">
+<div class="w-11 h-11 rounded-lg flex items-center justify-center mr-3 shrink-0" :style="orderPickSel&&orderPickSel.key===x.key?{background:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #E5E5E5'}"><span v-html="luci(orderPickIsBatt?'battery-charging':'bike','w-6 h-6 text-[var(--accent)]')"></span></div>
+<div class="flex-1 min-w-0">
+<div class="text-[15px] font-semibold text-[#111] truncate">{{ x.no }}</div>
+<div class="flex items-center gap-1.5 text-[12px] text-[#8A8A8A] mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full shrink-0" :style="x.online?{background:'#17A34A'}:{background:'#D97706'}"></span>
+<span>{{ x.online?'在线':'离线' }}</span>
+</div>
+</div>
+<span class="text-[13px] font-semibold text-[#333] shrink-0 pl-3">{{ x.meta }}</span>
+</div>
+<div v-if="orderPickEmpty" class="text-center text-[13px] text-[#999] py-12">暂无空闲{{ orderPickIsBatt?'电池':'车辆' }}可选</div>
+</div>
+<div class="px-5 pb-7 pt-2 shrink-0">
+<button @click="confirmOrderPick" class="w-full h-[50px] flex items-center justify-center rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" :style="orderPickSel?{background:'var(--accent)'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">{{ ordersMod.indexOf('assign')===0?'确认绑定':'确认更换' }}</button>
+</div>
+</div>
+</transition>
 </template>
 
 <!-- ═══ PROFILE ═══ -->
@@ -2792,8 +2862,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-[#F6F7F9] rounded-lg px-4 py-3 mb-4 text-[13px] text-[#555] leading-relaxed">{{ updateDesc }}</div>
 <template v-if="protoForceUpdate==='force'">
 <div class="flex gap-3">
+  <div @click="exitApp" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">退出应用</div>
 <div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'var(--accent)':'var(--accent)'}">{{ updating ? '下载中…' : '立即更新' }}</div>
-<div @click="exitApp" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">退出应用</div>
 </div>
 </template>
 <template v-else>
@@ -2912,13 +2982,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <div class="demo-ops-label">支付状态</div>
         <div class="demo-ops-chips">
           <div v-for="p in filteredDemoPaySts" :key="'demo-pst-'+p.v" class="demo-ops-chip" :class="{'is-on':dPaySt===p.v}" @click="dPaySt=p.v">{{ p.l }}</div>
-        </div>
-      </div>
-      <div v-if="['overdue','breach'].includes(dSt)" class="demo-ops-section" data-od-id="demo-order-lost">
-        <div class="demo-ops-label">报失状态</div>
-        <div class="demo-ops-chips">
-          <div class="demo-ops-chip" :class="{'is-on-ok':!orderLost}" @click="orderLost=false">未报失</div>
-          <div class="demo-ops-chip" :class="{'is-on-danger':orderLost}" @click="orderLost=true">已报失</div>
         </div>
       </div>
       <div v-if="dSt==='cancelled'" class="demo-ops-section" data-od-id="demo-order-cancel-pay">
@@ -3177,10 +3240,10 @@ const vehLoading=ref(true),vehRefreshing=ref(false);
 const locked=ref(false),pressProgress=ref(0),lockJustDone=ref(false);
 let pressTimer=null,pressStart=0;const PRESS_DURATION=1500;
 const vehicles=ref([
-  {vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30:00',lost:false,lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
-  {vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15:00',lost:false,lat:null,lng:null,location:''},
-  {vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00:00',lost:true,lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
-  {vin:'LSVAU2Z0D77777000',ctrl:'860123456789045',model:'雅迪 E-Bike Pro',plate:'京D·77777',status:'空闲',online:true,batteryMain:78,batterySub:70,time:'2024-10-24 15:02:00',lost:false,lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
+  {vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',account:'user001',phone:'+86 13571893628',email:'',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30:00',lost:false,lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
+  {vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',account:'user002',phone:'',email:'359878734@qq.com',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15:00',lost:false,lat:null,lng:null,location:''},
+  {vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',account:'user003',phone:'',email:'',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00:00',lost:true,lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
+  {vin:'LSVAU2Z0D77777000',ctrl:'860123456789045',model:'雅迪 E-Bike Pro',plate:'京D·77777',account:'user004',phone:'+86 13600004444',email:'',status:'空闲',online:true,batteryMain:78,batterySub:70,time:'2024-10-24 15:02:00',lost:false,lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
 ]);
 const vehModels=[{name:'雅迪 E-Bike Pro',protocolType:'HTTP'},{name:'雅迪 City Cruiser',protocolType:'TCP'},{name:'雅迪 Mountain X',protocolType:'HTTP'}];
 const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehFsLost=ref(null),vehFsModelC=ref(''),vehFsOnlineC=ref(null),vehFsLostC=ref(null);
@@ -3207,13 +3270,13 @@ function vehMapPinStyle(v,i){
   return{left:x+'%',top:y+'%'};
 }
 const vehCluster=ref(true);
-const armed=ref(false),lost=ref(false),findLoading=ref(false);
+const armed=ref(false),lost=ref(false),motorLocked=ref(false),findLoading=ref(false);
 const editCtrl=ref(''),editModel=ref(''),editPlate=ref('');
 const editSelectedModel=computed(()=>vehModels.find(m=>m.name===editModel.value)||null);
 const editSelectedProtocol=computed(()=>(editSelectedModel.value?.protocolType)||'HTTP');
 function openVehEdit(){if(!can('vehicle.edit')){deny();return}editCtrl.value=dv.value.ctrl;editModel.value=dv.value.model;editPlate.value=dv.value.plate;vehOV.value='edit'}
 function saveVehEdit(){dv.value.ctrl=editCtrl.value;dv.value.model=editModel.value;dv.value.plate=editPlate.value;dv.value.protocol=editSelectedProtocol.value;dv.value.startMode=dv.value.startMode||'onekey';const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);if(idx>=0){vehicles.value[idx].ctrl=editCtrl.value;vehicles.value[idx].model=editModel.value;vehicles.value[idx].plate=editPlate.value;vehicles.value[idx].protocol=editSelectedProtocol.value;vehicles.value[idx].startMode=vehicles.value[idx].startMode||'onekey'}vehOV.value='detail';toast('车辆信息已保存','success')}
-function vehOpenDetail(v){if(!can('vehicle.detail')){deny();return}dv.value={...v};armed.value=false;lost.value=v.lost||false;vehOV.value='detail'}
+function vehOpenDetail(v){if(!can('vehicle.detail')){deny();return}dv.value={...v};armed.value=false;lost.value=v.lost||false;motorLocked.value=!!v.motorLocked;vehOV.value='detail'}
 function vehOpenAdd(){if(!can('vehicle.add')){deny();return}vehOV.value='add'}
 function vehToggleViewSafe(){vehToggleView()}
 /* ══ VEHICLE LOCATION DETAIL ══ */
@@ -3396,11 +3459,12 @@ function startPress(e){e.preventDefault();const need=locked.value?'vehicle.comma
 function endPress(){if(pressTimer){cancelAnimationFrame(pressTimer);pressTimer=null}const decay=()=>{if(pressProgress.value>0){pressProgress.value=Math.max(0,pressProgress.value-5);requestAnimationFrame(decay)}};requestAnimationFrame(decay)}
 function doFind(){if(findLoading.value)return;if(!can('vehicle.command.find_car')){deny();return}findLoading.value=true;setTimeout(()=>{findLoading.value=false;toast('寻车指令已发送','success')},2500)}
 function vehOpenArm(){const need=armed.value?'vehicle.command.disarm':'vehicle.command.arm';if(!can(need)){deny();return}vehMod.value='arm'}
+function vehOpenMotorLock(){const need=motorLocked.value?'vehicle.status.unlost':'vehicle.status.lost';if(!can(need)){deny();return}vehMod.value='motorLock'}
 function vehOpenLost(){const need=lost.value?'vehicle.status.unlost':'vehicle.status.lost';if(!can(need)){deny();return}vehMod.value='lost'}
-const vehModTitle=computed(()=>{if(vehMod.value==='arm')return armed.value?'解除设防':'车辆设防';if(vehMod.value==='lost')return lost.value?'解除锁车':'锁车';return''});
-const vehModDesc=computed(()=>{if(vehMod.value==='arm')return armed.value?'确定对车辆解除设防？':'确定对车辆设防？';if(vehMod.value==='lost')return lost.value?'确认解锁该车辆电机？车辆将恢复骑行':'确认锁定该车辆电机？车辆将无法骑行';return''});
-const vehModDanger=computed(()=>(vehMod.value==='arm'&&armed.value)||(vehMod.value==='lost'&&!lost.value));
-function vehConfirmMod(){if(vehMod.value==='arm'){armed.value=!armed.value;toast(armed.value?'设防成功':'解除设防成功','success')}if(vehMod.value==='lost'){lost.value=!lost.value;toast(lost.value?'锁定成功':'解锁成功','success')}vehMod.value=null}
+const vehModTitle=computed(()=>{if(vehMod.value==='arm')return armed.value?'解除设防':'车辆设防';if(vehMod.value==='motorLock')return motorLocked.value?'解除锁车':'锁车';if(vehMod.value==='lost')return lost.value?'解除报失':'报失';return''});
+const vehModDesc=computed(()=>{if(vehMod.value==='arm')return armed.value?'确定对车辆解除设防？':'确定对车辆设防？';if(vehMod.value==='motorLock')return motorLocked.value?'电机解锁后车辆将恢复骑行':'电机锁定后车辆将无法骑行';if(vehMod.value==='lost')return lost.value?'解除报失后电机解锁，车辆将恢复正常骑行':'报失后车辆将会锁电机，车辆将无法骑行';return''});
+const vehModDanger=computed(()=>(vehMod.value==='arm'&&armed.value)||(vehMod.value==='motorLock'&&!motorLocked.value)||(vehMod.value==='lost'&&!lost.value));
+function vehConfirmMod(){if(vehMod.value==='arm'){armed.value=!armed.value;toast(armed.value?'设防成功':'解除设防成功','success')}if(vehMod.value==='motorLock'){motorLocked.value=!motorLocked.value;toast(motorLocked.value?'锁车成功':'解锁成功','success')}if(vehMod.value==='lost'){lost.value=!lost.value;if(dv.value)dv.value.lost=lost.value;toast(lost.value?'报失成功':'解除报失成功','success')}vehMod.value=null}
 const addModel=ref(''),addVin=ref(''),addCtrl=ref(''),modelQ=ref('');
 const selectedModel=computed(()=>vehModels.find(m=>m.name===addModel.value)||null);
 const selectedProtocol=computed(()=>selectedModel.value?selectedModel.value.protocolType:'HTTP');
@@ -3409,10 +3473,11 @@ const filteredModels=computed(()=>modelQ.value?vehModels.filter(m=>m.name.toLowe
 function pickModel(m){if(vehOV.value==='edit'){editModel.value=m.name}else{addModel.value=m.name};vehShowModelSheet.value=false}
 const scanning=ref(false),scanTarget=ref('vin');function scanVin(){scanTarget.value='vin';scanning.value=true}
 function scanBattNo(){scanTarget.value='battNo';scanning.value=true}
-function doScan(){if(scanTarget.value==='battNo'){battAddNo.value='BATT-YD'+Math.floor(1000+Math.random()*9000)}else{addVin.value='YD'+Math.floor(Math.random()*900000+100000)}scanning.value=false}
+function doScan(){if(scanTarget.value==='battNo'){var bn='BATT-YD'+Math.floor(1000+Math.random()*9000);if(orderPickActive.value){orderPickQ.value=bn}else{battAddNo.value=bn}}else{var vn='YD'+Math.floor(Math.random()*900000+100000);if(orderPickActive.value){orderPickQ.value=vn}else{addVin.value=vn}}scanning.value=false}
 const scanTorch=ref(false);const showManualInput=ref(false);const manualVin=ref('');
+function orderPickScan(){scanTarget.value=orderPickIsBatt.value?'battNo':'vin';scanning.value=true}
 function openManualInput(){manualVin.value='';showManualInput.value=true}
-function confirmManualVin(){const n=manualVin.value.trim();if(!n){toast(scanTarget.value==='battNo'?'请输入电池编号':'请输入车架号','warn');return}if(scanTarget.value==='battNo'){battAddNo.value=n}else{addVin.value=n}showManualInput.value=false;scanning.value=false}
+function confirmManualVin(){const n=manualVin.value.trim();if(!n){toast(scanTarget.value==='battNo'?'请输入电池编号':'请输入车架号','warn');return}if(orderPickActive.value){orderPickQ.value=n}else if(scanTarget.value==='battNo'){battAddNo.value=n}else{addVin.value=n}showManualInput.value=false;scanning.value=false}
 function submitAdd(){if(!canSubmit.value)return;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('新增成功','success');vehOV.value=null;addModel.value='';addVin.value='';addCtrl.value=''},600)}
 function vehOpenFS(){vehFsModelC.value=vehFsModel.value;vehFsOnlineC.value=vehFsOnline.value;vehFsLostC.value=vehFsLost.value;vehShowFS.value=true}
 function vehToggleFSModel(m){vehFsModelC.value=vehFsModelC.value===m?'':m}
@@ -3432,7 +3497,7 @@ const ALL_PERM_CODES=[
   'home.view','home.stats.business','home.stats.vehicle','home.alert.recent',
   'vehicle.list','vehicle.detail','vehicle.add','vehicle.edit',
   'vehicle.command.unlock','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.disarm','vehicle.status.lost','vehicle.status.unlost',
-  'order.list','order.detail','order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.status.report_lost','order.status.report_unlost','order.refund.create','order.refund.list',
+  'order.list','order.detail','order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.refund.create','order.refund.list',
   'model.list','model.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable',
   'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit'
 ];
@@ -3454,8 +3519,8 @@ const permGroups=[
     {c:'vehicle.list',n:'车辆列表'},{c:'vehicle.detail',n:'车辆详情'},{c:'vehicle.add',n:'新增车辆'},{c:'vehicle.edit',n:'编辑车辆'},
     {c:'vehicle.command.unlock',n:'开锁'},{c:'vehicle.command.lock',n:'关锁'},{c:'vehicle.command.find_car',n:'寻车鸣笛'},{c:'vehicle.command.arm',n:'设防'},{c:'vehicle.command.disarm',n:'解除设防'},{c:'vehicle.status.lost',n:'锁车'},{c:'vehicle.status.unlost',n:'解除锁车'}
   ]},
-  {id:'ord',name:'订单管理',codes:['order.list','order.detail','order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.status.report_lost','order.status.report_unlost','order.refund.create','order.refund.list'],items:[
-    {c:'order.list',n:'订单列表'},{c:'order.detail',n:'订单详情'},{c:'order.operate.cancel',n:'取消订单'},{c:'order.operate.confirm_payment',n:'确认支付'},{c:'order.operate.return_vehicle',n:'归还车辆'},{c:'order.status.report_lost',n:'订单车辆报失'},{c:'order.status.report_unlost',n:'订单解除报失'},{c:'order.refund.create',n:'发起退款'},{c:'order.refund.list',n:'查看退款记录'}
+  {id:'ord',name:'订单管理',codes:['order.list','order.detail','order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.refund.create','order.refund.list'],items:[
+    {c:'order.list',n:'订单列表'},{c:'order.detail',n:'订单详情'},{c:'order.operate.cancel',n:'取消订单'},{c:'order.operate.confirm_payment',n:'确认支付'},{c:'order.operate.return_vehicle',n:'结束订单'},{c:'order.refund.create',n:'发起退款'},{c:'order.refund.list',n:'查看退款记录'}
   ]},
   {id:'sys',name:'系统配置',codes:['model.list','model.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit'],items:[
     {c:'model.list',n:'车型列表'},{c:'model.edit',n:'编辑车型'},{c:'account.list',n:'账号列表'},{c:'account.detail',n:'账号详情'},{c:'account.add',n:'新增账号'},{c:'account.edit',n:'编辑账号'},{c:'account.status.disable',n:'禁用账号'},{c:'account.status.enable',n:'启用账号'},
@@ -3493,7 +3558,7 @@ const demoPagePermCtx=computed(()=>{
     if(ordersOV.value==='refunds')return{title:'退款记录',groups:[pickPermGroup('ord',['order.refund.list'])].filter(Boolean)};
     if(ordersOV.value==='docs')return{title:'用户资料',groups:[]};
     if(ordersOV.value==='detail')return{title:'订单详情',groups:[pickPermGroup('ord',[
-      'order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.status.report_lost','order.status.report_unlost','order.refund.create','order.refund.list'
+      'order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.refund.create','order.refund.list'
     ])].filter(Boolean)};
     /* 列表：进入码 order.list 在「底部 Tab」；本页只露详情 */
     return{title:'订单列表',groups:[pickPermGroup('ord',['order.detail'])].filter(Boolean)};
@@ -3550,7 +3615,6 @@ const showPrimaryAction=computed(()=>{
 });
 const showDangerAction=computed(()=>{
   if(dPaySt.value==='pending'&&dPm.value==='offline')return can('order.operate.cancel');
-  if(dSt.value==='overdue'||dSt.value==='breach')return orderLost.value?can('order.status.report_unlost'):can('order.status.report_lost');
   return false;
 });
 const showOrderActionsBar=computed(()=>showActions.value&&(showPrimaryAction.value||(dualMode.value&&showDangerAction.value)));
@@ -3565,12 +3629,12 @@ function closeOrderList(){ordersOV.value=null;tab.value='home'}
 /* ══ BATTERY DEVICES (订单 tab → 电池) ══ */
 const battQ=ref(''),battPill=ref('');
 const batteries=ref([
-{battNo:'BATT-YD1000',model:'天能锂电 72V20Ah',status:'空闲',online:true,level:92,lost:false,discharge:true,vin:'LSVAU2Z0A88888000',time:'2026-08-20 14:30:00',lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
-{battNo:'BATT-YD1001',model:'超威黑金 72V32Ah',status:'占用中',online:true,level:74,lost:false,discharge:true,vin:'LSVAU2Z0B12345000',time:'2026-08-20 13:15:00',lat:null,lng:null,location:''},
-{battNo:'BATT-YD1002',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:85,lost:false,discharge:true,vin:'',time:'2026-08-20 11:02:00',lat:null,lng:null,location:''},
-{battNo:'BATT-YD1003',model:'天能锂电 72V20Ah',status:'占用中',online:false,level:32,lost:false,discharge:false,vin:'LSVAU2Z0E99999000',time:'2026-08-19 09:40:00',lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
-{battNo:'BATT-YD1004',model:'超威黑金 72V32Ah',status:'空闲',online:true,level:63,lost:true,discharge:false,vin:'',time:'2026-08-20 10:25:00',lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
-{battNo:'BATT-YD1005',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
+{battNo:'BATT-YD1000',account:'user005',phone:'+86 13700005555',email:'',model:'天能锂电 72V20Ah',status:'空闲',online:true,level:92,lost:false,discharge:true,vin:'LSVAU2Z0A88888000',time:'2026-08-20 14:30:00',lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
+{battNo:'BATT-YD1001',account:'user006',phone:'',email:'battery006@qq.com',model:'超威黑金 72V32Ah',status:'占用中',online:true,level:74,lost:false,discharge:true,vin:'LSVAU2Z0B12345000',time:'2026-08-20 13:15:00',lat:null,lng:null,location:''},
+{battNo:'BATT-YD1002',account:'user007',phone:'',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:85,lost:false,discharge:true,vin:'',time:'2026-08-20 11:02:00',lat:null,lng:null,location:''},
+{battNo:'BATT-YD1003',account:'user008',phone:'+86 13700008888',email:'',model:'天能锂电 72V20Ah',status:'占用中',online:false,level:32,lost:false,discharge:false,vin:'LSVAU2Z0E99999000',time:'2026-08-19 09:40:00',lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
+{battNo:'BATT-YD1004',account:'user009',phone:'',email:'battery009@qq.com',model:'超威黑金 72V32Ah',status:'空闲',online:true,level:63,lost:true,discharge:false,vin:'',time:'2026-08-20 10:25:00',lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
+{battNo:'BATT-YD1005',account:'user010',phone:'+86 13700009999',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
 ]);
 const battPills=computed(()=>[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'}]);
 const battPillCnt=computed(()=>{const m={};let n=0;batteries.value.forEach(b=>{m[b.status]=(m[b.status]||0)+1;n++});return{'':n,空闲:m['空闲']||0,占用中:m['占用中']||0,租用中:m['租用中']||0}});
@@ -3583,10 +3647,11 @@ function battDoSearch(){}
 function battOpenDetail(b){curBatt.value=b;ordersOV.value='battDetail'}
 const battMod=ref(null);
 const battDischarge=computed(()=>!!(curBatt.value&&curBatt.value.discharge));
-const battModTitle=computed(()=>battDischarge.value?'禁止放电':'允许放电');
-const battModDesc=computed(()=>battDischarge.value?'确认禁止该电池放电？禁止后设备将无法放电':'确认允许该电池放电？允许后设备可正常放电');
-function battOpenDischarge(){battMod.value=true}
-function battConfirmDischarge(){const b=curBatt.value;if(!b)return;b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success');battMod.value=null}
+const battModTitle=computed(()=>battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失':'报失'):(battDischarge.value?'禁止放电':'允许放电'));
+const battModDesc=computed(()=>battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失后电池将恢复正常放电':'报失后电池将被锁定，无法正常放电使用'):(battDischarge.value?'禁止后设备将无法放电':'允许后设备可正常放电'));
+function battOpenDischarge(){battMod.value='discharge'}
+function battOpenReportLost(){battMod.value='lost'}
+function battConfirmMod(){const b=curBatt.value;if(!b)return;if(battMod.value==='lost'){b.lost=!b.lost;if(b.lost)b.discharge=false;toast(b.lost?'报失成功':'解除报失成功','success')}else{b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success')}battMod.value=null}
 const battEditModel=ref('');
 function openBattEdit(){battEditModel.value=curBatt.value?curBatt.value.model:'';ordersOV.value='battEdit'}
 function saveBattEdit(){const b=curBatt.value;if(!b)return;b.model=battEditModel.value;const idx=batteries.value.findIndex(x=>x.battNo===b.battNo);if(idx>=0)batteries.value[idx].model=battEditModel.value;ordersOV.value='battDetail';toast('电池信息已保存','success')}
@@ -3839,25 +3904,35 @@ var filteredDemoPaySts=computed(()=>{if(dSt.value==='created')return[{v:'pending
 var payStatus=computed(()=>{var m={pending:'待支付',processing:'支付中',paid:'已支付',refunding:'退款中',partialRefund:'部分退款',fullRefund:'全部退款'};return m[dPaySt.value]||'已支付'});
 var payStatusColor=computed(()=>{var m={pending:'#F59E0B',processing:'#F59E0B',paid:'#17A34A',refunding:'#F59E0B',partialRefund:'#E67E22',fullRefund:'#999'};return m[dPaySt.value]||'#17A34A'});
 var showPaid=computed(()=>vehSts.concat(['pickup']).indexOf(dSt.value)!==-1||(dSt.value==='cancelled'&&dCanceledPaid.value==='paid'));
-var showVehicle=computed(()=>vehSts.indexOf(dSt.value)!==-1);
 var refundable=computed(()=>dSt.value==='complete'||dSt.value==='cancelled');
 var showActions=computed(()=>dSt.value!=='cancelled');
-var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return '线下支付';var m={created:'取消订单',pickup:'取消订单',progress:'归还车辆','return':'归还车辆',overdue:'归还车辆',complete:'退款',breach:'归还车辆'};return m[dSt.value]||''});
+var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return '线下支付';var m={created:'取消订单',pickup:'取消订单',progress:'结束订单','return':'结束订单',overdue:'结束订单',complete:'退款',breach:'结束订单'};return m[dSt.value]||''});
 var primaryDanger=computed(()=>['created','pickup'].indexOf(dSt.value)!==-1&&!(dPaySt.value==='pending'&&dPm.value==='offline'));
-var dualMode=computed(()=>dSt.value==='overdue'||dSt.value==='breach'||(dPaySt.value==='pending'&&dPm.value==='offline'));
+var dualMode=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline');
 var dualIsCancel=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline');
-var orderLost=ref(false);
-var dangerLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return '取消订单';return orderLost.value?'解除报失':'车辆报失'});
-function ordersOpenDetail(o){if(!can('order.detail')){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='created'?'pending':'paid');dPm.value='online';dCanceledPaid.value='paid';orderLost.value=!!o.lost;ordersOV.value='detail'}
+var dangerLabel=computed(()=>'取消订单');
+function ordersOpenDetail(o){if(!can('order.detail')){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='created'?'pending':'paid');dPm.value='online';dCanceledPaid.value='paid';ordersOV.value='detail'}
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
+function copyText(t,label){var v=(t||'').trim();if(!v||v==='—'){toast('无内容可复制','warn');return}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){toast((label||'')+'已复制','success')},function(){toast('复制失败','warn')})}else{toast('复制失败','warn')}}
+function goVehicleDetail(vin){var v=vehicles.value.find(x=>x.vin===vin);setTab('vehicles');vehOpenDetail(v||{vin:vin})}
+function goBatteryDetail(no){var b=batteries.value.find(x=>x.battNo===no);battOpenDetail(b||{battNo:no})}
 function ordersDoSearch(){}
 var ordersSaving=ref(false);
 function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dPaySt.value==='pending'&&dPm.value==='offline';if(isOff){ordersMod.value='confirmPay';return}if(['created','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
-function ordersDoDanger(){if(ordersSaving.value)return;if(!showDangerAction.value){deny();return}if(dPaySt.value==='pending'&&dPm.value==='offline'){ordersMod.value='cancel';return}ordersMod.value='lost'}
-var ordersModTitle=computed(()=>{var m={cancel:'取消订单',confirmPay:'线下支付',lost:orderLost.value?'解除报失':'车辆报失',refundConfirm:refundMode.value==='return'?'归还车辆':'订单退款'};return m[ordersMod.value]||''});
-var ordersModDesc=computed(()=>{var m={cancel:'确定取消该订单？取消后不可恢复。',confirmPay:'确认用户已完成线下支付？',lost:orderLost.value?'确定解除订单内车辆的报失？':'确认对订单内车辆执行报失？',refundConfirm:'合计退款 ¥' + (refundTotal.value.toFixed(2)) + '，确定' + (refundMode.value==='return'?'归还车辆':'执行退款') + '？'};return m[ordersMod.value]||''});
-var ordersModDanger=computed(()=>ordersMod.value==='cancel'||(ordersMod.value==='lost'&&!orderLost.value));
- function ordersConfirmMod(){var m=ordersMod.value;ordersMod.value=null;if(m==='cancel')toast('订单已取消','success');if(m==='confirmPay')toast('支付确认成功','success');if(m==='lost'){orderLost.value=!orderLost.value;if(do_.value)do_.value.lost=orderLost.value;toast(orderLost.value?'报失成功':'解除报失成功','success')}if(m==='refundConfirm'){pushRefundRecord();showRefund.value=false;toast(refundMode.value==='return'?'车辆已归还':'退款已完成','success')}}
+function ordersDoDanger(){if(ordersSaving.value)return;if(!showDangerAction.value){deny();return}ordersMod.value='cancel'}
+var ordersModTitle=computed(()=>{var m={cancel:'取消订单',confirmPay:'线下支付',refundConfirm:refundMode.value==='return'?'结束订单':'订单退款',assignVehicle:'绑定车辆',assignBattery:'绑定电池',changeVehicle:'更换车辆',changeBattery:'更换电池'};return m[ordersMod.value]||''});
+var ordersModDesc=computed(()=>{var m={cancel:'确定取消该订单？取消后不可恢复。',confirmPay:'确认用户已完成线下支付？',refundConfirm:'合计退款 ¥' + (refundTotal.value.toFixed(2)) + '，确定' + (refundMode.value==='return'?'结束订单':'执行退款') + '？',assignVehicle:'请为订单绑定指定车辆',assignBattery:'请为订单绑定指定电池',changeVehicle:'请为订单更换指定车辆',changeBattery:'请为订单更换指定电池'};return m[ordersMod.value]||''});
+var ordersModDanger=computed(()=>ordersMod.value==='cancel');
+ function ordersConfirmMod(){var m=ordersMod.value;ordersMod.value=null;if(m==='cancel')toast('订单已取消','success');if(m==='confirmPay')toast('支付确认成功','success');if(m==='refundConfirm'){pushRefundRecord();showRefund.value=false;toast(refundMode.value==='return'?'车辆已归还':'退款已完成','success')}if(m==='assignVehicle')toast('车辆已绑定','success');if(m==='assignBattery')toast('电池已绑定','success');if(m==='changeVehicle')toast('车辆已更换','success');if(m==='changeBattery')toast('电池已更换','success')}
+var orderPickActive=computed(()=>['assignVehicle','assignBattery','changeVehicle','changeBattery'].indexOf(ordersMod.value)!==-1);
+var orderPickIsBatt=computed(()=>ordersMod.value==='assignBattery'||ordersMod.value==='changeBattery');
+var orderPickSel=ref(null);
+var orderPickQ=ref('');
+var orderPickList=computed(function(){var idle=function(o){return o.status==='空闲'};var q=(orderPickQ.value||'').trim().toLowerCase();var hasQ=q.length>0;var match=function(no){return !hasQ||(no||'').toLowerCase().indexOf(q)!==-1};return orderPickIsBatt.value?batteries.value.filter(idle).filter(function(b){return match(b.battNo)}).map(function(b){return{key:'b'+b.battNo,no:b.battNo,title:b.model,sub:(b.battNo||'')+' · '+(b.online?'在线':'离线'),online:b.online,meta:(b.level!=null?b.level:0)+'%'}}):vehicles.value.filter(idle).filter(function(v){return match(v.vin)}).map(function(v){return{key:'v'+v.vin,no:v.vin,title:v.model,sub:(v.vin||'—')+' · '+(v.online?'在线':'离线'),online:v.online,meta:(v.batteryMain!=null?v.batteryMain:0)+'% / '+(v.batterySub!=null?v.batterySub:0)+'%'}})});
+var orderPickEmpty=computed(()=>orderPickList.value.length===0);
+function openOrderPick(m){orderPickSel.value=null;orderPickQ.value='';ordersMod.value=m}
+function closeOrderPick(){ordersMod.value=null;orderPickSel.value=null;orderPickQ.value=''}
+function confirmOrderPick(){var m=ordersMod.value,sel=orderPickSel.value;if(!sel){toast('请先选择'+(orderPickIsBatt.value?'电池':'车辆'),'warn');return}var o=do_.value;if(m==='assignVehicle'||m==='changeVehicle'){o.vin=sel.no;if(o.type==='vehicle'&&sel.title)o.item=sel.title}if(m==='assignBattery'||m==='changeBattery'){o.battNo=sel.no;if(o.type==='battery'&&sel.title)o.item=sel.title}ordersMod.value=null;orderPickSel.value=null;var t={assignVehicle:'车辆已绑定',assignBattery:'电池已绑定',changeVehicle:'车辆已更换',changeBattery:'电池已更换'};toast(t[m],'success')}
 var refundMode=ref('return'),rRent=ref(0),rDep=ref(0),rReason=ref('');
 var rRentErr=computed(()=>rRent.value>800),rDepErr=computed(()=>rDep.value>500);
 var refundTotal=computed(()=>{var r=rRent.value||0,d=rDep.value||0;if(r<0)r=0;if(d<0)d=0;if(r>800)r=800;if(d>500)d=500;return r+d});
@@ -3868,13 +3943,25 @@ var refundSaving=ref(false);
 function submitRefund(){if(refundSaving.value)return;refundSaving.value=true;setTimeout(function(){refundSaving.value=false;ordersMod.value='refundConfirm'},400)}
  /* ══ Order Refund Records ══ */
   const orderRefunds=ref({
-'#ORD2026072001':[
+'#ORD2026071007':[
 {id:1002,mode:'refund',rent:200,deposit:0,total:200,status:'success',source:'运营平台',channel:'原路退回 · 2C2P',reason:'提前还车，租金差额退还',operator:'Staff Li',time:'2026-07-21 14:30:00'},
      {id:1004,mode:'refund',rent:0,deposit:300,total:300,status:'failed',source:'用户端',channel:'原路退回 · 2C2P',reason:'用户主动申请押金退还',operator:'运营平台',time:'2026-07-20 11:05:00'},
      {id:1005,mode:'refund',rent:80,deposit:0,total:80,status:'processing',source:'商户端',channel:'原路退回 · 线下支付',reason:'商户优惠减免补偿',operator:'Merchant Shop A',time:'2026-07-19 16:42:00'}
     ],
     '#ORD2026071908':[
 {id:1003,mode:'refund',rent:300,deposit:500,total:800,status:'success',source:'运营平台',channel:'原路退回 · 2C2P',reason:'用户取消订单',operator:'当前账号',time:'2026-07-19 15:30:00'}
+    ],
+    '#ORD2026071001':[
+{id:1006,mode:'refund',rent:60,deposit:0,total:60,status:'success',source:'运营平台',channel:'原路退回 · 2C2P',reason:'提前还车，租金差额退还',operator:'Staff Li',time:'2026-07-26 10:20:00'}
+    ],
+    '#ORD2026071901':[
+{id:1007,mode:'refund',rent:180,deposit:200,total:380,status:'success',source:'运营平台',channel:'原路退回 · 2C2P',reason:'用户取消订单',operator:'当前账号',time:'2026-07-24 09:40:00'}
+    ],
+    '#ORD2026071002':[
+{id:1008,mode:'refund',rent:100,deposit:0,total:100,status:'success',source:'运营平台',channel:'原路退回 · 2C2P',reason:'提前还车，租金差额退还',operator:'Staff Li',time:'2026-07-26 11:10:00'}
+    ],
+    '#ORD2026071902':[
+{id:1009,mode:'refund',rent:620,deposit:500,total:1120,status:'success',source:'运营平台',channel:'原路退回 · 2C2P',reason:'用户取消订单',operator:'当前账号',time:'2026-07-24 14:00:00'}
     ]
   });
  const curRefunds=computed(()=>{
@@ -4307,7 +4394,7 @@ const pFilter=computed(()=>{const q=pQ.value.toLowerCase();return q?positions.va
 const dp=ref({});
 const pdRows=computed(()=>[{k:'职位名称',v:dp.value.name},{k:'门店级别',v:dp.value.level||'—'},{k:'上级职位',v:dp.value.parent},{k:'备注',v:dp.value.remark||'—'},{k:'创建时间',v:dp.value.created}]);
 const fp=ref({name:'',parent:'—',remark:''});
-function mkP(){return[{name:'仪表盘',icon:'pie-chart',exp:false,items:[{n:'查看营收数据',c:false},{n:'查看车辆运营',c:false}]},{name:'订单管理',icon:'file-text',exp:false,items:[{n:'查看订单列表',c:false},{n:'查看订单详情',c:false},{n:'取消订单',c:false},{n:'归还车辆',c:false},{n:'退款处理',c:false}]}]}
+function mkP(){return[{name:'仪表盘',icon:'pie-chart',exp:false,items:[{n:'查看营收数据',c:false},{n:'查看车辆运营',c:false}]},{name:'订单管理',icon:'file-text',exp:false,items:[{n:'查看订单列表',c:false},{n:'查看订单详情',c:false},{n:'取消订单',c:false},{n:'结束订单',c:false},{n:'退款处理',c:false}]}]}
 function mkPM(){return[{name:'仪表盘',icon:'pie-chart',exp:false,items:[{n:'查看营收数据',c:false},{n:'查看车辆运营',c:false}]},{name:'订单管理',icon:'file-text',exp:false,items:[{n:'查看订单列表',c:false},{n:'查看订单详情',c:false}]}]}
 const pTreeP=ref(mkP()),pTreeM=ref(mkPM());function rstPerm(){pTreeP.value=mkP();pTreeM.value=mkPM()}
 function gCb(g){const t=g.items.length,c=g.items.filter(x=>x.c).length;if(c===t)return'on';if(c>0)return'pt';return''}
@@ -4464,7 +4551,7 @@ function initI18nData(){
 }
 watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){setTimeout(()=>checkVersion(),100)}});
 onMounted(()=>{homeLoading.value=true;vehLoading.value=true;ordersLoading.value=true;initI18nData();setTimeout(()=>{homeLoading.value=false;vehLoading.value=false;ordersLoading.value=false;brandLoading.value=false;paint();if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)});
-watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited,pkgPicker],paint);
+watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,orderPickSel,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited,pkgPicker],paint);
 watch(dSt,(v)=>{if(v==='created')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
 onUpdated(paint);
 
@@ -4474,9 +4561,9 @@ return{luci,alertTypeLabel,vehStatusLabel,ignoreReasonLabel,initPullToRefresh,re
 vehOV,vehMod,vehShowModelSheet,vehShowFS,vehLoading,vehRefreshing,locked,pressProgress,lockJustDone,
 vehicles,vehModels,vehQ,vehPill,vehFsModel,vehFsOnline,vehFsModelC,vehFsOnlineC,vehHasF,pills,pillCnt,filtered,
 vehView,mapVehicles,vehNoLocationCount,mapSelectedVin,mapSelectedVeh,vehToggleView,vehMapSelect,vehMapPinStyle,vehCluster,
-dv,armed,lost,findLoading,addModel,addVin,addCtrl,modelQ,selectedModel,selectedProtocol,filteredModels,canSubmit,
+dv,armed,lost,motorLocked,findLoading,addModel,addVin,addCtrl,modelQ,selectedModel,selectedProtocol,filteredModels,canSubmit,
 vehModTitle,vehModDesc,vehModDanger,
-vehOpenDetail,vehOpenAdd,vehToggleViewSafe,vehDoSearch,startPress,endPress,doFind,vehOpenArm,vehOpenLost,vehConfirmMod,pickModel,scanVin,doScan,scanning,scanTorch,showManualInput,manualVin,openManualInput,confirmManualVin,submitAdd,
+vehOpenDetail,vehOpenAdd,vehToggleViewSafe,vehDoSearch,startPress,endPress,doFind,vehOpenArm,vehOpenLost,vehOpenMotorLock,vehConfirmMod,pickModel,scanVin,doScan,scanning,scanTorch,showManualInput,manualVin,openManualInput,confirmManualVin,submitAdd,
 vehOpenFS,vehToggleFSModel,vehToggleFSOnline,vehResetFS,vehApplyFS,sc,bi,bc,
 editCtrl,editModel,editPlate,editSelectedModel,editSelectedProtocol,openVehEdit,saveVehEdit,
 openVehLocation,locLoading,locRinging,locFocus,locVehPt,locUserPt,locAddressFull,locAddressShort,locDistM,locWalkMin,locFocusUser,locFocusVehicle,locRingVehicle,locOpenNav,
@@ -4489,15 +4576,15 @@ ordersOV,ordersMod,ordersShowFS,showRefund,ordersLoading,ordersRefreshing,orders
 orders,allStatus,demoAllStatus,paySts,demoPayStsFixed,filteredDemoPaySts,quickPills,qCnt,oFiltered,orderCustomerText,
 ordersType,typePills,typeCnt,ordersSetType,ordersTypeActive,
 ordersEntry,ordersPlaceholder,ordersLName,ordersListTitle,orderEntries,homeOpenOrders,closeOrderList,
-batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSearch,battOpenDetail,battMod,battDischarge,battModTitle,battModDesc,battOpenDischarge,battConfirmDischarge,openBattLocation,loadBattLocData,battLocLoading,battLocFocus,battLocAddressFull,battLocAddressShort,battLocDistM,battLocWalkMin,battLocBattPt,battLocUserPt,battLocFocusUser,battLocFocusBattery,battLocOpenNav,openBattTrack,battTrackStart,battTrackEnd,battTrackDraft,battTrackTimePicker,battTrackLoading,battTrackPoints,battTrackWheelDay,battTrackWheelMonth,battTrackWheelYear,battTrackWheelHour,battTrackWheelMin,battTrackDays,battTrackMonths,battTrackYears,battTrackHours,battTrackMins,battTrackStartLabel,battTrackEndLabel,battTrackPois,battTrackPolyline,battTrackStartPt,battTrackEndPt,openBattTrackTimePicker,cancelBattTrackTimePicker,confirmBattTrackTimePicker,onBattTrackWheelScroll,battShowFS,battFsModelC,battFsOnlineC,battFsLostC,battHasF,battFsModels,battOpenFS,battToggleFSModel,battToggleFSOnline,battToggleFSLost,battResetFS,battApplyFS,battView,battToggleView,battMapBatteries,battNoLocationCount,battMapSelected,battMapSelectedBatt,battMapSelect,battMapPinStyle,battCluster,battEditModel,openBattEdit,saveBattEdit,battAddModel,battAddNo,battModelQ,battModels,battShowModelSheet,battFilteredModels,canBattSubmit,pickBattModel,openBattAdd,closeBattAdd,submitBattAdd,scanBattNo,scanTarget,
+batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSearch,battOpenDetail,battMod,battDischarge,battModTitle,battModDesc,battOpenDischarge,battOpenReportLost,battConfirmMod,openBattLocation,loadBattLocData,battLocLoading,battLocFocus,battLocAddressFull,battLocAddressShort,battLocDistM,battLocWalkMin,battLocBattPt,battLocUserPt,battLocFocusUser,battLocFocusBattery,battLocOpenNav,openBattTrack,battTrackStart,battTrackEnd,battTrackDraft,battTrackTimePicker,battTrackLoading,battTrackPoints,battTrackWheelDay,battTrackWheelMonth,battTrackWheelYear,battTrackWheelHour,battTrackWheelMin,battTrackDays,battTrackMonths,battTrackYears,battTrackHours,battTrackMins,battTrackStartLabel,battTrackEndLabel,battTrackPois,battTrackPolyline,battTrackStartPt,battTrackEndPt,openBattTrackTimePicker,cancelBattTrackTimePicker,confirmBattTrackTimePicker,onBattTrackWheelScroll,battShowFS,battFsModelC,battFsOnlineC,battFsLostC,battHasF,battFsModels,battOpenFS,battToggleFSModel,battToggleFSOnline,battToggleFSLost,battResetFS,battApplyFS,battView,battToggleView,battMapBatteries,battNoLocationCount,battMapSelected,battMapSelectedBatt,battMapSelect,battMapPinStyle,battCluster,battEditModel,openBattEdit,saveBattEdit,battAddModel,battAddNo,battModelQ,battModels,battShowModelSheet,battFilteredModels,canBattSubmit,pickBattModel,openBattAdd,closeBattAdd,submitBattAdd,scanBattNo,scanTarget,
 ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
-do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid,showVehicle,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,
-primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,orderLost,
-ordersModTitle,ordersModDesc,ordersModDanger,
+do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,
+primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,
+ordersModTitle,ordersModDesc,ordersModDanger,orderPickActive,orderPickIsBatt,orderPickQ,orderPickSel,orderPickList,orderPickEmpty,openOrderPick,closeOrderPick,confirmOrderPick,orderPickScan,
 refundMode,rRent,rDep,rReason,rRentErr,rDepErr,refundTotal,
-sl,stg,hasVehicle,fmtRp,ordersOpenDetail,copyId,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,
+sl,stg,hasVehicle,fmtRp,ordersOpenDetail,copyId,copyText,goVehicleDetail,goBatteryDetail,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,
  openRefund,clampRent,clampDep,submitRefund,refundSaving,
   openRefundRecords,curRefunds,refundStLabel,refundStg,refundSourceLabel,
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
