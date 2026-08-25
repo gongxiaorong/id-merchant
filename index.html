@@ -47,6 +47,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',sy
 .demo-ops-chip.is-on-ok{background:#2F6FEB;border-color:#2F6FEB;color:#fff}
 .demo-ops-chip.is-on-danger{background:#2F6FEB;border-color:#2F6FEB;color:#fff}
 .demo-ops-section+.demo-ops-section{margin-top:4px;padding-top:12px;border-top:1px solid #E5E5E5}
+.demo-ops-group-hd{font-size:13px;font-weight:700;color:#111;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid #E5E5E5}
 .demo-ops-chip.is-off{opacity:.55;text-decoration:line-through}
 .demo-ops-perm-g{margin-bottom:10px}
 .demo-ops-perm-g:last-child{margin-bottom:0}
@@ -150,6 +151,37 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ Toast ═══ -->
 <div class="toast-wrap"><transition-group name="toast"><div v-for="t in toasts" :key="t.id" class="toast-item" :class="'toast-'+t.type">{{ t.msg }}</div></transition-group></div>
+
+<!-- ═══ 绑定用户 · 选择弹窗（车辆/电池详情共用） ═══ -->
+<transition name="fd"><div v-if="userPickActive" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="closeUserPick"></div></transition>
+<transition name="sh">
+<div v-if="userPickActive" data-od-id="user-pick-modal" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] max-h-[70%] flex flex-col">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="px-5 pt-2 pb-1 shrink-0"><span class="block text-center text-[17px] font-semibold">绑定用户</span></div>
+<div class="relative mx-5 mb-3 rounded-full flex items-center px-4 py-2.5 gap-2 shrink-0" style="background:#F6F7F9;border:1px solid #E5E5E5">
+<span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
+<input v-model="userPickQ" type="text" placeholder="搜索账号 / 手机号 / 邮箱" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 pr-8 placeholder:text-[#999]">
+</div>
+<div class="flex-1 overflow-y-auto pb-4">
+<div v-for="x in userPickList" :key="x.key" @click="userPickSel=x" class="flex items-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="userPickSel&&userPickSel.key===x.key?{background:'#EBF1FD'}:{background:'#fff'}" style="border-bottom:1px solid #EDEDED">
+<div class="w-11 h-11 rounded-full flex items-center justify-center mr-3 shrink-0" :style="userPickSel&&userPickSel.key===x.key?{background:'#fff',border:'1px solid var(--accent)'}:{background:'#EBF1FD'}"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
+<div class="flex-1 min-w-0">
+<div class="text-[15px] font-semibold text-[#111] truncate">{{ x.account }}</div>
+<div v-if="x.sub" class="text-[12px] text-[#8A8A8A] mt-0.5 truncate">{{ x.sub }}</div>
+</div>
+<span v-if="userPickSel&&userPickSel.key===x.key" v-html="luci('check','w-5 h-5 text-[var(--accent)] shrink-0')"></span>
+</div>
+<div v-if="userPickEmpty" class="flex flex-col items-center justify-center py-12">
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('user-search','w-7 h-7 text-[var(--accent)]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">{{ userPickQ ? '未找到匹配用户' : '暂无用户' }}</div>
+<div class="text-[13px] text-[#999]">{{ userPickQ ? '请调整关键词后重试' : '输入账号 / 手机号 / 邮箱搜索' }}</div>
+</div>
+</div>
+<div class="px-5 pb-7 pt-2 shrink-0">
+<button @click="confirmUserPick" class="w-full h-[50px] flex items-center justify-center rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" :style="userPickSel?{background:'var(--accent)'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">确认绑定</button>
+</div>
+</div>
+</transition>
 
 <!-- ═══ 全局区号选择（登录 / 绑定 / 账号 / 客服 共用） ═══ -->
 <div v-if="showDialPicker" class="absolute inset-0 z-[1950] bg-[#F6F7F9] flex flex-col rounded-[44px] overflow-hidden" data-od-id="dialcode-page">
@@ -421,7 +453,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  </div>
  </transition-group>
 </template>
-<template v-if="can('order.list')">
+<template v-if="orderEntries.length">
 <div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">订单管理</span></div>
 <div class="grid grid-cols-3 gap-2.5">
 <div v-for="e in orderEntries" :key="e.v" @click="homeOpenOrders(e.v)" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" :data-od-id="'home-order-entry-'+e.v" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
@@ -765,40 +797,33 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </div>
 <div class="grid grid-cols-2 gap-3 mb-3">
-<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] relative overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);transition:background .3s" @mousedown="startPress" @mouseup="endPress" @mouseleave="endPress" @touchstart.prevent="startPress" @touchend="endPress" @touchcancel="endPress">
+<div v-if="can('vehicle.command.lock')" class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] relative overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);transition:background .3s" @mousedown="startPress" @mouseup="endPress" @mouseleave="endPress" @touchstart.prevent="startPress" @touchend="endPress" @touchcancel="endPress">
 <div class="absolute bottom-0 left-0 w-full transition-all duration-75 ease-linear" :style="{height:pressProgress+'%',background:locked?'rgba(220,38,38,0.1)':'rgba(39,111,235,0.1)'}"></div>
 <div class="relative z-10 flex flex-col items-center gap-1 transition-all" :style="lockJustDone?{transform:'scale(1.08)'}:{transform:'scale(1)'}">
 <span v-html="luci(locked?'lock':'unlock','w-7 h-7 transition-all')"></span>
 <span class="text-[13px] font-semibold">{{ locked?'长按关锁':'长按开锁' }}</span>
 </div>
 </div>
-<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);transition:all .3s" :style="findLoading?{background:'#FFF3E0',borderColor:'#E67E22',pointerEvents:'none'}:{}" @click="doFind">
+<div v-if="can('vehicle.command.find_car')" class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);transition:all .3s" :style="findLoading?{background:'#FFF3E0',borderColor:'#E67E22',pointerEvents:'none'}:{}" @click="doFind">
 <span v-html="luci(findLoading?'loader':'locate','w-7 h-7 transition-all'+(findLoading?' anim-spin':''))" :style="findLoading?{color:'#E67E22'}:{}"></span>
 <span class="text-[13px] font-semibold" :style="findLoading?{color:'#E67E22'}:{}">{{ findLoading?'寻车中...':'寻车' }}</span>
 </div>
-<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehOpenArm">
+<div v-if="can('vehicle.command.arm')" class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehOpenArm">
 <span v-html="luci('shield-check','w-7 h-7 transition-all')"></span>
 <span class="text-[13px] font-semibold">{{ armed?'解除设防':'设防' }}</span>
 </div>
-<div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehOpenMotorLock">
+<div v-if="can('vehicle.command.motor_lock')" class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="vehOpenMotorLock">
 <span v-html="luci('alert-triangle','w-7 h-7 transition-all')"></span>
-<span class="text-[13px] font-semibold">{{ motorLocked?'解锁电机':'锁定电机' }}</span>
+<span class="text-[13px] font-semibold">{{ motorLocked?'解锁电机':'锁电机' }}</span>
 </div>
-</div>
-<div @click="vehOpenLost" class="bg-white rounded-xl px-4 py-3 mb-3 flex items-center gap-3 cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="veh-detail-report-lost-card">
-<div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all" :style="lost?{background:'#FEF2F2',color:'#DC2626'}:{background:'#FFFBEB',color:'#D97706'}">
-<span v-html="luci('alert-triangle','w-5 h-5')"></span>
-</div>
-<span class="flex-1 text-[15px] font-semibold" :style="lost?{color:'#DC2626'}:{color:'#111'}">{{ lost?'解除报失':'车辆报失' }}</span>
-<span v-html="luci('chevron-right','w-4 h-4 text-[#CCC] shrink-0')"></span>
 </div>
 <div class="bg-white rounded-xl p-4 mb-3 flex items-center active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ dv.account || '未绑定用户' }}</div><div v-if="dv.phone||dv.email" class="text-[13px] text-[#666]">{{ dv.phone || dv.email }}</div></div>
-<span v-if="dv.account" @click="vehMod='unbind'" class="text-[14px] font-medium cursor-pointer select-none text-[#DC2626] active:opacity-70 shrink-0">解绑</span>
+<span v-if="dv.account" @click="vehMod='unbind'" class="text-[14px] font-medium cursor-pointer select-none text-[#DC2626] active:opacity-70 shrink-0">解绑</span><span v-else @click="openUserPick('vehicle')" class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70 shrink-0">绑定</span>
 </div>
 <div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><div class="flex items-center gap-2"><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.lost?{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ dv.lost?'已报失':'未报失' }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.online?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#FFFBEB',color:'#D97706',border:'1px solid #D97706'}">{{ dv.online?'在线':'离线' }}</span></div></div>
+<div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><div class="flex items-center gap-2"><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.online?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#FFFBEB',color:'#D97706',border:'1px solid #D97706'}">{{ dv.online?'在线':'离线' }}</span></div></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">中控编号</div><div class="text-[14px] font-semibold">{{ dv.ctrl }}</div></div></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">车型</div><div class="text-[14px] font-semibold">{{ dv.model }}</div></div></div>
 <div class="flex py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">电池电量</div><div class="text-[14px] font-semibold" :style="{color:bc(dv.batteryMain)}">主{{ dv.batteryMain }}% / 副{{ dv.batterySub }}%</div></div><div class="flex-1"><div class="text-[12px] text-[#999] mb-1">运营状态</div><div class="text-[14px] font-semibold">{{ dv.status }}</div></div></div>
@@ -1069,10 +1094,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 <div class="mb-4">
-<div class="text-[14px] font-semibold mb-2">报失状态</div>
+<div class="text-[14px] font-semibold mb-2">电机状态</div>
 <div class="flex flex-wrap gap-2">
-<div @click="vehToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">未报失</div>
-<div @click="vehToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">已报失</div>
+<div @click="vehToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">未锁</div>
+<div @click="vehToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="vehFsLostC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">已锁</div>
 </div>
 </div>
 </div>
@@ -1244,7 +1269,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div @click="battToggleView" class="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform bg-white text-[#111]" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)">
 <span v-html="luci(battView==='list'?'map':'list','w-5 h-5')"></span>
 </div>
-<div @click="openBattAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
+<div v-if="can('battery.add')" @click="openBattAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
 </div>
 </template>
 
@@ -1316,7 +1341,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">电池详情</div>
-<span class="text-[14px] font-medium text-[var(--link)] cursor-pointer shrink-0 active:opacity-70" @click="openBattEdit">编辑</span>
+<span v-if="can('battery.edit')" class="text-[14px] font-medium text-[var(--link)] cursor-pointer shrink-0 active:opacity-70" @click="openBattEdit">编辑</span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <template v-if="curBatt">
@@ -1343,30 +1368,22 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
   </div>
 </div>
-<div @click="battOpenDischarge" class="bg-white rounded-xl p-4 mb-3 flex flex-col items-center justify-center gap-2 min-h-[112px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-discharge-card">
+<div v-if="can('battery.discharge')" @click="battOpenDischarge" class="bg-white rounded-xl p-4 mb-3 flex flex-col items-center justify-center gap-2 min-h-[112px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-discharge-card">
 <div class="w-14 h-14 rounded-full flex items-center justify-center transition-all" :style="battDischarge?{background:'#ECFDF3',color:'#17A34A'}:{background:'#FEF2F2',color:'#DC2626'}">
 <span v-html="luci(battDischarge?'zap':'zap-off','w-7 h-7')"></span>
 </div>
 <span class="text-[15px] font-semibold text-[#111] mt-0.5">{{ battDischarge?'禁止放电':'允许放电' }}</span>
 <span class="text-[12px] text-[#999]">{{ battDischarge?'当前允许放电，点击可禁止':'当前已禁止放电，点击可恢复' }}</span>
 </div>
-<div @click="battOpenReportLost" class="bg-white rounded-xl px-4 py-3 mb-3 flex items-center gap-3 cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-report-lost-card">
-<div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all" :style="curBatt.lost?{background:'#FEF2F2',color:'#DC2626'}:{background:'#FFFBEB',color:'#D97706'}">
-<span v-html="luci('alert-triangle','w-5 h-5')"></span>
-</div>
-<span class="flex-1 text-[15px] font-semibold" :style="curBatt.lost?{color:'#DC2626'}:{color:'#111'}">{{ curBatt.lost?'解除报失':'电池报失' }}</span>
-<span v-html="luci('chevron-right','w-4 h-4 text-[#CCC] shrink-0')"></span>
-</div>
 <div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-user-card">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
-<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ curBatt.account }}</div><div v-if="curBatt.phone||curBatt.email" class="text-[13px] text-[#666]">{{ curBatt.phone || curBatt.email }}</div></div>
-<div v-if="curBatt.phone||curBatt.email" class="w-8 h-8 rounded-full bg-[#EBF1FD] flex items-center justify-center text-[var(--accent)] shrink-0"><span v-html="luci(curBatt.phone?'phone':'mail','w-4 h-4')"></span></div>
+<div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ curBatt.account || '未绑定用户' }}</div><div v-if="curBatt.phone||curBatt.email" class="text-[13px] text-[#666]">{{ curBatt.phone || curBatt.email }}</div></div>
+<span v-if="curBatt.account" @click="battMod='unbind'" class="text-[14px] font-medium cursor-pointer select-none text-[#DC2626] active:opacity-70 shrink-0">解绑</span><span v-else @click="openUserPick('battery')" class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70 shrink-0">绑定</span>
 </div>
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-info-card">
 <div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5">
 <div class="flex-1 pl-4 pr-2"><div class="text-[12px] text-[#8A8A8A] mb-1">电池编号</div><div class="text-[16px] font-bold">{{ curBatt.battNo }}</div></div>
 <div class="flex items-center gap-2 pr-4">
-<span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="curBatt.lost?{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ curBatt.lost?'已报失':'未报失' }}</span>
 <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="curBatt.online?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#FFFBEB',color:'#D97706',border:'1px solid #D97706'}">{{ curBatt.online?'在线':'离线' }}</span>
 </div>
 </div>
@@ -1646,10 +1663,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div>
 <div class="mb-4">
-<div class="text-[14px] font-semibold mb-2">报失状态</div>
+<div class="text-[14px] font-semibold mb-2">放电状态</div>
 <div class="flex flex-wrap gap-2">
-<div @click="battToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="battFsLostC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">未报失</div>
-<div @click="battToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="battFsLostC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">已报失</div>
+<div @click="battToggleFSLost(false)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="battFsLostC===false?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">禁止放电</div>
+<div @click="battToggleFSLost(true)" class="px-4 py-2 rounded-full text-[14px] font-medium cursor-pointer transition-all" :style="battFsLostC===true?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">允许放电</div>
 </div>
 </div>
 </div>
@@ -2407,6 +2424,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <template v-for="p in modelPlanOpts" :key="'bp-'+p.v"><div v-if="fpk.plans[p.v]" class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ {priceHour:'时租',priceDay:'日租',priceWeek:'周租',priceMonth:'月租'}[modelPriceKey[p.v]] }}</div><div class="login-field relative flex items-center" :style="fE[p.v]?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span><input v-model.number="fpk[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 bg-transparent border-none text-[15px] font-medium outline-none px-2 py-3.5 text-[#333]"></div><div v-if="fE[p.v]" class="form-hint text-[#DC2626]">{{ fE[p.v] }}</div></div></template>
 <div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>押金</div><div class="login-field relative flex items-center" :style="fE.deposit?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span><input v-model.number="fpk.deposit" type="number" min="0" @input="vClr('deposit')" class="flex-1 bg-transparent border-none text-[15px] font-medium outline-none px-2 py-3.5"></div><div v-if="fE.deposit" class="form-hint text-[#DC2626]">{{ fE.deposit }}</div></div>
 <div class="form-row"><div class="form-label">排序</div><div class="login-field relative flex items-center"><input v-model.number="fpk.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.sort" class="form-hint text-[#DC2626]">{{ fE.sort }}</div></div>
+<div class="form-row"><div class="form-label">状态</div><div class="flex gap-2"><div @click="fpk.status='上架'" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fpk.status==='上架'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F7F8FA',color:'#666',border:'1px solid #EBEDF0'}">上架</div><div @click="fpk.status='下架'" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fpk.status==='下架'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F7F8FA',color:'#666',border:'1px solid #EBEDF0'}">下架</div></div></div>
 <div class="form-row"><div class="form-label">备注</div>
 <div class="relative">
 <textarea v-model="fpk.remark" maxlength="255" :placeholder="'请输入备注'" class="w-full p-3.5 pb-8 text-[15px] rounded-xl" style="border:1px solid #E5E5E5;background:#fff;min-height:90px;resize:none;line-height:1.5"></textarea>
@@ -2457,6 +2475,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <template v-for="p in modelPlanOpts" :key="'ba-'+p.v"><div v-if="fpk.plans[p.v]" class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>{{ {priceHour:'时租',priceDay:'日租',priceWeek:'周租',priceMonth:'月租'}[modelPriceKey[p.v]] }}</div><div class="login-field relative flex items-center" :style="fE[p.v]?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span><input v-model.number="fpk[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 bg-transparent border-none text-[15px] font-medium outline-none px-2 py-3.5 text-[#333]"></div><div v-if="fE[p.v]" class="form-hint text-[#DC2626]">{{ fE[p.v] }}</div></div></template>
 <div class="form-row"><div class="form-label"><span class="text-[#DC2626] mr-0.5">*</span>押金</div><div class="login-field relative flex items-center" :style="fE.deposit?{boxShadow:'inset 0 0 0 1px #DC2626'}:null"><span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span><input v-model.number="fpk.deposit" type="number" min="0" @input="vClr('deposit')" class="flex-1 bg-transparent border-none text-[15px] font-medium outline-none px-2 py-3.5"></div><div v-if="fE.deposit" class="form-hint text-[#DC2626]">{{ fE.deposit }}</div></div>
 <div class="form-row"><div class="form-label">排序</div><div class="login-field relative flex items-center"><input v-model.number="fpk.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div><div v-if="fE.sort" class="form-hint text-[#DC2626]">{{ fE.sort }}</div></div>
+<div class="form-row"><div class="form-label">状态</div><div class="flex gap-2"><div @click="fpk.status='上架'" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fpk.status==='上架'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F7F8FA',color:'#666',border:'1px solid #EBEDF0'}">上架</div><div @click="fpk.status='下架'" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fpk.status==='下架'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F7F8FA',color:'#666',border:'1px solid #EBEDF0'}">下架</div></div></div>
 <div class="form-row"><div class="form-label">备注</div>
 <div class="relative">
 <textarea v-model="fpk.remark" maxlength="255" :placeholder="'请输入备注'" class="w-full p-3.5 pb-8 text-[15px] rounded-xl" style="border:1px solid #E5E5E5;background:#fff;min-height:90px;resize:none;line-height:1.5"></textarea>
@@ -2845,7 +2864,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-if="can('vehicle.list')" @click="setTab('vehicles')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='vehicles'?'text-[var(--accent)]':'text-[#999]'">
 <span v-html="luci('bike','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">车辆</span>
 </div>
-<div v-if="can('order.list')" @click="setTab('orders')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='orders'?'text-[var(--accent)]':'text-[#999]'">
+<div v-if="can('battery.list')" @click="setTab('orders');ordersOV=null" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='orders'&&!ordersOV?'text-[var(--accent)]':'text-[#999]'">
 <span v-html="luci('battery-charging','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">电池</span>
 </div>
 <div @click="setTab('profile')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='profile'?'text-[var(--accent)]':'text-[#999]'">
@@ -2897,6 +2916,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <aside class="demo-ops is-active" data-od-id="demo-ops" :aria-hidden="!demoOpsActive">
   <div class="demo-ops-title">原型操作</div>
   <template v-if="showLogin">
+    <div class="demo-ops-group-hd">功能控制</div>
     <div class="demo-ops-section" data-od-id="demo-login-state">
       <div class="demo-ops-label">登录状态</div>
       <div class="demo-ops-chips">
@@ -2906,7 +2926,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     </div>
   </template>
   <template v-if="demoOpsActive">
-    <div class="demo-ops-section" data-od-id="demo-tab-perms">
+    <div class="demo-ops-group-hd">权限控制</div>
+    <div v-if="demoIsTopTab" class="demo-ops-section" data-od-id="demo-tab-perms">
       <div class="demo-ops-row">
         <div class="demo-ops-label" style="margin:0">底部 Tab</div>
         <div class="flex gap-2">
@@ -2940,6 +2961,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         </div>
       </div>
     </div>
+    <div class="demo-ops-group-hd">功能控制</div>
     <template v-if="curAlert">
       <div class="demo-ops-section" data-od-id="demo-alert-close-source">
         <div class="demo-ops-label">关闭方式</div>
@@ -2964,11 +2986,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <div class="demo-ops-chip" :class="{'is-on':protoForceUpdate==='force'}" @click="protoForceUpdate=protoForceUpdate==='force'?'none':'force'">强制更新</div>
       </div>
     </div>
-    <template v-else-if="ordersOV==='detail'||ordersOV==='olist'">
-      <div class="demo-ops-section">
+    <template v-else-if="ordersOV==='detail'">
+      <div class="demo-ops-section" data-od-id="demo-order-status">
         <div class="demo-ops-label">订单状态</div>
         <div class="demo-ops-chips">
-          <div v-for="s in demoAllStatus" :key="'demo-st-'+s.v" class="demo-ops-chip" :class="{'is-on':dSt===s.v}" @click="dSt=s.v">{{ s.l }}</div>
+          <div v-for="s in demoAllStatus" :key="'demo-od-st-'+s.v" class="demo-ops-chip" :class="{'is-on':dSt===s.v}" @click="dSt=s.v">{{ s.l }}</div>
         </div>
       </div>
       <div v-if="dPaySt==='pending'&&dSt!=='pickup'&&dSt!=='progress'&&dSt!=='return'&&dSt!=='overdue'&&dSt!=='breach'||dSt==='complete'" class="demo-ops-section" data-od-id="demo-order-pay">
@@ -2982,13 +3004,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <div class="demo-ops-label">支付状态</div>
         <div class="demo-ops-chips">
           <div v-for="p in filteredDemoPaySts" :key="'demo-pst-'+p.v" class="demo-ops-chip" :class="{'is-on':dPaySt===p.v}" @click="dPaySt=p.v">{{ p.l }}</div>
-        </div>
-      </div>
-      <div v-if="dSt==='cancelled'" class="demo-ops-section" data-od-id="demo-order-cancel-pay">
-        <div class="demo-ops-label">取消前状态</div>
-        <div class="demo-ops-chips">
-          <div class="demo-ops-chip" :class="{'is-on-ok':dCanceledPaid==='paid'}" @click="dCanceledPaid='paid'">已支付</div>
-          <div class="demo-ops-chip" :class="{'is-on-warn':dCanceledPaid==='unpaid'}" @click="dCanceledPaid='unpaid'">未支付</div>
         </div>
       </div>
     </template>
@@ -3243,7 +3258,7 @@ const vehicles=ref([
   {vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',account:'user001',phone:'+86 13571893628',email:'',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30:00',lost:false,lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
   {vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',account:'user002',phone:'',email:'359878734@qq.com',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15:00',lost:false,lat:null,lng:null,location:''},
   {vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',account:'user003',phone:'',email:'',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00:00',lost:true,lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
-  {vin:'LSVAU2Z0D77777000',ctrl:'860123456789045',model:'雅迪 E-Bike Pro',plate:'京D·77777',account:'user004',phone:'+86 13600004444',email:'',status:'空闲',online:true,batteryMain:78,batterySub:70,time:'2024-10-24 15:02:00',lost:false,lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
+  {vin:'LSVAU2Z0D77777000',ctrl:'860123456789045',model:'雅迪 E-Bike Pro',plate:'京D·77777',account:'',phone:'',email:'',status:'空闲',online:true,batteryMain:78,batterySub:70,time:'2024-10-24 15:02:00',lost:false,lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
 ]);
 const vehModels=[{name:'雅迪 E-Bike Pro',protocolType:'HTTP'},{name:'雅迪 City Cruiser',protocolType:'TCP'},{name:'雅迪 Mountain X',protocolType:'HTTP'}];
 const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehFsLost=ref(null),vehFsModelC=ref(''),vehFsOnlineC=ref(null),vehFsLostC=ref(null);
@@ -3455,16 +3470,16 @@ function onTrackWheelScroll(kind,e){
   },80);
 }
 function vehDoSearch(){}
-function startPress(e){e.preventDefault();const need=locked.value?'vehicle.command.lock':'vehicle.command.unlock';if(!can(need)){deny();return}pressStart=Date.now();pressProgress.value=0;const update=()=>{const now=Date.now();const elapsed=now-pressStart;pressProgress.value=Math.min((elapsed/PRESS_DURATION)*100,100);if(elapsed>=PRESS_DURATION){locked.value=!locked.value;pressProgress.value=0;lockJustDone.value=true;toast(locked.value?'已开锁':'已关锁','success');setTimeout(()=>lockJustDone.value=false,300);return}pressTimer=requestAnimationFrame(update)};pressTimer=requestAnimationFrame(update)}
+function startPress(e){e.preventDefault();if(!can('vehicle.command.lock')){deny();return}pressStart=Date.now();pressProgress.value=0;const update=()=>{const now=Date.now();const elapsed=now-pressStart;pressProgress.value=Math.min((elapsed/PRESS_DURATION)*100,100);if(elapsed>=PRESS_DURATION){locked.value=!locked.value;pressProgress.value=0;lockJustDone.value=true;toast(locked.value?'已开锁':'已关锁','success');setTimeout(()=>lockJustDone.value=false,300);return}pressTimer=requestAnimationFrame(update)};pressTimer=requestAnimationFrame(update)}
 function endPress(){if(pressTimer){cancelAnimationFrame(pressTimer);pressTimer=null}const decay=()=>{if(pressProgress.value>0){pressProgress.value=Math.max(0,pressProgress.value-5);requestAnimationFrame(decay)}};requestAnimationFrame(decay)}
 function doFind(){if(findLoading.value)return;if(!can('vehicle.command.find_car')){deny();return}findLoading.value=true;setTimeout(()=>{findLoading.value=false;toast('寻车指令已发送','success')},2500)}
-function vehOpenArm(){const need=armed.value?'vehicle.command.disarm':'vehicle.command.arm';if(!can(need)){deny();return}vehMod.value='arm'}
-function vehOpenMotorLock(){const need=motorLocked.value?'vehicle.status.unlost':'vehicle.status.lost';if(!can(need)){deny();return}vehMod.value='motorLock'}
-function vehOpenLost(){const need=lost.value?'vehicle.status.unlost':'vehicle.status.lost';if(!can(need)){deny();return}vehMod.value='lost'}
-const vehModTitle=computed(()=>{if(vehMod.value==='arm')return armed.value?'解除设防':'车辆设防';if(vehMod.value==='motorLock')return motorLocked.value?'解锁电机':'锁定电机';if(vehMod.value==='lost')return lost.value?'解除报失':'车辆报失';if(vehMod.value==='unbind')return '解绑用户';return''});
+function vehOpenArm(){if(!can('vehicle.command.arm')){deny();return}vehMod.value='arm'}
+function vehOpenMotorLock(){if(!can('vehicle.command.motor_lock')){deny();return}vehMod.value='motorLock'}
+function vehOpenLost(){if(!can('vehicle.command.motor_lock')){deny();return}vehMod.value='lost'}
+const vehModTitle=computed(()=>{if(vehMod.value==='arm')return armed.value?'解除设防':'车辆设防';if(vehMod.value==='motorLock')return motorLocked.value?'解锁电机':'锁电机';if(vehMod.value==='lost')return lost.value?'解除报失':'车辆报失';if(vehMod.value==='unbind')return '解绑用户';return''});
 const vehModDesc=computed(()=>{if(vehMod.value==='arm')return armed.value?'确定对车辆解除设防？':'确定对车辆设防？';if(vehMod.value==='motorLock')return motorLocked.value?'电机解锁后车辆将恢复骑行':'电机锁定后车辆将无法骑行';if(vehMod.value==='lost')return lost.value?'解除报失后车辆电机将被解锁，恢复骑行':'报失后车辆电机将被锁定，无法正常骑行';if(vehMod.value==='unbind')return '确认解绑该用户？';return''});
 const vehModDanger=computed(()=>(vehMod.value==='arm'&&armed.value)||(vehMod.value==='motorLock'&&!motorLocked.value)||(vehMod.value==='lost'&&!lost.value));
-function vehConfirmMod(){if(vehMod.value==='arm'){armed.value=!armed.value;toast(armed.value?'设防成功':'解除设防成功','success')}if(vehMod.value==='motorLock'){motorLocked.value=!motorLocked.value;toast(motorLocked.value?'锁定电机成功':'解锁电机成功','success')}if(vehMod.value==='lost'){lost.value=!lost.value;if(dv.value)dv.value.lost=lost.value;toast(lost.value?'报失成功':'解除报失成功','success')}if(vehMod.value==='unbind'){if(dv.value){dv.value.account='';dv.value.phone='';dv.value.email=''}toast('解绑成功','success')}vehMod.value=null}
+function vehConfirmMod(){if(vehMod.value==='arm'){armed.value=!armed.value;toast(armed.value?'设防成功':'解除设防成功','success')}if(vehMod.value==='motorLock'){motorLocked.value=!motorLocked.value;toast(motorLocked.value?'锁电机成功':'解锁电机成功','success')}if(vehMod.value==='lost'){lost.value=!lost.value;if(dv.value)dv.value.lost=lost.value;toast(lost.value?'报失成功':'解除报失成功','success')}if(vehMod.value==='unbind'){if(dv.value){dv.value.account='';dv.value.phone='';dv.value.email='';var _mv=vehicles.value.find(function(v){return v.vin===dv.value.vin});if(_mv){_mv.account='';_mv.phone='';_mv.email=''}}toast('解绑成功','success')}vehMod.value=null}
 const addModel=ref(''),addVin=ref(''),addCtrl=ref(''),modelQ=ref('');
 const selectedModel=computed(()=>vehModels.find(m=>m.name===addModel.value)||null);
 const selectedProtocol=computed(()=>selectedModel.value?selectedModel.value.protocolType:'HTTP');
@@ -3496,13 +3511,17 @@ const demoOpsActive=computed(()=>!showLogin.value);
 const ALL_PERM_CODES=[
   'home.view','home.stats.business','home.stats.vehicle','home.alert.recent',
   'vehicle.list','vehicle.detail','vehicle.add','vehicle.edit',
-  'vehicle.command.unlock','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.disarm','vehicle.status.lost','vehicle.status.unlost',
+  'vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.motor_lock',
+  'battery.list','battery.detail','battery.add','battery.edit','battery.discharge',
   'order.list','order.detail','order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.refund.create','order.refund.list',
-  'model.list','model.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable',
+  'order.battery.list','order.battery.detail','order.battery.operate.cancel','order.battery.operate.confirm_payment','order.battery.operate.return_vehicle','order.battery.refund.create','order.battery.refund.list',
+  'order.package.list','order.package.detail','order.package.operate.cancel','order.package.operate.confirm_payment','order.package.operate.return_vehicle','order.package.refund.create','order.package.refund.list',
+  'model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit',
+  'account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable',
   'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit'
 ];
 const perms=ref(Object.fromEntries(ALL_PERM_CODES.map(c=>[c,true])));
-const TAB_PERM_ITEMS=[{c:'home.view',n:'首页'},{c:'vehicle.list',n:'车辆'},{c:'order.list',n:'电池'}];
+const TAB_PERM_ITEMS=[{c:'home.view',n:'首页'},{c:'vehicle.list',n:'车辆'},{c:'battery.list',n:'电池'}];
 const TAB_PERM_CODES=TAB_PERM_ITEMS.map(i=>i.c);
 const tabPermItems=TAB_PERM_ITEMS;
 function can(code){return !!perms.value[code]}
@@ -3515,15 +3534,24 @@ const permGroups=[
   {id:'home',name:'首页',codes:['home.view','home.stats.business','home.stats.vehicle','home.alert.recent'],items:[
     {c:'home.view',n:'首页总览'},{c:'home.stats.business',n:'经营数据看板'},{c:'home.stats.vehicle',n:'车辆运营统计'},{c:'home.alert.recent',n:'最近告警列表'}
   ]},
-  {id:'veh',name:'车辆管理',codes:['vehicle.list','vehicle.detail','vehicle.add','vehicle.edit','vehicle.command.unlock','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.disarm','vehicle.status.lost','vehicle.status.unlost'],items:[
+  {id:'veh',name:'车辆管理',codes:['vehicle.list','vehicle.detail','vehicle.add','vehicle.edit','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.motor_lock'],items:[
     {c:'vehicle.list',n:'车辆列表'},{c:'vehicle.detail',n:'车辆详情'},{c:'vehicle.add',n:'新增车辆'},{c:'vehicle.edit',n:'编辑车辆'},
-    {c:'vehicle.command.unlock',n:'开锁'},{c:'vehicle.command.lock',n:'关锁'},{c:'vehicle.command.find_car',n:'寻车鸣笛'},{c:'vehicle.command.arm',n:'设防'},{c:'vehicle.command.disarm',n:'解除设防'},{c:'vehicle.status.lost',n:'锁定电机'},{c:'vehicle.status.unlost',n:'解锁电机'}
+    {c:'vehicle.command.lock',n:'开关锁'},{c:'vehicle.command.find_car',n:'寻车鸣笛'},{c:'vehicle.command.arm',n:'设防'},{c:'vehicle.command.motor_lock',n:'锁电机'}
+  ]},
+  {id:'batt',name:'电池管理',codes:['battery.list','battery.detail','battery.add','battery.edit','battery.discharge'],items:[
+    {c:'battery.list',n:'电池列表'},{c:'battery.detail',n:'电池详情'},{c:'battery.add',n:'新增电池'},{c:'battery.edit',n:'编辑电池'},{c:'battery.discharge',n:'电池放电'}
   ]},
   {id:'ord',name:'订单管理',codes:['order.list','order.detail','order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.refund.create','order.refund.list'],items:[
     {c:'order.list',n:'订单列表'},{c:'order.detail',n:'订单详情'},{c:'order.operate.cancel',n:'取消订单'},{c:'order.operate.confirm_payment',n:'确认支付'},{c:'order.operate.return_vehicle',n:'结束订单'},{c:'order.refund.create',n:'发起退款'},{c:'order.refund.list',n:'查看退款记录'}
   ]},
-  {id:'sys',name:'系统配置',codes:['model.list','model.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit'],items:[
-    {c:'model.list',n:'车型列表'},{c:'model.edit',n:'编辑车型'},{c:'account.list',n:'账号列表'},{c:'account.detail',n:'账号详情'},{c:'account.add',n:'新增账号'},{c:'account.edit',n:'编辑账号'},{c:'account.status.disable',n:'禁用账号'},{c:'account.status.enable',n:'启用账号'},
+  {id:'ordBatt',name:'电池订单',codes:['order.battery.list','order.battery.detail','order.battery.operate.cancel','order.battery.operate.confirm_payment','order.battery.operate.return_vehicle','order.battery.refund.create','order.battery.refund.list'],items:[
+    {c:'order.battery.list',n:'订单列表'},{c:'order.battery.detail',n:'订单详情'},{c:'order.battery.operate.cancel',n:'取消订单'},{c:'order.battery.operate.confirm_payment',n:'确认支付'},{c:'order.battery.operate.return_vehicle',n:'结束订单'},{c:'order.battery.refund.create',n:'发起退款'},{c:'order.battery.refund.list',n:'查看退款记录'}
+  ]},
+  {id:'ordPkg',name:'套餐订单',codes:['order.package.list','order.package.detail','order.package.operate.cancel','order.package.operate.confirm_payment','order.package.operate.return_vehicle','order.package.refund.create','order.package.refund.list'],items:[
+    {c:'order.package.list',n:'订单列表'},{c:'order.package.detail',n:'订单详情'},{c:'order.package.operate.cancel',n:'取消订单'},{c:'order.package.operate.confirm_payment',n:'确认支付'},{c:'order.package.operate.return_vehicle',n:'结束订单'},{c:'order.package.refund.create',n:'发起退款'},{c:'order.package.refund.list',n:'查看退款记录'}
+  ]},
+  {id:'sys',name:'系统配置',codes:['model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit'],items:[
+    {c:'model.list',n:'车型列表'},{c:'model.edit',n:'编辑车型'},{c:'batt_model.list',n:'电池型号列表'},{c:'batt_model.edit',n:'编辑电池型号'},{c:'package.list',n:'套餐列表'},{c:'package.add',n:'新增套餐'},{c:'package.edit',n:'编辑套餐'},{c:'account.list',n:'账号列表'},{c:'account.detail',n:'账号详情'},{c:'account.add',n:'新增账号'},{c:'account.edit',n:'编辑账号'},{c:'account.status.disable',n:'禁用账号'},{c:'account.status.enable',n:'启用账号'},
     {c:'position.list',n:'职位列表'},{c:'position.detail',n:'职位详情'},{c:'position.add',n:'新增职位'},{c:'position.edit',n:'编辑职位'},{c:'position.delete',n:'删除职位'},{c:'cs_info.list',n:'客服列表'},{c:'cs_info.add',n:'新增客服'},{c:'cs_info.edit',n:'编辑客服'},{c:'cs_info.delete',n:'删除客服'},{c:'order_config.view',n:'订单配置'},{c:'order_config.edit',n:'编辑配置'}
   ]}
 ];
@@ -3540,12 +3568,12 @@ const demoPagePermCtx=computed(()=>{
   if(curAlert.value)return{title:'告警详情',groups:[pickPermGroup('veh',['vehicle.detail','vehicle.command.find_car'])].filter(Boolean)};
   if(tab.value==='home'){
     if(homeOV.value==='alerts')return{title:'告警中心',groups:[]};
-    /* 首页总览：进入码 home.view 在「底部 Tab」；本页只露看板/统计/最近告警 */
-    return{title:'首页',groups:[pickPermGroup('home',['home.stats.business','home.stats.vehicle','home.alert.recent'])].filter(Boolean)};
+    /* 首页总览：进入码 home.view 在「底部 Tab」；本页只露看板/统计/最近告警 + 三种订单合并到一个「首页」分组 */
+    return{title:'首页',groups:[{id:'homeMgmt',name:'首页',codes:['home.stats.business','home.stats.vehicle','home.alert.recent','order.list','order.battery.list','order.package.list'],items:[{c:'home.stats.business',n:'经营数据看板'},{c:'home.stats.vehicle',n:'车辆运营统计'},{c:'home.alert.recent',n:'最近告警列表'},{c:'order.list',n:'车辆订单列表'},{c:'order.battery.list',n:'电池订单列表'},{c:'order.package.list',n:'套餐订单列表'}]}].filter(Boolean)};
   }
   if(tab.value==='vehicles'){
     if(vehOV.value==='detail')return{title:'车辆详情',groups:[pickPermGroup('veh',[
-      'vehicle.edit','vehicle.command.unlock','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.disarm','vehicle.status.lost','vehicle.status.unlost'
+      'vehicle.edit','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.motor_lock'
     ])].filter(Boolean)};
     if(vehOV.value==='location')return{title:'车辆位置',groups:[pickPermGroup('veh',['vehicle.command.find_car'])].filter(Boolean)};
     if(vehOV.value==='track')return{title:'车辆轨迹',groups:[]};
@@ -3555,13 +3583,20 @@ const demoPagePermCtx=computed(()=>{
     return{title:vehView.value==='map'?'车辆地图':'车辆列表',groups:[pickPermGroup('veh',['vehicle.detail','vehicle.add'])].filter(Boolean)};
   }
   if(tab.value==='orders'){
-    if(ordersOV.value==='refunds')return{title:'退款记录',groups:[pickPermGroup('ord',['order.refund.list'])].filter(Boolean)};
+    /* 电池设备列表（底部 Tab 电池）*/
+    if(!ordersOV.value)return{title:'电池列表',groups:[pickPermGroup('batt',['battery.detail','battery.add'])].filter(Boolean)};
+    /* 电池详情 */
+    if(ordersOV.value==='battDetail')return{title:'电池详情',groups:[pickPermGroup('batt',['battery.edit','battery.discharge'])].filter(Boolean)};
+    const otype=(do_.value&&do_.value.type)||ordersType.value||'vehicle';
+    const ogid=otype==='battery'?'ordBatt':otype==='package'?'ordPkg':'ord';
+    const op=otype==='battery'?'order.battery.':otype==='package'?'order.package.':'order.';
+    if(ordersOV.value==='refunds')return{title:'退款记录',groups:[pickPermGroup(ogid,[op+'refund.list'])].filter(Boolean)};
     if(ordersOV.value==='docs')return{title:'用户资料',groups:[]};
-    if(ordersOV.value==='detail')return{title:'订单详情',groups:[pickPermGroup('ord',[
-      'order.operate.cancel','order.operate.confirm_payment','order.operate.return_vehicle','order.refund.create','order.refund.list'
+    if(ordersOV.value==='detail')return{title:'订单详情',groups:[pickPermGroup(ogid,[
+      op+'operate.cancel',op+'operate.confirm_payment',op+'operate.return_vehicle',op+'refund.create',op+'refund.list'
     ])].filter(Boolean)};
-    /* 列表：进入码 order.list 在「底部 Tab」；本页只露详情 */
-    return{title:'订单列表',groups:[pickPermGroup('ord',['order.detail'])].filter(Boolean)};
+    /* 订单列表：进入码在「首页订单管理」；本页只露详情 */
+    return{title:'订单列表',groups:[pickPermGroup(ogid,[op+'detail'])].filter(Boolean)};
   }
   if(tab.value==='profile'){
     const sub=profileSub.value,ov=profileOV.value;
@@ -3576,13 +3611,17 @@ const demoPagePermCtx=computed(()=>{
     }
     /* 车型列表页不露 model.list */
     if(sub==='mEdit'||ov==='model')return{title:sub==='mEdit'?'编辑车型':'车型管理',groups:[pickPermGroup('sys',sub==='mEdit'?['model.edit']:['model.edit'])].filter(Boolean)};
+    /* 电池型号管理 */
+    if(sub==='bmEdit'||ov==='battModel')return{title:sub==='bmEdit'?'编辑电池型号':'电池型号管理',groups:[pickPermGroup('sys',sub==='bmEdit'?['batt_model.edit']:['batt_model.edit'])].filter(Boolean)};
+    /* 套餐管理 */
+    if(sub==='pkgEdit'||sub==='pkgAdd'||ov==='package')return{title:sub==='pkgEdit'?'编辑套餐':sub==='pkgAdd'?'新增套餐':'套餐管理',groups:[pickPermGroup('sys',sub==='pkgEdit'?['package.edit']:sub==='pkgAdd'?['package.add']:['package.add','package.edit'])].filter(Boolean)};
     /* 客服列表页不露 cs_info.list */
     if(sub==='csEdit'||ov==='cs')return{title:sub==='csEdit'?(csIdx.value===-1?'新增客服':'编辑客服'):'客服信息',groups:[pickPermGroup('sys',sub==='csEdit'?(csIdx.value===-1?['cs_info.add']:['cs_info.edit','cs_info.delete']):['cs_info.add','cs_info.edit','cs_info.delete'])].filter(Boolean)};
     /* 已在配置页：不露 order_config.view（入口在「我的」） */
     if(ov==='config')return{title:'订单配置',groups:[pickPermGroup('sys',['order_config.edit'])].filter(Boolean)};
     if(ov==='store')return{title:'切换门店',groups:[]};
     if(ov==='info'||ov==='settings'||sub==='lang'||sub==='bindPhone'||sub==='bindEmail'||sub==='pwdVerify'||sub==='pwdReset')return{title:ov==='settings'||sub==='lang'?'系统设置':ov==='info'?'个人信息':'我的',groups:[]};
-    return{title:'我的',groups:[pickPermGroup('sys',['model.list','account.list','position.list','cs_info.list','order_config.view'])].filter(Boolean)};
+    return{title:'我的',groups:[pickPermGroup('sys',['model.list','batt_model.list','package.list','account.list','position.list','cs_info.list','order_config.view'])].filter(Boolean)};
   }
   return{title:'—',groups:[]};
 });
@@ -3593,28 +3632,30 @@ const demoPagePermGroups=computed(()=>(demoPagePermCtx.value.groups||[]).map(g=>
 }).filter(Boolean));
 const demoPagePermTitle=computed(()=>demoPagePermCtx.value.title||'—');
 const demoPagePermCodes=computed(()=>{const s=[];(demoPagePermGroups.value||[]).forEach(g=>(g.codes||[]).forEach(c=>s.push(c)));return s});
+const demoIsTopTab=computed(()=>{if(tab.value==='home')return !homeOV.value;if(tab.value==='vehicles')return !vehOV.value;if(tab.value==='orders')return !ordersOV.value;if(tab.value==='profile')return !profileOV.value;return false});
 function enforceTabPerms(){
   if(showLogin.value)return;
-  const ok={home:can('home.view'),vehicles:can('vehicle.list'),orders:can('order.list'),profile:true};
+  const ok={home:can('home.view'),vehicles:can('vehicle.list'),orders:can('battery.list')||can('order.list'),profile:true};
   if(!ok[tab.value]){tab.value='profile';homeOV.value=null;vehOV.value=null;ordersOV.value=null;curAlert.value=null}
 }
 function setTab(t){
   if(t==='home'&&!can('home.view')){deny();return}
   if(t==='vehicles'&&!can('vehicle.list')){deny();return}
-  if(t==='orders'&&!can('order.list')){deny();return}
+  if(t==='orders'&&!can('battery.list')&&!can('order.list')){deny();return}
   tab.value=t;
   if(t==='home'&&protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()
 }
+function orderPerm(suffix){const t=(do_.value&&do_.value.type)||'vehicle';const prefix=t==='vehicle'?'order.':('order.'+t+'.');return can(prefix+suffix)}
 const showPrimaryAction=computed(()=>{
   const isOff=dPaySt.value==='pending'&&dPm.value==='offline';
-  if(dSt.value==='created'||(dPaySt.value==='pending'&&!isOff)||dSt.value==='pickup')return can('order.operate.cancel');
-  if(isOff)return can('order.operate.confirm_payment');
-  if(['progress','return','overdue','breach'].includes(dSt.value))return can('order.operate.return_vehicle');
-  if(dSt.value==='complete'&&dPm.value==='online'&&(dPaySt.value==='paid'||dPaySt.value==='partialRefund'))return can('order.refund.create');
+  if(dSt.value==='created'||(dPaySt.value==='pending'&&!isOff)||dSt.value==='pickup')return orderPerm('operate.cancel');
+  if(isOff)return orderPerm('operate.confirm_payment');
+  if(['progress','return','overdue','breach'].includes(dSt.value))return orderPerm('operate.return_vehicle');
+  if(dSt.value==='complete'&&dPm.value==='online'&&(dPaySt.value==='paid'||dPaySt.value==='partialRefund'))return orderPerm('refund.create');
   return false;
 });
 const showDangerAction=computed(()=>{
-  if(dPaySt.value==='pending'&&dPm.value==='offline')return can('order.operate.cancel');
+  if(dPaySt.value==='pending'&&dPm.value==='offline')return orderPerm('operate.cancel');
   return false;
 });
 const showOrderActionsBar=computed(()=>showActions.value&&(showPrimaryAction.value||(dualMode.value&&showDangerAction.value)));
@@ -3623,15 +3664,15 @@ const ordersEntry=ref('');
 const ordersPlaceholder=computed(()=>!ordersEntry.value);
 const ordersLName=computed(()=>{const m={vehicle:'车辆',battery:'电池',package:'套餐'};return ordersEntry.value?m[ordersEntry.value]||'车辆':'电池'});
 const ordersListTitle=computed(()=>ordersLName.value+'订单列表');
-const orderEntries=computed(()=>[{v:'vehicle',l:'车辆',icon:'bike'},{v:'battery',l:'电池',icon:'battery-charging'},{v:'package',l:'套餐',icon:'package'}]);
-function homeOpenOrders(t){if(!can('order.list')){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value='';ordersFsEnd.value='';searchScope.value='id';tab.value='orders'}
+const orderEntries=computed(()=>[{v:'vehicle',l:'车辆',icon:'bike',code:'order.list'},{v:'battery',l:'电池',icon:'battery-charging',code:'order.battery.list'},{v:'package',l:'套餐',icon:'package',code:'order.package.list'}].filter(e=>can(e.code)));
+function homeOpenOrders(t){const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value='';ordersFsEnd.value='';searchScope.value='id';tab.value='orders'}
 function closeOrderList(){ordersOV.value=null;tab.value='home'}
 /* ══ BATTERY DEVICES (订单 tab → 电池) ══ */
 const battQ=ref(''),battPill=ref('');
 const batteries=ref([
 {battNo:'BATT-YD1000',account:'user005',phone:'+86 13700005555',email:'',model:'天能锂电 72V20Ah',status:'空闲',online:true,level:92,lost:false,discharge:true,vin:'LSVAU2Z0A88888000',time:'2026-08-20 14:30:00',lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
 {battNo:'BATT-YD1001',account:'user006',phone:'',email:'battery006@qq.com',model:'超威黑金 72V32Ah',status:'占用中',online:true,level:74,lost:false,discharge:true,vin:'LSVAU2Z0B12345000',time:'2026-08-20 13:15:00',lat:null,lng:null,location:''},
-{battNo:'BATT-YD1002',account:'user007',phone:'',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:85,lost:false,discharge:true,vin:'',time:'2026-08-20 11:02:00',lat:null,lng:null,location:''},
+{battNo:'BATT-YD1002',account:'',phone:'',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:85,lost:false,discharge:true,vin:'',time:'2026-08-20 11:02:00',lat:null,lng:null,location:''},
 {battNo:'BATT-YD1003',account:'user008',phone:'+86 13700008888',email:'',model:'天能锂电 72V20Ah',status:'占用中',online:false,level:32,lost:false,discharge:false,vin:'LSVAU2Z0E99999000',time:'2026-08-19 09:40:00',lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
 {battNo:'BATT-YD1004',account:'user009',phone:'',email:'battery009@qq.com',model:'超威黑金 72V32Ah',status:'空闲',online:true,level:63,lost:true,discharge:false,vin:'',time:'2026-08-20 10:25:00',lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
 {battNo:'BATT-YD1005',account:'user010',phone:'+86 13700009999',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
@@ -3644,14 +3685,14 @@ const battFsModels=computed(()=>Array.from(new Set(batteries.value.map(b=>b.mode
 const batterFiltered=computed(()=>batteries.value.filter(b=>{if(battPill.value&&b.status!==battPill.value)return false;if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true}));
 const curBatt=ref(null);
 function battDoSearch(){}
-function battOpenDetail(b){curBatt.value=b;ordersOV.value='battDetail'}
+function battOpenDetail(b){if(!can('battery.detail')){deny();return}curBatt.value=b;ordersOV.value='battDetail'}
 const battMod=ref(null);
 const battDischarge=computed(()=>!!(curBatt.value&&curBatt.value.discharge));
-const battModTitle=computed(()=>battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失':'电池报失'):(battDischarge.value?'禁止放电':'允许放电'));
-const battModDesc=computed(()=>battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失后电池将被解锁，恢复放电':'报失后电池将被锁定，无法正常放电'):(battDischarge.value?'禁止后设备将无法放电':'允许后设备可正常放电'));
-function battOpenDischarge(){battMod.value='discharge'}
+const battModTitle=computed(()=>{if(battMod.value==='unbind')return '解绑用户';return battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失':'电池报失'):(battDischarge.value?'禁止放电':'允许放电')});
+const battModDesc=computed(()=>{if(battMod.value==='unbind')return '确认解绑该用户？';return battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失后电池将被解锁，恢复放电':'报失后电池将被锁定，无法正常放电'):(battDischarge.value?'禁止后设备将无法放电':'允许后设备可正常放电')});
+function battOpenDischarge(){if(!can('battery.discharge')){deny();return}battMod.value='discharge'}
 function battOpenReportLost(){battMod.value='lost'}
-function battConfirmMod(){const b=curBatt.value;if(!b)return;if(battMod.value==='lost'){b.lost=!b.lost;if(b.lost)b.discharge=false;toast(b.lost?'报失成功':'解除报失成功','success')}else{b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success')}battMod.value=null}
+function battConfirmMod(){const b=curBatt.value;if(!b)return;if(battMod.value==='unbind'){b.account='';b.phone='';b.email='';toast('解绑成功','success')}else if(battMod.value==='lost'){b.lost=!b.lost;if(b.lost)b.discharge=false;toast(b.lost?'报失成功':'解除报失成功','success')}else{b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success')}battMod.value=null}
 const battEditModel=ref('');
 function openBattEdit(){battEditModel.value=curBatt.value?curBatt.value.model:'';ordersOV.value='battEdit'}
 function saveBattEdit(){const b=curBatt.value;if(!b)return;b.model=battEditModel.value;const idx=batteries.value.findIndex(x=>x.battNo===b.battNo);if(idx>=0)batteries.value[idx].model=battEditModel.value;ordersOV.value='battDetail';toast('电池信息已保存','success')}
@@ -3906,12 +3947,12 @@ var payStatusColor=computed(()=>{var m={pending:'#F59E0B',processing:'#F59E0B',p
 var showPaid=computed(()=>vehSts.concat(['pickup']).indexOf(dSt.value)!==-1||(dSt.value==='cancelled'&&dCanceledPaid.value==='paid'));
 var refundable=computed(()=>dSt.value==='complete'||dSt.value==='cancelled');
 var showActions=computed(()=>dSt.value!=='cancelled');
-var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return '线下支付';var m={created:'取消订单',pickup:'取消订单',progress:'结束订单','return':'结束订单',overdue:'结束订单',complete:'退款',breach:'结束订单'};return m[dSt.value]||''});
+var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline')return '确认支付';var m={created:'取消订单',pickup:'取消订单',progress:'结束订单','return':'结束订单',overdue:'结束订单',complete:'退款',breach:'结束订单'};return m[dSt.value]||''});
 var primaryDanger=computed(()=>['created','pickup'].indexOf(dSt.value)!==-1&&!(dPaySt.value==='pending'&&dPm.value==='offline'));
 var dualMode=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline');
 var dualIsCancel=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline');
 var dangerLabel=computed(()=>'取消订单');
-function ordersOpenDetail(o){if(!can('order.detail')){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='created'?'pending':'paid');dPm.value=(o.payment==='offline'?'offline':'online');dCanceledPaid.value='paid';ordersOV.value='detail'}
+function ordersOpenDetail(o){const detailCode=o.type==='battery'?'order.battery.detail':o.type==='package'?'order.package.detail':'order.detail';if(!can(detailCode)){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='created'?'pending':'paid');dPm.value=(o.payment==='offline'?'offline':'online');dCanceledPaid.value='paid';ordersOV.value='detail'}
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
 function copyText(t,label){var v=(t||'').trim();if(!v||v==='—'){toast('无内容可复制','warn');return}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){toast((label||'')+'已复制','success')},function(){toast('复制失败','warn')})}else{toast('复制失败','warn')}}
 function goVehicleDetail(vin){var v=vehicles.value.find(x=>x.vin===vin);setTab('vehicles');vehOpenDetail(v||{vin:vin})}
@@ -3920,7 +3961,7 @@ function ordersDoSearch(){}
 var ordersSaving=ref(false);
 function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dPaySt.value==='pending'&&dPm.value==='offline';if(isOff){ordersMod.value='confirmPay';return}if(['created','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){if(do_.value&&do_.value.payment==='offline'){ordersMod.value='refundConfirm'}else{openRefund('return')}}else if(dSt.value==='complete'){openRefund('refund')}}
 function ordersDoDanger(){if(ordersSaving.value)return;if(!showDangerAction.value){deny();return}ordersMod.value='cancel'}
-var ordersModTitle=computed(()=>{var m={cancel:'取消订单',confirmPay:'线下支付',refundConfirm:refundMode.value==='return'?'结束订单':'订单退款',assignVehicle:'绑定车辆',assignBattery:'绑定电池',changeVehicle:'更换车辆',changeBattery:'更换电池'};return m[ordersMod.value]||''});
+var ordersModTitle=computed(()=>{var m={cancel:'取消订单',confirmPay:'确认支付',refundConfirm:refundMode.value==='return'?'结束订单':'订单退款',assignVehicle:'绑定车辆',assignBattery:'绑定电池',changeVehicle:'更换车辆',changeBattery:'更换电池'};return m[ordersMod.value]||''});
 var ordersModDesc=computed(()=>{var m={cancel:'确定取消该订单？取消后不可恢复',confirmPay:'确认用户已完成线下支付？',refundConfirm:refundMode.value==='return'?(do_.value&&do_.value.payment==='offline'?'确认结束订单？该订单为线下支付，如需要退款请线下处理退款':'确认结束订单？合计退款 Rp' + (refundTotal.value.toFixed(2))):'确认执行退款？合计退款 Rp' + (refundTotal.value.toFixed(2)),assignVehicle:'请为订单绑定指定车辆',assignBattery:'请为订单绑定指定电池',changeVehicle:'请为订单更换指定车辆',changeBattery:'请为订单更换指定电池'};return m[ordersMod.value]||''});
 var ordersModDanger=computed(()=>ordersMod.value==='cancel');
  function ordersConfirmMod(){var m=ordersMod.value;ordersMod.value=null;if(m==='cancel')toast('订单已取消','success');if(m==='confirmPay')toast('支付确认成功','success');if(m==='refundConfirm'){if(refundMode.value==='return'&&do_.value&&do_.value.payment==='offline'){showRefund.value=false;toast('订单已结束','success')}else{pushRefundRecord();showRefund.value=false;toast(refundMode.value==='return'?'车辆已归还':'退款已完成','success')}}if(m==='assignVehicle')toast('车辆已绑定','success');if(m==='assignBattery')toast('电池已绑定','success');if(m==='changeVehicle')toast('车辆已更换','success');if(m==='changeBattery')toast('电池已更换','success')}
@@ -3933,6 +3974,16 @@ var orderPickEmpty=computed(()=>orderPickList.value.length===0);
 function openOrderPick(m){orderPickSel.value=null;orderPickQ.value='';ordersMod.value=m}
 function closeOrderPick(){ordersMod.value=null;orderPickSel.value=null;orderPickQ.value=''}
 function confirmOrderPick(){var m=ordersMod.value,sel=orderPickSel.value;if(!sel){toast('请先选择'+(orderPickIsBatt.value?'电池':'车辆'),'warn');return}var o=do_.value;if(m==='assignVehicle'||m==='changeVehicle'){o.vin=sel.no;if(o.type==='vehicle'&&sel.title)o.item=sel.title}if(m==='assignBattery'||m==='changeBattery'){o.battNo=sel.no;if(o.type==='battery'&&sel.title)o.item=sel.title}ordersMod.value=null;orderPickSel.value=null;var t={assignVehicle:'车辆已绑定',assignBattery:'电池已绑定',changeVehicle:'车辆已更换',changeBattery:'电池已更换'};toast(t[m],'success')}
+/* ══ 绑定/解绑用户（设备详情） ══ */
+const users=computed(()=>{const m={};orders.value.forEach(function(o){var acc=(o.account||'').trim();if(acc&&!m[acc])m[acc]={account:acc,name:o.customer||acc,phone:o.phone||'',email:o.email||''}});return Object.values(m)});
+const userPickActive=ref('');
+const userPickQ=ref('');
+const userPickSel=ref(null);
+const userPickList=computed(()=>{var q=(userPickQ.value||'').trim().toLowerCase();if(!q)return [];return users.value.filter(function(u){return (u.account+' '+(u.phone||'')+' '+(u.email||'')).toLowerCase().indexOf(q)!==-1}).map(function(u){return{key:u.account,account:u.account,phone:u.phone,email:u.email,sub:u.phone||u.email||''}})});
+const userPickEmpty=computed(()=>userPickList.value.length===0);
+function openUserPick(type){userPickSel.value=null;userPickQ.value='';userPickActive.value=type}
+function closeUserPick(){userPickActive.value='';userPickSel.value=null;userPickQ.value=''}
+function confirmUserPick(){var u=userPickSel.value;if(!u){toast('请先选择用户','warn');return}if(userPickActive.value==='vehicle'){if(dv.value){dv.value.account=u.account;dv.value.phone=u.phone;dv.value.email=u.email}var mv=vehicles.value.find(function(x){return x.vin===dv.value.vin});if(mv){mv.account=u.account;mv.phone=u.phone;mv.email=u.email}}else if(userPickActive.value==='battery'){if(curBatt.value){curBatt.value.account=u.account;curBatt.value.phone=u.phone;curBatt.value.email=u.email}}toast('绑定成功','success');userPickActive.value='';userPickSel.value=null;userPickQ.value=''}
 var refundMode=ref('return'),rRent=ref(0),rDep=ref(0),rReason=ref('');
 var rRentErr=computed(()=>rRent.value>800),rDepErr=computed(()=>rDep.value>500);
 var refundTotal=computed(()=>{var r=rRent.value||0,d=rDep.value||0;if(r<0)r=0;if(d<0)d=0;if(r>800)r=800;if(d>500)d=500;return r+d});
@@ -4254,8 +4305,8 @@ const menuList=computed(()=>{
   const all=[
     {id:'store',label:'切换门店',icon:'building-2',sub:curStore.value,code:null},
     {id:'model',label:'车型管理',icon:'bike',code:'model.list'},
-    {id:'battModel',label:'电池型号管理',icon:'battery-charging',code:null},
-    {id:'package',label:'套餐管理',icon:'package',code:null},
+    {id:'battModel',label:'电池型号管理',icon:'battery-charging',code:'batt_model.list'},
+    {id:'package',label:'套餐管理',icon:'package',code:'package.list'},
     {id:'account',label:'账号管理',icon:'users',code:'account.list'},
     {id:'pos',label:'职位管理',icon:'clock',code:'position.list'},
     {id:'cs',label:'客服信息',icon:'headset',code:'cs_info.list'},
@@ -4346,18 +4397,18 @@ function saveBattModel(){if(battModelSaving.value)return;var e={};['hour','day',
 const pkgQ=ref('');
 const profilePackages=ref([]);
 const pkgFilter=computed(()=>pkgQ.value?profilePackages.value.filter(m=>m.name.toLowerCase().includes(pkgQ.value.toLowerCase())):profilePackages.value);
-const fpk=ref({name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:''});
-function openPackageEdit(m){fpk.value={name:m.name,vehicleModel:m.vehicleModel||'',batteryModel:m.batteryModel||'',mainImg:!!m.mainImg,thumbImg:!!m.thumbImg,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0,remark:m.remark||''};profileSub.value='pkgEdit'}
-function openPackageAdd(){fpk.value={name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:''};fE.value={};profileSub.value='pkgAdd'}
+const fpk=ref({name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:'',status:'上架'});
+function openPackageEdit(m){fpk.value={name:m.name,vehicleModel:m.vehicleModel||'',batteryModel:m.batteryModel||'',mainImg:!!m.mainImg,thumbImg:!!m.thumbImg,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0,remark:m.remark||'',status:m.status||'上架'};profileSub.value='pkgEdit'}
+function openPackageAdd(){fpk.value={name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:'',status:'上架'};fE.value={};profileSub.value='pkgAdd'}
 const pkgPicker=ref(null);
 const pkgPickerQ=ref('');
 const pkgPickerList=computed(()=>pkgPicker.value==='vehicle'?profileModels.value.map(m=>m.name):pkgPicker.value==='battery'?profileBattModels.value.map(m=>m.name):[]);
 const pkgPickerFiltered=computed(()=>{const q=pkgPickerQ.value.toLowerCase();return q?pkgPickerList.value.filter(n=>n.toLowerCase().includes(q)):pkgPickerList.value});
 function openPkgPicker(mode){pkgPickerQ.value='';pkgPicker.value=mode}
 function pkgPick(name){if(pkgPicker.value==='vehicle'){fpk.value.vehicleModel=name}else if(pkgPicker.value==='battery'){fpk.value.batteryModel=name}pkgPicker.value=null}
-function submitPackageAdd(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name='请输入套餐名称'}['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;setTimeout(function(){profilePackages.value.push({name:fpk.value.name.trim(),vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,count:0,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,time:now()});profileSub.value=null;fE.value={};toast('套餐已新增','success');packageSaving.value=false},400)}
+function submitPackageAdd(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name='请输入套餐名称'}['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;setTimeout(function(){profilePackages.value.push({name:fpk.value.name.trim(),vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,count:0,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()});profileSub.value=null;fE.value={};toast('套餐已新增','success');packageSaving.value=false},400)}
 var packageSaving=ref(false);
-function savePackage(){if(packageSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;setTimeout(function(){const i=profilePackages.value.findIndex(m=>m.name===fpk.value.name);if(i>=0){Object.assign(profilePackages.value[i],{vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,time:now()})}profileSub.value=null;fE.value={};toast('套餐已保存','success');packageSaving.value=false},400)}
+function savePackage(){if(packageSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;setTimeout(function(){const i=profilePackages.value.findIndex(m=>m.name===fpk.value.name);if(i>=0){Object.assign(profilePackages.value[i],{vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()})}profileSub.value=null;fE.value={};toast('套餐已保存','success');packageSaving.value=false},400)}
 const aQ=ref(''),allRoles=computed(()=>['店长','管理员','员工','财务','运维']);
 const accounts=ref([]);
 const aFilter=computed(()=>{const q=aQ.value.toLowerCase();return q?accounts.value.filter(a=>(a.account+a.name+a.phone).toLowerCase().includes(q)):accounts.value});
@@ -4548,9 +4599,9 @@ function initI18nData(){
     {name:'星恒锂电 48V24Ah',count:12,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:40000,priceWeek:220000,priceMonth:850000,deposit:180000,sort:3,time:'2025-01-18 14:00:00'}
   ];
   profilePackages.value=[
-    {name:'乐迪SAA+天能72V20Ah',vehicleModel:'雅迪乐跑版',batteryModel:'天能锂电 72V20Ah',mainImg:true,thumbImg:true,count:14,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1800000,deposit:600000,sort:1,remark:'热销组合套餐，含车辆与电池',time:'2025-01-20 09:00:00'},
-    {name:'雅迪冠能3+超威黑金',vehicleModel:'雅迪冠能Q7',batteryModel:'超威黑金 72V32Ah',mainImg:true,thumbImg:false,count:9,plans:{hour:true,day:true,week:true,month:true},priceHour:25000,priceDay:150000,priceWeek:900000,priceMonth:3600000,deposit:700000,sort:2,remark:'',time:'2025-01-19 16:30:00'},
-    {name:'乐迪E8+星恒锂电48V24Ah',vehicleModel:'雅迪小钢炮',batteryModel:'星恒锂电 48V24Ah',mainImg:false,thumbImg:false,count:11,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:180000,priceWeek:950000,priceMonth:3800000,deposit:650000,sort:3,remark:'长续航车型套餐',time:'2025-01-18 14:00:00'}
+    {name:'乐迪SAA+天能72V20Ah',vehicleModel:'雅迪乐跑版',batteryModel:'天能锂电 72V20Ah',mainImg:true,thumbImg:true,count:14,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1800000,deposit:600000,sort:1,remark:'热销组合套餐，含车辆与电池',status:'上架',time:'2025-01-20 09:00:00'},
+    {name:'雅迪冠能3+超威黑金',vehicleModel:'雅迪冠能Q7',batteryModel:'超威黑金 72V32Ah',mainImg:true,thumbImg:false,count:9,plans:{hour:true,day:true,week:true,month:true},priceHour:25000,priceDay:150000,priceWeek:900000,priceMonth:3600000,deposit:700000,sort:2,remark:'',status:'上架',time:'2025-01-19 16:30:00'},
+    {name:'乐迪E8+星恒锂电48V24Ah',vehicleModel:'雅迪小钢炮',batteryModel:'星恒锂电 48V24Ah',mainImg:false,thumbImg:false,count:11,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:180000,priceWeek:950000,priceMonth:3800000,deposit:650000,sort:3,remark:'长续航车型套餐',status:'下架',time:'2025-01-18 14:00:00'}
   ];
   accounts.value=[
     {account:'Manager Wang',name:'Wang Jianguo',code:'+86',phone:'13871893628',email:'wang@test.com',roles:'店长'+'、'+'管理员',remark:'测试账号',status:'启用',created:'2024-10-01 09:00:00'},
@@ -4577,7 +4628,7 @@ watch(dSt,(v)=>{if(v==='created')dPaySt.value='pending';if(v==='pickup'||v==='pr
 onUpdated(paint);
 
 return{luci,alertTypeLabel,vehStatusLabel,ignoreReasonLabel,initPullToRefresh,refreshHome,refreshVeh,refreshOrd,refreshBatt,refreshAlert,tab,setTab,toasts,toast,can,deny,perms,permGroups,togglePerm,setPermGroup,setAllPerms,
- TAB_PERM_CODES,tabPermItems,demoPagePermGroups,demoPagePermTitle,demoPagePermCodes,
+ TAB_PERM_CODES,tabPermItems,demoPagePermGroups,demoPagePermTitle,demoPagePermCodes,demoIsTopTab,
  homeOV,homeLoading,homeRefreshing,store,bizStats,vehStats,goHomeVehStat,recent,allAlerts,pendingAlertCount,alertStatus,alertType,alertStatusTabs,alertTypeTabs,alertStatusCnt,filteredAlerts,alertEmptyTitle,alertEmptySub,demoHasAlerts,demoSetHasAlerts,curAlert,alertMod,ignoreReasonPick,ignoreReasons,lvBg,stBg,stLabel,closeSourceLabel,lvLabel,timelineLabel,timelineDotClass,curAlertTimeline,curAlertTimelineHasMore,alertTimelineExpanded,homeOpen,homeClose,openAlertDetail,closeAlertDetail,startProcessAlert,resolveAlert,confirmIgnoreAlert,reopenAlert,demoOpsActive,demoSetAlertCloseSource,goAlertVehicle,doFindFromAlert,
 vehOV,vehMod,vehShowModelSheet,vehShowFS,vehLoading,vehRefreshing,locked,pressProgress,lockJustDone,
 vehicles,vehModels,vehQ,vehPill,vehFsModel,vehFsOnline,vehFsModelC,vehFsOnlineC,vehHasF,pills,pillCnt,filtered,
@@ -4603,7 +4654,7 @@ ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelY
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
 do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,
 primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,
-ordersModTitle,ordersModDesc,ordersModDanger,orderPickActive,orderPickIsBatt,orderPickQ,orderPickSel,orderPickList,orderPickEmpty,openOrderPick,closeOrderPick,confirmOrderPick,orderPickScan,
+ordersModTitle,ordersModDesc,ordersModDanger,orderPickActive,orderPickIsBatt,orderPickQ,orderPickSel,orderPickList,orderPickEmpty,openOrderPick,closeOrderPick,confirmOrderPick,orderPickScan,users,userPickActive,userPickQ,userPickSel,userPickList,userPickEmpty,openUserPick,closeUserPick,confirmUserPick,
 refundMode,rRent,rDep,rReason,rRentErr,rDepErr,refundTotal,
 sl,stg,hasVehicle,fmtRp,ordersOpenDetail,copyId,copyText,goVehicleDetail,goBatteryDetail,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,
  openRefund,clampRent,clampDep,submitRefund,refundSaving,
