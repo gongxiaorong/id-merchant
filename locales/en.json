@@ -149,7 +149,7 @@
   "vehicles.operatingStatus": "Operating Status",
   "vehicles.pressToLock": "Long Press to Lock",
   "vehicles.pressToUnlock": "Long Press to Unlock",
-  "vehicles.scanVinHint": "Align the VIN QR code within the frame",
+  "vehicles.scanVinHint": "Align the QR code with the frame",
   "vehicles.searchModel": "Search Model",
   "vehicles.searchPlaceholder": "Search VIN",
   "vehicles.selectEndTime": "Select End Time",

@@ -149,7 +149,7 @@
   "vehicles.operatingStatus": "Status Operasi",
   "vehicles.pressToLock": "Tekan lama untuk mengunci",
   "vehicles.pressToUnlock": "Tekan lama untuk buka kunci",
-  "vehicles.scanVinHint": "Arahkan kode QR nomor rangka ke bingkai pemindai",
+  "vehicles.scanVinHint": "Arahkan kode QR ke bingkai",
   "vehicles.searchModel": "Cari Model",
   "vehicles.searchPlaceholder": "Cari nomor rangka",
   "vehicles.selectEndTime": "Pilih Waktu Selesai",

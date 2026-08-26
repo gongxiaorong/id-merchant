@@ -235,7 +235,7 @@
   "orders.noResultsSub": "还没有订单数据",
   "orders.orderCancelled": "订单已取消",
   "orders.orderId": "订单编号",
-  "orders.paidAmount": "合计",
+  "orders.paidAmount": "实付金额",
   "orders.payConfirmed": "支付确认成功",
   "orders.payFullRefund": "全部退款",
   "orders.payPaid": "已支付",

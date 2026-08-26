@@ -149,7 +149,7 @@
   "vehicles.operatingStatus": "營運狀態",
   "vehicles.pressToLock": "長按關鎖",
   "vehicles.pressToUnlock": "長按開鎖",
-  "vehicles.scanVinHint": "請將車架號二維碼對準取景框",
+  "vehicles.scanVinHint": "請將二維碼對準取景框",
   "vehicles.searchModel": "搜尋車型",
   "vehicles.searchPlaceholder": "搜尋車架號",
   "vehicles.selectEndTime": "選擇結束時間",
