@@ -786,10 +786,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span class="text-[13px] font-semibold">{{ motorLocked?'解锁电机':'锁电机' }}</span>
 </div>
 </div>
-<div class="bg-white rounded-xl p-4 mb-3 flex items-center active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="goUserDetail(dv.account)" data-od-id="veh-detail-user-card">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ dv.account || '未绑定用户' }}</div><div v-if="dv.phone||dv.email" class="text-[13px] text-[#666]">{{ dv.phone || dv.email }}</div></div>
-<span v-if="dv.account" @click="vehMod='unbind'" class="text-[14px] font-medium cursor-pointer select-none text-[#DC2626] active:opacity-70 shrink-0">解绑</span><span v-else @click="openUserPick('vehicle')" class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70 shrink-0">绑定</span>
+<span v-if="dv.account" @click.stop="vehMod='unbind'" class="text-[14px] font-medium cursor-pointer select-none text-[#DC2626] active:opacity-70 shrink-0">解绑</span><span v-else @click.stop="openUserPick('vehicle')" class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70 shrink-0">绑定</span>
 </div>
 <div class="bg-white rounded-xl p-4" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5"><div class="flex-1"><div class="text-[12px] text-[#8A8A8A] mb-1">车架号</div><div class="text-[16px] font-bold">{{ dv.vin }}</div></div><div class="flex items-center gap-2"><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="dv.online?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#FFFBEB',color:'#D97706',border:'1px solid #D97706'}">{{ dv.online?'在线':'离线' }}</span></div></div>
@@ -1326,10 +1326,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span class="text-[15px] font-semibold text-[#111] mt-0.5">{{ battDischarge?'禁止放电':'允许放电' }}</span>
 <span class="text-[12px] text-[#999]">{{ battDischarge?'当前允许放电，点击可禁止':'当前已禁止放电，点击可恢复' }}</span>
 </div>
-<div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-user-card">
+<div class="bg-white rounded-xl p-4 mb-3 flex items-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="goUserDetail(curBatt.account)" data-od-id="batt-detail-user-card">
 <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('user','w-5 h-5 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0"><div class="text-[15px] font-semibold mb-0.5">{{ curBatt.account || '未绑定用户' }}</div><div v-if="curBatt.phone||curBatt.email" class="text-[13px] text-[#666]">{{ curBatt.phone || curBatt.email }}</div></div>
-<span v-if="curBatt.account" @click="battMod='unbind'" class="text-[14px] font-medium cursor-pointer select-none text-[#DC2626] active:opacity-70 shrink-0">解绑</span><span v-else @click="openUserPick('battery')" class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70 shrink-0">绑定</span>
+<span v-if="curBatt.account" @click.stop="battMod='unbind'" class="text-[14px] font-medium cursor-pointer select-none text-[#DC2626] active:opacity-70 shrink-0">解绑</span><span v-else @click.stop="openUserPick('battery')" class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70 shrink-0">绑定</span>
 </div>
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-info-card">
 <div class="flex items-center py-2.5" style="border-bottom:1px dashed #E5E5E5">
@@ -1638,7 +1638,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">基本信息</div><span class="text-[13px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ orderCustomerText(do_) }}<span v-if="do_.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span><span v-else-if="do_.email" v-html="luci('mail','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold flex items-center justify-end gap-1.5"><span :class="(do_.account||do_.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" @click="(do_.account||do_.customer)&&goUserDetail(do_.account||do_.customer)">{{ orderCustomerText(do_) }}</span><span v-if="do_.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span><span v-else-if="do_.email" v-html="luci('mail','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">租赁方案</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.plan }}</span></div>
 <div class="flex items-start gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]">2025-01-18 14:00:00<br>2025-01-20 14:00:00</span></div>
 <div class="flex items-center gap-2 py-2.5" :style="(dSt==='complete'||dSt==='cancelled')?'border-bottom:1px dashed #E5E5E5':''"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.created }}</span></div>
@@ -2791,37 +2791,55 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <!-- 基本信息 -->
   <div class="text-[13px] font-semibold text-[#999] mb-2">基本信息</div>
   <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div v-for="(r,j) in uDetailRows" :key="r.k" class="flex py-2.5" :style="j<uDetailRows.length-1?{borderBottom:'1px dashed #E5E5E5'}:{}"><span class="text-[13px] text-[#999] w-20 shrink-0">{{ r.k }}</span><span class="text-sm font-medium flex-1">{{ r.v }}</span></div>
+    <div v-for="(r,j) in uDetailRows" :key="r.k" class="flex items-center py-2.5" :style="j<uDetailRows.length-1?{borderBottom:'1px dashed #E5E5E5'}:{}"><span class="text-[13px] text-[#999] w-20 shrink-0">{{ r.k }}</span><span class="text-sm font-medium flex-1 truncate">{{ r.v }}</span></div>
   </div>
 
   <!-- 用户钱包 -->
   <div class="text-[13px] font-semibold text-[#999] mb-2">用户钱包</div>
   <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div class="grid grid-cols-2 gap-4">
-      <div><div class="text-[12px] text-[#999] mb-1">余额</div><div class="text-[20px] font-bold tabular-nums" style="color:var(--accent)">Rp {{ uWallet.balance }}</div></div>
-      <div><div class="text-[12px] text-[#999] mb-1">冻结金额</div><div class="text-[20px] font-bold tabular-nums text-[#D97706]">Rp {{ uWallet.frozen }}</div></div>
-      <div><div class="text-[12px] text-[#999] mb-1">累计充值</div><div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.totalRecharge }}</div></div>
-      <div><div class="text-[12px] text-[#999] mb-1">累计消费</div><div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.totalSpent }}</div></div>
+    <div class="flex items-end justify-between mb-4">
+      <div>
+        <div class="text-[12px] text-[#999] mb-1">总余额</div>
+        <div class="text-[24px] font-bold tabular-nums tracking-tight" style="color:var(--accent)">Rp {{ uWallet.total }}</div>
+      </div>
+      <div class="text-right">
+        <div class="text-[12px] text-[#999] mb-1">可用余额</div>
+        <div class="text-[18px] font-bold tabular-nums">Rp {{ uWallet.available }}</div>
+      </div>
     </div>
-    <div class="flex items-center justify-between mt-3 pt-3" style="border-top:1px dashed #E5E5E5">
-      <span class="text-[12px] text-[#999]">状态</span>
-      <span class="text-[12px] font-medium" :class="uWallet.status==='正常'?'text-[#17A34A]':'text-[#DC2626]'">{{ uWallet.status }}</span>
+    <div class="grid grid-cols-2 gap-2.5">
+      <div class="rounded-xl p-3" style="background:#F6F7F9;border:1px solid #EDEDED">
+        <div class="text-[12px] text-[#999] mb-1">充值余额</div>
+        <div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.rechargeBalance }}</div>
+      </div>
+      <div class="rounded-xl p-3" style="background:#F6F7F9;border:1px solid #EDEDED">
+        <div class="text-[12px] text-[#999] mb-1">充值冻结</div>
+        <div class="text-[15px] font-semibold tabular-nums text-[#D97706]">Rp {{ uWallet.rechargeFrozen }}</div>
+      </div>
+      <div class="rounded-xl p-3" style="background:#F6F7F9;border:1px solid #EDEDED">
+        <div class="text-[12px] text-[#999] mb-1">赠送余额</div>
+        <div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.giftBalance }}</div>
+      </div>
+      <div class="rounded-xl p-3" style="background:#F6F7F9;border:1px solid #EDEDED">
+        <div class="text-[12px] text-[#999] mb-1">赠送冻结</div>
+        <div class="text-[15px] font-semibold tabular-nums text-[#D97706]">Rp {{ uWallet.giftFrozen }}</div>
+      </div>
     </div>
   </div>
 
   <!-- 车辆列表 -->
   <div class="flex items-center justify-between mb-2">
     <span class="text-[13px] font-semibold text-[#999]">车辆列表</span>
-    <span v-if="uVehicles.length" class="text-[11px] text-[#999]">{{ uVehicles.length }} 辆</span>
+    <span @click="openUBind('vehicle')" class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EBF1FD] shrink-0" data-od-id="bind-vehicle-btn" title="绑定车辆"><span v-html="luci('link','w-4 h-4 text-[var(--link)]')"></span></span>
   </div>
   <div v-if="uVehicles.length" class="bg-white rounded-xl mb-5 overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div v-for="(v,i) in uVehicles" :key="v.vin" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uVehicles.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+    <div v-for="(v,i) in uVehicles" :key="v.vin" @click="goVehicleDetail(v.vin)" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uVehicles.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
       <div class="w-9 h-9 rounded-lg bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-5 h-5 text-[var(--accent)]')"></span></div>
       <div class="flex-1 min-w-0">
         <div class="text-[14px] font-semibold truncate">{{ v.vin }}</div>
-        <div class="text-[12px] text-[#666] mt-0.5">{{ v.model }} · {{ v.status }}</div>
+        <div class="text-[12px] text-[#666] mt-0.5 truncate">{{ v.model }}</div>
       </div>
-      <span class="text-[11px] font-medium px-2 py-0.5 rounded shrink-0" :class="v.rentStatus==='租用中'?'text-[#17A34A] bg-[#ECFDF3]':'text-[#999] bg-[#F6F7F9]'">{{ v.rentStatus }}</span>
+      <span v-if="v._manual" @click.stop="openUUnbind('vehicle',v)" class="w-8 h-8 flex items-center justify-center rounded-full ml-1 cursor-pointer active:bg-[#FDE8E8] shrink-0" title="解绑车辆" data-od-id="unbind-vehicle-btn"><span v-html="luci('unlink','w-4 h-4 text-[#DC2626]')"></span></span>
     </div>
   </div>
   <div v-else class="flex flex-col items-center py-8 mb-5 bg-white rounded-xl" style="border:1px solid #E5E5E5">
@@ -2832,22 +2850,62 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <!-- 电池列表 -->
   <div class="flex items-center justify-between mb-2">
     <span class="text-[13px] font-semibold text-[#999]">电池列表</span>
-    <span v-if="uBatteries.length" class="text-[11px] text-[#999]">{{ uBatteries.length }} 个</span>
+    <span @click="openUBind('battery')" class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EBF1FD] shrink-0" data-od-id="bind-battery-btn" title="绑定电池"><span v-html="luci('link','w-4 h-4 text-[var(--link)]')"></span></span>
   </div>
   <div v-if="uBatteries.length" class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div v-for="(b,i) in uBatteries" :key="b.code" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uBatteries.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+    <div v-for="(b,i) in uBatteries" :key="b.code" @click="setTab('orders');goBatteryDetail(b.code)" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uBatteries.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
       <div class="w-9 h-9 rounded-lg bg-[#FFF8E6] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('battery-charging','w-5 h-5 text-[#B07B00]')"></span></div>
       <div class="flex-1 min-w-0">
         <div class="text-[14px] font-semibold truncate">{{ b.code }}</div>
-        <div class="text-[12px] text-[#666] mt-0.5">{{ b.model }} · {{ b.soc }}%</div>
+        <div class="text-[12px] text-[#666] mt-0.5 truncate">{{ b.model }}</div>
       </div>
-      <span class="text-[11px] font-medium px-2 py-0.5 rounded shrink-0" :class="b.rentStatus==='租用中'?'text-[#17A34A] bg-[#ECFDF3]':'text-[#999] bg-[#F6F7F9]'">{{ b.rentStatus }}</span>
+      <span v-if="b._manual" @click.stop="openUUnbind('battery',b)" class="w-8 h-8 flex items-center justify-center rounded-full ml-1 cursor-pointer active:bg-[#FDE8E8] shrink-0" title="解绑电池" data-od-id="unbind-battery-btn"><span v-html="luci('unlink','w-4 h-4 text-[#DC2626]')"></span></span>
     </div>
   </div>
   <div v-else class="flex flex-col items-center py-8 bg-white rounded-xl" style="border:1px solid #E5E5E5;margin-top:0">
     <div class="w-10 h-10 rounded-full bg-[#F6F7F9] flex items-center justify-center mb-2"><span v-html="luci('battery-charging','w-5 h-5 text-[#999]')"></span></div>
     <div class="text-[13px] text-[#999]">暂无电池</div>
   </div>
+</div>
+</div></transition>
+
+<transition name="fd"><div v-if="uBindMod" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="closeUBind"></div></transition>
+<transition name="sh">
+<div v-if="uBindMod" data-od-id="user-bind-modal" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] max-h-[70%] flex flex-col">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="px-5 pt-2 pb-1 shrink-0">
+<span class="block text-center text-[17px] font-semibold">{{ uBindIsBatt?'绑定电池':'绑定车辆' }}</span>
+</div>
+<div class="relative mx-5 mb-3 rounded-full flex items-center px-4 py-2.5 gap-2 shrink-0" style="background:#F6F7F9;border:1px solid #E5E5E5">
+<span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
+<input v-model="uBindQ" type="text" :placeholder="uBindIsBatt?'搜索电池编号':'搜索车架号'" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 pr-8 placeholder:text-[#999]">
+<button @click="uBindScan" type="button" aria-label="扫码" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button>
+</div>
+<div class="flex-1 overflow-y-auto pb-4">
+<div v-for="x in uBindList" :key="x.key" @click="uBindSel=x" class="flex items-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="uBindSel&&uBindSel.key===x.key?{background:'#EBF1FD'}:{background:'#fff'}" style="border-bottom:1px solid #EDEDED">
+<div class="w-11 h-11 rounded-lg flex items-center justify-center mr-3 shrink-0" :style="uBindSel&&uBindSel.key===x.key?{background:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #E5E5E5'}"><span v-html="luci(uBindIsBatt?'battery-charging':'bike','w-6 h-6 text-[var(--accent)]')"></span></div>
+<div class="flex-1 min-w-0">
+<div class="text-[15px] font-semibold text-[#111] truncate">{{ x.no }}</div>
+<div class="flex items-center gap-1.5 text-[12px] text-[#8A8A8A] mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full shrink-0" :style="x.online?{background:'#17A34A'}:{background:'#D97706'}"></span>
+<span>{{ x.online?'在线':'离线' }}</span>
+</div>
+</div>
+<span class="text-[13px] font-semibold text-[#333] shrink-0 pl-3">{{ x.meta }}</span>
+</div>
+<div v-if="uBindEmpty" class="text-center text-[13px] text-[#999] py-12">暂无空闲{{ uBindIsBatt?'电池':'车辆' }}可选</div>
+</div>
+<div class="px-5 pb-7 pt-2 shrink-0">
+<button @click="confirmUBind" class="w-full h-[50px] flex items-center justify-center rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer transition-colors" :style="uBindSel?{background:'var(--accent)'}:{background:'#E0E0E0',color:'#999',pointerEvents:'none'}">确认绑定</button>
+</div>
+</div>
+</transition>
+
+<transition name="fd"><div v-if="uUnbindMod" class="absolute inset-0 z-[999] flex items-center justify-center" style="background:rgba(0,0,0,.45)">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="text-[17px] font-bold text-center">{{ uUnbindTitle }}</div>
+<div class="text-[14px] text-[#666] text-center leading-relaxed">{{ uUnbindDesc }}</div>
+<div class="flex gap-3 mt-2"><div @click="uUnbindMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div><div @click="confirmUUnbind" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80 transition-colors" style="background:var(--accent)">确认</div></div>
 </div>
 </div></transition>
 
@@ -2865,7 +2923,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row">
 <span class="flex-1 text-[15px] font-medium">当前版本</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.2.5</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
+<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.3.8</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
 </div>
 </div>
 </div>
@@ -2970,7 +3028,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span v-html="luci('check','w-7 h-7 text-[var(--accent)]')"></span>
 </div>
 <div class="text-[17px] font-bold mb-1">已是最新版本</div>
-<div class="text-[13px] text-[#666]">V1.2.5</div>
+<div class="text-[13px] text-[#666]">V1.3.8</div>
 </div>
 <div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:var(--accent)">知道了</div>
 </template>
@@ -3327,7 +3385,7 @@ const vehRefreshing=ref(false);
 const locked=ref(false),pressProgress=ref(0),lockJustDone=ref(false);
 let pressTimer=null,pressStart=0;const PRESS_DURATION=1500;
 const vehicles=ref([
-  {vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',account:'user001',phone:'+86 13571893628',email:'',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30:00',lost:false,lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
+  {vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',account:'user001',phone:'+86 13800001111',email:'',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30:00',lost:false,lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
   {vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',account:'user002',phone:'',email:'359878734@qq.com',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15:00',lost:false,lat:null,lng:null,location:''},
   {vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',account:'user003',phone:'',email:'',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00:00',lost:true,lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
   {vin:'LSVAU2Z0D77777000',ctrl:'860123456789045',model:'雅迪 E-Bike Pro',plate:'京D·77777',account:'',phone:'',email:'',status:'空闲',online:true,batteryMain:78,batterySub:70,time:'2024-10-24 15:02:00',lost:false,lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
@@ -3549,7 +3607,7 @@ function vehOpenArm(){if(!can('vehicle.command.arm')){deny();return}vehMod.value
 function vehOpenMotorLock(){if(!can('vehicle.command.motor_lock')){deny();return}vehMod.value='motorLock'}
 function vehOpenLost(){if(!can('vehicle.command.motor_lock')){deny();return}vehMod.value='lost'}
 const vehModTitle=computed(()=>{if(vehMod.value==='arm')return armed.value?'解除设防':'车辆设防';if(vehMod.value==='motorLock')return motorLocked.value?'解锁电机':'锁电机';if(vehMod.value==='lost')return lost.value?'解除报失':'车辆报失';if(vehMod.value==='unbind')return '解绑用户';return''});
-const vehModDesc=computed(()=>{if(vehMod.value==='arm')return armed.value?'确定对车辆解除设防？':'确定对车辆设防？';if(vehMod.value==='motorLock')return motorLocked.value?'电机解锁后车辆将恢复骑行':'电机锁定后车辆将无法骑行';if(vehMod.value==='lost')return lost.value?'解除报失后车辆电机将被解锁，恢复骑行':'报失后车辆电机将被锁定，无法正常骑行';if(vehMod.value==='unbind')return '确认解绑该用户？';return''});
+const vehModDesc=computed(()=>{if(vehMod.value==='arm')return armed.value?'确定对车辆解除设防？':'确定对车辆设防？';if(vehMod.value==='motorLock')return motorLocked.value?'电机解锁后车辆将恢复骑行':'电机锁定后车辆将无法骑行';if(vehMod.value==='lost')return lost.value?'解除报失后车辆电机将被解锁，恢复骑行':'报失后车辆电机将被锁定，无法正常骑行';if(vehMod.value==='unbind')return '确认将该车辆与用户解绑？解绑后将变为空闲车辆，可重新绑定用户';return''});
 const vehModDanger=computed(()=>(vehMod.value==='arm'&&armed.value)||(vehMod.value==='motorLock'&&!motorLocked.value)||(vehMod.value==='lost'&&!lost.value));
 function vehConfirmMod(){if(vehMod.value==='arm'){armed.value=!armed.value;toast(armed.value?'设防成功':'解除设防成功','success')}if(vehMod.value==='motorLock'){motorLocked.value=!motorLocked.value;toast(motorLocked.value?'锁电机成功':'解锁电机成功','success')}if(vehMod.value==='lost'){lost.value=!lost.value;if(dv.value)dv.value.lost=lost.value;toast(lost.value?'报失成功':'解除报失成功','success')}if(vehMod.value==='unbind'){if(dv.value){dv.value.account='';dv.value.phone='';dv.value.email='';var _mv=vehicles.value.find(function(v){return v.vin===dv.value.vin});if(_mv){_mv.account='';_mv.phone='';_mv.email=''}}toast('解绑成功','success')}vehMod.value=null}
 const addModel=ref(''),addVin=ref(''),addCtrl=ref(''),modelQ=ref('');
@@ -3560,11 +3618,23 @@ const filteredModels=computed(()=>modelQ.value?vehModels.filter(m=>m.name.toLowe
 function pickModel(m){if(vehOV.value==='edit'){editModel.value=m.name}else{addModel.value=m.name};vehShowModelSheet.value=false}
 const scanning=ref(false),scanTarget=ref('vin');function scanVin(){scanTarget.value='vin';scanning.value=true}
 function scanBattNo(){scanTarget.value='battNo';scanning.value=true}
-function doScan(){if(scanTarget.value==='battNo'){var bn='BATT-YD'+Math.floor(1000+Math.random()*9000);if(orderPickActive.value){orderPickQ.value=bn}else{battAddNo.value=bn}}else{var vn='YD'+Math.floor(Math.random()*900000+100000);if(orderPickActive.value){orderPickQ.value=vn}else{addVin.value=vn}}scanning.value=false}
+function doScan(){if(scanTarget.value==='battNo'){var bn='BATT-YD'+Math.floor(1000+Math.random()*9000);if(orderPickActive.value){orderPickQ.value=bn}else if(uBindMod.value){uBindQ.value=bn}else{battAddNo.value=bn}}else{var vn='YD'+Math.floor(Math.random()*900000+100000);if(orderPickActive.value){orderPickQ.value=vn}else if(uBindMod.value){uBindQ.value=vn}else{addVin.value=vn}}scanning.value=false}
 const scanTorch=ref(false);const showManualInput=ref(false);const manualVin=ref('');
 function orderPickScan(){scanTarget.value=orderPickIsBatt.value?'battNo':'vin';scanning.value=true}
+function uBindScan(){scanTarget.value=uBindIsBatt.value?'battNo':'vin';scanning.value=true}
+const uUnbindMod=ref(null);
+const uUnbindTarget=ref(null);
+const uUnbindTitle=computed(()=>uUnbindMod.value==='vehicle'?'解绑车辆':'解绑电池');
+const uUnbindDesc=computed(()=>uUnbindMod.value==='vehicle'?'确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆':'确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池');
+function openUUnbind(t,x){uUnbindMod.value=t;uUnbindTarget.value=x}
+function confirmUUnbind(){
+  var t=uUnbindMod.value,x=uUnbindTarget.value;
+  if(t==='vehicle'){uVehicles.value=uVehicles.value.filter(function(v){return v.vin!==x.vin})}else{uBatteries.value=uBatteries.value.filter(function(b){return b.code!==x.code})}
+  toast(t==='vehicle'?'车辆已解绑':'电池已解绑','success');
+  uUnbindMod.value=null;uUnbindTarget.value=null;
+}
 function openManualInput(){manualVin.value='';showManualInput.value=true}
-function confirmManualVin(){const n=manualVin.value.trim();if(!n){toast(scanTarget.value==='battNo'?'请输入电池编号':'请输入车架号','warn');return}if(orderPickActive.value){orderPickQ.value=n}else if(scanTarget.value==='battNo'){battAddNo.value=n}else{addVin.value=n}showManualInput.value=false;scanning.value=false}
+function confirmManualVin(){const n=manualVin.value.trim();if(!n){toast(scanTarget.value==='battNo'?'请输入电池编号':'请输入车架号','warn');return}if(orderPickActive.value){orderPickQ.value=n}else if(uBindMod.value){uBindQ.value=n}else if(scanTarget.value==='battNo'){battAddNo.value=n}else{addVin.value=n}showManualInput.value=false;scanning.value=false}
 function submitAdd(){if(!canSubmit.value)return;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('新增成功','success');vehOV.value=null;addModel.value='';addVin.value='';addCtrl.value=''},600)}
 function vehOpenFS(){vehFsModelC.value=vehFsModel.value;vehFsOnlineC.value=vehFsOnline.value;vehFsLostC.value=vehFsLost.value;vehShowFS.value=true}
 function vehToggleFSModel(m){vehFsModelC.value=vehFsModelC.value===m?'':m}
@@ -3776,7 +3846,7 @@ function battOpenDetail(b){if(!can('battery.detail')){deny();return}curBatt.valu
 const battMod=ref(null);
 const battDischarge=computed(()=>!!(curBatt.value&&curBatt.value.discharge));
 const battModTitle=computed(()=>{if(battMod.value==='unbind')return '解绑用户';return battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失':'电池报失'):(battDischarge.value?'禁止放电':'允许放电')});
-const battModDesc=computed(()=>{if(battMod.value==='unbind')return '确认解绑该用户？';return battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失后电池将被解锁，恢复放电':'报失后电池将被锁定，无法正常放电'):(battDischarge.value?'禁止后设备将无法放电':'允许后设备可正常放电')});
+const battModDesc=computed(()=>{if(battMod.value==='unbind')return '确认将该电池与用户解绑？解绑后将变为空闲电池，可重新绑定用户';return battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失后电池将被解锁，恢复放电':'报失后电池将被锁定，无法正常放电'):(battDischarge.value?'禁止后设备将无法放电':'允许后设备可正常放电')});
 function battOpenDischarge(){if(!can('battery.discharge')){deny();return}battMod.value='discharge'}
 function battOpenReportLost(){battMod.value='lost'}
 function battConfirmMod(){const b=curBatt.value;if(!b)return;if(battMod.value==='unbind'){b.account='';b.phone='';b.email='';toast('解绑成功','success')}else if(battMod.value==='lost'){b.lost=!b.lost;if(b.lost)b.discharge=false;toast(b.lost?'报失成功':'解除报失成功','success')}else{b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success')}battMod.value=null}
@@ -4064,7 +4134,7 @@ function openOrderPick(m){orderPickSel.value=null;orderPickQ.value='';ordersMod.
 function closeOrderPick(){ordersMod.value=null;orderPickSel.value=null;orderPickQ.value=''}
 function confirmOrderPick(){var m=ordersMod.value,sel=orderPickSel.value;if(!sel){toast('请先选择'+(orderPickIsBatt.value?'电池':'车辆'),'warn');return}var o=do_.value;if(m==='assignVehicle'||m==='changeVehicle'){o.vin=sel.no;if(o.type==='vehicle'&&sel.title)o.item=sel.title}if(m==='assignBattery'||m==='changeBattery'){o.battNo=sel.no;if(o.type==='battery'&&sel.title)o.item=sel.title}ordersMod.value=null;orderPickSel.value=null;var t={assignVehicle:'车辆已绑定',assignBattery:'电池已绑定',changeVehicle:'车辆已更换',changeBattery:'电池已更换'};toast(t[m],'success')}
 /* ══ 绑定/解绑用户（设备详情） ══ */
-const users=computed(()=>{const m={};orders.value.forEach(function(o){var acc=(o.account||'').trim();if(acc&&!m[acc])m[acc]={account:acc,name:o.customer||acc,phone:o.phone||'',email:o.email||''}});return Object.values(m)});
+const users=computed(()=>{const m={};orders.value.forEach(function(o){var acc=(o.account||'').trim();if(acc&&!m[acc])m[acc]={account:acc,name:o.customer||acc,phone:o.phone||'',email:o.email||''}});userList.value.forEach(function(u){if(!m[u.account])m[u.account]={account:u.account,name:u.nickname||u.account,phone:u.phone||'',email:u.email||''}});return Object.values(m)});
 const userPickActive=ref('');
 const userPickQ=ref('');
 const userPickSel=ref(null);
@@ -4558,30 +4628,68 @@ const uFiltered=computed(()=>{
   return list;
 });
 const du=ref({});
-const uWallet=ref({balance:'0',frozen:'0',totalRecharge:'0',totalSpent:'0',status:'正常'});
+const uWallet=ref({total:0,available:0,rechargeBalance:0,rechargeFrozen:0,giftBalance:0,giftFrozen:0});
 const uVehicles=ref([]);
 const uBatteries=ref([]);
 const uDetailRows=computed(()=>[
-  {k:'账号',v:du.value.account},
-  {k:'手机号',v:du.value.phone},
+  {k:'账号',v:du.value.account||'—'},
+  {k:'手机号',v:du.value.phone||'—'},
   {k:'邮箱',v:du.value.email||'—'},
   {k:'昵称',v:du.value.nickname||'—'},
-  {k:'状态',v:du.value.status},
-  {k:'注册时间',v:du.value.created}
+  {k:'状态',v:du.value.status||'正常'},
+  {k:'注册时间',v:du.value.created||'—'}
 ]);
+function walletFor(acc){
+  var h=0,s=acc||'';for(var i=0;i<s.length;i++){h=(h*33+s.charCodeAt(i))>>>0}
+  var recharge=20000+(h%31)*1000;
+  var gift=500+((h>>>5)%5)*500;
+  var fr=Math.floor(recharge*0.4);
+  var fg=((h>>>9)%3===0)?0:(Math.round(gift*0.5));
+  return{total:recharge+gift,available:(recharge-fr)+(gift-fg),rechargeBalance:recharge,rechargeFrozen:fr,giftBalance:gift,giftFrozen:fg};
+}
 function openUserDetail(u){
   if(!can('user.detail')){deny();return}
   du.value={...u};
-  uWallet.value={balance:Math.floor(Math.random()*500+10).toString(),frozen:Math.floor(Math.random()*50).toString(),totalRecharge:Math.floor(Math.random()*1000+100).toString(),totalSpent:Math.floor(Math.random()*800+50).toString(),status:'正常'};
-  uVehicles.value=[
-    {vin:'VIN-'+u.id+'A'+Math.floor(Math.random()*1000),model:'雅迪冠能',status:'在线',rentStatus:'租用中'},
-    {vin:'VIN-'+u.id+'B'+Math.floor(Math.random()*1000),model:'爱玛小蜜豆',status:'离线',rentStatus:'已归还'}
-  ];
-  uBatteries.value=[
-    {code:'BAT-'+u.id+'A'+Math.floor(Math.random()*1000),model:'48V20Ah',soc:Math.floor(Math.random()*50+50),rentStatus:'租用中'},
-    {code:'BAT-'+u.id+'B'+Math.floor(Math.random()*1000),model:'48V12Ah',soc:Math.floor(Math.random()*30+20),rentStatus:'已归还'}
-  ];
+  uWallet.value=walletFor(u.account);
+  uVehicles.value=vehicles.value.filter(function(v){return v.account===u.account&&v.vin}).map(function(v){return{vin:v.vin,model:v.model,status:v.online?'在线':'离线',batteryMain:v.batteryMain,batterySub:v.batterySub}});
+  uBatteries.value=batteries.value.filter(function(b){return b.account===u.account&&b.battNo}).map(function(b){return{code:b.battNo,model:b.model,soc:b.level}});
   profileSub.value='userDetail';
+}
+function goUserDetail(account){
+  if(!account)return;
+  if(!can('user.detail')){deny();return}
+  var u=users.value.find(function(x){return x.account===account||x.phone===account})||userList.value.find(function(x){return x.account===account||x.phone===account});
+  if(!u)u={id:0,account:account,phone:'',email:'',nickname:'',status:'正常',created:'—'};
+  setTab('profile');
+  openUserDetail(u);
+}
+const uBindMod=ref(null);
+const uBindQ=ref('');
+const uBindSel=ref(null);
+const uBindIsBatt=computed(()=>uBindMod.value==='battery');
+const uBindList=computed(function(){
+  var idle=function(o){return o.status==='空闲'};
+  var q=(uBindQ.value||'').trim().toLowerCase();
+  var hasQ=q.length>0;
+  var match=function(no){return !hasQ||(no||'').toLowerCase().indexOf(q)!==-1};
+  return uBindIsBatt.value
+    ? batteries.value.filter(idle).filter(function(b){return match(b.battNo)}).map(function(b){return{key:'b'+b.battNo,no:b.battNo,title:b.model,sub:(b.battNo||'')+' · '+(b.online?'在线':'离线'),online:b.online,meta:(b.level!=null?b.level:0)+'%'}})
+    : vehicles.value.filter(idle).filter(function(v){return match(v.vin)}).map(function(v){return{key:'v'+v.vin,no:v.vin,title:v.model,sub:(v.vin||'—')+' · '+(v.online?'在线':'离线'),online:v.online,meta:(v.batteryMain!=null?v.batteryMain:0)+'% / '+(v.batterySub!=null?v.batterySub:0)+'%'}});
+});
+const uBindEmpty=computed(()=>uBindList.value.length===0);
+function openUBind(t){uBindMod.value=t;uBindSel.value=null;uBindQ.value=''}
+function closeUBind(){uBindMod.value=null;uBindSel.value=null;uBindQ.value=''}
+function confirmUBind(){
+  var sel=uBindSel.value;
+  if(!sel){toast('请先选择'+(uBindIsBatt.value?'电池':'车辆'),'warn');return}
+  if(uBindIsBatt.value){
+    uBatteries.value=[...uBatteries.value,{code:sel.no,model:sel.title,soc:parseFloat(sel.meta)||0,_manual:true}];
+  }else{
+    var pct=(sel.meta||'/').split('/');
+    uVehicles.value=[...uVehicles.value,{vin:sel.no,model:sel.title,status:sel.online?'在线':'离线',batteryMain:parseFloat(pct[0])||0,batterySub:pct[1]!=null?(parseFloat(pct[1])||0):0,_manual:true}];
+  }
+  toast((uBindIsBatt.value?'电池':'车辆')+'已绑定','success');
+  uBindMod.value=null;uBindSel.value=null;uBindQ.value='';
 }
 const pQ=ref('');
 const positions=ref([]);
@@ -4767,7 +4875,7 @@ function initI18nData(){
 }
 watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){setTimeout(()=>checkVersion(),100)}});
 onMounted(()=>{brandLoading.value=true;initI18nData();setTimeout(()=>{brandLoading.value=false;paint();if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)});
-watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,orderPickSel,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited,pkgPicker],paint);
+watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,orderPickSel,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited,pkgPicker,uBindMod,uBindSel],paint);
 watch(dSt,(v)=>{if(v==='created')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
 onUpdated(paint);
 
@@ -4809,7 +4917,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,copyId,copyText,goVehicleDetail,goBatte
   curStore,menuGroups,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
-aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,uDetailRows,uWallet,uVehicles,uBatteries,
+aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,uDetailRows,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
 csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,cfg,saveCfg,cfgSaving,cfgErr,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
