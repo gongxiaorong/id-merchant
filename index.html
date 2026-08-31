@@ -1962,12 +1962,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div @click="profileOV='settings'" class="w-9 h-9 flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] rounded-full shrink-0" data-od-id="profile-settings"><span v-html="luci('settings','w-5 h-5 text-[#666]')"></span></div>
   </div>
-<div class="text-xl font-bold mb-3" style="color:#222">常用功能</div>
+<div v-for="g in menuGroups" :key="g.name" class="mb-3">
+<div class="text-[13px] font-semibold text-[#999] px-1 mb-1.5">{{ g.name }}</div>
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
-<div v-for="(m,i) in menuList" :key="m.id" @click="openMenu(m.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" :style="i<menuList.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+<div v-for="(m,i) in g.items" :key="m.id" @click="openMenu(m.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" :style="i<g.items.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
 <div class="w-7 h-7 flex items-center justify-center mr-3 text-[#666]"><span v-html="luci(m.icon,'w-5 h-5')"></span></div>
 <span class="flex-1 text-[15px] font-medium">{{ m.label }}</span>
 <div class="flex items-center gap-1"><span v-if="m.sub" class="text-[13px] text-[#666] mr-1">{{ m.sub }}</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
+</div>
 </div>
 </div>
 </div>
@@ -2470,9 +2472,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-for="(a,i) in aFilter" :key="a.account" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
 <div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openAccDetail(a)">
 <div class="flex justify-between items-center mb-2"><span class="text-[15px] font-semibold">{{ a.account }}</span><span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="a.status==='启用'?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}">{{ a.status }}</span></div>
-<div class="grid grid-cols-2 gap-x-3 gap-y-0.5 text-xs text-[#666] mb-2"><div>手机号：{{ mask(a.code+a.phone) }}</div><div>邮箱：{{ a.email }}</div><div>姓名：{{ a.name }}</div><div>备注：{{ a.remark||'—' }}</div></div>
-<div class="flex gap-1 mb-1"><span v-for="r in a.roles.split('、')" :key="r" class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#EBF1FD] text-[#333]">{{ r }}</span></div>
-<div class="text-[11px] text-[#999]">创建时间：{{ a.created }}</div>
+<div class="text-[13px]">
+  <div class="flex justify-between py-1"><span class="text-[#999]">手机号</span><span class="text-[#111]">{{ mask(a.code+a.phone) }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">邮箱</span><span class="text-[#111]">{{ a.email||'—' }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">姓名</span><span class="text-[#111]">{{ a.name }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">备注</span><span class="text-[#111]">{{ a.remark||'—' }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">创建时间</span><span class="text-[#111]">{{ a.created }}</span></div>
+</div>
+<div class="flex gap-1 pt-1 pb-0.5"><span v-for="r in a.roles.split('、')" :key="r" class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#EBF1FD] text-[#333]">{{ r }}</span></div>
 </div>
 <div class="card-actions">
 <div v-if="can('account.edit')" class="card-action-btn" style="color:var(--link)" @click="openAccEdit(a)">编辑</div>
@@ -2574,10 +2581,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition-group v-if="pFilter.length" name="item">
 <div v-for="(p,i) in pFilter" :key="p.name" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
 <div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openPosDetail(p)">
-<div class="flex justify-between items-center mb-1"><span class="text-[15px] font-semibold">{{ p.name }}</span></div>
-<div class="text-xs text-[#999] mb-0.5">上级职位：{{ p.parent }}</div>
-<div class="text-xs text-[#999] mb-0.5">备注：{{ p.remark||'—' }}</div>
-<div class="text-[11px] text-[#999]">创建时间：{{ p.created }}</div>
+<div class="flex justify-between items-center mb-2"><span class="text-[15px] font-semibold">{{ p.name }}</span></div>
+<div class="text-[13px]">
+  <div class="flex justify-between py-1"><span class="text-[#999]">上级职位</span><span class="text-[#111]">{{ p.parent }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">备注</span><span class="text-[#111]">{{ p.remark||'—' }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">创建时间</span><span class="text-[#111]">{{ p.created }}</span></div>
+</div>
 </div>
 <div class="card-actions">
 <div v-if="can('position.edit')" class="card-action-btn" style="color:var(--link)" @click="openPosEdit(p)">编辑</div>
@@ -2730,6 +2739,118 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div></transition>
 
 <!-- 系统设置 -->
+<!-- ═══ 用户管理 — 列表 ═══ -->
+<transition name="sl"><div v-if="profileOV==='user'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="user-list-page">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold">用户管理</div><span class="min-w-[2rem] shrink-0"></span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<!-- 筛选条件 -->
+<div class="flex flex-col gap-2.5 mb-3">
+  <div class="flex-1 rounded-full flex items-center py-1.5 gap-1.5" style="background:#fff;border:1px solid #E5E5E5;padding-left:14px;padding-right:4px">
+    <span v-html="luci('search','w-4 h-4 text-[#999] shrink-0')"></span>
+    <input v-model="uQ" type="text" :placeholder="'搜索账号/手机号/邮箱'" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="uDoSearch">
+    <div @click="uDoSearch" class="h-8 px-3 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-xs font-semibold">搜索</div>
+  </div>
+  <div class="filter-tabs">
+    <div v-for="t in uStatusTabs" :key="t.v" @click="uSetPill(t.v)" class="filter-pill" :style="uStatus===t.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t.l }} ({{ uPillCnt[t.l] }})</div>
+  </div>
+</div>
+<!-- 用户列表 -->
+<template v-if="uFiltered.length">
+<div v-for="u in uFiltered" :key="u.id" class="bg-white rounded-xl p-4 mb-2.5 cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)'}" @click="openUserDetail(u)" :data-od-id="'user-item-'+u.id">
+<div class="flex justify-between items-center mb-2">
+  <span class="text-[15px] font-semibold">{{ u.account }}</span>
+  <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded" :style="u.status==='正常'?{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'}:{background:'#F1F2F3',color:'#6B7280',border:'1px solid #D9DEE7'}">{{ u.status }}</span>
+</div>
+<div class="text-[13px]">
+  <div class="flex justify-between py-1"><span class="text-[#999]">手机号</span><span class="text-[#111]">{{ u.phone }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">邮箱</span><span class="text-[#111]">{{ u.email||'—' }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">昵称</span><span class="text-[#111]">{{ u.nickname||'—' }}</span></div>
+  <div class="flex justify-between py-1"><span class="text-[#999]">注册时间</span><span class="text-[#111]">{{ u.created }}</span></div>
+</div>
+</div>
+</template>
+<div v-else class="flex flex-col items-center py-16">
+<div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('users','w-7 h-7 text-[var(--accent)]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">{{ uQ||uStatus ? '未找到匹配的用户' : '暂无用户数据' }}</div>
+<div class="text-[13px] text-[#999] mb-4">{{ uQ||uStatus ? '请调整搜索条件' : '暂无注册用户' }}</div>
+<div v-if="uQ||uStatus" @click="uClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">清除筛选</div>
+</div>
+</div>
+</div></transition>
+
+<!-- ═══ 用户管理 — 详情 ═══ -->
+<transition name="sl"><div v-if="profileSub==='userDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="user-detail-page">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">用户详情</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+  <!-- 基本信息 -->
+  <div class="text-[13px] font-semibold text-[#999] mb-2">基本信息</div>
+  <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+    <div v-for="(r,j) in uDetailRows" :key="r.k" class="flex py-2.5" :style="j<uDetailRows.length-1?{borderBottom:'1px dashed #E5E5E5'}:{}"><span class="text-[13px] text-[#999] w-20 shrink-0">{{ r.k }}</span><span class="text-sm font-medium flex-1">{{ r.v }}</span></div>
+  </div>
+
+  <!-- 用户钱包 -->
+  <div class="text-[13px] font-semibold text-[#999] mb-2">用户钱包</div>
+  <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+    <div class="grid grid-cols-2 gap-4">
+      <div><div class="text-[12px] text-[#999] mb-1">余额</div><div class="text-[20px] font-bold tabular-nums" style="color:var(--accent)">Rp {{ uWallet.balance }}</div></div>
+      <div><div class="text-[12px] text-[#999] mb-1">冻结金额</div><div class="text-[20px] font-bold tabular-nums text-[#D97706]">Rp {{ uWallet.frozen }}</div></div>
+      <div><div class="text-[12px] text-[#999] mb-1">累计充值</div><div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.totalRecharge }}</div></div>
+      <div><div class="text-[12px] text-[#999] mb-1">累计消费</div><div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.totalSpent }}</div></div>
+    </div>
+    <div class="flex items-center justify-between mt-3 pt-3" style="border-top:1px dashed #E5E5E5">
+      <span class="text-[12px] text-[#999]">状态</span>
+      <span class="text-[12px] font-medium" :class="uWallet.status==='正常'?'text-[#17A34A]':'text-[#DC2626]'">{{ uWallet.status }}</span>
+    </div>
+  </div>
+
+  <!-- 车辆列表 -->
+  <div class="flex items-center justify-between mb-2">
+    <span class="text-[13px] font-semibold text-[#999]">车辆列表</span>
+    <span v-if="uVehicles.length" class="text-[11px] text-[#999]">{{ uVehicles.length }} 辆</span>
+  </div>
+  <div v-if="uVehicles.length" class="bg-white rounded-xl mb-5 overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+    <div v-for="(v,i) in uVehicles" :key="v.vin" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uVehicles.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+      <div class="w-9 h-9 rounded-lg bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('bike','w-5 h-5 text-[var(--accent)]')"></span></div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[14px] font-semibold truncate">{{ v.vin }}</div>
+        <div class="text-[12px] text-[#666] mt-0.5">{{ v.model }} · {{ v.status }}</div>
+      </div>
+      <span class="text-[11px] font-medium px-2 py-0.5 rounded shrink-0" :class="v.rentStatus==='租用中'?'text-[#17A34A] bg-[#ECFDF3]':'text-[#999] bg-[#F6F7F9]'">{{ v.rentStatus }}</span>
+    </div>
+  </div>
+  <div v-else class="flex flex-col items-center py-8 mb-5 bg-white rounded-xl" style="border:1px solid #E5E5E5">
+    <div class="w-10 h-10 rounded-full bg-[#F6F7F9] flex items-center justify-center mb-2"><span v-html="luci('bike','w-5 h-5 text-[#999]')"></span></div>
+    <div class="text-[13px] text-[#999]">暂无车辆</div>
+  </div>
+
+  <!-- 电池列表 -->
+  <div class="flex items-center justify-between mb-2">
+    <span class="text-[13px] font-semibold text-[#999]">电池列表</span>
+    <span v-if="uBatteries.length" class="text-[11px] text-[#999]">{{ uBatteries.length }} 个</span>
+  </div>
+  <div v-if="uBatteries.length" class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+    <div v-for="(b,i) in uBatteries" :key="b.code" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uBatteries.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+      <div class="w-9 h-9 rounded-lg bg-[#FFF8E6] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('battery-charging','w-5 h-5 text-[#B07B00]')"></span></div>
+      <div class="flex-1 min-w-0">
+        <div class="text-[14px] font-semibold truncate">{{ b.code }}</div>
+        <div class="text-[12px] text-[#666] mt-0.5">{{ b.model }} · {{ b.soc }}%</div>
+      </div>
+      <span class="text-[11px] font-medium px-2 py-0.5 rounded shrink-0" :class="b.rentStatus==='租用中'?'text-[#17A34A] bg-[#ECFDF3]':'text-[#999] bg-[#F6F7F9]'">{{ b.rentStatus }}</span>
+    </div>
+  </div>
+  <div v-else class="flex flex-col items-center py-8 bg-white rounded-xl" style="border:1px solid #E5E5E5;margin-top:0">
+    <div class="w-10 h-10 rounded-full bg-[#F6F7F9] flex items-center justify-center mb-2"><span v-html="luci('battery-charging','w-5 h-5 text-[#999]')"></span></div>
+    <div class="text-[13px] text-[#999]">暂无电池</div>
+  </div>
+</div>
+</div></transition>
+
 <transition name="sl"><div v-if="profileOV==='settings'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="settings-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
@@ -2744,7 +2865,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 <div @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row">
 <span class="flex-1 text-[15px] font-medium">当前版本</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.1.1</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
+<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.2.5</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
 </div>
 </div>
 </div>
@@ -2849,7 +2970,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span v-html="luci('check','w-7 h-7 text-[var(--accent)]')"></span>
 </div>
 <div class="text-[17px] font-bold mb-1">已是最新版本</div>
-<div class="text-[13px] text-[#666]">V1.1.1</div>
+<div class="text-[13px] text-[#666]">V1.2.5</div>
 </div>
 <div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:var(--accent)">知道了</div>
 </template>
@@ -3471,6 +3592,7 @@ const ALL_PERM_CODES=[
   'order.package.list','order.package.detail','order.package.operate.cancel','order.package.operate.confirm_payment','order.package.operate.return_vehicle','order.package.refund.create','order.package.refund.list',
   'model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit',
   'account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable',
+  'user.list','user.detail',
   'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit'
 ];
 const perms=ref(Object.fromEntries(ALL_PERM_CODES.map(c=>[c,true])));
@@ -3502,6 +3624,9 @@ const permGroups=[
   ]},
   {id:'ordPkg',name:'套餐订单',codes:['order.package.list','order.package.detail','order.package.operate.cancel','order.package.operate.confirm_payment','order.package.operate.return_vehicle','order.package.refund.create','order.package.refund.list'],items:[
     {c:'order.package.list',n:'订单列表'},{c:'order.package.detail',n:'订单详情'},{c:'order.package.operate.cancel',n:'取消订单'},{c:'order.package.operate.confirm_payment',n:'确认支付'},{c:'order.package.operate.return_vehicle',n:'结束订单'},{c:'order.package.refund.create',n:'发起退款'},{c:'order.package.refund.list',n:'查看退款记录'}
+  ]},
+  {id:'user',name:'用户管理',codes:['user.list','user.detail'],items:[
+    {c:'user.list',n:'用户列表'},{c:'user.detail',n:'用户详情'}
   ]},
   {id:'sys',name:'系统配置',codes:['model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit'],items:[
     {c:'model.list',n:'车型列表'},{c:'model.edit',n:'编辑车型'},{c:'batt_model.list',n:'电池型号列表'},{c:'batt_model.edit',n:'编辑电池型号'},{c:'package.list',n:'套餐列表'},{c:'package.add',n:'新增套餐'},{c:'package.edit',n:'编辑套餐'},{c:'account.list',n:'账号列表'},{c:'account.detail',n:'账号详情'},{c:'account.add',n:'新增账号'},{c:'account.edit',n:'编辑账号'},{c:'account.status.disable',n:'禁用账号'},{c:'account.status.enable',n:'启用账号'},
@@ -3573,8 +3698,9 @@ const demoPagePermCtx=computed(()=>{
     /* 已在配置页：不露 order_config.view（入口在「我的」） */
     if(ov==='config')return{title:'订单配置',groups:[pickPermGroup('sys',['order_config.edit'])].filter(Boolean)};
     if(ov==='store')return{title:'切换门店',groups:[]};
+    if(ov==='user'||sub==='userDetail')return{title:sub==='userDetail'?'用户详情':'用户管理',groups:[pickPermGroup('user',sub==='userDetail'?['user.detail']:['user.detail'])].filter(Boolean)};
     if(ov==='info'||ov==='settings'||sub==='lang'||sub==='bindPhone'||sub==='bindEmail'||sub==='pwdVerify'||sub==='pwdReset')return{title:ov==='settings'||sub==='lang'?'系统设置':ov==='info'?'个人信息':'我的',groups:[]};
-    return{title:'我的',groups:[pickPermGroup('sys',['model.list','batt_model.list','package.list','account.list','position.list','cs_info.list','order_config.view'])].filter(Boolean)};
+    return{title:'我的',groups:[pickPermGroup('sys',['model.list','batt_model.list','package.list','account.list','user.list','position.list','cs_info.list','order_config.view'])].filter(Boolean)};
   }
   return{title:'—',groups:[]};
 });
@@ -4262,22 +4388,26 @@ function goBack(){
   else if(profileSub.value)profileSub.value=null;
   else if(profileOV.value)profileOV.value=null;
 }
-const hdrTitle=computed(()=>{const m={info:'个人信息',store:'门店列表',model:'车型管理',battModel:'电池型号管理',package:'套餐管理',account:'账号管理',pos:'职位管理',cs:'客服信息',config:'订单配置',settings:'系统设置'};const s={mEdit:'编辑车型',bmEdit:'编辑电池型号',pkgEdit:'编辑套餐',pkgAdd:'新增套餐',aDetail:'账号详情',aAdd:'新增账号',aEdit:'编辑账号',pDetail:'职位详情',pAdd:'新增职位',pEdit:'编辑职位',csEdit:csIdx.value===-1?'新增客服':'编辑客服',lang:'切换语言',bindPhone:'绑定手机号',bindEmail:'绑定邮箱',pwdVerify:'修改密码',pwdReset:'重置密码'};return profileSub.value?(s[profileSub.value]||''):(m[profileOV.value]||'')});
+const hdrTitle=computed(()=>{const m={info:'个人信息',store:'门店列表',model:'车型管理',battModel:'电池型号管理',package:'套餐管理',account:'账号管理',pos:'职位管理',cs:'客服信息',config:'订单配置',user:'用户管理',settings:'系统设置'};const s={mEdit:'编辑车型',bmEdit:'编辑电池型号',pkgEdit:'编辑套餐',pkgAdd:'新增套餐',aDetail:'账号详情',aAdd:'新增账号',aEdit:'编辑账号',pDetail:'职位详情',pAdd:'新增职位',pEdit:'编辑职位',csEdit:csIdx.value===-1?'新增客服':'编辑客服',lang:'切换语言',bindPhone:'绑定手机号',bindEmail:'绑定邮箱',pwdVerify:'修改密码',pwdReset:'重置密码',userDetail:'用户详情'};return profileSub.value?(s[profileSub.value]||''):(m[profileOV.value]||'')});
 const hdrAction=computed(()=>{if(profileOV.value==='account'&&can('account.add'))return{label:'新增',fn:()=>openAccAdd()};if(profileOV.value==='cs'&&can('cs_info.add'))return{label:'新增',fn:()=>openCsEdit(-1)};if(profileSub.value==='pDetail'&&can('position.add'))return{label:'新增下级职位',fn:()=>openPosAdd(dp.value.name)};if(profileOV.value==='config'&&can('order_config.edit'))return{label:'保存',fn:saveCfg};return null});
 const curStore=ref('');
-const menuList=computed(()=>{
-  const all=[
+const menuGroups=computed(()=>[
+  {name:'经营管理',items:[
     {id:'store',label:'切换门店',icon:'building-2',sub:curStore.value,code:null},
     {id:'model',label:'车型管理',icon:'bike',code:'model.list'},
     {id:'battModel',label:'电池型号管理',icon:'battery-charging',code:'batt_model.list'},
-    {id:'package',label:'套餐管理',icon:'package',code:'package.list'},
+    {id:'package',label:'套餐管理',icon:'package',code:'package.list'}
+  ]},
+  {name:'员工与用户',items:[
     {id:'account',label:'账号管理',icon:'users',code:'account.list'},
     {id:'pos',label:'职位管理',icon:'clock',code:'position.list'},
-    {id:'cs',label:'客服信息',icon:'headset',code:'cs_info.list'},
-    {id:'config',label:'订单配置',icon:'settings',code:'order_config.view'}
-  ];
-  return all.filter(m=>!m.code||can(m.code));
-});
+    {id:'user',label:'用户管理',icon:'users',code:'user.list'}
+  ]},
+  {name:'运营',items:[
+    {id:'config',label:'订单配置',icon:'settings',code:'order_config.view'},
+    {id:'cs',label:'客服信息',icon:'headset',code:'cs_info.list'}
+  ]}
+].map(g=>({...g,items:g.items.filter(m=>!m.code||can(m.code))})).filter(g=>g.items.length));
 function openMenu(id){profileOV.value=id;brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)}
 const langOptions=[{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'en',label:'English'},{id:'id',label:'Bahasa Indonesia'}];
 const appLangLabel=computed(()=>'简体中文');
@@ -4403,6 +4533,56 @@ function saveAccAdd(){if(accSaving.value)return;if(!accValid(false))return;accSa
 function closeAccCred(){newAccCred.value=null;profileSub.value=null;fE.value={}}
 function copyCred(tp){if(!newAccCred.value)return;const c=newAccCred.value;const txt=tp==='acc'?c.account:tp==='pwd'?c.password:(c.account+' '+c.password);navigator.clipboard.writeText(txt);toast(tp==='acc'?'账号已复制':tp==='pwd'?'密码已复制':'账号和密码已复制','success')}
 let tgtAcc=null;function toggleAcc(a){const need=a.status==='启用'?'account.status.disable':'account.status.enable';if(!can(need)){deny();return}tgtAcc=a;profileMod.value='toggle'}
+/* ══ 用户管理 ══ */
+const uQ=ref(''),uStatus=ref('');
+const uStatusTabs=[{v:'',l:'全部'},{v:'正常',l:'正常'},{v:'注销',l:'注销'}];
+const uPillCnt=computed(()=>{const m={};userList.value.forEach(u=>{m[u.status]=(m[u.status]||0)+1});return{'全部':userList.value.length,'正常':m['正常']||0,'注销':m['注销']||0}});
+const uDoSearch=()=>{if(uQ.value)uQ.value=uQ.value.trim();brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)};
+const uSetPill=function(v){uStatus.value=uStatus.value===v?'':v;brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)};
+const uClearFilters=function(){uQ.value='';uStatus.value=''};
+const userList=ref([
+  {id:1,account:'zhangsan',phone:'+62 81234567890',email:'zhangsan@mail.com',nickname:'张三',status:'正常',created:'2024-08-01 10:30'},
+  {id:2,account:'lisi_rent',phone:'+62 81345678901',email:'lisi@mail.com',nickname:'李四',status:'正常',created:'2024-08-03 14:20'},
+  {id:3,account:'wangwu',phone:'+62 81456789012',email:'',nickname:'王五',status:'注销',created:'2024-07-15 09:00'},
+  {id:4,account:'zhaoliu88',phone:'+62 81567890123',email:'zhaoliu@mail.com',nickname:'赵六',status:'正常',created:'2024-08-10 16:45'},
+  {id:5,account:'sunqi',phone:'+62 81678901234',email:'sunqi@mail.com',nickname:'孙七',status:'注销',created:'2024-08-18 11:30'},
+  {id:6,account:'zhouba',phone:'+62 81789012345',email:'',nickname:'周八',status:'正常',created:'2024-07-28 08:15'},
+  {id:7,account:'wujiu',phone:'+62 81890123456',email:'wujiu@mail.com',nickname:'吴九',status:'正常',created:'2024-08-20 13:00'},
+  {id:8,account:'zhengshi',phone:'+62 81901234567',email:'zhengshi@mail.com',nickname:'郑十',status:'注销',created:'2024-06-01 10:00'}
+]);
+const uFiltered=computed(()=>{
+  let list=userList.value;
+  if(uStatus.value)list=list.filter(u=>u.status===uStatus.value);
+  const q=uQ.value.toLowerCase();
+  if(q)list=list.filter(u=>(u.account+u.phone+u.email).toLowerCase().includes(q));
+  return list;
+});
+const du=ref({});
+const uWallet=ref({balance:'0',frozen:'0',totalRecharge:'0',totalSpent:'0',status:'正常'});
+const uVehicles=ref([]);
+const uBatteries=ref([]);
+const uDetailRows=computed(()=>[
+  {k:'账号',v:du.value.account},
+  {k:'手机号',v:du.value.phone},
+  {k:'邮箱',v:du.value.email||'—'},
+  {k:'昵称',v:du.value.nickname||'—'},
+  {k:'状态',v:du.value.status},
+  {k:'注册时间',v:du.value.created}
+]);
+function openUserDetail(u){
+  if(!can('user.detail')){deny();return}
+  du.value={...u};
+  uWallet.value={balance:Math.floor(Math.random()*500+10).toString(),frozen:Math.floor(Math.random()*50).toString(),totalRecharge:Math.floor(Math.random()*1000+100).toString(),totalSpent:Math.floor(Math.random()*800+50).toString(),status:'正常'};
+  uVehicles.value=[
+    {vin:'VIN-'+u.id+'A'+Math.floor(Math.random()*1000),model:'雅迪冠能',status:'在线',rentStatus:'租用中'},
+    {vin:'VIN-'+u.id+'B'+Math.floor(Math.random()*1000),model:'爱玛小蜜豆',status:'离线',rentStatus:'已归还'}
+  ];
+  uBatteries.value=[
+    {code:'BAT-'+u.id+'A'+Math.floor(Math.random()*1000),model:'48V20Ah',soc:Math.floor(Math.random()*50+50),rentStatus:'租用中'},
+    {code:'BAT-'+u.id+'B'+Math.floor(Math.random()*1000),model:'48V12Ah',soc:Math.floor(Math.random()*30+20),rentStatus:'已归还'}
+  ];
+  profileSub.value='userDetail';
+}
 const pQ=ref('');
 const positions=ref([]);
 const pFilter=computed(()=>{const q=pQ.value.toLowerCase();return q?positions.value.filter(p=>p.name.toLowerCase().includes(q)):positions.value});
@@ -4626,10 +4806,10 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,copyId,copyText,goVehicleDetail,goBatte
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
-  curStore,menuList,openMenu,stores,doSwitch,
+  curStore,menuGroups,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
-aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,
+aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,uDetailRows,uWallet,uVehicles,uBatteries,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
 csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,cfg,saveCfg,cfgSaving,cfgErr,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,

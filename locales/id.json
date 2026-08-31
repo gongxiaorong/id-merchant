@@ -20,7 +20,7 @@
     "goVehicleSub": "Buka detail kendaraan dan kontrol",
     "historyCount": "Total {n} catatan",
     "historyTitle": "Riwayat",
-    "ignoreDesc": "Silakan pilih alasan pengabaian, setelah diabaikan dapat dilihat di \\\"Diabaikan\\\".",
+    "ignoreDesc": "Silakan pilih alasan pengabaian, setelah diabaikan dapat dilihat di \"Diabaikan\".",
     "ignoreDuplicate": "Peringatan Duplikat",
     "ignoreHandled": "Ditangani di Lokasi",
     "ignoreMistake": "Alarm Palsu",
@@ -58,7 +58,17 @@
     "manage": "Manajemen Baterai",
     "position": "Lokasi Baterai",
     "replace": "Ganti Baterai",
-    "replaced": "Baterai telah diganti"
+    "replaced": "Baterai telah diganti",
+    "bind": "Ikat baterai",
+    "dischargeAllowed": "Pengosongan diizinkan",
+    "dischargeForbidden": "Pengosongan dilarang",
+    "dischargeOffHint": "Pengosongan saat ini dilarang. Ketuk untuk mengizinkan",
+    "dischargeOnHint": "Pengosongan saat ini diizinkan. Ketuk untuk melarang",
+    "lostLockHint": "Setelah dilaporkan hilang, baterai dikunci dan tidak dapat dikosongkan",
+    "lostUnlockHint": "Baterai akan dibuka kuncinya setelah laporan kehilangan dibatalkan",
+    "noLocationListOnly": "{n} baterai tanpa lokasi, hanya terlihat di daftar",
+    "reportLost": "Laporkan baterai hilang",
+    "searchEmpty": "Baterai yang cocok tidak ditemukan. Sesuaikan pencarian"
   },
   "common": {
     "account": "Akun",
@@ -87,7 +97,10 @@
     "search": "Cari",
     "searchEmpty": "Tidak ada hasil, silakan sesuaikan kata kunci dan coba lagi",
     "startTime": "Waktu Mulai",
-    "thumbnail": "Gambar Mini"
+    "thumbnail": "Gambar Mini",
+    "searchUserPlaceholder": "Cari berdasarkan akun / telepon / email",
+    "uploadSpecLarge": "Ukuran: 454px × 454px, format: PNG latar transparan, maksimal 1MB",
+    "uploadSpecSmall": "Ukuran: 170px × 170px, format: PNG latar transparan, maksimal 512KB"
   },
   "dialcode": {
     "australia": "Australia",
@@ -138,7 +151,16 @@
       "online": "Kendaraan Online"
     },
     "vehStatsTitle": "Operasi Kendaraan",
-    "viewAllAlerts": "Semua"
+    "viewAllAlerts": "Semua",
+    "alert": {
+      "recent": "Daftar peringatan terbaru"
+    },
+    "stats": {
+      "business": "Dasbor data operasional",
+      "vehicle": "Statistik operasi kendaraan"
+    },
+    "vehicleMap": "Peta kendaraan",
+    "view": "Ikhtisar"
   },
   "login": {
     "accountMode": "Masuk dengan Akun",
@@ -159,7 +181,14 @@
     "phonePlaceholder": "Masukkan nomor ponsel",
     "privacyPolicy": "Kebijakan Privasi",
     "switchLang": "Ganti Bahasa",
-    "title": "Aplikasi Mitra Sewa E-Kendaraan"
+    "title": "Aplikasi Mitra Sewa E-Kendaraan",
+    "accountCharError": "Akun hanya boleh berisi huruf, angka, dan garis bawah",
+    "codeFormatError": "Format kode verifikasi tidak valid",
+    "emailTooLong": "Alamat email tidak boleh lebih dari 255 karakter",
+    "passwordRequired": "Masukkan kata sandi",
+    "phoneFormatMismatch": "Nomor ponsel tidak valid, periksa nomor dan kode area",
+    "pwdCharError": "Kata sandi hanya boleh berisi huruf, angka, dan simbol keyboard",
+    "welcome": "Selamat datang"
   },
   "orders": {
     "actionRefund": "Lakukan Pengembalian Dana",
@@ -310,13 +339,36 @@
     "unlostSuccess": "Pembatalan laporan hilang berhasil",
     "vehicleOnline": "Online",
     "vehicleReturned": "Kendaraan telah dikembalikan",
-    "vinLabel": "Nomor Rangka:"
+    "vinLabel": "Nomor Rangka:",
+    "battBound": "Baterai terikat",
+    "battChanged": "Baterai diganti",
+    "battModel": "Model",
+    "battModelLabel": "Model Baterai:",
+    "battNoLabel": "Nomor Baterai:",
+    "bindBatteryHint": "Ikatkan baterai ke pesanan ini",
+    "bindVehicleHint": "Ikatkan kendaraan ke pesanan ini",
+    "confirmFinishOffline": "Selesaikan pesanan ini? Pembayaran dilakukan luring, mohon proses pengembalian dana secara luring",
+    "confirmRefundTotal": "Konfirmasi pengembalian dana? Total pengembalian Rp {amount}",
+    "createdTimeColon": "Dibuat:",
+    "noIdleBattery": "Tidak ada baterai kosong tersedia",
+    "noIdleVehicle": "Tidak ada kendaraan kosong tersedia",
+    "opAssignVehicle": "Ikat kendaraan",
+    "opChangeVehicle": "Ganti kendaraan",
+    "opRefund": "Pengembalian dana pesanan",
+    "opReturnVehicle": "Kembalikan kendaraan",
+    "orderEnded": "Pesanan telah berakhir",
+    "replaceBatteryHint": "Pilih baterai pengganti untuk pesanan ini",
+    "replaceVehicleHint": "Pilih kendaraan pengganti untuk pesanan ini",
+    "vehicleBound": "Kendaraan terikat",
+    "vehicleChanged": "Kendaraan diganti",
+    "vehicleInfo": "Info Kendaraan"
   },
   "package": {
     "list": "Daftar Paket",
     "manage": "Manajemen Paket",
     "statusOff": "Ditarik",
-    "statusOn": "Dipublikasikan"
+    "statusOn": "Dipublikasikan",
+    "namePlaceholder": "Masukkan nama paket"
   },
   "perm": {
     "csList": "Daftar Layanan Pelanggan",
@@ -329,7 +381,15 @@
     "permViewOrderList": "Lihat Daftar Pesanan",
     "permViewRevenue": "Lihat Data Pendapatan",
     "permViewVehOps": "Lihat Operasi Kendaraan",
-    "sysConfig": "Konfigurasi Sistem"
+    "sysConfig": "Konfigurasi Sistem",
+    "group": {
+      "batt": "Manajemen baterai",
+      "ord": "Manajemen pesanan",
+      "ordBatt": "Pesanan baterai",
+      "ordPkg": "Pesanan paket",
+      "sys": "Konfigurasi sistem",
+      "veh": "Manajemen kendaraan"
+    }
   },
   "profile": {
     "accountAdd": "Tambah Akun",
@@ -537,13 +597,28 @@
     "userAccount": "Akun Pengguna",
     "userInfo": "Info Pengguna",
     "verifyByEmail": "Verifikasi Email",
-    "verifyByPhone": "Verifikasi Ponsel"
+    "verifyByPhone": "Verifikasi Ponsel",
+    "bindSuccess": "Berhasil diikat",
+    "confirmReplaceBind": "Konfirmasi penggantian",
+    "confirmUnbindUser": "Konfirmasi pelepasan ikatan pengguna ini",
+    "createdTimeColon": "Dibuat:",
+    "emailColon": "Email:",
+    "nameColon": "Nama:",
+    "packageAdded": "Paket telah ditambahkan",
+    "packageSaved": "Paket telah disimpan",
+    "parentPositionColon": "Posisi Atasan:",
+    "phoneColon": "Nomor Ponsel:",
+    "relateVehicle": "Kendaraan Terkait",
+    "searchPackageName": "Cari nama paket",
+    "unbindUser": "Lepas ikatan pengguna",
+    "userPickSearch": "Cari akun / ponsel / email"
   },
   "tab": {
     "home": "Beranda",
     "orders": "Pesanan",
     "profile": "Profil",
-    "vehicles": "Kendaraan"
+    "vehicles": "Kendaraan",
+    "battery": "Baterai"
   },
   "toast": {
     "loginSuccess": "Berhasil masuk",
@@ -662,7 +737,25 @@
     "viewDetail": "Lihat Detail",
     "vin": "Nomor rangka",
     "walk": "Berjalan",
-    "walkMin": "menit"
+    "walkMin": "menit",
+    "battInfoSaved": "Info baterai telah disimpan",
+    "battInputPlaceholder": "Masukkan nomor baterai",
+    "battModelSaved": "Model baterai telah disimpan",
+    "battNoPosSub": "Lokasi tersinkron setelah mengikat kendaraan",
+    "battPlateHint": "Masukkan nomor baterai pada papan nama baterai",
+    "batteryModelEdit": "Edit Model Baterai",
+    "filterOnlineStatus": "Status Online",
+    "inputVinNo": "Masukkan nomor kendaraan",
+    "motorLockHint": "Kendaraan tidak dapat dikendarai setelah motor dikunci",
+    "motorLockedToast": "Motor berhasil dikunci",
+    "motorUnlockHint": "Kendaraan dapat dikendarai kembali setelah motor dibuka kuncinya",
+    "motorUnlockedToast": "Motor berhasil dibuka kuncinya",
+    "noLocationListOnly": "{n} kendaraan tanpa lokasi, hanya terlihat di daftar",
+    "searchBattModel": "Cari model baterai",
+    "searchBattModelName": "Cari nama model baterai",
+    "searchBattNo": "Cari nomor baterai",
+    "unbindSuccess": "Berhasil dilepas",
+    "vinPlateHint": "Masukkan nomor rangka pada papan nama kendaraan"
   },
   "version": {
     "appExited": "Aplikasi telah keluar",
@@ -682,5 +775,53 @@
     "updateAvailable": "Pembaruan Versi",
     "updateComplete": "Pembaruan selesai! Ditingkatkan ke V{version}",
     "updateNow": "Perbarui Sekarang"
+  },
+  "account": {
+    "list": "Daftar akun"
+  },
+  "batt_model": {
+    "list": "Daftar model baterai"
+  },
+  "model": {
+    "list": "Daftar model kendaraan"
+  },
+  "order": {
+    "battery": {
+      "operate": {
+        "confirm_payment": "Konfirmasi pembayaran"
+      },
+      "refund": {
+        "create": "Ajukan pengembalian dana",
+        "list": "Lihat riwayat pengembalian dana"
+      }
+    },
+    "operate": {
+      "confirm_payment": "Konfirmasi pembayaran"
+    },
+    "package": {
+      "operate": {
+        "confirm_payment": "Konfirmasi pembayaran"
+      },
+      "refund": {
+        "create": "Ajukan pengembalian dana",
+        "list": "Lihat riwayat pengembalian dana"
+      }
+    },
+    "refund": {
+      "create": "Ajukan pengembalian dana",
+      "list": "Lihat riwayat pengembalian dana"
+    }
+  },
+  "order_config": {
+    "edit": "Ubah konfigurasi"
+  },
+  "position": {
+    "list": "Daftar jabatan"
+  },
+  "vehicle": {
+    "command": {
+      "find_car": "Cari kendaraan dengan klakson"
+    },
+    "list": "Daftar kendaraan"
   }
 }

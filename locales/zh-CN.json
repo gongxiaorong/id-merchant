@@ -58,7 +58,17 @@
     "manage": "电池管理",
     "position": "电池位置",
     "replace": "更换电池",
-    "replaced": "电池已更换"
+    "replaced": "电池已更换",
+    "bind": "绑定电池",
+    "dischargeAllowed": "已允许放电",
+    "dischargeForbidden": "已禁止放电",
+    "dischargeOffHint": "当前已禁止放电，点击可恢复",
+    "dischargeOnHint": "当前允许放电，点击可禁止",
+    "lostLockHint": "报失后电池将被锁定，无法正常放电",
+    "lostUnlockHint": "解除报失后电池将被解锁，恢复放电",
+    "noLocationListOnly": "{n}块无定位，仅列表可见",
+    "reportLost": "电池报失",
+    "searchEmpty": "未找到匹配的电池，请调整搜索条件"
   },
   "common": {
     "account": "账号",
@@ -87,7 +97,10 @@
     "search": "搜索",
     "searchEmpty": "请调整关键词后重试",
     "startTime": "开始时间",
-    "thumbnail": "缩略图"
+    "thumbnail": "缩略图",
+    "searchUserPlaceholder": "输入账号 / 手机号 / 邮箱搜索",
+    "uploadSpecLarge": "尺寸：454px × 454px 格式：PNG 透明底，大小：不超过 1MB",
+    "uploadSpecSmall": "尺寸：170px × 170px 格式：PNG 透明底，大小：不超过 512KB"
   },
   "dialcode": {
     "australia": "澳大利亚",
@@ -138,7 +151,16 @@
       "online": "在线车辆"
     },
     "vehStatsTitle": "车辆运营",
-    "viewAllAlerts": "全部"
+    "viewAllAlerts": "全部",
+    "alert": {
+      "recent": "最近告警列表"
+    },
+    "stats": {
+      "business": "经营数据看板",
+      "vehicle": "车辆运营统计"
+    },
+    "vehicleMap": "车辆地图",
+    "view": "首页总览"
   },
   "login": {
     "accountMode": "账号登录",
@@ -159,7 +181,14 @@
     "phonePlaceholder": "请输入手机号",
     "privacyPolicy": "隐私政策",
     "switchLang": "切换语言",
-    "title": "电动车租赁商户管理端"
+    "title": "电动车租赁商户管理端",
+    "accountCharError": "账号仅支持字母、数字、下划线",
+    "codeFormatError": "验证码格式不正确",
+    "emailTooLong": "邮箱地址不能超过 255 位",
+    "passwordRequired": "请输入密码",
+    "phoneFormatMismatch": "手机号格式不正确，请检查号码与区号是否匹配",
+    "pwdCharError": "密码仅支持大小写字母、数字、键盘符号",
+    "welcome": "欢迎登录"
   },
   "orders": {
     "actionRefund": "执行退款",
@@ -310,13 +339,36 @@
     "unlostSuccess": "解除报失成功",
     "vehicleOnline": "在线",
     "vehicleReturned": "车辆已归还",
-    "vinLabel": "车架号："
+    "vinLabel": "车架号：",
+    "battBound": "电池已绑定",
+    "battChanged": "电池已更换",
+    "battModel": "型号",
+    "battModelLabel": "电池型号：",
+    "battNoLabel": "电池编号：",
+    "bindBatteryHint": "请为订单绑定指定电池",
+    "bindVehicleHint": "请为订单绑定指定车辆",
+    "confirmFinishOffline": "确认结束订单？该订单为线下支付，如需要退款请线下处理退款",
+    "confirmRefundTotal": "确认执行退款？合计退款 Rp {amount}",
+    "createdTimeColon": "创建时间:",
+    "noIdleBattery": "暂无空闲电池可选",
+    "noIdleVehicle": "暂无空闲车辆可选",
+    "opAssignVehicle": "绑定车辆",
+    "opChangeVehicle": "更换车辆",
+    "opRefund": "订单退款",
+    "opReturnVehicle": "还车",
+    "orderEnded": "订单已结束",
+    "replaceBatteryHint": "请为订单更换指定电池",
+    "replaceVehicleHint": "请为订单更换指定车辆",
+    "vehicleBound": "车辆已绑定",
+    "vehicleChanged": "车辆已更换",
+    "vehicleInfo": "车辆信息"
   },
   "package": {
     "list": "套餐列表",
     "manage": "套餐管理",
     "statusOff": "下架",
-    "statusOn": "上架"
+    "statusOn": "上架",
+    "namePlaceholder": "请输入套餐名称"
   },
   "perm": {
     "csList": "客服列表",
@@ -329,7 +381,15 @@
     "permViewOrderList": "查看订单列表",
     "permViewRevenue": "查看营收数据",
     "permViewVehOps": "查看车辆运营",
-    "sysConfig": "系统配置"
+    "sysConfig": "系统配置",
+    "group": {
+      "batt": "电池管理",
+      "ord": "订单管理",
+      "ordBatt": "电池订单",
+      "ordPkg": "套餐订单",
+      "sys": "系统配置",
+      "veh": "车辆管理"
+    }
   },
   "profile": {
     "accountAdd": "新增账号",
@@ -537,13 +597,28 @@
     "userAccount": "用户账号",
     "userInfo": "用户资料",
     "verifyByEmail": "邮箱验证",
-    "verifyByPhone": "手机验证"
+    "verifyByPhone": "手机验证",
+    "bindSuccess": "绑定成功",
+    "confirmReplaceBind": "确认替换",
+    "confirmUnbindUser": "确认解绑该用户",
+    "createdTimeColon": "创建时间：",
+    "emailColon": "邮箱：",
+    "nameColon": "姓名：",
+    "packageAdded": "套餐已新增",
+    "packageSaved": "套餐已保存",
+    "parentPositionColon": "上级职位：",
+    "phoneColon": "手机号：",
+    "relateVehicle": "关联车型",
+    "searchPackageName": "搜索套餐名称",
+    "unbindUser": "解绑用户",
+    "userPickSearch": "搜索账号 / 手机号 / 邮箱"
   },
   "tab": {
     "home": "首页",
     "orders": "订单",
     "profile": "我的",
-    "vehicles": "车辆"
+    "vehicles": "车辆",
+    "battery": "电池"
   },
   "toast": {
     "loginSuccess": "登录成功",
@@ -662,7 +737,25 @@
     "viewDetail": "查看详情",
     "vin": "车架号",
     "walk": "步行",
-    "walkMin": "分钟"
+    "walkMin": "分钟",
+    "battInfoSaved": "电池信息已保存",
+    "battInputPlaceholder": "请输入电池编号",
+    "battModelSaved": "电池型号已保存",
+    "battNoPosSub": "绑定车辆后同步定位",
+    "battPlateHint": "请输入电池铭牌上的电池编号",
+    "batteryModelEdit": "编辑电池型号",
+    "filterOnlineStatus": "在线状态",
+    "inputVinNo": "输入车辆编号",
+    "motorLockHint": "电机锁定后车辆将无法骑行",
+    "motorLockedToast": "锁电机成功",
+    "motorUnlockHint": "电机解锁后车辆将恢复骑行",
+    "motorUnlockedToast": "解锁电机成功",
+    "noLocationListOnly": "{n}辆无定位，仅列表可见",
+    "searchBattModel": "搜索电池型号",
+    "searchBattModelName": "搜索电池型号名称",
+    "searchBattNo": "搜索电池编号",
+    "unbindSuccess": "解绑成功",
+    "vinPlateHint": "请输入车辆铭牌上的车架号"
   },
   "version": {
     "appExited": "应用已退出",
@@ -682,5 +775,53 @@
     "updateAvailable": "版本更新",
     "updateComplete": "更新完成！已升级至 V{version}",
     "updateNow": "立即更新"
+  },
+  "account": {
+    "list": "账号列表"
+  },
+  "batt_model": {
+    "list": "电池型号列表"
+  },
+  "model": {
+    "list": "车型列表"
+  },
+  "order": {
+    "battery": {
+      "operate": {
+        "confirm_payment": "确认支付"
+      },
+      "refund": {
+        "create": "发起退款",
+        "list": "查看退款记录"
+      }
+    },
+    "operate": {
+      "confirm_payment": "确认支付"
+    },
+    "package": {
+      "operate": {
+        "confirm_payment": "确认支付"
+      },
+      "refund": {
+        "create": "发起退款",
+        "list": "查看退款记录"
+      }
+    },
+    "refund": {
+      "create": "发起退款",
+      "list": "查看退款记录"
+    }
+  },
+  "order_config": {
+    "edit": "编辑配置"
+  },
+  "position": {
+    "list": "职位列表"
+  },
+  "vehicle": {
+    "command": {
+      "find_car": "寻车鸣笛"
+    },
+    "list": "车辆列表"
   }
 }

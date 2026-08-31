@@ -58,7 +58,17 @@
     "manage": "電池管理",
     "position": "電池位置",
     "replace": "更換電池",
-    "replaced": "電池已更換"
+    "replaced": "電池已更換",
+    "bind": "綁定電池",
+    "dischargeAllowed": "已允許放電",
+    "dischargeForbidden": "已禁止放電",
+    "dischargeOffHint": "當前已禁止放電，點擊可恢復",
+    "dischargeOnHint": "當前允許放電，點擊可禁止",
+    "lostLockHint": "報失後電池將被鎖定，無法正常放電",
+    "lostUnlockHint": "解除報失後電池將被解鎖，恢復放電",
+    "noLocationListOnly": "{n}塊無定位，僅列表可見",
+    "reportLost": "電池報失",
+    "searchEmpty": "未找到符合的電池，請調整搜尋條件"
   },
   "common": {
     "account": "帳號",
@@ -87,7 +97,10 @@
     "search": "搜尋",
     "searchEmpty": "請調整關鍵詞後重試",
     "startTime": "開始時間",
-    "thumbnail": "縮圖"
+    "thumbnail": "縮圖",
+    "searchUserPlaceholder": "輸入帳號 / 手機號碼 / 電子郵件搜尋",
+    "uploadSpecLarge": "尺寸：454px × 454px 格式：PNG 透明底，大小：不超過 1MB",
+    "uploadSpecSmall": "尺寸：170px × 170px 格式：PNG 透明底，大小：不超過 512KB"
   },
   "dialcode": {
     "australia": "澳大利亞",
@@ -138,7 +151,16 @@
       "online": "在線車輛"
     },
     "vehStatsTitle": "車輛營運",
-    "viewAllAlerts": "全部"
+    "viewAllAlerts": "全部",
+    "alert": {
+      "recent": "最近告警列表"
+    },
+    "stats": {
+      "business": "經營數據看板",
+      "vehicle": "車輛運營統計"
+    },
+    "vehicleMap": "車輛地圖",
+    "view": "首頁總覽"
   },
   "login": {
     "accountMode": "帳號登入",
@@ -159,7 +181,14 @@
     "phonePlaceholder": "請輸入手機號",
     "privacyPolicy": "隱私政策",
     "switchLang": "切換語言",
-    "title": "電動車租賃商戶管理端"
+    "title": "電動車租賃商戶管理端",
+    "accountCharError": "帳號僅支援字母、數字、下劃線",
+    "codeFormatError": "驗證碼格式不正確",
+    "emailTooLong": "電郵地址不能超過 255 位",
+    "passwordRequired": "請輸入密碼",
+    "phoneFormatMismatch": "手機號格式不正確，請檢查號碼與區號是否匹配",
+    "pwdCharError": "密碼僅支援大小寫字母、數字、鍵盤符號",
+    "welcome": "歡迎登入"
   },
   "orders": {
     "actionRefund": "執行退款",
@@ -310,13 +339,36 @@
     "unlostSuccess": "解除報失成功",
     "vehicleOnline": "在線",
     "vehicleReturned": "車輛已歸還",
-    "vinLabel": "車架號："
+    "vinLabel": "車架號：",
+    "battBound": "電池已綁定",
+    "battChanged": "電池已更換",
+    "battModel": "型號",
+    "battModelLabel": "電池型號：",
+    "battNoLabel": "電池編號：",
+    "bindBatteryHint": "請為訂單綁定指定電池",
+    "bindVehicleHint": "請為訂單綁定指定車輛",
+    "confirmFinishOffline": "確認結束訂單？該訂單為線下支付，如需要退款請線下處理退款",
+    "confirmRefundTotal": "確認執行退款？合計退款 Rp {amount}",
+    "createdTimeColon": "建立時間:",
+    "noIdleBattery": "暫無空閒電池可選",
+    "noIdleVehicle": "暫無空閒車輛可選",
+    "opAssignVehicle": "綁定車輛",
+    "opChangeVehicle": "更換車輛",
+    "opRefund": "訂單退款",
+    "opReturnVehicle": "還車",
+    "orderEnded": "訂單已結束",
+    "replaceBatteryHint": "請為訂單更換指定電池",
+    "replaceVehicleHint": "請為訂單更換指定車輛",
+    "vehicleBound": "車輛已綁定",
+    "vehicleChanged": "車輛已更換",
+    "vehicleInfo": "車輛資訊"
   },
   "package": {
     "list": "套餐列表",
     "manage": "套餐管理",
     "statusOff": "下架",
-    "statusOn": "上架"
+    "statusOn": "上架",
+    "namePlaceholder": "請輸入套餐名稱"
   },
   "perm": {
     "csList": "客服列表",
@@ -329,7 +381,15 @@
     "permViewOrderList": "查看訂單列表",
     "permViewRevenue": "查看營收數據",
     "permViewVehOps": "查看車輛營運",
-    "sysConfig": "系統配置"
+    "sysConfig": "系統配置",
+    "group": {
+      "batt": "電池管理",
+      "ord": "訂單管理",
+      "ordBatt": "電池訂單",
+      "ordPkg": "套餐訂單",
+      "sys": "系統設定",
+      "veh": "車輛管理"
+    }
   },
   "profile": {
     "accountAdd": "新增帳號",
@@ -537,13 +597,28 @@
     "userAccount": "用戶帳號",
     "userInfo": "用戶資料",
     "verifyByEmail": "電郵驗證",
-    "verifyByPhone": "手機驗證"
+    "verifyByPhone": "手機驗證",
+    "bindSuccess": "綁定成功",
+    "confirmReplaceBind": "確認替換",
+    "confirmUnbindUser": "確認解綁該用戶",
+    "createdTimeColon": "建立時間：",
+    "emailColon": "電郵：",
+    "nameColon": "姓名：",
+    "packageAdded": "套餐已新增",
+    "packageSaved": "套餐已儲存",
+    "parentPositionColon": "上級職位：",
+    "phoneColon": "手機號：",
+    "relateVehicle": "關聯車型",
+    "searchPackageName": "搜尋套餐名稱",
+    "unbindUser": "解綁用戶",
+    "userPickSearch": "搜尋帳號 / 手機號 / 電郵"
   },
   "tab": {
     "home": "首頁",
     "orders": "訂單",
     "profile": "我的",
-    "vehicles": "車輛"
+    "vehicles": "車輛",
+    "battery": "電池"
   },
   "toast": {
     "loginSuccess": "登入成功",
@@ -662,7 +737,25 @@
     "viewDetail": "查看詳情",
     "vin": "車架號",
     "walk": "步行",
-    "walkMin": "分鐘"
+    "walkMin": "分鐘",
+    "battInfoSaved": "電池資訊已儲存",
+    "battInputPlaceholder": "請輸入電池編號",
+    "battModelSaved": "電池型號已儲存",
+    "battNoPosSub": "綁定車輛後同步定位",
+    "battPlateHint": "請輸入電池銘牌上的電池編號",
+    "batteryModelEdit": "編輯電池型號",
+    "filterOnlineStatus": "在線狀態",
+    "inputVinNo": "輸入車輛編號",
+    "motorLockHint": "電機鎖定後車輛將無法騎行",
+    "motorLockedToast": "鎖電機成功",
+    "motorUnlockHint": "電機解鎖後車輛將恢復騎行",
+    "motorUnlockedToast": "解鎖電機成功",
+    "noLocationListOnly": "{n}輛無定位，僅列表可見",
+    "searchBattModel": "搜尋電池型號",
+    "searchBattModelName": "搜尋電池型號名稱",
+    "searchBattNo": "搜尋電池編號",
+    "unbindSuccess": "解綁成功",
+    "vinPlateHint": "請輸入車輛銘牌上的車架號"
   },
   "version": {
     "appExited": "應用已退出",
@@ -682,5 +775,53 @@
     "updateAvailable": "版本更新",
     "updateComplete": "更新完成！已升級至 V{version}",
     "updateNow": "立即更新"
+  },
+  "account": {
+    "list": "帳號列表"
+  },
+  "batt_model": {
+    "list": "電池型號列表"
+  },
+  "model": {
+    "list": "車型列表"
+  },
+  "order": {
+    "battery": {
+      "operate": {
+        "confirm_payment": "確認支付"
+      },
+      "refund": {
+        "create": "發起退款",
+        "list": "查看退款記錄"
+      }
+    },
+    "operate": {
+      "confirm_payment": "確認支付"
+    },
+    "package": {
+      "operate": {
+        "confirm_payment": "確認支付"
+      },
+      "refund": {
+        "create": "發起退款",
+        "list": "查看退款記錄"
+      }
+    },
+    "refund": {
+      "create": "發起退款",
+      "list": "查看退款記錄"
+    }
+  },
+  "order_config": {
+    "edit": "編輯設定"
+  },
+  "position": {
+    "list": "職位列表"
+  },
+  "vehicle": {
+    "command": {
+      "find_car": "尋車鳴笛"
+    },
+    "list": "車輛列表"
   }
 }

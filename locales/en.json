@@ -20,7 +20,7 @@
     "goVehicleSub": "Go to vehicle details and controls",
     "historyCount": "{n} records total",
     "historyTitle": "History",
-    "ignoreDesc": "Please select an ignore reason. Ignored alerts can be found under \\\"Ignored\\\".",
+    "ignoreDesc": "Please select an ignore reason. Ignored alerts can be found under \"Ignored\".",
     "ignoreDuplicate": "Duplicate Alert",
     "ignoreHandled": "Handled On-site",
     "ignoreMistake": "False Alarm",
@@ -58,7 +58,17 @@
     "manage": "Battery Management",
     "position": "Battery Location",
     "replace": "Replace Battery",
-    "replaced": "Battery replaced"
+    "replaced": "Battery replaced",
+    "bind": "Bind battery",
+    "dischargeAllowed": "Discharge allowed",
+    "dischargeForbidden": "Discharge forbidden",
+    "dischargeOffHint": "Discharge is forbidden. Tap to allow",
+    "dischargeOnHint": "Discharge is allowed. Tap to forbid",
+    "lostLockHint": "Once reported lost, the battery is locked and cannot discharge",
+    "lostUnlockHint": "The battery will be unlocked once the lost report is cleared",
+    "noLocationListOnly": "{n} batteries without location, visible in list only",
+    "reportLost": "Report battery as lost",
+    "searchEmpty": "No matching battery found. Adjust your search"
   },
   "common": {
     "account": "Account",
@@ -87,7 +97,10 @@
     "search": "Search",
     "searchEmpty": "No results found, please adjust keywords and try again",
     "startTime": "Start Time",
-    "thumbnail": "Thumbnail"
+    "thumbnail": "Thumbnail",
+    "searchUserPlaceholder": "Search by account / phone / email",
+    "uploadSpecLarge": "Size: 454px × 454px, format: PNG with transparent background, max 1MB",
+    "uploadSpecSmall": "Size: 170px × 170px, format: PNG with transparent background, max 512KB"
   },
   "dialcode": {
     "australia": "Australia",
@@ -138,7 +151,16 @@
       "online": "Online Vehicles"
     },
     "vehStatsTitle": "Vehicle Operations",
-    "viewAllAlerts": "All"
+    "viewAllAlerts": "All",
+    "alert": {
+      "recent": "Recent alerts"
+    },
+    "stats": {
+      "business": "Business dashboard",
+      "vehicle": "Vehicle operation statistics"
+    },
+    "vehicleMap": "Vehicle map",
+    "view": "Overview"
   },
   "login": {
     "accountMode": "Account Login",
@@ -159,7 +181,14 @@
     "phonePlaceholder": "Enter phone number",
     "privacyPolicy": "Privacy Policy",
     "switchLang": "Switch Language",
-    "title": "E-Vehicle Rental Merchant APP"
+    "title": "E-Vehicle Rental Merchant APP",
+    "accountCharError": "Account can only contain letters, numbers and underscores",
+    "codeFormatError": "Invalid verification code format",
+    "emailTooLong": "Email address cannot exceed 255 characters",
+    "passwordRequired": "Please enter password",
+    "phoneFormatMismatch": "Invalid phone number, please check the number and area code",
+    "pwdCharError": "Password can only contain letters, numbers and keyboard symbols",
+    "welcome": "Welcome"
   },
   "orders": {
     "actionRefund": "Process Refund",
@@ -310,13 +339,36 @@
     "unlostSuccess": "Lost status cleared",
     "vehicleOnline": "Online",
     "vehicleReturned": "Vehicle returned",
-    "vinLabel": "VIN: "
+    "vinLabel": "VIN: ",
+    "battBound": "Battery bound",
+    "battChanged": "Battery changed",
+    "battModel": "Model",
+    "battModelLabel": "Battery Model:",
+    "battNoLabel": "Battery No.:",
+    "bindBatteryHint": "Bind a battery to this order",
+    "bindVehicleHint": "Bind a vehicle to this order",
+    "confirmFinishOffline": "Finish this order? It was paid offline, so process any refund offline",
+    "confirmRefundTotal": "Confirm the refund? Total refund Rp {amount}",
+    "createdTimeColon": "Created:",
+    "noIdleBattery": "No idle battery available",
+    "noIdleVehicle": "No idle vehicle available",
+    "opAssignVehicle": "Bind vehicle",
+    "opChangeVehicle": "Change vehicle",
+    "opRefund": "Order refund",
+    "opReturnVehicle": "Return vehicle",
+    "orderEnded": "Order ended",
+    "replaceBatteryHint": "Select a replacement battery for this order",
+    "replaceVehicleHint": "Select a replacement vehicle for this order",
+    "vehicleBound": "Vehicle bound",
+    "vehicleChanged": "Vehicle changed",
+    "vehicleInfo": "Vehicle Info"
   },
   "package": {
     "list": "Package List",
     "manage": "Package Management",
     "statusOff": "Unlisted",
-    "statusOn": "Listed"
+    "statusOn": "Listed",
+    "namePlaceholder": "Enter package name"
   },
   "perm": {
     "csList": "Customer Service List",
@@ -329,7 +381,15 @@
     "permViewOrderList": "View Order List",
     "permViewRevenue": "View Revenue Data",
     "permViewVehOps": "View Vehicle Operations",
-    "sysConfig": "System Configuration"
+    "sysConfig": "System Configuration",
+    "group": {
+      "batt": "Battery management",
+      "ord": "Order management",
+      "ordBatt": "Battery orders",
+      "ordPkg": "Package orders",
+      "sys": "System configuration",
+      "veh": "Vehicle management"
+    }
   },
   "profile": {
     "accountAdd": "Add Account",
@@ -537,13 +597,28 @@
     "userAccount": "User Account",
     "userInfo": "User Info",
     "verifyByEmail": "Email Verification",
-    "verifyByPhone": "Phone Verification"
+    "verifyByPhone": "Phone Verification",
+    "bindSuccess": "Bound successfully",
+    "confirmReplaceBind": "Confirm replacement",
+    "confirmUnbindUser": "Confirm unbinding this user",
+    "createdTimeColon": "Created:",
+    "emailColon": "Email:",
+    "nameColon": "Name:",
+    "packageAdded": "Package added",
+    "packageSaved": "Package saved",
+    "parentPositionColon": "Superior Position:",
+    "phoneColon": "Phone:",
+    "relateVehicle": "Related Vehicle",
+    "searchPackageName": "Search package name",
+    "unbindUser": "Unbind user",
+    "userPickSearch": "Search account / phone / email"
   },
   "tab": {
     "home": "Home",
     "orders": "Orders",
     "profile": "Profile",
-    "vehicles": "Vehicles"
+    "vehicles": "Vehicles",
+    "battery": "Battery"
   },
   "toast": {
     "loginSuccess": "Login successful",
@@ -662,7 +737,25 @@
     "viewDetail": "View Details",
     "vin": "VIN",
     "walk": "Walk",
-    "walkMin": "min"
+    "walkMin": "min",
+    "battInfoSaved": "Battery info saved",
+    "battInputPlaceholder": "Enter battery number",
+    "battModelSaved": "Battery model saved",
+    "battNoPosSub": "Location syncs after binding the vehicle",
+    "battPlateHint": "Enter the battery number on the battery nameplate",
+    "batteryModelEdit": "Edit Battery Model",
+    "filterOnlineStatus": "Online Status",
+    "inputVinNo": "Enter vehicle number",
+    "motorLockHint": "The vehicle cannot be ridden once the motor is locked",
+    "motorLockedToast": "Motor locked",
+    "motorUnlockHint": "The vehicle can be ridden again once the motor is unlocked",
+    "motorUnlockedToast": "Motor unlocked",
+    "noLocationListOnly": "{n} vehicles without location, visible in list only",
+    "searchBattModel": "Search battery model",
+    "searchBattModelName": "Search battery model name",
+    "searchBattNo": "Search battery number",
+    "unbindSuccess": "Unbound successfully",
+    "vinPlateHint": "Enter the VIN on the vehicle nameplate"
   },
   "version": {
     "appExited": "Application exited",
@@ -682,5 +775,53 @@
     "updateAvailable": "Version Update",
     "updateComplete": "Update complete! Upgraded to V{version}",
     "updateNow": "Update Now"
+  },
+  "account": {
+    "list": "Account list"
+  },
+  "batt_model": {
+    "list": "Battery model list"
+  },
+  "model": {
+    "list": "Vehicle model list"
+  },
+  "order": {
+    "battery": {
+      "operate": {
+        "confirm_payment": "Confirm payment"
+      },
+      "refund": {
+        "create": "Initiate refund",
+        "list": "View refund records"
+      }
+    },
+    "operate": {
+      "confirm_payment": "Confirm payment"
+    },
+    "package": {
+      "operate": {
+        "confirm_payment": "Confirm payment"
+      },
+      "refund": {
+        "create": "Initiate refund",
+        "list": "View refund records"
+      }
+    },
+    "refund": {
+      "create": "Initiate refund",
+      "list": "View refund records"
+    }
+  },
+  "order_config": {
+    "edit": "Edit configuration"
+  },
+  "position": {
+    "list": "Position list"
+  },
+  "vehicle": {
+    "command": {
+      "find_car": "Locate vehicle by horn"
+    },
+    "list": "Vehicle list"
   }
 }
