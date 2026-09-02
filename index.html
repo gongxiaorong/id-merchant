@@ -725,7 +725,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
   </template>
   <div class="absolute right-5 z-[80] flex flex-col items-center gap-3" :style="{bottom:(vehView==='map'&&mapSelectedVeh)?'248px':'105px',transition:'bottom .2s cubic-bezier(0.2,0,0,1)'}">
-    <div v-if="true" @click="vehToggleViewSafe" class="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform bg-white text-[#111]" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+    <div v-if="false" @click="vehToggleViewSafe" class="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform bg-white text-[#111]" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)">
      <span v-html="luci(vehView==='list'?'map':'list','w-5 h-5')"></span>
     </div>
    <div v-if="can('vehicle.add')" @click="vehOpenAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
@@ -1225,7 +1225,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </template>
 <div class="absolute right-5 z-[80] flex flex-col items-center gap-3" :style="{bottom:(battView==='map'&&battMapSelected)?'248px':'105px',transition:'bottom .2s cubic-bezier(0.2,0,0,1)'}">
-<div @click="battToggleView" class="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform bg-white text-[#111]" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+<div v-if="false" @click="battToggleView" class="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform bg-white text-[#111]" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)">
 <span v-html="luci(battView==='list'?'map':'list','w-5 h-5')"></span>
 </div>
 <div v-if="can('battery.add')" @click="openBattAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)"><span v-html="luci('plus','w-5 h-5')"></span></div>
@@ -1742,10 +1742,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <!-- ═══ ORDER DOCS SUB-PAGE ═══ -->
  <transition name="sl">
  <div v-if="ordersOV==='docs'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
- <div class="pt-14 px-4 pb-3 flex items-center justify-between bg-white shrink-0" style="border-bottom:1px solid #F0F0F0">
+ <div class="pt-14 px-4 pb-3 flex items-center bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
  <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
- <span class="text-[17px] font-semibold text-[#1A1A1A]">用户资料</span>
- <span class="w-8 h-8"></span>
+ <div class="flex-1 text-center text-[17px] font-semibold mr-8">用户资料</div>
  </div>
  <div class="flex-1 overflow-y-auto min-h-0 px-4 pt-3 pb-24 hid">
  <template v-if="!curDocs.length">
