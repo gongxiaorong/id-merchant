@@ -474,12 +474,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </transition-group>
 </template>
-<template v-if="orderEntries.length">
+<template v-if="true">
 <div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">订单管理</span></div>
-<div class="grid grid-cols-3 gap-2.5">
+<div class="grid grid-cols-2 gap-2.5">
 <div v-for="e in orderEntries" :key="e.v" @click="homeOpenOrders(e.v)" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" :data-od-id="'home-order-entry-'+e.v" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci(e.icon,'w-6 h-6 text-[var(--accent)]')"></span></div>
 <span class="text-[14px] font-semibold text-[#1A1A1A]">{{ e.l }}</span>
+</div>
+<div @click="roOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-recharge-order-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
+<div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('wallet','w-6 h-6 text-[var(--accent)]')"></span></div>
+<span class="text-[14px] font-semibold text-[#1A1A1A]">充值订单</span>
 </div>
 </div>
 </template>
@@ -1669,7 +1673,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">基本信息</div><span class="text-[13px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold flex items-center justify-end gap-1.5"><span :class="(do_.account||do_.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" @click="(do_.account||do_.customer)&&goUserDetail(do_.account||do_.customer)">{{ orderCustomerText(do_) }}</span><span v-if="do_.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span><span v-else-if="do_.email" v-html="luci('mail','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold flex items-center justify-end gap-1.5"><span :class="(do_.account||do_.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" @click="(do_.account||do_.customer)&&goUserDetail(do_.account||do_.customer)">{{ orderCustomerText(do_) }}</span><span v-if="do_.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
 <div class="flex items-center gap-2 py-2.5" :style="(dSt==='complete'||dSt==='cancelled')?'border-bottom:1px dashed #E5E5E5':''"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.created }}</span></div>
 <div v-if="dSt==='complete'" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">2025-01-20 14:30:00</span></div>
 <div v-if="dSt==='cancelled'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">取消时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">2025-01-18 10:15:00</span></div>
@@ -1739,6 +1743,201 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <button v-if="dualMode&&showDangerAction" @click="ordersDoDanger" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-colors" :style="{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
 </div></div>
 </div></transition>
+
+<!-- ═══ RECHARGE ORDER LIST ═══ -->
+<transition name="sl"><div v-if="roOV==='list'" v-swipe-close="roCloseList" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="recharge-order-list">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="roCloseList"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">充值订单</div>
+<span class="min-w-[2rem] shrink-0"></span>
+</div>
+<div class="bg-white shrink-0 px-5 pt-3 pb-2">
+<div class="flex gap-2 items-center">
+<div class="flex-1 rounded-full flex items-center py-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:6px;padding-right:4px">
+<div class="relative shrink-0" @click.stop>
+<button @click="roSearchScopeOpen=!roSearchScopeOpen" type="button" class="flex items-center gap-1.5 text-[12px] font-medium text-[#333] bg-transparent border-0 outline-none pl-2 pr-2.5 mr-1.5 py-1 cursor-pointer transition-colors hover:bg-[#EFEFF1]" style="border-right:1px solid #E5E5E5">
+<span class="truncate max-w-[60px]">{{ roSearchScopeLabel }}</span>
+<svg class="w-3 h-3 text-[#999] transition-transform" :class="roSearchScopeOpen?'rotate-180':''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+</button>
+<div v-if="roSearchScopeOpen" @click.stop class="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#EEE] py-1 z-50 min-w-[100px]">
+<div v-for="opt in roSearchScopeOpts" :key="opt.v" @click="setRoSearchScope(opt.v)" class="px-3 py-2 text-[12px] cursor-pointer hover:bg-[#F6F7F9]" :style="opt.v===roSearchScope?{color:'var(--link)',fontWeight:600,background:'#EBF1FD'}:{color:'#333'}">{{ opt.l }}</div>
+</div>
+</div>
+<input v-model="roQ" type="text" :placeholder="roSearchPH" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="roDoSearch">
+<div @click="roDoSearch" class="h-7 px-2.5 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer shrink-0 text-[11px] font-semibold">搜索</div>
+</div>
+<div @click="roOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="roHasF?{background:'#FFF3E0',border:'1px solid var(--accent-2)',color:'var(--accent-2)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
+</div>
+</div>
+
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
+<template v-if="rechargeFiltered.length">
+<div v-for="(o,i) in rechargeFiltered" :key="o.orderNo" @click="roOpenDetail(o)" class="bg-white rounded-2xl p-4 mb-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex items-center justify-between mb-2"><span class="text-[13px] font-semibold text-[#333] truncate pr-2">{{ o.orderNo }}</span><span class="text-[13px] font-semibold shrink-0" :style="{color:roPayStatusTag(o.payStatus).c}">{{ roPayStatusTag(o.payStatus).l }}</span></div>
+<div class="flex justify-between items-end">
+<div class="text-[14px] font-medium text-[#1A1A1A] truncate">{{ rechargeCustomerText(o) }}</div>
+<div class="text-[16px] font-bold shrink-0" style="color:#FF6A00">{{ fmtRp(o.amount) }}</div>
+</div>
+</div>
+</template>
+<div v-else class="flex flex-col items-center justify-center py-16">
+<div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('file-text','w-8 h-8 text-[var(--accent)]')"></span></div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无充值订单</div>
+<div class="text-[13px] text-[#999] mb-4">{{ roQ||roHasF||roStatus ? '当前筛选下无匹配订单' : '还没有订单数据' }}</div>
+<div v-if="roQ||roHasF||roStatus" @click="roClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">重置</div>
+</div>
+</div>
+</div></transition>
+
+<!-- ═══ RECHARGE ORDER FILTER SHEET ═══ -->
+<transition name="fd"><div v-if="roShowFS" class="absolute inset-0 z-[600]" style="background:rgba(0,0,0,.35)" @click="roShowFS=false"></div></transition>
+<transition name="sh"><div v-if="roShowFS" class="absolute bottom-0 left-0 right-0 bg-white z-[601] rounded-t-[20px] flex flex-col" style="max-height:70%">
+<div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
+<div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">全部筛选</div>
+<div class="flex-1 overflow-y-auto px-5 pb-3 hid" style="min-height:0">
+
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in roFsPayStOpts" :key="'rfp-'+p.v" @click="roToggleFsPaySt(p.v)" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="roFsPayStC.indexOf(p.v)!==-1?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div @click="roFsPayC=roFsPayC==='2C2P'?'':'2C2P'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="roFsPayC==='2C2P'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div></div></div>
+<div style="margin-bottom:16px" data-od-id="recharge-fs-create-time">
+ <div class="text-[14px] font-semibold" style="margin-bottom:8px">创建时间</div>
+ <div style="display:flex;gap:8px;align-items:center">
+  <div @click="openRoDatePicker('start')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;background:#FAFAFA">
+   <span class="text-[14px] font-medium text-[#111] truncate">{{ roFsStartC }}</span>
+   <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+  </div>
+  <span class="text-[14px] text-[#999] shrink-0">至</span>
+   <div @click="openRoDatePicker('end')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;background:#FAFAFA">
+    <span class="text-[14px] font-medium text-[#111] truncate">{{ roFsEndC }}</span>
+    <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+   </div>
+  </div>
+ </div>
+</div>
+<div class="flex gap-3 px-5 pb-8 shrink-0"><button @click="roResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">重置</button><button @click="roApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:var(--accent)">确定</button></div>
+</div></transition>
+
+<!-- ═══ RECHARGE ORDER CREATE-TIME DATE PICKER ═══ -->
+<transition name="fd"><div v-if="roDatePicker" class="absolute inset-0 z-[630]" style="background:rgba(0,0,0,.45)" @click="cancelRoDatePicker"></div></transition>
+<transition name="sh">
+<div v-if="roDatePicker" class="absolute bottom-0 left-0 right-0 bg-white z-[631] rounded-t-[20px] flex flex-col" data-od-id="recharge-date-sheet">
+<div class="flex items-center justify-between px-5 pt-4 pb-3 shrink-0">
+<span class="text-[15px] text-[#6B6B6B] cursor-pointer active:opacity-70" @click="cancelRoDatePicker">取消</span>
+<span class="text-[16px] font-semibold text-[#111]">{{ roDatePicker==='start'?'选择开始日期':'选择结束日期' }}</span>
+<span class="text-[15px] font-semibold text-[var(--link)] cursor-pointer active:opacity-70" @click="confirmRoDatePicker">确定</span>
+</div>
+<div class="relative px-2 pb-8">
+<div class="track-wheel-mask"></div>
+<div class="flex items-stretch gap-0.5">
+<div class="track-wheel-col" ref="roDateWheelYear" @scroll="onRoDateWheelScroll('year',$event)">
+<div style="height:72px"></div>
+<div v-for="y in roDateYears" :key="'rdy'+y" class="track-wheel-item" :class="{'is-on':roDateDraft.year===y}">{{ y }}年</div>
+<div style="height:72px"></div>
+</div>
+<div class="track-wheel-col" ref="roDateWheelMonth" @scroll="onRoDateWheelScroll('month',$event)">
+<div style="height:72px"></div>
+<div v-for="m in trackMonths" :key="'rdm'+m" class="track-wheel-item" :class="{'is-on':roDateDraft.month===m}">{{ m }}月</div>
+<div style="height:72px"></div>
+</div>
+<div class="track-wheel-col" ref="roDateWheelDay" @scroll="onRoDateWheelScroll('day',$event)">
+<div style="height:72px"></div>
+<div v-for="d in roDateDays" :key="'rdd'+d" class="track-wheel-item" :class="{'is-on':roDateDraft.day===d}">{{ d }}日</div>
+<div style="height:72px"></div>
+</div>
+</div>
+</div>
+</div>
+</transition>
+
+<!-- ═══ RECHARGE ORDER DETAIL ═══ -->
+<transition name="sl"><div v-if="roOV==='detail' && curRechargeOrder" v-swipe-close="roGoBack" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="recharge-order-detail">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="roGoBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">订单详情</div>
+<span class="w-8 h-8 shrink-0" aria-hidden="true"></span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
+<div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">基本信息</div><span class="text-[13px] font-semibold" :style="{color:roPayStatusTag(curRechargeOrder.payStatus).c}">{{ roPayStatusTag(curRechargeOrder.payStatus).l }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ curRechargeOrder.orderNo }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(curRechargeOrder.orderNo,'订单编号')"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.createTime }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">支付渠道</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ roPayChannelText(curRechargeOrder.payChannel) }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.payTime||'-' }}</span></div>
+</div>
+<div class="bg-white rounded-2xl p-4 mb-3 cursor-pointer active:bg-[#FAFAFA]" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="goUserDetail(curRechargeOrder.account||curRechargeOrder.phone||curRechargeOrder.email)">
+<div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">用户信息</div><span v-html="luci('chevron-right','w-4 h-4 text-[#bbb]')"></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.account||'-' }}</span><span v-if="curRechargeOrder.account" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.account,'账号')" class="shrink-0 ml-1"></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">手机号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.phone||'-' }}</span><span v-if="curRechargeOrder.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)] cursor-pointer active:opacity-70')" @click.stop="callPhone(curRechargeOrder.phone)" class="shrink-0 ml-1"></span><span v-if="curRechargeOrder.phone" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.phone,'手机号')" class="shrink-0 ml-1"></span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">邮箱</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.email||'-' }}</span><span v-if="curRechargeOrder.email" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.email,'邮箱')" class="shrink-0 ml-1"></span></div>
+</div>
+<div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="text-[14px] font-bold text-[#1A1A1A] mb-2">充值明细</div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.amount) }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.giftAmount||0) }}</span></div>
+</div>
+<div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="text-[14px] font-bold text-[#1A1A1A] mb-2">退款明细</div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.refundAmount||0) }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.refundGiftAmount||0) }}</span></div>
+</div>
+</div>
+<div v-if="roCanRefund()||roCanRefundRecords()" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
+<div class="flex gap-3">
+<button v-if="roCanRefundRecords()" @click="roOpenRefunds" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border cursor-pointer" style="border:1px solid var(--accent);color:var(--accent);background:#fff">退款记录</button>
+<button v-if="roCanRefund()" @click="roOpenRefund" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer" style="background:var(--accent)">退款</button>
+</div></div>
+</div></transition>
+
+<!-- ═══ RECHARGE ORDER REFUND RECORDS ═══ -->
+<transition name="sl"><div v-if="roOV==='refunds'" v-swipe-close="()=>roOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="recharge-refund-records">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="roOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">退款记录</div>
+<span class="min-w-[2rem] shrink-0"></span>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
+<div v-for="(r,i) in roRefunds" :key="i" class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
+<div class="flex items-center justify-between mb-2"><span class="text-[13px] font-semibold text-[#333]">{{ r.applyTime }}</span><span class="text-[13px] font-semibold" :style="{color:'#8B5CF6'}">{{ r.refundStatus==='REFUNDING'?'退款中':r.refundStatus }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.rechargeAmount) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.giftAmount) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">操作人</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.operator }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款来源</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundSource||'-' }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款原因</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundReason }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundTime||'-' }}</span></div>
+</div>
+<div v-if="!roRefunds.length" class="flex flex-col items-center py-16"><div class="text-[15px] font-semibold text-[#111] mb-1">暂无退款记录</div></div>
+</div>
+</div></transition>
+
+<!-- ═══ RECHARGE ORDER REFUND MODAL ═══ -->
+<transition name="fd"><div v-if="roRefundMod" class="absolute inset-0 z-[800]" style="background:rgba(0,0,0,.45)" @click="roRefundMod=false"></div></transition>
+<transition name="sh"><div v-if="roRefundMod" class="absolute bottom-0 left-0 right-0 bg-white z-[801] rounded-t-[20px] flex flex-col p-5 relative" style="padding-bottom:max(20px,env(safe-area-inset-bottom))">
+<div class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#888] active:bg-[#F2F2F2]" @click="roRefundMod=false"><span v-html="luci('x','w-5 h-5')"></span></div>
+<div class="text-center text-[17px] font-semibold mb-4">退款</div>
+<div class="mb-3">
+<div class="text-[13px] text-[#999] mb-1">充值金额</div>
+<div class="flex items-center rounded-xl px-3.5 py-3" style="background:#F6F7F9;border:1px solid #E5E5E5"><span class="text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="roRefundForm.amount" type="number" min="0" step="0.01" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2"></div>
+<div class="text-[12px] text-[#999] mt-1">可退 {{ fmtRp(curRechargeOrder.amount) }}</div>
+</div>
+<div class="mb-3">
+<div class="text-[13px] text-[#999] mb-1">赠送金额</div>
+<div class="flex items-center rounded-xl px-3.5 py-3" style="background:#F6F7F9;border:1px solid #E5E5E5"><span class="text-[16px] font-semibold shrink-0">Rp</span><input v-model.number="roRefundForm.giftAmount" type="number" min="0" step="0.01" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2"></div>
+<div class="text-[12px] text-[#999] mt-1">可退 {{ fmtRp(curRechargeOrder.giftAmount) }}</div>
+</div>
+<div class="mt-2">
+<button @click="roSubmitRefund" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer" style="background:var(--accent)">确认</button>
+</div>
+</div></transition>
+
+<!-- ═══ RECHARGE ORDER REFUND CONFIRM MODAL ═══ -->
+<transition name="fd"><div v-if="roRefundConfirm" class="absolute inset-0 z-[820]" style="background:rgba(0,0,0,.45)" @click="roRefundConfirm=false"></div></transition>
+<transition name="fd"><div v-if="roRefundConfirm" class="absolute inset-0 z-[821] flex items-center justify-center pointer-events-none"><div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3 pointer-events-auto" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="text-[16px] font-semibold text-center mb-1">订单退款</div>
+<div class="text-[14px] text-center text-[#666] leading-relaxed">确认执行退款？合计退款 {{ fmtRp(roRefundTotal(),2) }}</div>
+<div class="flex gap-3 mt-2">
+<div @click="roRefundConfirm=false" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;background:#fff">取消</div>
+<div @click="roConfirmRefund" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">确认</div>
+</div>
+</div></div></transition>
 
  <!-- ═══ ORDER REFUND RECORDS ═══ -->
  <transition name="sl">
@@ -2936,6 +3135,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
    </div>
    <div v-if="cfgErr.breach" class="form-hint text-[#DC2626]">{{ cfgErr.breach }}</div>
   </div>
+  <div class="od-indent">
+   <div class="flex items-center gap-2 py-1.5 cursor-pointer active:bg-[#F6F7F9] rounded" @click="cfg.autoLockVehicle=!cfg.autoLockVehicle">
+    <span class="w-[18px] h-[18px] rounded shrink-0 flex items-center justify-center transition-colors" :style="cfg.autoLockVehicle?{background:'var(--accent)',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #CCC'}"><span v-if="cfg.autoLockVehicle" v-html="luci('check','w-3 h-3 text-white')"></span></span>
+    <span class="text-sm font-medium text-[#333]">自动锁车</span>
+   </div>
+   <div class="flex items-center gap-2 py-1.5 cursor-pointer active:bg-[#F6F7F9] rounded" @click="cfg.autoLockBattery=!cfg.autoLockBattery">
+    <span class="w-[18px] h-[18px] rounded shrink-0 flex items-center justify-center transition-colors" :style="cfg.autoLockBattery?{background:'var(--accent)',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #CCC'}"><span v-if="cfg.autoLockBattery" v-html="luci('check','w-3 h-3 text-white')"></span></span>
+    <span class="text-sm font-medium text-[#333]">自动锁电池</span>
+   </div>
+  </div>
 
   <!-- 二、订单续租 -->
   <div class="od-sec">订单续租</div>
@@ -3158,7 +3367,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <!-- 基本信息 -->
   <div class="text-[13px] font-semibold text-[#999] mb-2">基本信息</div>
   <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div v-for="(r,j) in uDetailRows" :key="r.k" class="flex items-center py-2.5" :style="j<uDetailRows.length-1?{borderBottom:'1px dashed #E5E5E5'}:{}"><span class="text-[13px] text-[#999] w-20 shrink-0">{{ r.k }}</span><span class="text-sm font-medium flex-1 truncate">{{ r.v }}</span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.account||'-' }}</span><span v-if="du.account" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.account,'账号')" class="shrink-0 ml-1"></span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">手机号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.phone||'-' }}</span><span v-if="du.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)] cursor-pointer active:opacity-70')" @click="callPhone(du.phone)" class="shrink-0 ml-1"></span><span v-if="du.phone" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.phone,'手机号')" class="shrink-0 ml-1"></span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">邮箱</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.email||'-' }}</span><span v-if="du.email" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.email,'邮箱')" class="shrink-0 ml-1"></span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">昵称</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.nickname||'-' }}</span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">状态</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.status||'正常' }}</span></div>
+    <div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">注册时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.created||'-' }}</span></div>
   </div>
 
   <!-- 用户钱包 -->
@@ -3289,11 +3503,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <template v-else>
 <div v-for="r in uWdList" :key="r.withdrawNo" class="bg-white rounded-xl p-4 mb-2.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2.5">
-<span class="text-[15px] font-bold tabular-nums">Rp {{ r.amount }}</span>
+<span class="text-[13px] font-semibold text-[#333]">{{ r.applyTime }}</span>
 <span class="text-[11px] font-semibold px-2 py-0.5 rounded shrink-0" :style="uWdStg(r.status)">{{ uWdStLabel(r.status) }}</span>
 </div>
 <div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">提现类型</span><span class="font-medium ml-3 text-right">{{ r.withdrawType==='MERCHANT'?'商户提现':'用户提现' }}</span></div>
-<div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">创建时间</span><span class="font-medium ml-3 text-right">{{ r.applyTime }}</span></div>
+<div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">提现金额</span><span class="font-medium ml-3 text-right">Rp {{ r.amount }}</span></div>
 <div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">完成时间</span><span class="font-medium ml-3 text-right">{{ r.finishTime }}</span></div>
 <div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">备注</span><span class="font-medium ml-3 text-right">{{ r.remark||'-' }}</span></div>
 </div>
@@ -3306,7 +3520,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-white rounded-t-[20px] w-full max-h-[82%] flex flex-col" style="z-index:601">
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="px-5 pt-2 pb-1 shrink-0 flex items-center justify-center relative">
-<span class="block text-center text-[17px] font-semibold">{{ uWalletSheet==='adjust'?'赠送余额调账':'手动提现' }}</span>
+<span class="block text-center text-[17px] font-semibold">{{ uWalletSheet==='adjust'?'编辑赠送余额':'手动提现' }}</span>
 <button @click="uWalletSheet=null" type="button" aria-label="关闭" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
 </div>
 <template v-if="uWalletSheet==='adjust'">
@@ -3326,7 +3540,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="relative"><textarea v-model="uAdjust.remark" maxlength="255" rows="3" placeholder="请输入备注" class="w-full rounded-xl px-3.5 py-3 pb-8 text-[14px] outline-none resize-none" style="background:#F6F7F9;border:1px solid #E5E5E5"></textarea><div class="absolute right-3 bottom-2 text-[12px] text-[#999] pointer-events-none">{{ (uAdjust.remark||'').length }}/255</div></div>
 </div>
 <div class="px-5 pb-7 pt-2 shrink-0">
-<div @click="submitUAdjust" class="w-full py-3.5 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">确认调账</div>
+<div @click="submitUAdjust" class="w-full py-3.5 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">确认</div>
 </div>
 </template>
 <template v-else-if="uWalletSheet==='withdraw'">
@@ -3337,14 +3551,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex items-center rounded-xl px-3.5 py-3 mb-1" style="background:#F6F7F9;border:1px solid #E5E5E5">
 <span class="text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="uWithdraw.amount" type="number" min="1" :max="uWallet.rechargeBalance" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2">
-<span @click="uWithdraw.amount=uWallet.rechargeBalance" class="text-[13px] font-medium text-[var(--link)] cursor-pointer px-2 shrink-0">全部</span>
 </div>
 <div v-if="uWithdrawErr.amount" class="text-[12px] text-[#DC2626] mb-2">{{ uWithdrawErr.amount }}</div>
 <div class="text-[13px] text-[#999] mb-2 mt-3">备注</div>
 <div class="relative"><textarea v-model="uWithdraw.remark" maxlength="255" rows="3" placeholder="请输入备注" class="w-full rounded-xl px-3.5 py-3 pb-8 text-[14px] outline-none resize-none" style="background:#F6F7F9;border:1px solid #E5E5E5"></textarea><div class="absolute right-3 bottom-2 text-[12px] text-[#999] pointer-events-none">{{ (uWithdraw.remark||'').length }}/255</div></div>
 </div>
 <div class="px-5 pb-7 pt-2 shrink-0">
-<div @click="submitUManualWithdraw" class="w-full py-3.5 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">确认提现</div>
+<div @click="submitUManualWithdraw" class="w-full py-3.5 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">提现</div>
 </div>
 </template>
 </div></div></transition>
@@ -3361,7 +3574,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="pb-7 pt-1">
 <div @click="opsPick('withdraw')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED"><span class="text-[15px] font-medium">手动提现</span></div>
 <div @click="opsPick('records')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED"><span class="text-[15px] font-medium">提现记录</span></div>
-<div @click="opsPick('adjust')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]"><span class="text-[15px] font-medium">调账</span></div>
+<div @click="opsPick('adjust')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]"><span class="text-[15px] font-medium">编辑赠送余额</span></div>
 </div>
 </div>
 </transition>
@@ -4328,7 +4541,7 @@ const ordersPlaceholder=computed(()=>!ordersEntry.value);
 const ordersLName=computed(()=>{const m={vehicle:'车辆',battery:'电池',package:'套餐'};return ordersEntry.value?m[ordersEntry.value]||'车辆':'电池'});
 const ordersListTitle=computed(()=>ordersLName.value+'订单列表');
 const orderEntries=computed(()=>[{v:'vehicle',l:'车辆租赁',icon:'bike',code:'order.list'},{v:'battery',l:'电池租赁',icon:'battery-charging',code:'order.battery.list'},{v:'package',l:'车电套餐',icon:'package',code:'order.package.list'}].filter(e=>can(e.code)));
-function homeOpenOrders(t){const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value='';ordersFsEnd.value='';searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
+function homeOpenOrders(t){const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value=_ordDateDef.start;ordersFsEnd.value=_ordDateDef.end;searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
 function closeOrderList(){ordersOV.value=null;tab.value='home'}
 /* ══ BATTERY DEVICES (订单 tab → 电池) ══ */
 const battQ=ref(''),battPill=ref('');
@@ -4559,7 +4772,7 @@ const battCluster=ref(true);
 const searchScopeOpts=computed(()=>{const all=[{v:'id',l:'订单号'},{v:'account',l:'账号'},{v:'phone',l:'手机号'},{v:'email',l:'邮箱'},{v:'vin',l:'车架号'},{v:'battNo',l:'电池编号'}];if(ordersEntry.value==='vehicle')return all.filter(o=>o.v!=='battNo');if(ordersEntry.value==='battery')return all.filter(o=>o.v!=='vin');return all});
 const searchScopeLabel=computed(()=>(searchScopeOpts.value.find(o=>o.v===searchScope.value)||{}).l||'订单号');
 function setSearchScope(v){searchScope.value=v;searchScopeOpen.value=false}
-function orderCustomerText(o){const acc=(o.account&&o.account.trim())?o.account:(o.customer||'');if(o.phone)return acc+'（'+o.phone+'）';if(o.email)return acc+'（'+o.email+'）';return acc}
+function orderCustomerText(o){if(o.phone&&String(o.phone).trim())return o.phone;if(o.email&&String(o.email).trim())return o.email;return (o.account&&o.account.trim())?o.account:(o.customer||'')}
 document.addEventListener('click',function(){searchScopeOpen.value=false})
 const searchPH=computed(()=>'请输入'+(({id:'订单号',account:'账号',phone:'手机号',email:'邮箱',vin:'车架号'})[searchScope.value]||'订单号'));
 const orders=ref([]);
@@ -4587,7 +4800,7 @@ function parseYmd(s){
 }
 function ymdFromParts(t){return t.year+'-'+p2(t.month)+'-'+p2(t.day)}
 var _ordDateDef=defaultOrdersDateRange();
-const ordersFsSt=ref(''),ordersFsPay=ref(''),ordersFsPaySt=ref(''),ordersFsStart=ref(''),ordersFsEnd=ref('');
+const ordersFsSt=ref(''),ordersFsPay=ref(''),ordersFsPaySt=ref(''),ordersFsStart=ref(_ordDateDef.start),ordersFsEnd=ref(_ordDateDef.end);
 const ordersFsStC=ref(''),ordersFsPayC=ref(''),ordersFsPayStC=ref(''),ordersFsStartC=ref(_ordDateDef.start),ordersFsEndC=ref(_ordDateDef.end);
 const ordersDatePicker=ref(null);
 const ordersDateDraft=ref({year:2025,month:1,day:1});
@@ -4620,6 +4833,7 @@ var dangerLabel=computed(()=>'取消订单');
 function ordersOpenDetail(o){const detailCode=o.type==='battery'?'order.battery.detail':o.type==='package'?'order.package.detail':'order.detail';if(!can(detailCode)){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=(o.status==='created'?'pending':'paid');dPm.value=(o.payment==='offline'?'offline':'online');dCanceledPaid.value='paid';ordersOV.value='detail'}
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
 function copyText(t,label){var v=(t||'').trim();if(!v||v==='—'){toast('无内容可复制','warn');return}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){toast((label||'')+'已复制','success')},function(){toast('复制失败','warn')})}else{toast('复制失败','warn')}}
+function callPhone(p){if(!p)return;window.location.href='tel:'+p}
 function goVehicleDetail(vin){var v=vehicles.value.find(x=>x.vin===vin);setTab('vehicles');vehOpenDetail(v||{vin:vin})}
 function goBatteryDetail(no){var b=batteries.value.find(x=>x.battNo===no);battOpenDetail(b||{battNo:no})}
 function ordersDoSearch(){}
@@ -5116,7 +5330,7 @@ function openMenu(id){profileOV.value=id;brandLoading.value=true;setTimeout(func
 const langOptions=[{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'en',label:'English'},{id:'id',label:'Bahasa Indonesia'}];
 const appLangLabel=computed(()=>'简体中文');
 function selectLang(id){profileSub.value=null}
-const showLogin=ref(true);
+const showLogin=ref(false);
 const loginView=ref('main');
 const loginMode=ref('phone');
 const loginSub=ref('password');
@@ -5275,14 +5489,6 @@ const du=ref({});
 const uWallet=ref({total:0,rechargeBalance:0,rechargeFrozen:0,bonusBalance:0,bonusFrozen:0});
 const uVehicles=ref([]);
 const uBatteries=ref([]);
-const uDetailRows=computed(()=>[
-  {k:'账号',v:du.value.account||'—'},
-  {k:'手机号',v:du.value.phone||'—'},
-  {k:'邮箱',v:du.value.email||'—'},
-  {k:'昵称',v:du.value.nickname||'—'},
-  {k:'状态',v:du.value.status||'正常'},
-  {k:'注册时间',v:du.value.created||'—'}
-]);
 function walletFor(acc){
   var h=0,s=acc||'';for(var i=0;i<s.length;i++){h=(h*33+s.charCodeAt(i))>>>0}
   var recharge=20000+(h%31)*1000;
@@ -5470,7 +5676,7 @@ function onHmWheelScroll(kind,e){
   },80);
 }
 let delCsI=-1;function delCs(i){if(!can('cs_info.delete')){deny();return}delCsI=i;profileMod.value='delCs'}
-const cfg=ref({pre:1,breach:3,renewEnabled:false,renewTypes:[],renewManual:false,renewStatuses:[],renewAuto:false,renewAdvanceDays:1,renewRemindDays:1,renewFailThreshold:3,requireRealName:false});
+const cfg=ref({pre:1,breach:3,renewEnabled:false,renewTypes:[],renewManual:false,renewStatuses:[],renewAuto:false,renewAdvanceDays:1,renewRemindDays:1,renewFailThreshold:3,requireRealName:false,autoLockVehicle:false,autoLockBattery:false});
 var cfgSaving=ref(false);const cfgErr=ref({pre:'',breach:''});
 const renewTypeOpts=[{v:'VEHICLE',l:'车辆租赁'},{v:'BATTERY',l:'电池租赁'},{v:'PACKAGE',l:'车电套餐'}];
 const renewStatusOpts=[{v:'IN_USE',l:'进行中'},{v:'TO_RETURN',l:'待归还'},{v:'OVERDUE',l:'已超期'},{v:'BREACH',l:'已违约'}];
@@ -5485,6 +5691,80 @@ var rechargeSaving=ref(false);const rfcErr=ref({amount:''});
 function openRechargeEdit(i){if(i===-1){if(!can('recharge.add')){deny();return}}else if(!can('recharge.edit')){deny();return}rechargeIdx.value=i;rfc.value=i===-1?{amount:null,giftAmount:null,status:1,remark:''}:{...rechargeList.value[i]};rfcErr.value={amount:''};profileSub.value='rechargeEdit'}
 function saveRecharge(){if(rechargeSaving.value)return;var e={};if(rfc.value.amount==null||rfc.value.amount===''||Number(rfc.value.amount)<0)e.amount='请输入充值金额';rfcErr.value=e;if(e.amount)return;rechargeSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;if(rechargeIdx.value===-1){var ids=rechargeList.value.map(x=>x.id);var nid=ids.length?Math.max(...ids):0;rechargeList.value.push({id:nid+1,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0,status:rfc.value.status,remark:rfc.value.remark||''})}else{rechargeList.value[rechargeIdx.value]={...rfc.value,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0}}profileSub.value=null;rfcErr.value={};toast(rechargeIdx.value===-1?'充值配置已新增成功':'充值配置已编辑成功','success');rechargeSaving.value=false},400)}
 let delRechargeI=-1;function delRecharge(i){if(!can('recharge.delete')){deny();return}delRechargeI=i;profileMod.value='delRecharge'}
+/* ══ 充值订单（商户端，对接 recharge-order-merchant-mobile 文档） ══ */
+const roOV=ref('');            // '' | 'list' | 'detail' | 'refunds'
+const curRechargeOrder=ref(null);
+const roRefundMod=ref(false);  // 退款表单弹窗
+const roRefundConfirm=ref(false); // 退款确认弹窗
+const roRefundForm=ref({amount:null,giftAmount:null});
+const roRefunds=ref([]);       // 退款记录
+const rechargeOrders=ref([
+ {orderNo:'CZ202609010001',storeName:'测试门店',createTime:'2026-09-01 10:00:00',payChannel:'2C2P',payStatus:'UNPAID',payTime:'',account:'han.min',phone:'+86 13800001234',email:'han.min@example.com',amount:100,giftAmount:10,refundAmount:null,refundGiftAmount:null},
+ {orderNo:'CZ202609010002',storeName:'测试门店',createTime:'2026-09-01 15:20:00',payChannel:'2C2P',payStatus:'PAYING',payTime:'',account:'chen.yi',phone:'',email:'chen.yi@example.com',amount:200,giftAmount:20,refundAmount:null,refundGiftAmount:null},
+ {orderNo:'CZ202608200003',storeName:'雅迪朝阳店',createTime:'2026-08-20 11:00:00',payChannel:'2C2P',payStatus:'PAID',payTime:'2026-08-20 13:30:00',account:'li.er',phone:'',email:'',amount:300,giftAmount:50,refundAmount:null,refundGiftAmount:null},
+ {orderNo:'CZ202608150004',storeName:'雅迪朝阳店',createTime:'2026-08-15 09:00:00',payChannel:'2C2P',payStatus:'REFUNDING',payTime:'2026-08-15 11:00:00',account:'',phone:'+86 13800003333',email:'',amount:150,giftAmount:30,refundAmount:null,refundGiftAmount:null},
+ {orderNo:'CZ202608100005',storeName:'雅迪海淀店',createTime:'2026-08-10 08:00:00',payChannel:'2C2P',payStatus:'PARTIAL_REFUND',payTime:'2026-08-10 09:12:00',account:'li.si',phone:'',email:'li.si@example.com',amount:500,giftAmount:80,refundAmount:200,refundGiftAmount:30},
+ {orderNo:'CZ202609030006',storeName:'雅迪海淀店',createTime:'2026-09-03 10:00:00',payChannel:'2C2P',payStatus:'FULL_REFUND',payTime:'2026-09-03 10:30:00',account:'wang.wu',phone:'',email:'',amount:300,giftAmount:50,refundAmount:300,refundGiftAmount:50}
+]);
+function roPayStatusTag(s){var m={UNPAID:{l:'待支付',c:'#FF8C1B'},PAYING:{l:'支付中',c:'#1A82F4'},PAID:{l:'已支付',c:'#17A34A'},REFUNDING:{l:'退款中',c:'#8B5CF6'},PARTIAL_REFUND:{l:'部分退款',c:'#E6A23C'},FULL_REFUND:{l:'全部退款',c:'#FF4343'}};return m[s]||{l:s,c:'#999'}}
+function roPayChannelText(c){return c?c:'-'}
+function roOpenList(){roQ.value='';roStatus.value=null;roFsPay.value='';roFsPaySt.value=[];roFsStart.value=_ordDateDef.start;roFsEnd.value=_ordDateDef.end;roFsMin.value='';roFsMax.value='';roSearchScope.value='no';roOV.value='list';tab.value='orders'}
+function roOpenDetail(o){curRechargeOrder.value=o;roOV.value='detail'}
+function roCloseList(){roOV.value=''}
+function roGoBack(){roOV.value='list'}
+function roCanRefund(){var s=curRechargeOrder.value&&curRechargeOrder.value.payStatus;return s==='PAID'||s==='PARTIAL_REFUND'}
+function roCanRefundRecords(){var s=curRechargeOrder.value&&curRechargeOrder.value.payStatus;return ['REFUNDING','PARTIAL_REFUND','FULL_REFUND'].indexOf(s)!==-1}
+function roOpenRefunds(){var o=curRechargeOrder.value;roRefunds.value=[{applyTime:'2026-08-10 09:12:00',rechargeAmount:o.refundAmount||0,giftAmount:o.refundGiftAmount||0,operator:'zhang.wei',refundReason:'客户要求退款',refundStatus:'REFUNDING',refundTime:o.payStatus==='FULL_REFUND'?'2026-08-01 11:00:00':''}];roOV.value='refunds'}
+function roRefundTotal(){var a=Number(roRefundForm.value.amount)||0,b=Number(roRefundForm.value.giftAmount)||0;return a+b}
+function roOpenRefund(){if(!roCanRefund())return;roRefundForm.value={amount:null,giftAmount:null};roRefundMod.value=true}
+function roSubmitRefund(){var a=Number(roRefundForm.value.amount)||0,b=Number(roRefundForm.value.giftAmount)||0,o=curRechargeOrder.value;if(a<=0&&b<=0){toast('请输入退款金额','warn');return}if(a>o.amount){toast('充值金额超出可退金额','warn');return}if(b>o.giftAmount){toast('赠送金额超出可退金额','warn');return}roRefundConfirm.value=true}
+function roConfirmRefund(){var o=curRechargeOrder.value;o.payStatus='REFUNDING';roRefundConfirm.value=false;toast('退款申请已提交','success')}
+/* ══ 充值订单列表：搜索 / 状态 / 筛选 ══ */
+const roQ=ref('');
+const roSearchScope=ref('no');
+const roSearchScopeOpen=ref(false);
+const roSearchScopeOpts=[{v:'no',l:'订单号'},{v:'account',l:'账号'},{v:'phone',l:'手机号'},{v:'email',l:'邮箱'}];
+const roSearchScopeLabel=computed(()=>(roSearchScopeOpts.find(o=>o.v===roSearchScope.value)||{}).l||'订单号');
+const roSearchPH=computed(()=>'请输入'+({no:'订单号',account:'账号',phone:'手机号',email:'邮箱'}[roSearchScope.value]||'订单号'));
+const roStatus=ref(null);
+const roStatusTabs=[{v:null,l:'全部'},{v:['UNPAID','PAYING'],l:'待支付'},{v:['PAID'],l:'已支付'},{v:['REFUNDING'],l:'退款中'},{v:['PARTIAL_REFUND','FULL_REFUND'],l:'已退款'}];
+function roStatusActive(p){return roStatus.value===p.v}
+const roTabCnt=computed(()=>{const m={};let n=0;rechargeOrders.value.forEach(o=>{const t=roStatusTabs.find(p=>p.v===null||(p.v&&p.v.indexOf(o.payStatus)!==-1));if(t)m[t.l]=(m[t.l]||0)+1;n++});m['全部']=n;return m});
+const roFsPay=ref(''),roFsPaySt=ref([]),roFsStart=ref(_ordDateDef.start),roFsEnd=ref(_ordDateDef.end),roFsMin=ref(''),roFsMax=ref('');
+const roHasF=computed(()=>!!roFsPay.value||roFsPaySt.value.length>0||!!roFsStart.value||!!roFsEnd.value||(roFsMin.value!==''&&roFsMin.value!=null)||(roFsMax.value!==''&&roFsMax.value!=null));
+const rechargeFiltered=computed(()=>rechargeOrders.value.filter(o=>{
+  if(roStatus.value&&roStatus.value.indexOf(o.payStatus)===-1)return false;
+  if(roFsPay.value&&(o.payChannel||'')!==roFsPay.value)return false;
+  if(roFsPaySt.value.length&&roFsPaySt.value.indexOf(o.payStatus)===-1)return false;
+  if(roFsStart.value&&roFsEnd.value){var m=(o.createTime||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<roFsStart.value||m[1]>roFsEnd.value))return false}
+  if(roFsMin.value!==''&&roFsMin.value!=null&&Number(o.amount)<Number(roFsMin.value))return false;
+  if(roFsMax.value!==''&&roFsMax.value!=null&&Number(o.amount)>Number(roFsMax.value))return false;
+  if(roQ.value){var f={no:o.orderNo,account:o.account||'',phone:o.phone||'',email:o.email||''}[roSearchScope.value]||o.orderNo;if(f.toLowerCase().indexOf(roQ.value.toLowerCase())===-1)return false}
+  return true
+}));
+const roShowFS=ref(false);
+const roDatePicker=ref(null);
+const roDateDraft=ref({year:2025,month:1,day:1});
+const roDateWheelYear=ref(null),roDateWheelMonth=ref(null),roDateWheelDay=ref(null);
+const roDateYears=Array.from({length:8},(_,i)=>2020+i);
+const roDateDays=computed(()=>{const y=roDateDraft.value.year,m=roDateDraft.value.month;const last=new Date(y,m,0).getDate();return Array.from({length:last},(_,i)=>i+1)});
+var roDateWheelTimers={};
+function openRoDatePicker(which){var src=which==='start'?roFsStartC.value:roFsEndC.value;var p=parseYmd(src)||parseYmd(defaultOrdersDateRange()[which==='start'?'start':'end']);roDateDraft.value={year:p.year,month:p.month,day:p.day};roDatePicker.value=which;nextTick(function(){scrollRoDateWheelsToDraft()})}
+function cancelRoDatePicker(){roDatePicker.value=null}
+function confirmRoDatePicker(){var ymd=ymdFromParts(roDateDraft.value);if(roDatePicker.value==='start'){roFsStartC.value=ymd;if(roFsStartC.value>roFsEndC.value)roFsEndC.value=ymd}else{roFsEndC.value=ymd;if(roFsEndC.value<roFsStartC.value)roFsStartC.value=ymd}roDatePicker.value=null}
+function scrollRoDateWheelsToDraft(){var d=roDateDraft.value;var map=[[roDateWheelYear,roDateYears.indexOf(d.year)],[roDateWheelMonth,trackMonths.indexOf(d.month)],[roDateWheelDay,roDateDays.value.indexOf(d.day)]];map.forEach(function(pair){var el=pair[0],idx=pair[1];if(el.value&&idx>=0)el.value.scrollTop=idx*36})}
+function onRoDateWheelScroll(kind,e){clearTimeout(roDateWheelTimers[kind]);roDateWheelTimers[kind]=setTimeout(function(){var el=e.target;var idx=Math.round(el.scrollTop/36);el.scrollTop=idx*36;var d=Object.assign({},roDateDraft.value);if(kind==='year'){d.year=roDateYears[Math.min(Math.max(idx,0),roDateYears.length-1)];var maxD=new Date(d.year,d.month,0).getDate();if(d.day>maxD)d.day=maxD}if(kind==='month'){d.month=trackMonths[Math.min(Math.max(idx,0),11)];var maxD2=new Date(d.year,d.month,0).getDate();if(d.day>maxD2)d.day=maxD2}if(kind==='day'){var days=roDateDays.value;d.day=days[Math.min(Math.max(idx,0),days.length-1)]}roDateDraft.value=d},80)}
+const roFsPayC=ref(''),roFsPayStC=ref([]),roFsStartC=ref(_ordDateDef.start),roFsEndC=ref(_ordDateDef.end),roFsMinC=ref(''),roFsMaxC=ref('');
+const roFsPayStOpts=[{v:'UNPAID',l:'待支付'},{v:'PAYING',l:'支付中'},{v:'PAID',l:'已支付'},{v:'REFUNDING',l:'退款中'},{v:'PARTIAL_REFUND',l:'部分退款'},{v:'FULL_REFUND',l:'全部退款'}];
+function roOpenFS(){roFsPayC.value=roFsPay.value;roFsPayStC.value=roFsPaySt.value.slice();roFsStartC.value=roFsStart.value;roFsEndC.value=roFsEnd.value;roFsMinC.value=roFsMin.value;roFsMaxC.value=roFsMax.value;roShowFS.value=true}
+function roToggleFsPaySt(v){var i=roFsPayStC.value.indexOf(v);if(i===-1)roFsPayStC.value.push(v);else roFsPayStC.value.splice(i,1)}
+function roResetFS(){roFsPayC.value='';roFsPayStC.value=[];roFsStartC.value='';roFsEndC.value='';roFsMinC.value='';roFsMaxC.value=''}
+function roApplyFS(){roFsPay.value=roFsPayC.value;roFsPaySt.value=roFsPayStC.value.slice();roFsStart.value=roFsStartC.value;roFsEnd.value=roFsEndC.value;roFsMin.value=roFsMinC.value;roFsMax.value=roFsMaxC.value;roShowFS.value=false}
+function roDoSearch(){}
+function setRoSearchScope(v){roSearchScope.value=v;roSearchScopeOpen.value=false}
+function roClearFilters(){roQ.value='';roStatus.value=null;roFsPay.value='';roFsPaySt.value=[];roFsStart.value='';roFsEnd.value='';roFsMin.value='';roFsMax.value='';roSearchScope.value='no'}
+document.addEventListener('click',function(){roSearchScopeOpen.value=false})
+function rechargeCustomerText(o){if(o.phone&&String(o.phone).trim())return o.phone;if(o.email&&String(o.email).trim())return o.email;return (o.account&&String(o.account).trim())?o.account:(o.customer||'')}
 const profileMdT=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用账号':'启用账号';if(profileMod.value==='delPos')return '删除职位';if(profileMod.value==='delCs')return '删除客服';if(profileMod.value==='delRecharge')return '删除充值配置';if(profileMod.value==='logout')return '退出登录';return''});
 const profileMdD=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用后该账号将无法登录，确定禁用？':'确定重新启用该账号？启用后可正常登录。';if(profileMod.value==='delPos')return '确定删除该职位？删除后不可恢复。';if(profileMod.value==='delCs')return '确定删除该客服信息？删除后不可恢复。';if(profileMod.value==='delRecharge')return '确定删除该充值配置？删除后不可恢复。';if(profileMod.value==='logout')return '确定要退出当前账号吗？退出后需重新登录。';return''});
 const profileMdDanger=computed(()=>(profileMod.value==='toggle'&&tgtAcc&&tgtAcc.status==='启用')||profileMod.value==='delPos'||profileMod.value==='delCs'||profileMod.value==='logout');
@@ -5647,12 +5927,13 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,copyId,copyText,goVehicleDetail,goBatte
   curStore,menuGroups,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
-aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,uDetailRows,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,openUWithdraw,openUWithdrawRecord,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowTypeOpts,uFlowAmt,uWdStatus,uWdStatusOpts,uWdList,uWdStLabel,uWdStg,uAdjust,uAdjustErr,uWithdraw,uWithdrawErr,submitUAdjust,submitUManualWithdraw,handleUBalanceChange,uFlowAll,uWithdrawAll,
+aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,openUWithdraw,openUWithdrawRecord,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowTypeOpts,uFlowAmt,uWdStatus,uWdStatusOpts,uWdList,uWdStLabel,uWdStg,uAdjust,uAdjustErr,uWithdraw,uWithdrawErr,submitUAdjust,submitUManualWithdraw,handleUBalanceChange,uFlowAll,uWithdrawAll,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
 csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
 profileMdT,profileMdD,profileMdDanger,profileMdOk,
-fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage
+fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage,
+roOV,curRechargeOrder,roRefundMod,roRefundConfirm,roRefundForm,roRefunds,rechargeOrders,roPayStatusTag,roPayChannelText,roOpenList,roOpenDetail,roCloseList,roGoBack,roCanRefund,roCanRefundRecords,roOpenRefunds,roRefundTotal,roOpenRefund,roSubmitRefund,roConfirmRefund,roQ,roSearchScope,roSearchScopeOpen,roSearchScopeOpts,roSearchScopeLabel,roSearchPH,roStatus,roStatusTabs,roStatusActive,roTabCnt,roHasF,rechargeFiltered,roShowFS,roFsPayC,roFsPayStC,roFsPayStOpts,roFsStartC,roFsEndC,roFsMinC,roFsMaxC,roOpenFS,roToggleFsPaySt,roResetFS,roApplyFS,roDoSearch,setRoSearchScope,roClearFilters,rechargeCustomerText,roDatePicker,roDateDraft,roDateWheelYear,roDateWheelMonth,roDateWheelDay,roDateYears,roDateDays,openRoDatePicker,cancelRoDatePicker,confirmRoDatePicker,onRoDateWheelScroll
 };
 }
 });
