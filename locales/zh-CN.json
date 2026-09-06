@@ -295,7 +295,7 @@
     "refundEmptyTitle": "暂无退款记录",
     "refundFailed": "退款失败",
     "refundModalDepositLimit": "可退 {amount}",
-    "refundModalReasonPlaceholder": "请输入退款原因...",
+    "refundModalReasonPlaceholder": "请输入退款原因",
     "refundModalRentLimit": "可退 {amount}",
     "refundModalTotalLabel": "合计退款",
     "refundModeReturn": "归还",
