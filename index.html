@@ -702,8 +702,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <span v-html="luci('bike','w-8 h-8 text-[var(--accent)]')"></span>
  </div>
  <div class="text-[15px] font-semibold text-[#111] mb-1">暂无车辆</div>
- <div class="text-[13px] text-[#999] mb-4">{{ vehQ||vehHasF ? '未找到匹配的车辆，请调整搜索条件' : '点击右下角 + 添加第一辆车辆' }}</div>
- <div v-if="vehQ||vehHasF" @click="vehClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">清除筛选</div>
  </div>
  </div>
  </template>
@@ -717,7 +715,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
    <template v-if="!filtered.length">
     <div class="absolute inset-0 flex flex-col items-center justify-center px-8" @click.stop>
      <div class="text-[15px] font-semibold text-[#111] mb-1">暂无车辆</div>
-     <div class="text-[13px] text-[#999] text-center">还没有车辆数据</div>
     </div>
    </template>
    <template v-else-if="!mapVehicles.length">
@@ -1203,8 +1200,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-else class="flex flex-col items-center justify-center py-16">
 <div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('battery-charging','w-8 h-8 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">暂无电池</div>
-<div class="text-[13px] text-[#999] mb-4">{{ battQ||battHasF ? '未找到匹配的电池，请调整搜索条件' : '暂无电池设备数据' }}</div>
-<div v-if="battQ||battHasF" @click="battClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">清除筛选</div>
 </div>
 </div>
 </template>
@@ -1218,7 +1213,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <template v-if="!batterFiltered.length">
 <div class="absolute inset-0 flex flex-col items-center justify-center px-8" @click.stop>
 <div class="text-[15px] font-semibold text-[#111] mb-1">暂无电池</div>
-<div class="text-[13px] text-[#999] text-center">还没有电池数据</div>
 </div>
 </template>
 <template v-else-if="!battMapBatteries.length">
@@ -1315,9 +1309,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 <div v-else class="flex flex-col items-center justify-center py-16">
 <div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('file-text','w-8 h-8 text-[var(--accent)]')"></span></div>
-<div class="text-[15px] font-semibold text-[#111] mb-1">暂无{{ ordersLName }}订单</div>
-<div class="text-[13px] text-[#999] mb-4">{{ ordersQ||ordersHasF ? '当前筛选下无匹配订单' : '还没有订单数据' }}</div>
-<div v-if="ordersQ||ordersHasF" @click="ordersClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">重置</div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无订单</div>
 </div>
 </div>
 </div></transition>
@@ -1843,9 +1835,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 <div v-else class="flex flex-col items-center justify-center py-16">
 <div class="w-16 h-16 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-4"><span v-html="luci('file-text','w-8 h-8 text-[var(--accent)]')"></span></div>
-<div class="text-[15px] font-semibold text-[#111] mb-1">暂无充值订单</div>
-<div class="text-[13px] text-[#999] mb-4">{{ roQ||roHasF||roStatus ? '当前筛选下无匹配订单' : '还没有订单数据' }}</div>
-<div v-if="roQ||roHasF||roStatus" @click="roClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">重置</div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无订单</div>
 </div>
 </div>
 </div></transition>
@@ -1862,12 +1852,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div style="margin-bottom:16px" data-od-id="recharge-fs-create-time">
  <div class="text-[14px] font-semibold" style="margin-bottom:8px">创建时间</div>
  <div style="display:flex;gap:8px;align-items:center">
-  <div class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-default" style="border:1px solid #E5E5E5;background:#FAFAFA">
+  <div @click="openRoDatePicker('start')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
    <span class="text-[14px] font-medium text-[#111] truncate">{{ roFsStartC }}</span>
    <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
   </div>
   <span class="text-[14px] text-[#999] shrink-0">至</span>
-   <div class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-default" style="border:1px solid #E5E5E5;background:#FAFAFA">
+   <div @click="openRoDatePicker('end')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
     <span class="text-[14px] font-medium text-[#111] truncate">{{ roFsEndC }}</span>
     <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
    </div>
@@ -1971,7 +1961,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex items-center justify-between mb-2"><span class="text-[13px] font-semibold text-[#333]">{{ r.applyTime }}</span><span class="text-[13px] font-semibold" :style="{color:refundStg(r.refundStatus)}">{{ refundStLabel(r.refundStatus) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.rechargeAmount) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.giftAmount) }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">操作人</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.operator }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">操作账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.operator }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款来源</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundSource||'-' }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款原因</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundReason }}</span></div>
 <div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundTime||'-' }}</span></div>
@@ -2023,7 +2013,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <div class="flex flex-col items-center py-16">
  <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center mb-3" style="border:1px solid #E5E5E5"><span v-html="luci('file-text','w-7 h-7 text-[#999]')"></span></div>
  <div class="text-[15px] font-semibold text-[#111] mb-1">暂无退款记录</div>
- <div class="text-[13px] text-[#999]">该订单尚未产生退款</div>
  </div>
  </template>
  <template v-else>
@@ -2048,7 +2037,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
   </template>
   <div v-else class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">押金</span><span class="text-[14px] font-semibold">{{ fmtRp(r.depositAmount) }}</span></div>
-  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">操作人</span><span class="text-[14px] font-medium text-right">{{ r.operator || '—' }}</span></div>
+  <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">操作账号</span><span class="text-[14px] font-medium text-right">{{ r.operator || '—' }}</span></div>
   <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">退款来源</span><span class="text-[14px] font-medium text-right">{{ refundSourceLabel(r) }}</span></div>
   <div class="flex justify-between items-start gap-3"><span class="text-[13px] text-[#999] shrink-0">退款原因</span><span class="text-[14px] font-medium text-right">{{ r.reason || '—' }}</span></div>
   <div v-if="r.refundStatus==='SUCCESS'||r.refundStatus==='FAILED'" class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">完成时间</span><span class="text-[14px] font-medium text-right">{{ r.finishTime || '—' }}</span></div>
@@ -2078,9 +2067,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
      <template v-else>
        <div class="flex flex-col gap-3">
          <div v-for="(r,i) in opRecords" :key="i" class="bg-white rounded-2xl p-4" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-           <!-- 顶部信息：操作人、操作时间 -->
+           <!-- 顶部信息：操作账号、操作时间 -->
            <div class="flex flex-col gap-1.5 mb-3 pb-3" style="border-bottom:1px solid #EDEDED">
-             <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">操作人</span><span class="text-[14px] font-medium text-right">{{ r.operatorAccount || 'zhang.wei' }}</span></div>
+             <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">操作账号</span><span class="text-[14px] font-medium text-right">{{ r.operatorAccount || 'zhang.wei' }}</span></div>
              <div class="flex justify-between items-center gap-3"><span class="text-[13px] text-[#999] shrink-0">操作时间</span><span class="text-[14px] font-medium text-right">{{ r.timeFull || '2026-09-01 10:30:00' }}</span></div>
            </div>
            <!-- 改价前 -->
@@ -2322,8 +2311,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-if="ordersOV!=='feedetail'" @click="showMoreActions=false;ordersOV='feedetail'" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" ><span class="text-[15px] font-medium">费用明细</span></div>
 <div v-if="canPriceOperate||(feeMoreRow&&feeMoreRow.payStatus==='待支付')" @click="showMoreActions=false;openPaySplit(feeMoreRow||null)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">改价</span></div>
 <div @click="showMoreActions=false;ordersOV='oprecords'" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">改价记录</span></div>
-<div v-if="(['已支付','部分退款'].indexOf(feeMoreRow&&feeMoreRow.payStatus)!==-1)&&can('order.refund.create')" @click="showMoreActions=false;openRefund('refund',feeMoreRow)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]"><span class="text-[15px] font-medium">退款</span></div>
-<div v-if="(['退款中','部分退款','全部退款'].indexOf(feeMoreRow&&feeMoreRow.payStatus)!==-1)&&can('order.refund.list')" @click="showMoreActions=false;openRefundRecords(feeMoreRow)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">退款记录</span></div>
+<div v-if="(['已支付','部分退款'].indexOf(feeMoreRow&&feeMoreRow.payStatus)!==-1)&&orderPerm('refund.create')" @click="showMoreActions=false;openRefund('refund',feeMoreRow)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]"><span class="text-[15px] font-medium">退款</span></div>
+<div v-if="(['退款中','部分退款','全部退款'].indexOf(feeMoreRow&&feeMoreRow.payStatus)!==-1)&&orderPerm('refund.list')" @click="showMoreActions=false;openRefundRecords(feeMoreRow)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">退款记录</span></div>
 </div>
 </div></transition>
 
@@ -2366,12 +2355,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <div style="margin-bottom:16px" data-od-id="orders-fs-create-time">
   <div class="text-[14px] font-semibold" style="margin-bottom:8px">创建时间</div>
   <div style="display:flex;gap:8px;align-items:center">
-   <div class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-default" style="border:1px solid #E5E5E5;background:#FAFAFA">
+   <div @click="openOrdersDatePicker('start')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
     <span class="text-[14px] font-medium text-[#111] truncate">{{ ordersFsStartC }}</span>
     <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
    </div>
    <span class="text-[14px] text-[#999] shrink-0">至</span>
-    <div class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-default" style="border:1px solid #E5E5E5;background:#FAFAFA">
+    <div @click="openOrdersDatePicker('end')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
      <span class="text-[14px] font-medium text-[#111] truncate">{{ ordersFsEndC }}</span>
      <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
     </div>
@@ -2730,7 +2719,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-else class="flex flex-col items-center py-16">
 <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('bike','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ mQ ? '未找到匹配的车型' : '暂无车型' }}</div>
-<div class="text-[13px] text-[#999]">{{ mQ ? '请调整搜索关键词' : '还没有车型数据' }}</div>
 </div>
 </div>
 </div></transition>
@@ -2768,7 +2756,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-else class="flex flex-col items-center py-16">
 <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('battery-charging','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ bmQ ? '未找到匹配的电池型号' : '暂无电池型号' }}</div>
-<div class="text-[13px] text-[#999]">{{ bmQ ? '请调整搜索关键词' : '还没有电池型号数据' }}</div>
 </div>
 </div>
 </div></transition>
@@ -2804,8 +2791,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </transition-group>
 <div v-else class="flex flex-col items-center py-16">
 <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('package','w-7 h-7 text-[var(--accent)]')"></span></div>
-<div class="text-[15px] font-semibold text-[#111] mb-1">{{ pkgQ ? '未找到匹配的套餐' : '暂无套餐' }}</div>
-<div class="text-[13px] text-[#999]">{{ pkgQ ? '请调整搜索关键词' : '还没有套餐数据' }}</div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无套餐</div>
 </div>
 </div>
 </div></transition>
@@ -2998,7 +2984,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-else class="flex flex-col items-center py-16">
 <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('users','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ aQ ? '未找到匹配的账号' : '暂无账号' }}</div>
-<div class="text-[13px] text-[#999]">{{ aQ ? '请调整搜索关键词' : '点击右上角新增账号' }}</div>
 </div>
 </div>
 </div></transition>
@@ -3105,7 +3090,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-else class="flex flex-col items-center py-16">
 <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('briefcase','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">{{ pQ ? '未找到匹配的职位' : '暂无职位' }}</div>
-<div class="text-[13px] text-[#999]">{{ pQ ? '请调整搜索关键词' : '还没有职位数据' }}</div>
 </div>
 </div>
 </div></transition>
@@ -3168,7 +3152,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
    </div>
   </div>
  </div>
-<transition-group v-if="csList.length" name="item">
+<transition-group v-if="csList.length&&!demoListEmpty" name="item">
 <div v-for="(c,i) in csList" :key="i" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
 <div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openCsEdit(i)">
 <div class="text-[15px] font-semibold mb-2">{{ c.code }} {{ c.phone }}</div>
@@ -3183,7 +3167,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div v-else class="flex flex-col items-center py-16">
 <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('headset','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="text-[15px] font-semibold text-[#111] mb-1">暂无客服信息</div>
-<div class="text-[13px] text-[#999]">点击右上角新增客服电话</div>
 </div>
 </div>
 </div></transition>
@@ -3350,7 +3333,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl"><div v-if="profileOV==='recharge'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">充值配置</div><span v-if="can('recharge.add')" class="text-sm font-medium cursor-pointer shrink-0" :style="{color:'var(--link)'}" @click="openRechargeEdit(-1)">新增</span><span v-else class="min-w-[2rem] shrink-0"></span>
+<div class="flex-1 text-center text-[17px] font-semibold">充值配置</div><span class="text-sm font-medium cursor-pointer shrink-0" :style="{color:'var(--link)'}" @click="openRechargeEdit(-1)">新增</span><span class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
  <div class="form-card mb-3">
@@ -3367,7 +3350,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
    </div>
   </div>
  </div>
- <transition-group v-if="rechargeList.length" name="item">
+ <transition-group v-if="rechargeList.length&&!demoListEmpty" name="item">
  <div v-for="(r,i) in rechargeList" :key="r.id" class="bg-white rounded-xl mb-2.5 overflow-hidden" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)',transitionDelay:i*50+'ms'}">
   <div class="p-4 cursor-pointer active:bg-[#F6F7F9]" @click="openRechargeEdit(i)">
    <div class="flex items-center justify-between mb-2">
@@ -3378,15 +3361,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
    <div v-if="r.remark" class="text-xs text-[#999] mt-0.5 truncate">{{ r.remark }}</div>
   </div>
   <div class="card-actions">
-   <div v-if="can('recharge.edit')" class="card-action-btn" style="color:var(--link)" @click="openRechargeEdit(i)">编辑</div>
-   <div v-if="can('recharge.delete')" class="card-action-btn" style="color:#DC2626" @click="delRecharge(i)">删除</div>
+   <div class="card-action-btn" style="color:var(--link)" @click="openRechargeEdit(i)">编辑</div>
+   <div class="card-action-btn" style="color:#DC2626" @click="delRecharge(i)">删除</div>
   </div>
  </div>
  </transition-group>
  <div v-else class="flex flex-col items-center py-16">
   <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('wallet','w-7 h-7 text-[var(--accent)]')"></span></div>
   <div class="text-[15px] font-semibold text-[#111] mb-1">暂无充值配置</div>
-  <div class="text-[13px] text-[#999]">点击右上角新增充值档位</div>
  </div>
 </div>
 </div></transition>
@@ -3465,9 +3447,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 <div v-else class="flex flex-col items-center py-16">
 <div class="w-14 h-14 rounded-full bg-[#EBF1FD] flex items-center justify-center mb-3"><span v-html="luci('users','w-7 h-7 text-[var(--accent)]')"></span></div>
-<div class="text-[15px] font-semibold text-[#111] mb-1">{{ uQ||uStatus ? '未找到匹配的用户' : '暂无用户' }}</div>
-<div class="text-[13px] text-[#999] mb-4">{{ uQ||uStatus ? '请调整搜索条件' : '暂无注册用户' }}</div>
-<div v-if="uQ||uStatus" @click="uClearFilters" class="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer active:opacity-70" style="background:#EBF1FD;color:var(--link);border:1px solid var(--link)">清除筛选</div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">暂无用户</div>
 </div>
 </div>
 </div></transition>
@@ -3920,6 +3900,13 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       </div>
     </div>
     <div class="demo-ops-group-hd">功能控制</div>
+    <div v-if="!showLogin&&((tab==='vehicles'&&!vehOV)||(tab==='orders'&&(!ordersOV||ordersOV==='olist'))||roOV==='list'||uWalletView==='flow'||uWalletView==='wrecords'||((profileOV==='user'||profileOV==='package'||['model','battModel','account','pos','cs','recharge'].indexOf(profileOV)!==-1)&&!profileSub))" class="demo-ops-section" data-od-id="demo-list-data">
+      <div class="demo-ops-label">列表数据</div>
+      <div class="demo-ops-chips">
+        <div class="demo-ops-chip" :class="{'is-on':!demoListEmpty}" data-od-id="demo-list-data-full" @click="demoSetListEmpty(false)">有数据</div>
+        <div class="demo-ops-chip" :class="{'is-on-warn':demoListEmpty}" data-od-id="demo-list-data-empty" @click="demoSetListEmpty(true)">空数据</div>
+      </div>
+    </div>
     <template v-if="curAlert">
       <div class="demo-ops-section" data-od-id="demo-alert-close-source">
         <div class="demo-ops-label">关闭方式</div>
@@ -4064,6 +4051,8 @@ const bizStats=computed(()=>[{label:'今日收款',value:'Rp 3,240',trend:null},
   ];
  function cloneAlertsSeed(){return JSON.parse(JSON.stringify(ALERTS_SEED))}
  const allAlerts=ref(cloneAlertsSeed());
+ const demoListEmpty=ref(false);
+ function demoSetListEmpty(v){demoListEmpty.value=!!v}
  const demoHasAlerts=ref(true);
  function demoSetHasAlerts(on){
    demoHasAlerts.value=!!on;
@@ -4242,8 +4231,8 @@ const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehF
 const vehView=ref('list'),mapSelectedVin=ref(null);
 const vehHasF=computed(()=>!!vehFsModel.value||vehFsOnline.value!==null||vehFsLost.value!==null||!!vehPill.value);
 const pills=computed(()=>[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'}]);
-const pillCnt=computed(()=>{const base=vehicles.value.filter(v=>{if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehFsLost.value!==null&&(v.lost||false)!==vehFsLost.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true});const m={};let n=0;base.forEach(v=>{m[v.status]=(m[v.status]||0)+1;n++});return{'':n,'空闲':m['空闲']||0,'占用中':m['占用中']||0,'租用中':m['租用中']||0}});
-const filtered=computed(()=>vehicles.value.filter(v=>{if(vehPill.value&&v.status!==vehPill.value)return false;if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehFsLost.value!==null&&(v.lost||false)!==vehFsLost.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true}));
+const pillCnt=computed(()=>{const base=demoListEmpty.value?[]:vehicles.value.filter(v=>{if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehFsLost.value!==null&&(v.lost||false)!==vehFsLost.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true});const m={};let n=0;base.forEach(v=>{m[v.status]=(m[v.status]||0)+1;n++});return{'':n,'空闲':m['空闲']||0,'占用中':m['占用中']||0,'租用中':m['租用中']||0}});
+const filtered=computed(()=>demoListEmpty.value?[]:vehicles.value.filter(v=>{if(vehPill.value&&v.status!==vehPill.value)return false;if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehFsLost.value!==null&&(v.lost||false)!==vehFsLost.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true}));
 const mapVehicles=computed(()=>filtered.value.filter(v=>v.lat!=null&&v.lng!=null&&!Number.isNaN(v.lat)&&!Number.isNaN(v.lng)));
 const vehNoLocationCount=computed(()=>filtered.value.filter(v=>v.lat==null||v.lng==null||Number.isNaN(v.lat)||Number.isNaN(v.lng)).length);
 const mapSelectedVeh=computed(()=>mapSelectedVin.value?filtered.value.find(v=>v.vin===mapSelectedVin.value)||null:null);
@@ -4509,8 +4498,7 @@ const ALL_PERM_CODES=[
   'order.package.list','order.package.detail','order.package.operate.cancel','order.package.operate.confirm_payment','order.package.operate.return_vehicle','order.package.refund.create','order.package.refund.list',
   'model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit',
   'account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable',
-  'user.list','user.detail',
-  'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit','recharge.view','recharge.edit','recharge.add','recharge.delete'
+  'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit'
 ];
 const perms=ref(Object.fromEntries(ALL_PERM_CODES.map(c=>[c,true])));
 const TAB_PERM_ITEMS=[{c:'home.view',n:'首页'},{c:'vehicle.list',n:'车辆'},{c:'battery.list',n:'电池'}];
@@ -4542,12 +4530,9 @@ const permGroups=[
   {id:'ordPkg',name:'套餐订单',codes:['order.package.list','order.package.detail','order.package.operate.cancel','order.package.operate.confirm_payment','order.package.operate.return_vehicle','order.package.refund.create','order.package.refund.list'],items:[
     {c:'order.package.list',n:'订单列表'},{c:'order.package.detail',n:'订单详情'},{c:'order.package.operate.cancel',n:'取消订单'},{c:'order.package.operate.confirm_payment',n:'确认支付'},{c:'order.package.operate.return_vehicle',n:'结束订单'},{c:'order.package.refund.create',n:'发起退款'},{c:'order.package.refund.list',n:'查看退款记录'}
   ]},
-  {id:'user',name:'用户管理',codes:['user.list','user.detail'],items:[
-    {c:'user.list',n:'用户列表'},{c:'user.detail',n:'用户详情'}
-  ]},
-  {id:'sys',name:'系统配置',codes:['model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.view','order_config.edit','recharge.view','recharge.edit','recharge.add','recharge.delete'],items:[
+  {id:'sys',name:'系统配置',codes:['model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit'],items:[
     {c:'model.list',n:'车型列表'},{c:'model.edit',n:'编辑车型'},{c:'batt_model.list',n:'电池型号列表'},{c:'batt_model.edit',n:'编辑电池型号'},{c:'package.list',n:'套餐列表'},{c:'package.add',n:'新增套餐'},{c:'package.edit',n:'编辑套餐'},{c:'account.list',n:'账号列表'},{c:'account.detail',n:'账号详情'},{c:'account.add',n:'新增账号'},{c:'account.edit',n:'编辑账号'},{c:'account.status.disable',n:'禁用账号'},{c:'account.status.enable',n:'启用账号'},
-    {c:'position.list',n:'职位列表'},{c:'position.detail',n:'职位详情'},{c:'position.add',n:'新增职位'},{c:'position.edit',n:'编辑职位'},{c:'position.delete',n:'删除职位'},{c:'cs_info.list',n:'客服列表'},{c:'cs_info.add',n:'新增客服'},{c:'cs_info.edit',n:'编辑客服'},{c:'cs_info.delete',n:'删除客服'},{c:'order_config.view',n:'订单配置'},{c:'order_config.edit',n:'编辑配置'},{c:'recharge.view',n:'充值配置'},{c:'recharge.edit',n:'编辑充值'},{c:'recharge.add',n:'新增充值'},{c:'recharge.delete',n:'删除充值'}
+    {c:'position.list',n:'职位列表'},{c:'position.detail',n:'职位详情'},{c:'position.add',n:'新增职位'},{c:'position.edit',n:'编辑职位'},{c:'position.delete',n:'删除职位'},{c:'cs_info.list',n:'客服列表'},{c:'cs_info.add',n:'新增客服'},{c:'cs_info.edit',n:'编辑客服'},{c:'cs_info.delete',n:'删除客服'},{c:'order_config.detail',n:'订单配置'},{c:'order_config.edit',n:'编辑配置'}
   ]}
 ];
 function pickPermGroup(id,codeFilter){
@@ -4612,13 +4597,13 @@ const demoPagePermCtx=computed(()=>{
     if(sub==='pkgEdit'||sub==='pkgAdd'||ov==='package')return{title:sub==='pkgEdit'?'编辑套餐':sub==='pkgAdd'?'新增套餐':'套餐管理',groups:[pickPermGroup('sys',sub==='pkgEdit'?['package.edit']:sub==='pkgAdd'?['package.add']:['package.add','package.edit'])].filter(Boolean)};
     /* 客服列表页不露 cs_info.list */
     if(sub==='csEdit'||ov==='cs')return{title:sub==='csEdit'?(csIdx.value===-1?'新增客服':'编辑客服'):'客服信息',groups:[pickPermGroup('sys',sub==='csEdit'?(csIdx.value===-1?['cs_info.add']:['cs_info.edit','cs_info.delete']):['cs_info.add','cs_info.edit','cs_info.delete'])].filter(Boolean)};
-    /* 已在配置页：不露 order_config.view（入口在「我的」） */
+    /* 已在配置页：不露 order_config.detail（入口在「我的」） */
     if(ov==='config')return{title:'订单配置',groups:[pickPermGroup('sys',['order_config.edit'])].filter(Boolean)};
-    if(ov==='recharge'||sub==='rechargeEdit')return{title:sub==='rechargeEdit'?(rechargeIdx.value===-1?'新增充值配置':'编辑充值配置'):'充值配置',groups:[pickPermGroup('sys',sub==='rechargeEdit'?(rechargeIdx.value===-1?['recharge.add']:['recharge.edit','recharge.delete']):['recharge.add','recharge.edit','recharge.delete'])].filter(Boolean)};
+    if(ov==='recharge'||sub==='rechargeEdit')return{title:sub==='rechargeEdit'?(rechargeIdx.value===-1?'新增充值配置':'编辑充值配置'):'充值配置',groups:[]};
     if(ov==='store')return{title:'切换门店',groups:[]};
     if(ov==='user'||sub==='userDetail')return{title:sub==='userDetail'?'用户详情':'用户管理',groups:[]};
     if(ov==='info'||ov==='settings'||sub==='lang'||sub==='bindPhone'||sub==='bindEmail'||sub==='pwdVerify'||sub==='pwdReset')return{title:ov==='settings'||sub==='lang'?'系统设置':ov==='info'?'个人信息':'我的',groups:[]};
-    return{title:'我的',groups:[pickPermGroup('sys',['model.list','batt_model.list','package.list','account.list','user.list','position.list','cs_info.list','order_config.view'])].filter(Boolean)};
+    return{title:'我的',groups:[pickPermGroup('sys',['model.list','batt_model.list','package.list','account.list','position.list','cs_info.list','order_config.detail'])].filter(Boolean)};
   }
   return{title:'—',groups:[]};
 });
@@ -4656,7 +4641,7 @@ const showPrimaryAction=computed(()=>{
   if(dSt.value==='created'||(dPaySt.value==='pending'&&!isOff)||dSt.value==='pickup')return orderPerm('operate.cancel');
   if(isOff)return orderPerm('operate.confirm_payment');
   if(['progress','return','overdue','breach'].includes(dSt.value))return orderPerm('operate.return_vehicle');
-  if(refundable.value)return orderPerm('order.refund.create');
+  if(refundable.value)return orderPerm('refund.create');
   return false;
 });
 const showDangerAction=computed(()=>{
@@ -4683,11 +4668,11 @@ const batteries=ref([
 {battNo:'BATT-YD1005',account:'user010',phone:'+86 13700009999',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
 ]);
 const battPills=computed(()=>[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'}]);
-const battPillCnt=computed(()=>{const base=batteries.value.filter(b=>{if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true});const m={};let n=0;base.forEach(b=>{m[b.status]=(m[b.status]||0)+1;n++});return{'':n,空闲:m['空闲']||0,占用中:m['占用中']||0,租用中:m['租用中']||0}});
+const battPillCnt=computed(()=>{const base=demoListEmpty.value?[]:batteries.value.filter(b=>{if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true});const m={};let n=0;base.forEach(b=>{m[b.status]=(m[b.status]||0)+1;n++});return{'':n,空闲:m['空闲']||0,占用中:m['占用中']||0,租用中:m['租用中']||0}});
 const battShowFS=ref(false),battFsModel=ref(''),battFsOnline=ref(null),battFsLost=ref(null),battFsModelC=ref(''),battFsOnlineC=ref(null),battFsLostC=ref(null);
 const battHasF=computed(()=>!!battFsModel.value||battFsOnline.value!==null||battFsLost.value!==null||!!battPill.value);
 const battFsModels=computed(()=>Array.from(new Set(batteries.value.map(b=>b.model))));
-const batterFiltered=computed(()=>batteries.value.filter(b=>{if(battPill.value&&b.status!==battPill.value)return false;if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true}));
+const batterFiltered=computed(()=>demoListEmpty.value?[]:batteries.value.filter(b=>{if(battPill.value&&b.status!==battPill.value)return false;if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true}));
 const curBatt=ref(null);
 function battDoSearch(){brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)}
 function battOpenDetail(b){if(!can('battery.detail')){deny();return}curBatt.value=b;ordersOV.value='battDetail'}
@@ -4910,7 +4895,7 @@ const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'
 const paySts=computed(()=>[{v:'pending',l:'待支付'},{v:'processing',l:'支付中'},{v:'paid',l:'已支付'},{v:'refunding',l:'退款中'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
 const quickPills=computed(()=>[{l:'全部',v:''},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'}]);
-  const qCnt=computed(()=>{const base=orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=(o.rentStart||o.created||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true});const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
+  const qCnt=computed(()=>{const base=demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=(o.created||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true});const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
 const typePills=computed(()=>[{l:'全部',v:''},{v:'vehicle',l:'车辆租赁'},{v:'battery',l:'电池租赁'},{v:'package',l:'套餐'}]);
 const typeCnt=computed(()=>{const m={};orders.value.forEach(o=>{const ty=o.type||'vehicle';m[ty]=(m[ty]||0)+1});return{'':orders.value.length,vehicle:m['vehicle']||0,battery:m['battery']||0,package:m['package']||0}});
 function fmtYmd(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
@@ -4943,7 +4928,7 @@ const ordersDateDays=computed(()=>{
 const ordersHasF=computed(()=>!!ordersFsSt.value||!!ordersFsPay.value||!!ordersFsPaySt.value);
 const vehSts=['progress','return','overdue','complete','breach'];
 function hasVehicle(s){return vehSts.indexOf(s)!==-1}
-const oFiltered=computed(()=>orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
+const oFiltered=computed(()=>demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=(o.created||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
 function sl(s){var m={created:'已创建',pickup:'待取用',progress:'进行中','return':'待归还',overdue:'已超期',complete:'已完成',cancelled:'已取消',breach:'已违约'};return m[s]||s}
 function stg(s){var m={created:'#FF8C1B',pickup:'#FF8C1B',progress:'#22D098','return':'#1A82F4',overdue:'#FF4343',complete:'#333333',cancelled:'#666666',breach:'#FF4343'};return {color:m[s]||'#333333'}}
 var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
@@ -5030,25 +5015,25 @@ var refundSaving=ref(false);
 function submitRefund(){if(refundSaving.value)return;refundSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;refundSaving.value=false;ordersMod.value='refundConfirm'},600)}
  /* ══ Order Refund Records ══ */
   const orderRefunds=ref({
-'YD202607100007':[
-{refundNo:'TK202607210001',refundTime:'2026-07-21 14:30:00',finishTime:'2026-07-21 14:33:20',operator:'Staff Li',reason:'提前还车，租金差额退还',rentAmount:200,depositAmount:0,refundSource:'运营平台',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:200}]},
-{refundNo:'TK202607200002',refundTime:'2026-07-20 11:05:00',finishTime:'2026-07-20 11:07:45',operator:'运营平台',reason:'用户主动申请押金退还',rentAmount:0,depositAmount:300,refundSource:'运营平台',refundStatus:'FAILED',items:[{part:'deposit',method:'2C2P',amount:300}]},
-{refundNo:'TK202607190003',refundTime:'2026-07-19 16:42:00',operator:'Merchant Shop A',reason:'商户优惠减免补偿',rentAmount:80,depositAmount:0,refundSource:'商户端',refundStatus:'REFUNDING',items:[{part:'rent',method:'OFFLINE',amount:80}]}
+'YD202608100007':[
+{refundNo:'TK202607210001',refundTime:'2026-08-21 14:30:00',finishTime:'2026-08-21 14:33:20',operator:'Staff Li',reason:'提前还车，租金差额退还',rentAmount:200,depositAmount:0,refundSource:'运营平台',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:200}]},
+{refundNo:'TK202608200002',refundTime:'2026-08-20 11:05:00',finishTime:'2026-08-20 11:07:45',operator:'运营平台',reason:'用户主动申请押金退还',rentAmount:0,depositAmount:300,refundSource:'运营平台',refundStatus:'FAILED',items:[{part:'deposit',method:'2C2P',amount:300}]},
+{refundNo:'TK202608190003',refundTime:'2026-08-19 16:42:00',operator:'Merchant Shop A',reason:'商户优惠减免补偿',rentAmount:80,depositAmount:0,refundSource:'商户端',refundStatus:'REFUNDING',items:[{part:'rent',method:'OFFLINE',amount:80}]}
 ],
-'YD202607190008':[
-{refundNo:'TK202607190004',refundTime:'2026-07-19 15:30:00',finishTime:'2026-07-19 15:32:10',operator:'zhang.wei',reason:'用户取消订单',rentAmount:300,depositAmount:500,refundSource:'用户端',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:300},{part:'deposit',method:'2C2P',amount:500}]}
+'YD202608190008':[
+{refundNo:'TK202608190004',refundTime:'2026-08-19 15:30:00',finishTime:'2026-08-19 15:32:10',operator:'zhang.wei',reason:'用户取消订单',rentAmount:300,depositAmount:500,refundSource:'用户端',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:300},{part:'deposit',method:'2C2P',amount:500}]}
 ],
-'YD202607100001':[
-{refundNo:'TK202607260005',refundTime:'2026-07-26 10:20:00',finishTime:'2026-07-26 10:22:40',operator:'Staff Li',reason:'提前还车，租金差额退还',rentAmount:60,depositAmount:0,refundSource:'运营平台',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:60}]}
+'YD202608100001':[
+{refundNo:'TK202607260005',refundTime:'2026-08-26 10:20:00',finishTime:'2026-08-26 10:22:40',operator:'Staff Li',reason:'提前还车，租金差额退还',rentAmount:60,depositAmount:0,refundSource:'运营平台',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:60}]}
 ],
-'YD202607190001':[
-{refundNo:'TK202607240006',refundTime:'2026-07-24 09:40:00',finishTime:'2026-07-24 09:42:50',operator:'zhang.wei',reason:'用户取消订单',rentAmount:180,depositAmount:200,refundSource:'用户端',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:180},{part:'deposit',method:'2C2P',amount:200}]}
+'YD202608190001':[
+{refundNo:'TK202607240006',refundTime:'2026-08-24 09:40:00',finishTime:'2026-08-24 09:42:50',operator:'zhang.wei',reason:'用户取消订单',rentAmount:180,depositAmount:200,refundSource:'用户端',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:180},{part:'deposit',method:'2C2P',amount:200}]}
 ],
-'YD202607100002':[
-{refundNo:'TK202607260007',refundTime:'2026-07-26 11:10:00',finishTime:'2026-07-26 11:12:30',operator:'Staff Li',reason:'提前还车，租金差额退还',rentAmount:100,depositAmount:0,refundSource:'运营平台',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:100}]}
+'YD202608100002':[
+{refundNo:'TK202607260007',refundTime:'2026-08-26 11:10:00',finishTime:'2026-08-26 11:12:30',operator:'Staff Li',reason:'提前还车，租金差额退还',rentAmount:100,depositAmount:0,refundSource:'运营平台',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:100}]}
 ],
-'YD202607190002':[
-{refundNo:'TK202607240008',refundTime:'2026-07-24 14:00:00',finishTime:'2026-07-24 14:02:15',operator:'zhang.wei',reason:'用户取消订单',rentAmount:620,depositAmount:500,refundSource:'用户端',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:620},{part:'deposit',method:'2C2P',amount:500}]}
+'YD202608190002':[
+{refundNo:'TK202607240008',refundTime:'2026-08-24 14:00:00',finishTime:'2026-08-24 14:02:15',operator:'zhang.wei',reason:'用户取消订单',rentAmount:620,depositAmount:500,refundSource:'用户端',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:620},{part:'deposit',method:'2C2P',amount:500}]}
 ]
   });
  const refRecScope=ref(null);
@@ -5058,7 +5043,7 @@ function submitRefund(){if(refundSaving.value)return;refundSaving.value=true;bra
   if(refRecScope.value)list=list.filter(function(r){return r&&r.targetNo===refRecScope.value});
   return list.sort(function(a,b){return (b.refundTime||'').localeCompare(a.refundTime||'')});
  });
- function openRefundRecords(row){if(!do_.value)return;if(!can('order.refund.list')){deny();return}refRecScope.value=(row&&row.isRenew)?row.subOrderNo:null;ordersOV.value='refunds'}
+ function openRefundRecords(row){if(!do_.value)return;if(!orderPerm('refund.list')){deny();return}refRecScope.value=(row&&row.isRenew)?row.subOrderNo:null;ordersOV.value='refunds'}
   function refundStLabel(s){return {PROCESSING:'退款中',REFUNDING:'退款中',SUCCESS:'退款成功',FAILED:'退款失败'}[s]||'-'}
   function refundStg(s){var m={PROCESSING:'#F59E0B',REFUNDING:'#F59E0B',SUCCESS:'#17A34A',FAILED:'#DC2626'};return m[s]||'#999'}
   function refundSourceLabel(r){return (r&&r.refundSource)||'-'}
@@ -5611,7 +5596,7 @@ function goBack(){
   else if(profileOV.value)profileOV.value=null;
 }
 const hdrTitle=computed(()=>{const m={info:'个人信息',store:'门店列表',model:'车型管理',battModel:'电池型号管理',package:'套餐管理',account:'账号管理',pos:'职位管理',cs:'客服信息',config:'订单配置',recharge:'充值配置',user:'用户管理',settings:'系统设置'};const s={mEdit:'编辑车型',bmEdit:'编辑电池型号',pkgEdit:'编辑套餐',pkgAdd:'新增套餐',aDetail:'账号详情',aAdd:'新增账号',aEdit:'编辑账号',pDetail:'职位详情',pAdd:'新增职位',pEdit:'编辑职位',csEdit:csIdx.value===-1?'新增客服':'编辑客服',lang:'切换语言',bindPhone:'绑定手机号',bindEmail:'绑定邮箱',pwdVerify:'修改密码',pwdReset:'重置密码',userDetail:'用户详情'};return profileSub.value?(s[profileSub.value]||''):(m[profileOV.value]||'')});
-const hdrAction=computed(()=>{if(profileOV.value==='account'&&can('account.add'))return{label:'新增',fn:()=>openAccAdd()};if(profileOV.value==='cs'&&can('cs_info.add'))return{label:'新增',fn:()=>openCsEdit(-1)};if(profileOV.value==='recharge'&&can('recharge.add'))return{label:'新增',fn:()=>openRechargeEdit(-1)};if(profileSub.value==='pDetail'&&can('position.add'))return{label:'新增下级职位',fn:()=>openPosAdd(dp.value.name)};if(profileOV.value==='config'&&can('order_config.edit'))return{label:'保存',fn:saveCfg};return null});
+const hdrAction=computed(()=>{if(profileOV.value==='account'&&can('account.add'))return{label:'新增',fn:()=>openAccAdd()};if(profileOV.value==='cs'&&can('cs_info.add'))return{label:'新增',fn:()=>openCsEdit(-1)};if(profileOV.value==='recharge')return{label:'新增',fn:()=>openRechargeEdit(-1)};if(profileSub.value==='pDetail'&&can('position.add'))return{label:'新增下级职位',fn:()=>openPosAdd(dp.value.name)};if(profileOV.value==='config'&&can('order_config.edit'))return{label:'保存',fn:saveCfg};return null});
 const curStore=ref('');
 const menuGroups=computed(()=>[
   {name:'经营管理',items:[
@@ -5623,12 +5608,12 @@ const menuGroups=computed(()=>[
   {name:'员工与用户',items:[
     {id:'account',label:'账号管理',icon:'users',code:'account.list'},
     {id:'pos',label:'职位管理',icon:'clock',code:'position.list'},
-    {id:'user',label:'用户管理',icon:'users',code:'user.list'}
+    {id:'user',label:'用户管理',icon:'users',code:null}
   ]},
   {name:'运营配置',items:[
-    {id:'config',label:'订单配置',icon:'settings',code:'order_config.view'},
+    {id:'config',label:'订单配置',icon:'settings',code:'order_config.detail'},
     {id:'cs',label:'客服信息',icon:'headset',code:'cs_info.list'},
-    {id:'recharge',label:'充值配置',icon:'wallet',code:'recharge.view'}
+    {id:'recharge',label:'充值配置',icon:'wallet',code:null}
   ]}
 ].map(g=>({...g,items:g.items.filter(m=>!m.code||can(m.code))})).filter(g=>g.items.length));
 function openMenu(id){profileOV.value=id;brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)}
@@ -5695,7 +5680,7 @@ const stores=ref([]);
 function doSwitch(n){if(n===curStore.value){profileOV.value=null;return}curStore.value=n;profileOV.value=null}
 const mQ=ref('');
 const profileModels=ref([]);
-const mFilter=computed(()=>mQ.value?profileModels.value.filter(m=>m.name.toLowerCase().includes(mQ.value.toLowerCase())):profileModels.value);
+const mFilter=computed(()=>demoListEmpty.value?[]:mQ.value?profileModels.value.filter(m=>m.name.toLowerCase().includes(mQ.value.toLowerCase())):profileModels.value);
 const fm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0});
 const modelPlanOpts=[{v:'hour',l:'planHour'},{v:'day',l:'planDay'},{v:'week',l:'planWeek'},{v:'month',l:'planMonth'}];
 const modelPriceKey={hour:'priceHour',day:'priceDay',week:'priceWeek',month:'priceMonth'};
@@ -5706,14 +5691,14 @@ function mPlanText(m){var PLANS={hour:'时租',day:'日租',week:'周租',month:
 function mPlanPrices(m){var M={hour:['时租','priceHour'],day:['日租','priceDay'],week:['周租','priceWeek'],month:['月租','priceMonth']};var out=[];['hour','day','week','month'].forEach(function(k){if(m.plans&&m.plans[k])out.push({label:M[k][0],price:m[M[k][1]]||0})});return out}
 const bmQ=ref('');
 const profileBattModels=ref([]);
-const bmFilter=computed(()=>bmQ.value?profileBattModels.value.filter(m=>m.name.toLowerCase().includes(bmQ.value.toLowerCase())):profileBattModels.value);
+const bmFilter=computed(()=>demoListEmpty.value?[]:bmQ.value?profileBattModels.value.filter(m=>m.name.toLowerCase().includes(bmQ.value.toLowerCase())):profileBattModels.value);
 const fbm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0});
 function openBattModelEdit(m){fbm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0};profileSub.value='bmEdit'}
 var battModelSaving=ref(false);
 function saveBattModel(){if(battModelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fbm.value.plans[p]&&(fbm.value[k]===null||fbm.value[k]===undefined||fbm.value[k]==='')){e[p]='请输入价格'}else if(fbm.value.plans[p]&&!isAmt(fbm.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fbm.value.deposit===''||fbm.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fbm.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fbm.value.sort!==''&&!(Number.isInteger(fbm.value.sort)&&fbm.value.sort>=1&&fbm.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};battModelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileBattModels.value.findIndex(m=>m.name===fbm.value.name);if(i>=0){Object.assign(profileBattModels.value[i],{plans:Object.assign({},fbm.value.plans),priceHour:fbm.value.priceHour,priceDay:fbm.value.priceDay,priceWeek:fbm.value.priceWeek,priceMonth:fbm.value.priceMonth,deposit:fbm.value.deposit,sort:fbm.value.sort,time:now()})}profileSub.value=null;fE.value={};toast('电池型号已保存','success');battModelSaving.value=false},400)}
 const pkgQ=ref('');
 const profilePackages=ref([]);
-const pkgFilter=computed(()=>pkgQ.value?profilePackages.value.filter(m=>m.name.toLowerCase().includes(pkgQ.value.toLowerCase())):profilePackages.value);
+const pkgFilter=computed(()=>demoListEmpty.value?[]:pkgQ.value?profilePackages.value.filter(m=>m.name.toLowerCase().includes(pkgQ.value.toLowerCase())):profilePackages.value);
 const fpk=ref({name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:'',status:'上架'});
 function openPackageEdit(m){fpk.value={name:m.name,vehicleModel:m.vehicleModel||'',batteryModel:m.batteryModel||'',mainImg:!!m.mainImg,thumbImg:!!m.thumbImg,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0,remark:m.remark||'',status:m.status||'上架'};profileSub.value='pkgEdit'}
 function openPackageAdd(){fpk.value={name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:'',status:'上架'};fE.value={};profileSub.value='pkgAdd'}
@@ -5728,7 +5713,7 @@ var packageSaving=ref(false);
 function savePackage(){if(packageSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profilePackages.value.findIndex(m=>m.name===fpk.value.name);if(i>=0){Object.assign(profilePackages.value[i],{vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()})}profileSub.value=null;fE.value={};toast('套餐已保存','success');packageSaving.value=false},400)}
 const aQ=ref(''),allRoles=computed(()=>['店长','管理员','员工','财务','运维']);
 const accounts=ref([]);
-const aFilter=computed(()=>{const q=aQ.value.toLowerCase();return q?accounts.value.filter(a=>(a.account+a.name+a.phone).toLowerCase().includes(q)):accounts.value});
+const aFilter=computed(()=>{if(demoListEmpty.value)return[];const q=aQ.value.toLowerCase();return q?accounts.value.filter(a=>(a.account+a.name+a.phone).toLowerCase().includes(q)):accounts.value});
 const fa=ref({account:'',name:'',code:'+86',phone:'',email:'',roles:[],remark:''});const da=ref({});
 const adRows=computed(()=>[{k:'账号',v:da.value.account},{k:'姓名',v:da.value.name},{k:'手机号',v:(da.value.code||'')+' '+(da.value.phone||'')},{k:'邮箱',v:da.value.email},{k:'备注',v:da.value.remark||'—'},{k:'创建时间',v:da.value.created}]);
 function mask(p){if(!p||p.length<11)return p;return p.slice(0,p.length-8)+'****'+p.slice(-4)}
@@ -5780,6 +5765,7 @@ const userList=ref([
   {id:8,account:'zhengshi',phone:'+62 81901234567',email:'zhengshi@mail.com',nickname:'郑十',status:'注销',created:'2024-06-01 10:00:00'}
 ]);
 const uFiltered=computed(()=>{
+  if(demoListEmpty.value)return[];
   let list=userList.value;
   if(uStatus.value)list=list.filter(u=>u.status===uStatus.value);
   const q=uQ.value.toLowerCase();
@@ -5853,10 +5839,10 @@ const uWithdrawAll=[
 ];
 const uFlowList=computed(function(){
   const prefix=uFlowType.value==='bonus'?'G':'L';
-  return uFlowAll.filter(function(r){return String(r.ledgerNo).charAt(0)===prefix&&(uFlowTxn.value==='全部'||r.txnType===uFlowTxn.value)})
+  return demoListEmpty.value?[]:uFlowAll.filter(function(r){return String(r.ledgerNo).charAt(0)===prefix&&(uFlowTxn.value==='全部'||r.txnType===uFlowTxn.value)})
     .slice().sort(function(a,b){return String(b.createTime).localeCompare(String(a.createTime))});
 });
-const uWdList=computed(function(){return uWithdrawAll.filter(function(r){
+const uWdList=computed(function(){return demoListEmpty.value?[]:uWithdrawAll.filter(function(r){
   if(uWdStatus.value&&r.status!==uWdStatus.value)return false;
   return true;
 }).slice().sort(function(a,b){return String(b.applyTime).localeCompare(String(a.applyTime))})});
@@ -5916,7 +5902,7 @@ function confirmUBind(){
 }
 const pQ=ref('');
 const positions=ref([]);
-const pFilter=computed(()=>{const q=pQ.value.toLowerCase();return q?positions.value.filter(p=>p.name.toLowerCase().includes(q)):positions.value});
+const pFilter=computed(()=>{if(demoListEmpty.value)return[];const q=pQ.value.toLowerCase();return q?positions.value.filter(p=>p.name.toLowerCase().includes(q)):positions.value});
 const dp=ref({});
 const pdRows=computed(()=>[{k:'职位名称',v:dp.value.name},{k:'门店级别',v:dp.value.level||'—'},{k:'上级职位',v:dp.value.parent},{k:'备注',v:dp.value.remark||'—'},{k:'创建时间',v:dp.value.created}]);
 const fp=ref({name:'',parent:'—',remark:''});
@@ -5993,9 +5979,9 @@ const rechargeCustom=ref(false);
 const rechargeList=ref([{id:1,amount:100,giftAmount:10,status:1,remark:'新用户首充优惠'},{id:2,amount:200,giftAmount:30,status:1,remark:'常规定制套餐'},{id:3,amount:500,giftAmount:80,status:0,remark:''}]);
 const rechargeIdx=ref(-1);const rfc=ref({amount:null,giftAmount:null,status:1,remark:''});
 var rechargeSaving=ref(false);const rfcErr=ref({amount:''});
-function openRechargeEdit(i){if(i===-1){if(!can('recharge.add')){deny();return}}else if(!can('recharge.edit')){deny();return}rechargeIdx.value=i;rfc.value=i===-1?{amount:null,giftAmount:null,status:1,remark:''}:{...rechargeList.value[i]};rfcErr.value={amount:''};profileSub.value='rechargeEdit'}
+function openRechargeEdit(i){rechargeIdx.value=i;rfc.value=i===-1?{amount:null,giftAmount:null,status:1,remark:''}:{...rechargeList.value[i]};rfcErr.value={amount:''};profileSub.value='rechargeEdit'}
 function saveRecharge(){if(rechargeSaving.value)return;var e={};if(rfc.value.amount==null||rfc.value.amount===''||Number(rfc.value.amount)<0)e.amount='请输入充值金额';rfcErr.value=e;if(e.amount)return;rechargeSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;if(rechargeIdx.value===-1){var ids=rechargeList.value.map(x=>x.id);var nid=ids.length?Math.max(...ids):0;rechargeList.value.push({id:nid+1,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0,status:rfc.value.status,remark:rfc.value.remark||''})}else{rechargeList.value[rechargeIdx.value]={...rfc.value,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0}}profileSub.value=null;rfcErr.value={};toast(rechargeIdx.value===-1?'充值配置已新增成功':'充值配置已编辑成功','success');rechargeSaving.value=false},400)}
-let delRechargeI=-1;function delRecharge(i){if(!can('recharge.delete')){deny();return}delRechargeI=i;profileMod.value='delRecharge'}
+let delRechargeI=-1;function delRecharge(i){delRechargeI=i;profileMod.value='delRecharge'}
 /* ══ 充值订单（商户端，对接 recharge-order-merchant-mobile 文档） ══ */
 const roOV=ref('');            // '' | 'list' | 'detail' | 'refunds'
 const curRechargeOrder=ref(null);
@@ -6020,7 +6006,7 @@ function roCloseList(){roOV.value=''}
 function roGoBack(){roOV.value='list'}
 function roCanRefund(){var s=curRechargeOrder.value&&curRechargeOrder.value.payStatus;return s==='PAID'||s==='PARTIAL_REFUND'}
 function roCanRefundRecords(){var s=curRechargeOrder.value&&curRechargeOrder.value.payStatus;return ['REFUNDING','PARTIAL_REFUND','FULL_REFUND'].indexOf(s)!==-1}
-function roOpenRefunds(){var o=curRechargeOrder.value;roRefunds.value=[{applyTime:'2026-08-10 09:12:00',rechargeAmount:o.refundAmount||0,giftAmount:o.refundGiftAmount||0,operator:'zhang.wei',refundReason:'客户要求退款',refundStatus:'REFUNDING',refundTime:o.payStatus==='FULL_REFUND'?'2026-08-01 11:00:00':''}];roOV.value='refunds'}
+function roOpenRefunds(){var o=curRechargeOrder.value;roRefunds.value=[{applyTime:'2026-08-10 09:12:00',rechargeAmount:o.refundAmount||0,giftAmount:o.refundGiftAmount||0,operator:'zhang.wei',refundReason:'客户要求退款',refundStatus:'REFUNDING',refundTime:o.payStatus==='FULL_REFUND'?'2026-08-11 11:00:00':''}];roOV.value='refunds'}
 function roRefundTotal(){var a=Number(roRefundForm.value.amount)||0,b=Number(roRefundForm.value.giftAmount)||0;return a+b}
 function roOpenRefund(){if(!roCanRefund())return;roRefundForm.value={amount:null,giftAmount:null};roRefundMod.value=true}
 function roSubmitRefund(){var a=Number(roRefundForm.value.amount)||0,b=Number(roRefundForm.value.giftAmount)||0,o=curRechargeOrder.value;if(a<=0&&b<=0){toast('请输入退款金额','warn');return}if(a>o.amount){toast('充值金额超出可退金额','warn');return}if(b>o.giftAmount){toast('赠送金额超出可退金额','warn');return}roRefundConfirm.value=true}
@@ -6043,11 +6029,13 @@ const roTabCnt=computed(()=>{const m={};let n=0;rechargeOrders.value.forEach(o=>
 const roFsPay=ref(''),roFsPaySt=ref([]),roFsStart=ref(_ordDateDef.start),roFsEnd=ref(_ordDateDef.end),roFsMin=ref(''),roFsMax=ref('');
 const roHasF=computed(()=>!!roFsPay.value||roFsPaySt.value.length>0||!!roFsStart.value||!!roFsEnd.value||(roFsMin.value!==''&&roFsMin.value!=null)||(roFsMax.value!==''&&roFsMax.value!=null));
 const rechargeFiltered=computed(()=>rechargeOrders.value.filter(o=>{
+  if(demoListEmpty.value)return false;
   if(roStatus.value&&roStatus.value.indexOf(o.payStatus)===-1)return false;
   if(roFsPay.value&&(o.payChannel||'')!==roFsPay.value)return false;
   if(roFsPaySt.value.length&&roFsPaySt.value.indexOf(o.payStatus)===-1)return false;
   if(roFsMin.value!==''&&roFsMin.value!=null&&Number(o.amount)<Number(roFsMin.value))return false;
   if(roFsMax.value!==''&&roFsMax.value!=null&&Number(o.amount)>Number(roFsMax.value))return false;
+  if(roFsStart.value&&roFsEnd.value){var m=(o.createTime||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<roFsStart.value||m[1]>roFsEnd.value))return false}
   if(roQ.value){var f={no:o.orderNo,account:o.account||'',phone:o.phone||'',email:o.email||''}[roSearchScope.value]||o.orderNo;if(f.toLowerCase().indexOf(roQ.value.toLowerCase())===-1)return false}
   return true
 }));
@@ -6067,7 +6055,7 @@ const roFsPayC=ref(''),roFsPayStC=ref([]),roFsStartC=ref(_ordDateDef.start),roFs
 const roFsPayStOpts=[{v:'UNPAID',l:'待支付'},{v:'PAYING',l:'支付中'},{v:'PAID',l:'已支付'},{v:'REFUNDING',l:'退款中'},{v:'PARTIAL_REFUND',l:'部分退款'},{v:'FULL_REFUND',l:'全部退款'},{v:'CANCELLED',l:'已取消'}];
 function roOpenFS(){roFsPayC.value=roFsPay.value;roFsPayStC.value=roFsPaySt.value.slice();roFsStartC.value=roFsStart.value;roFsEndC.value=roFsEnd.value;roFsMinC.value=roFsMin.value;roFsMaxC.value=roFsMax.value;roShowFS.value=true}
 function roToggleFsPaySt(v){var i=roFsPayStC.value.indexOf(v);if(i===-1)roFsPayStC.value.push(v);else roFsPayStC.value.splice(i,1)}
-function roResetFS(){roFsPayC.value='';roFsPayStC.value=[];roFsStartC.value='';roFsEndC.value='';roFsMinC.value='';roFsMaxC.value=''}
+function roResetFS(){roFsPayC.value='';roFsPayStC.value=[];var def=defaultOrdersDateRange();roFsStartC.value=def.start;roFsEndC.value=def.end;roFsMinC.value='';roFsMaxC.value=''}
 function roApplyFS(){roFsPay.value=roFsPayC.value;roFsPaySt.value=roFsPayStC.value.slice();roFsStart.value=roFsStartC.value;roFsEnd.value=roFsEndC.value;roFsMin.value=roFsMinC.value;roFsMax.value=roFsMaxC.value;roShowFS.value=false}
 function roDoSearch(){}
 function setRoSearchScope(v){roSearchScope.value=v;roSearchScopeOpen.value=false}
@@ -6105,54 +6093,54 @@ function initI18nData(){
     {id:'YD202609010002',vin:'LSVAU2Z0A44444000',customer:'Wang Fang',phone:'+86 13800004444',plan:'月租×' + (1) + '月',amount:520,status:'progress',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-09-02 11:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-09-02 14:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:420},{method:'WALLET',amount:100}],depositSplit:[{method:'2C2P',amount:500}]},renewSubOrders:[
       {subOrderNo:'YD202609150031',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-02 14:00:00',newRentEnd:'2026-10-09 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:80},{method:'WALLET',amount:50}]}}
     ]},
-    {id:'YD202607210001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:'月租×' + (1) + '月',amount:350,status:'created',type:'vehicle',item:'乐迪SAA',created:'2026-07-21 09:00:00',payment:'offline',paySt:'pending',rentStart:'2026-07-21 09:00:00'},
-    {id:'YD202607210002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:'月租×' + (1) + '月',amount:560,status:'created',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-07-22 10:00:00',payment:'2c2p',paySt:'pending',rentStart:'2026-07-21 09:30:00',paySplitAudits:[{splitNo:'CF20260801001',operatorAccount:'zhang.wei',createTime:'2026-08-01 15:20:00',reason:'客户要求调高租金并调整渠道',before:{rentFee:560,deposit:500,rentSplit:[{method:'2C2P',amount:560}],depositSplit:[{method:'2C2P',amount:500}]},after:{rentFee:600,deposit:500,rentSplit:[{method:'2C2P',amount:400},{method:'WALLET',amount:200}],depositSplit:[{method:'2C2P',amount:500}]}}]},
-    {id:'YD202607210003',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:'月租×' + (1) + '月',amount:420,status:'pickup',type:'vehicle',item:'乐迪E8',created:'2026-07-23 11:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-21 09:00:00'},
-    {id:'YD202607210004',vin:'LSVAU2Z0A44444000',customer:'Li Si',phone:'+86 13800004444',plan:'月租×' + (1) + '月',amount:380,status:'pickup',type:'vehicle',item:'雅迪DE2',created:'2026-07-23 12:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-21 10:00:00'},
-    {id:'YD202607180004',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:'月租×' + (2) + '月',amount:420,status:'progress',type:'vehicle',item:'雅迪DE2',created:'2026-07-24 12:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-22 14:00:00'},
-    {id:'YD202607180005',vin:'LSVAU2Z0A55556000',customer:'Wang Liu',phone:'+86 13800005556',plan:'月租×' + (1) + '月',amount:360,status:'progress',type:'vehicle',item:'乐迪E10',created:'2026-07-24 13:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-22 15:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:240},{method:'WALLET',amount:120}],depositSplit:[{method:'2C2P',amount:500}]}},
-    {id:'YD202607170005',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:'月租×' + (1) + '月',amount:350,status:'return',type:'vehicle',item:'乐迪E10',created:'2026-07-25 13:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-21 08:00:00'},
-    {id:'YD202607170006',vin:'LSVAU2Z0A66667000',customer:'Zhao Qi',phone:'+86 13800006667',plan:'月租×' + (1) + '月',amount:350,status:'return',type:'vehicle',item:'乐迪SAA',created:'2026-07-25 14:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-21 09:00:00'},
-    {id:'YD202607150006',vin:'LSVAU2Z0A77777000',customer:'Sun Qi',phone:'+86 13800007777',plan:'月租×' + (1) + '月',amount:350,status:'overdue',type:'vehicle',item:'乐迪SAA',created:'2026-07-26 14:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-23 10:00:00'},
-    {id:'YD202607150007',vin:'LSVAU2Z0A77778000',customer:'Sun Ba',phone:'+86 13800007778',plan:'月租×' + (1) + '月',amount:380,status:'overdue',type:'vehicle',item:'雅迪DE2',created:'2026-07-26 15:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-23 11:00:00'},
-    {id:'YD202607080009',vin:'LSVAU2Z0A10101000',customer:'Wu Shi',phone:'+86 13900001010',plan:'月租×' + (1) + '月',amount:350,status:'breach',type:'vehicle',item:'雅迪DE2',created:'2026-07-29 17:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-28 08:00:00'},
-    {id:'YD202607080010',vin:'LSVAU2Z0A10102000',customer:'Wu Liu',phone:'+86 13900001011',plan:'月租×' + (1) + '月',amount:360,status:'breach',type:'vehicle',item:'乐迪E8',created:'2026-07-29 18:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-28 09:00:00'},
-    {id:'YD202607100007',vin:'LSVAU2Z0A88888000',customer:'Zhou Ba',phone:'+86 13800008888',plan:'月租×' + (2) + '月',amount:620,status:'complete',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-07-27 15:00:00',payment:'offline',paySt:'partialRefund',rentStart:'2026-07-25 09:00:00'},
-    {id:'YD202607100008',vin:'LSVAU2Z0A88889000',customer:'Zhou Liu',phone:'+86 13800008889',plan:'月租×' + (1) + '月',amount:560,status:'complete',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-07-27 16:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-25 10:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:200},{method:'WALLET',amount:160},{method:'OFFLINE',amount:200}],depositSplit:[{method:'2C2P',amount:300},{method:'WALLET',amount:200}]}},
-    {id:'YD202607190008',vin:'LSVAU2Z0A99999000',customer:'Zheng Jiu',phone:'+86 13800009999',plan:'月租×' + (1) + '月',amount:300,status:'cancelled',type:'vehicle',item:'乐迪E8',created:'2026-07-28 16:00:00',payment:'offline',paySt:'fullRefund',rentStart:'2026-07-25 11:00:00'},
-    {id:'YD202607190009',vin:'LSVAU2Z0A99999001',customer:'Zheng Shi',phone:'+86 13800009990',plan:'月租×' + (1) + '月',amount:320,status:'cancelled',type:'vehicle',item:'乐迪SAA',created:'2026-07-28 17:00:00',payment:'2c2p',paySt:'fullRefund',rentStart:'2026-07-25 12:00:00'},
-    {id:'YD202607220001',vin:'LSVAU2Z0A11112000',customer:'Qian Qi',phone:'+86 13800002111',plan:'月租×' + (1) + '月',amount:180,status:'created',type:'battery',item:'天能锂电72V20Ah',created:'2026-07-30 09:00:00',battNo:'BATT-YD1000',payment:'offline',paySt:'pending',rentStart:'2026-07-21 10:00:00'},
-    {id:'YD202607220002',vin:'LSVAU2Z0A22222001',customer:'Sun Er',phone:'+86 13800002222',plan:'月租×' + (1) + '月',amount:260,status:'created',type:'battery',item:'超威黑金72V32Ah',created:'2026-07-31 10:00:00',battNo:'BATT-YD1001',payment:'2c2p',paySt:'pending',rentStart:'2026-07-21 10:30:00'},
-    {id:'YD202607220003',vin:'LSVAU2Z0A33333001',customer:'Li Si',phone:'+86 13800003333',plan:'月租×' + (1) + '月',amount:200,status:'pickup',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-01 11:00:00',battNo:'BATT-YD1002',payment:'offline',paySt:'paid',rentStart:'2026-07-21 11:00:00'},
-    {id:'YD202607220004',vin:'LSVAU2Z0A44444001',customer:'Li Wu',phone:'+86 13800004445',plan:'月租×' + (1) + '月',amount:220,status:'pickup',type:'battery',item:'超威黑金60V23Ah',created:'2026-08-01 12:00:00',battNo:'BATT-YD1009',payment:'2c2p',paySt:'paid',rentStart:'2026-07-21 12:00:00'},
-    {id:'YD202607180001',vin:'LSVAU2Z0A55555001',customer:'Wang San',phone:'+86 13800005555',plan:'月租×' + (2) + '月',amount:180,status:'progress',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-02 12:00:00',battNo:'BATT-YD1003',payment:'offline',paySt:'paid',rentStart:'2026-07-22 15:00:00'},
-    {id:'YD202607180006',vin:'LSVAU2Z0A55556001',customer:'Wang Liu',phone:'+86 13800005557',plan:'月租×' + (1) + '月',amount:200,status:'progress',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-02 13:00:00',battNo:'BATT-YD1010',payment:'2c2p',paySt:'paid',rentStart:'2026-07-22 16:00:00'},
-    {id:'YD202607170001',vin:'LSVAU2Z0A66666001',customer:'Zhao Si',phone:'+86 13800006666',plan:'月租×' + (1) + '月',amount:180,status:'return',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-03 13:00:00',battNo:'BATT-YD1004',payment:'offline',paySt:'paid',rentStart:'2026-07-21 09:00:00'},
-    {id:'YD202607170007',vin:'LSVAU2Z0A66667001',customer:'Zhao Wu',phone:'+86 13800006668',plan:'月租×' + (1) + '月',amount:200,status:'return',type:'battery',item:'天能锂电60V32Ah',created:'2026-08-03 14:00:00',battNo:'BATT-YD1011',payment:'2c2p',paySt:'paid',rentStart:'2026-07-21 10:00:00'},
-    {id:'YD202607150001',vin:'LSVAU2Z0A77777001',customer:'Sun Wu',phone:'+86 13800007777',plan:'月租×' + (1) + '月',amount:180,status:'overdue',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-04 14:00:00',battNo:'BATT-YD1005',payment:'offline',paySt:'paid',rentStart:'2026-07-23 11:00:00'},
-    {id:'YD202607150008',vin:'LSVAU2Z0A77778001',customer:'Sun Liu',phone:'+86 13800007779',plan:'月租×' + (1) + '月',amount:200,status:'overdue',type:'battery',item:'天能锂电48V24Ah',created:'2026-08-04 15:00:00',battNo:'BATT-YD1012',payment:'2c2p',paySt:'paid',rentStart:'2026-07-23 12:00:00'},
-    {id:'YD202607080001',vin:'LSVAU2Z0A10101001',customer:'Wu Ba',phone:'+86 13900001010',plan:'月租×' + (1) + '月',amount:180,status:'breach',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-07 17:00:00',battNo:'BATT-YD1008',payment:'offline',paySt:'paid',rentStart:'2026-07-28 09:00:00'},
-    {id:'YD202607080011',vin:'LSVAU2Z0A10102001',customer:'Wu Liu',phone:'+86 13900001012',plan:'月租×' + (1) + '月',amount:200,status:'breach',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-07 18:00:00',battNo:'BATT-YD1013',payment:'2c2p',paySt:'paid',rentStart:'2026-07-28 10:00:00'},
-    {id:'YD202607100001',vin:'LSVAU2Z0A88888001',customer:'Zhou Liu',phone:'+86 13800008888',plan:'月租×' + (2) + '月',amount:180,status:'complete',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-05 15:00:00',battNo:'BATT-YD1006',payment:'offline',paySt:'partialRefund',rentStart:'2026-07-25 10:00:00'},
-    {id:'YD202607100009',vin:'LSVAU2Z0A88889001',customer:'Zhou Qi',phone:'+86 13800008890',plan:'月租×' + (1) + '月',amount:200,status:'complete',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-05 16:00:00',battNo:'BATT-YD1014',payment:'2c2p',paySt:'paid',rentStart:'2026-07-25 11:00:00'},
-    {id:'YD202607190001',vin:'LSVAU2Z0A99999001',customer:'Zheng Qi',phone:'+86 13800009999',plan:'月租×' + (1) + '月',amount:180,status:'cancelled',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-06 16:00:00',battNo:'BATT-YD1007',payment:'offline',paySt:'fullRefund',rentStart:'2026-07-25 12:00:00'},
-    {id:'YD202607190010',vin:'LSVAU2Z0A99999003',customer:'Zheng Shi',phone:'+86 13800009991',plan:'月租×' + (1) + '月',amount:200,status:'cancelled',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-06 17:00:00',battNo:'BATT-YD1015',payment:'2c2p',paySt:'fullRefund',rentStart:'2026-07-25 13:00:00'},
-    {id:'YD202607230001',vin:'LSVAU2Z0A11113000',customer:'Zhou Yi',phone:'+86 13800003111',plan:'月租×' + (1) + '月',amount:620,status:'created',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-08 09:00:00',payment:'offline',paySt:'pending',rentStart:'2026-07-21 13:00:00'},
-    {id:'YD202607230002',vin:'LSVAU2Z0A22223001',customer:'Wu Er',phone:'+86 13800003222',plan:'月租×' + (1) + '月',amount:720,status:'created',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-09 10:00:00',payment:'2c2p',paySt:'pending',rentStart:'2026-07-21 13:30:00'},
-    {id:'YD202607230003',vin:'LSVAU2Z0A33333002',customer:'Sun San',phone:'+86 13800003334',plan:'月租×' + (1) + '月',amount:650,status:'pickup',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-10 11:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-21 14:00:00'},
-    {id:'YD202607230004',vin:'LSVAU2Z0A44444002',customer:'Sun Si',phone:'+86 13800004446',plan:'月租×' + (1) + '月',amount:680,status:'pickup',type:'package',item:'乐迪E8+超威黑金',created:'2026-08-10 12:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-21 15:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:400},{method:'WALLET',amount:280}],depositSplit:[{method:'2C2P',amount:500}]}},
-    {id:'YD202607180002',vin:'LSVAU2Z0A55555002',customer:'Zhao Si',phone:'+86 13800005556',plan:'月租×' + (2) + '月',amount:620,status:'progress',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-11 12:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-22 16:00:00'},
-    {id:'YD202607180007',vin:'LSVAU2Z0A55556002',customer:'Zhao Wu',phone:'+86 13800005558',plan:'月租×' + (1) + '月',amount:640,status:'progress',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-11 13:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-22 17:00:00'},
-    {id:'YD202607170002',vin:'LSVAU2Z0A66666002',customer:'Qian Wu',phone:'+86 13800006667',plan:'月租×' + (1) + '月',amount:620,status:'return',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-12 13:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-21 10:00:00'},
-    {id:'YD202607170008',vin:'LSVAU2Z0A66667002',customer:'Qian Liu',phone:'+86 13800006669',plan:'月租×' + (1) + '月',amount:640,status:'return',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-12 14:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-21 11:00:00'},
-    {id:'YD202607150002',vin:'LSVAU2Z0A77777002',customer:'Li Liu',phone:'+86 13800007778',plan:'月租×' + (1) + '月',amount:620,status:'overdue',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-13 14:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-23 12:00:00'},
-    {id:'YD202607150009',vin:'LSVAU2Z0A77778002',customer:'Li Qi',phone:'+86 13800007780',plan:'月租×' + (1) + '月',amount:640,status:'overdue',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-13 15:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-23 13:00:00'},
-    {id:'YD202607080002',vin:'LSVAU2Z0A10101002',customer:'Zhao Jiu',phone:'+86 13900001011',plan:'月租×' + (1) + '月',amount:620,status:'breach',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-07-22 17:00:00',payment:'offline',paySt:'paid',rentStart:'2026-07-28 10:00:00'},
-    {id:'YD202607080012',vin:'LSVAU2Z0A10102002',customer:'Zhao Shi',phone:'+86 13900001013',plan:'月租×' + (1) + '月',amount:640,status:'breach',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-07-22 18:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-28 11:00:00'},
-    {id:'YD202607100002',vin:'LSVAU2Z0A88888002',customer:'Wang Qi',phone:'+86 13800008889',plan:'月租×' + (2) + '月',amount:620,status:'complete',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-14 15:00:00',payment:'offline',paySt:'partialRefund',rentStart:'2026-07-25 11:00:00'},
-    {id:'YD202607100010',vin:'LSVAU2Z0A88889002',customer:'Wang Ba',phone:'+86 13800008891',plan:'月租×' + (1) + '月',amount:640,status:'complete',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-14 16:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-07-25 12:00:00'},
-    {id:'YD202607190002',vin:'LSVAU2Z0A99999002',customer:'Sun Ba',phone:'+86 13800009990',plan:'月租×' + (1) + '月',amount:620,status:'cancelled',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-07-21 16:00:00',payment:'offline',paySt:'fullRefund',rentStart:'2026-07-25 13:00:00'},
-    {id:'YD202607190011',vin:'LSVAU2Z0A99999004',customer:'Sun Jiu',phone:'+86 13800009992',plan:'月租×' + (1) + '月',amount:640,status:'cancelled',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-07-21 17:00:00',payment:'2c2p',paySt:'fullRefund',rentStart:'2026-07-25 14:00:00'}
+    {id:'YD202608210001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:'月租×' + (1) + '月',amount:350,status:'created',type:'vehicle',item:'乐迪SAA',created:'2026-08-21 09:00:00',payment:'offline',paySt:'pending',rentStart:'2026-08-21 09:00:00'},
+    {id:'YD202608210002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:'月租×' + (1) + '月',amount:560,status:'created',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-08-22 10:00:00',payment:'2c2p',paySt:'pending',rentStart:'2026-08-21 09:30:00',paySplitAudits:[{splitNo:'CF20260801001',operatorAccount:'zhang.wei',createTime:'2026-08-11 15:20:00',reason:'客户要求调高租金并调整渠道',before:{rentFee:560,deposit:500,rentSplit:[{method:'2C2P',amount:560}],depositSplit:[{method:'2C2P',amount:500}]},after:{rentFee:600,deposit:500,rentSplit:[{method:'2C2P',amount:400},{method:'WALLET',amount:200}],depositSplit:[{method:'2C2P',amount:500}]}}]},
+    {id:'YD202608210003',vin:'LSVAU2Z0A33333000',customer:'Zhang San',phone:'+86 13800003333',plan:'月租×' + (1) + '月',amount:420,status:'pickup',type:'vehicle',item:'乐迪E8',created:'2026-08-23 11:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-21 09:00:00'},
+    {id:'YD202608210004',vin:'LSVAU2Z0A44444000',customer:'Li Si',phone:'+86 13800004444',plan:'月租×' + (1) + '月',amount:380,status:'pickup',type:'vehicle',item:'雅迪DE2',created:'2026-08-23 12:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-21 10:00:00'},
+    {id:'YD202608180004',vin:'LSVAU2Z0A55555000',customer:'Wang Wu',phone:'+86 13800005555',plan:'月租×' + (2) + '月',amount:420,status:'progress',type:'vehicle',item:'雅迪DE2',created:'2026-08-24 12:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-22 14:00:00'},
+    {id:'YD202608180005',vin:'LSVAU2Z0A55556000',customer:'Wang Liu',phone:'+86 13800005556',plan:'月租×' + (1) + '月',amount:360,status:'progress',type:'vehicle',item:'乐迪E10',created:'2026-08-24 13:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-22 15:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:240},{method:'WALLET',amount:120}],depositSplit:[{method:'2C2P',amount:500}]}},
+    {id:'YD202608170005',vin:'LSVAU2Z0A66666000',customer:'Zhao Liu',phone:'+86 13800006666',plan:'月租×' + (1) + '月',amount:350,status:'return',type:'vehicle',item:'乐迪E10',created:'2026-08-25 13:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-21 08:00:00'},
+    {id:'YD202608170006',vin:'LSVAU2Z0A66667000',customer:'Zhao Qi',phone:'+86 13800006667',plan:'月租×' + (1) + '月',amount:350,status:'return',type:'vehicle',item:'乐迪SAA',created:'2026-08-25 14:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-21 09:00:00'},
+    {id:'YD202608150006',vin:'LSVAU2Z0A77777000',customer:'Sun Qi',phone:'+86 13800007777',plan:'月租×' + (1) + '月',amount:350,status:'overdue',type:'vehicle',item:'乐迪SAA',created:'2026-08-26 14:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-23 10:00:00'},
+    {id:'YD202608150007',vin:'LSVAU2Z0A77778000',customer:'Sun Ba',phone:'+86 13800007778',plan:'月租×' + (1) + '月',amount:380,status:'overdue',type:'vehicle',item:'雅迪DE2',created:'2026-08-26 15:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-23 11:00:00'},
+    {id:'YD202608080009',vin:'LSVAU2Z0A10101000',customer:'Wu Shi',phone:'+86 13900001010',plan:'月租×' + (1) + '月',amount:350,status:'breach',type:'vehicle',item:'雅迪DE2',created:'2026-08-29 17:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-28 08:00:00'},
+    {id:'YD202608080010',vin:'LSVAU2Z0A10102000',customer:'Wu Liu',phone:'+86 13900001011',plan:'月租×' + (1) + '月',amount:360,status:'breach',type:'vehicle',item:'乐迪E8',created:'2026-08-29 18:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-28 09:00:00'},
+    {id:'YD202608100007',vin:'LSVAU2Z0A88888000',customer:'Zhou Ba',phone:'+86 13800008888',plan:'月租×' + (2) + '月',amount:620,status:'complete',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-08-27 15:00:00',payment:'offline',paySt:'partialRefund',rentStart:'2026-08-25 09:00:00'},
+    {id:'YD202608100008',vin:'LSVAU2Z0A88889000',customer:'Zhou Liu',phone:'+86 13800008889',plan:'月租×' + (1) + '月',amount:560,status:'complete',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-08-27 16:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-25 10:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:200},{method:'WALLET',amount:160},{method:'OFFLINE',amount:200}],depositSplit:[{method:'2C2P',amount:300},{method:'WALLET',amount:200}]}},
+    {id:'YD202608190008',vin:'LSVAU2Z0A99999000',customer:'Zheng Jiu',phone:'+86 13800009999',plan:'月租×' + (1) + '月',amount:300,status:'cancelled',type:'vehicle',item:'乐迪E8',created:'2026-08-28 16:00:00',payment:'offline',paySt:'fullRefund',rentStart:'2026-08-25 11:00:00'},
+    {id:'YD202608190009',vin:'LSVAU2Z0A99999001',customer:'Zheng Shi',phone:'+86 13800009990',plan:'月租×' + (1) + '月',amount:320,status:'cancelled',type:'vehicle',item:'乐迪SAA',created:'2026-08-28 17:00:00',payment:'2c2p',paySt:'fullRefund',rentStart:'2026-08-25 12:00:00'},
+    {id:'YD202608220001',vin:'LSVAU2Z0A11112000',customer:'Qian Qi',phone:'+86 13800002111',plan:'月租×' + (1) + '月',amount:180,status:'created',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-30 09:00:00',battNo:'BATT-YD1000',payment:'offline',paySt:'pending',rentStart:'2026-08-21 10:00:00'},
+    {id:'YD202608220002',vin:'LSVAU2Z0A22222001',customer:'Sun Er',phone:'+86 13800002222',plan:'月租×' + (1) + '月',amount:260,status:'created',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-31 10:00:00',battNo:'BATT-YD1001',payment:'2c2p',paySt:'pending',rentStart:'2026-08-21 10:30:00'},
+    {id:'YD202608220003',vin:'LSVAU2Z0A33333001',customer:'Li Si',phone:'+86 13800003333',plan:'月租×' + (1) + '月',amount:200,status:'pickup',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-11 11:00:00',battNo:'BATT-YD1002',payment:'offline',paySt:'paid',rentStart:'2026-08-21 11:00:00'},
+    {id:'YD202608220004',vin:'LSVAU2Z0A44444001',customer:'Li Wu',phone:'+86 13800004445',plan:'月租×' + (1) + '月',amount:220,status:'pickup',type:'battery',item:'超威黑金60V23Ah',created:'2026-08-11 12:00:00',battNo:'BATT-YD1009',payment:'2c2p',paySt:'paid',rentStart:'2026-08-21 12:00:00'},
+    {id:'YD202608180001',vin:'LSVAU2Z0A55555001',customer:'Wang San',phone:'+86 13800005555',plan:'月租×' + (2) + '月',amount:180,status:'progress',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-12 12:00:00',battNo:'BATT-YD1003',payment:'offline',paySt:'paid',rentStart:'2026-08-22 15:00:00'},
+    {id:'YD202608180006',vin:'LSVAU2Z0A55556001',customer:'Wang Liu',phone:'+86 13800005557',plan:'月租×' + (1) + '月',amount:200,status:'progress',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-12 13:00:00',battNo:'BATT-YD1010',payment:'2c2p',paySt:'paid',rentStart:'2026-08-22 16:00:00'},
+    {id:'YD202608170001',vin:'LSVAU2Z0A66666001',customer:'Zhao Si',phone:'+86 13800006666',plan:'月租×' + (1) + '月',amount:180,status:'return',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-13 13:00:00',battNo:'BATT-YD1004',payment:'offline',paySt:'paid',rentStart:'2026-08-21 09:00:00'},
+    {id:'YD202608170007',vin:'LSVAU2Z0A66667001',customer:'Zhao Wu',phone:'+86 13800006668',plan:'月租×' + (1) + '月',amount:200,status:'return',type:'battery',item:'天能锂电60V32Ah',created:'2026-08-13 14:00:00',battNo:'BATT-YD1011',payment:'2c2p',paySt:'paid',rentStart:'2026-08-21 10:00:00'},
+    {id:'YD202608150001',vin:'LSVAU2Z0A77777001',customer:'Sun Wu',phone:'+86 13800007777',plan:'月租×' + (1) + '月',amount:180,status:'overdue',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-14 14:00:00',battNo:'BATT-YD1005',payment:'offline',paySt:'paid',rentStart:'2026-08-23 11:00:00'},
+    {id:'YD202608150008',vin:'LSVAU2Z0A77778001',customer:'Sun Liu',phone:'+86 13800007779',plan:'月租×' + (1) + '月',amount:200,status:'overdue',type:'battery',item:'天能锂电48V24Ah',created:'2026-08-14 15:00:00',battNo:'BATT-YD1012',payment:'2c2p',paySt:'paid',rentStart:'2026-08-23 12:00:00'},
+    {id:'YD202608080001',vin:'LSVAU2Z0A10101001',customer:'Wu Ba',phone:'+86 13900001010',plan:'月租×' + (1) + '月',amount:180,status:'breach',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-17 17:00:00',battNo:'BATT-YD1008',payment:'offline',paySt:'paid',rentStart:'2026-08-28 09:00:00'},
+    {id:'YD202608080011',vin:'LSVAU2Z0A10102001',customer:'Wu Liu',phone:'+86 13900001012',plan:'月租×' + (1) + '月',amount:200,status:'breach',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-17 18:00:00',battNo:'BATT-YD1013',payment:'2c2p',paySt:'paid',rentStart:'2026-08-28 10:00:00'},
+    {id:'YD202608100001',vin:'LSVAU2Z0A88888001',customer:'Zhou Liu',phone:'+86 13800008888',plan:'月租×' + (2) + '月',amount:180,status:'complete',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-15 15:00:00',battNo:'BATT-YD1006',payment:'offline',paySt:'partialRefund',rentStart:'2026-08-25 10:00:00'},
+    {id:'YD202608100009',vin:'LSVAU2Z0A88889001',customer:'Zhou Qi',phone:'+86 13800008890',plan:'月租×' + (1) + '月',amount:200,status:'complete',type:'battery',item:'天能锂电48V20Ah',created:'2026-08-15 16:00:00',battNo:'BATT-YD1014',payment:'2c2p',paySt:'paid',rentStart:'2026-08-25 11:00:00'},
+    {id:'YD202608190001',vin:'LSVAU2Z0A99999001',customer:'Zheng Qi',phone:'+86 13800009999',plan:'月租×' + (1) + '月',amount:180,status:'cancelled',type:'battery',item:'超威黑金72V32Ah',created:'2026-08-16 16:00:00',battNo:'BATT-YD1007',payment:'offline',paySt:'fullRefund',rentStart:'2026-08-25 12:00:00'},
+    {id:'YD202608190010',vin:'LSVAU2Z0A99999003',customer:'Zheng Shi',phone:'+86 13800009991',plan:'月租×' + (1) + '月',amount:200,status:'cancelled',type:'battery',item:'天能锂电72V20Ah',created:'2026-08-16 17:00:00',battNo:'BATT-YD1015',payment:'2c2p',paySt:'fullRefund',rentStart:'2026-08-25 13:00:00'},
+    {id:'YD202608230001',vin:'LSVAU2Z0A11113000',customer:'Zhou Yi',phone:'+86 13800003111',plan:'月租×' + (1) + '月',amount:620,status:'created',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-10 09:00:00',payment:'offline',paySt:'pending',rentStart:'2026-08-21 13:00:00'},
+    {id:'YD202608230002',vin:'LSVAU2Z0A22223001',customer:'Wu Er',phone:'+86 13800003222',plan:'月租×' + (1) + '月',amount:720,status:'created',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-09 10:00:00',payment:'2c2p',paySt:'pending',rentStart:'2026-08-21 13:30:00'},
+    {id:'YD202608230003',vin:'LSVAU2Z0A33333002',customer:'Sun San',phone:'+86 13800003334',plan:'月租×' + (1) + '月',amount:650,status:'pickup',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-10 11:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-21 14:00:00'},
+    {id:'YD202608230004',vin:'LSVAU2Z0A44444002',customer:'Sun Si',phone:'+86 13800004446',plan:'月租×' + (1) + '月',amount:680,status:'pickup',type:'package',item:'乐迪E8+超威黑金',created:'2026-08-10 12:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-21 15:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:400},{method:'WALLET',amount:280}],depositSplit:[{method:'2C2P',amount:500}]}},
+    {id:'YD202608180002',vin:'LSVAU2Z0A55555002',customer:'Zhao Si',phone:'+86 13800005556',plan:'月租×' + (2) + '月',amount:620,status:'progress',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-11 12:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-22 16:00:00'},
+    {id:'YD202608180007',vin:'LSVAU2Z0A55556002',customer:'Zhao Wu',phone:'+86 13800005558',plan:'月租×' + (1) + '月',amount:640,status:'progress',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-11 13:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-22 17:00:00'},
+    {id:'YD202608170002',vin:'LSVAU2Z0A66666002',customer:'Qian Wu',phone:'+86 13800006667',plan:'月租×' + (1) + '月',amount:620,status:'return',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-12 13:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-21 10:00:00'},
+    {id:'YD202608170008',vin:'LSVAU2Z0A66667002',customer:'Qian Liu',phone:'+86 13800006669',plan:'月租×' + (1) + '月',amount:640,status:'return',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-12 14:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-21 11:00:00'},
+    {id:'YD202608150002',vin:'LSVAU2Z0A77777002',customer:'Li Liu',phone:'+86 13800007778',plan:'月租×' + (1) + '月',amount:620,status:'overdue',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-13 14:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-23 12:00:00'},
+    {id:'YD202608150009',vin:'LSVAU2Z0A77778002',customer:'Li Qi',phone:'+86 13800007780',plan:'月租×' + (1) + '月',amount:640,status:'overdue',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-13 15:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-23 13:00:00'},
+    {id:'YD202608080002',vin:'LSVAU2Z0A10101002',customer:'Zhao Jiu',phone:'+86 13900001011',plan:'月租×' + (1) + '月',amount:620,status:'breach',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-22 17:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-28 10:00:00'},
+    {id:'YD202608080012',vin:'LSVAU2Z0A10102002',customer:'Zhao Shi',phone:'+86 13900001013',plan:'月租×' + (1) + '月',amount:640,status:'breach',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-22 18:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-28 11:00:00'},
+    {id:'YD202608100002',vin:'LSVAU2Z0A88888002',customer:'Wang Qi',phone:'+86 13800008889',plan:'月租×' + (2) + '月',amount:620,status:'complete',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-14 15:00:00',payment:'offline',paySt:'partialRefund',rentStart:'2026-08-25 11:00:00'},
+    {id:'YD202608100010',vin:'LSVAU2Z0A88889002',customer:'Wang Ba',phone:'+86 13800008891',plan:'月租×' + (1) + '月',amount:640,status:'complete',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-14 16:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-08-25 12:00:00'},
+    {id:'YD202608190002',vin:'LSVAU2Z0A99999002',customer:'Sun Ba',phone:'+86 13800009990',plan:'月租×' + (1) + '月',amount:620,status:'cancelled',type:'package',item:'雅迪冠能3+超威黑金',created:'2026-08-21 16:00:00',payment:'offline',paySt:'fullRefund',rentStart:'2026-08-25 13:00:00'},
+    {id:'YD202608190011',vin:'LSVAU2Z0A99999004',customer:'Sun Jiu',phone:'+86 13800009992',plan:'月租×' + (1) + '月',amount:640,status:'cancelled',type:'package',item:'乐迪SAA+天能72V20Ah',created:'2026-08-21 17:00:00',payment:'2c2p',paySt:'fullRefund',rentStart:'2026-08-25 14:00:00'}
   ].sort((a,b)=>(statusRank[a.status]??99)-(statusRank[b.status]??99));
   orders.value.forEach((o,i)=>{o.account='user'+String(i+1).padStart(3,'0'); if(o.deposit==null)o.deposit=500; if(o.paymentSplit===undefined)o.paymentSplit=null; if(!o.paySplitAudits)o.paySplitAudits=[]; if(!o.email)o.email='user'+String(i+1).padStart(3,'0')+'@yadea.id';
     if(i%3===1){ o.phone=''; } else if(i%3===2){ o.phone=''; o.email=''; }
@@ -6160,7 +6148,7 @@ function initI18nData(){
     o.idNo='3301**********'+String(1000+(_h%9000));
     o.driverNo=(_h%3)?'4403**********'+String(1000+((_h>>4)%9000)):'';
   });
-  const _ov={'YD202607210002':{phone:'',email:'359878734@qq.com'},'YD202607210003':{phone:''},'YD202607220002':{phone:'',email:'suner2@qq.com'},'YD202607080009':{phone:''}};
+  const _ov={'YD202608210002':{phone:'',email:'359878734@qq.com'},'YD202608210003':{phone:''},'YD202608220002':{phone:'',email:'suner2@qq.com'},'YD202608080009':{phone:''}};
   orders.value.forEach(o=>{const v=_ov[o.id];if(v)Object.assign(o,v)});
   stores.value=[
     {name:'测试门店',addr:''},
@@ -6209,7 +6197,7 @@ onUpdated(paint);
 
 return{luci,alertTypeLabel,vehStatusLabel,ignoreReasonLabel,initPullToRefresh,refreshHome,refreshVeh,refreshOrd,refreshBatt,refreshAlert,tab,setTab,toasts,toast,can,deny,perms,permGroups,togglePerm,setPermGroup,setAllPerms,
  TAB_PERM_CODES,tabPermItems,demoPagePermGroups,demoPagePermTitle,demoPagePermCodes,demoIsTopTab,
- homeOV,homeRefreshing,store,bizStats,vehStats,goHomeVehStat,recent,allAlerts,pendingAlertCount,alertStatus,alertType,alertStatusTabs,alertTypeTabs,alertStatusCnt,filteredAlerts,alertEmptyTitle,alertEmptySub,demoHasAlerts,demoSetHasAlerts,curAlert,alertMod,ignoreReasonPick,ignoreReasons,lvBg,stBg,stLabel,closeSourceLabel,lvLabel,timelineLabel,timelineDotClass,curAlertTimeline,curAlertTimelineHasMore,alertTimelineExpanded,homeOpen,homeClose,openAlertDetail,closeAlertDetail,startProcessAlert,resolveAlert,confirmIgnoreAlert,reopenAlert,demoOpsActive,demoSetAlertCloseSource,goAlertVehicle,doFindFromAlert,
+ homeOV,homeRefreshing,store,bizStats,vehStats,goHomeVehStat,recent,allAlerts,pendingAlertCount,alertStatus,alertType,alertStatusTabs,alertTypeTabs,alertStatusCnt,filteredAlerts,alertEmptyTitle,alertEmptySub,demoHasAlerts,demoSetHasAlerts,demoListEmpty,demoSetListEmpty,curAlert,alertMod,ignoreReasonPick,ignoreReasons,lvBg,stBg,stLabel,closeSourceLabel,lvLabel,timelineLabel,timelineDotClass,curAlertTimeline,curAlertTimelineHasMore,alertTimelineExpanded,homeOpen,homeClose,openAlertDetail,closeAlertDetail,startProcessAlert,resolveAlert,confirmIgnoreAlert,reopenAlert,demoOpsActive,demoSetAlertCloseSource,goAlertVehicle,doFindFromAlert,
 vehOV,vehMod,vehShowModelSheet,vehShowFS,vehRefreshing,locked,pressProgress,lockJustDone,
 vehicles,vehModels,vehQ,vehPill,vehFsModel,vehFsOnline,vehFsLost,vehFsModelC,vehFsOnlineC,vehFsLostC,vehHasF,pills,pillCnt,filtered,
 vehView,mapVehicles,vehNoLocationCount,mapSelectedVin,mapSelectedVeh,vehToggleView,vehMapSelect,vehMapPinStyle,vehCluster,
@@ -6236,7 +6224,7 @@ do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid
 primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,
 ordersModTitle,ordersModDesc,ordersModDanger,orderPickActive,orderPickIsBatt,orderPickQ,orderPickSel,orderPickList,orderPickEmpty,openOrderPick,closeOrderPick,confirmOrderPick,orderPickScan,users,userPickActive,userPickQ,userPickSel,userPickList,userPickEmpty,openUserPick,closeUserPick,confirmUserPick,
 refundMode,rTab,rReason,rRent2c2p,rRentWallet,rRentOffline,rDep2c2p,rDepWallet,rDepOffline,refundTotal,refundValid,refundRentCapCh,refundDepCapCh,orderRefundAgg,refundChannelBreakdown,refundRentOpen,refundDepOpen,refundTotalOpen,
-sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDetail,goBatteryDetail,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,
+sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDetail,goBatteryDetail,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,orderPerm,
  openRefund,refundChClamp,refundChBlur,submitRefund,refundSaving,
   autoRenew,toggleAutoRenew,dHasRealName,demoSetRealName,demoRenewScenes,demoRenewSceneK,demoRenewSceneKey,demoSetRenewScene,openRefundRecords,curRefunds,refundStLabel,refundStg,refundSourceLabel,rentItems,depositItems,refundRecordsOpenable,refRecOpen,
   depositOf,chLabel,rentPlanText,rentEndOf,psAllocText,buildSplit,showPaySplit,psTab,showMoreActions,psConfirmMod,psDoSubmit,psRent2c2p,psRentWallet,psRentOffline,psDep2c2p,psDepWallet,psDepOffline,psReason,applySplit,openPaySplit,submitPaySplit,psRentPart,psDepPart,psRentSum,psDepSum,psRentValid,psDepValid,psValid,psRentDiff,psDepDiff,canPriceOperate,splitPartView,splitPartText,
