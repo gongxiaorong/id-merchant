@@ -4944,12 +4944,12 @@ function battMapPinStyle(b,i){
   return{left:x+'%',top:y+'%'};
 }
 const battCluster=ref(true);
-const searchScopeOpts=computed(()=>{const all=[{v:'id',l:'订单号'},{v:'account',l:'账号'},{v:'phone',l:'手机号'},{v:'email',l:'邮箱'},{v:'vin',l:'车架号'},{v:'battNo',l:'电池编号'}];if(ordersEntry.value==='vehicle')return all.filter(o=>o.v!=='battNo');if(ordersEntry.value==='battery')return all.filter(o=>o.v!=='vin');return all});
-const searchScopeLabel=computed(()=>(searchScopeOpts.value.find(o=>o.v===searchScope.value)||{}).l||'订单号');
+const searchScopeOpts=computed(()=>{const all=[{v:'id',l:'订单编号'},{v:'account',l:'账号'},{v:'phone',l:'手机号'},{v:'email',l:'邮箱'},{v:'vin',l:'车架号'},{v:'battNo',l:'电池编号'}];if(ordersEntry.value==='vehicle')return all.filter(o=>o.v!=='battNo');if(ordersEntry.value==='battery')return all.filter(o=>o.v!=='vin');return all});
+const searchScopeLabel=computed(()=>(searchScopeOpts.value.find(o=>o.v===searchScope.value)||{}).l||'订单编号');
 function setSearchScope(v){searchScope.value=v;searchScopeOpen.value=false}
 function orderCustomerText(o){if(o.phone&&String(o.phone).trim())return o.phone;if(o.email&&String(o.email).trim())return o.email;return (o.account&&o.account.trim())?o.account:(o.customer||'')}
 document.addEventListener('click',function(){searchScopeOpen.value=false})
-const searchPH=computed(()=>'请输入'+(({id:'订单号',account:'账号',phone:'手机号',email:'邮箱',vin:'车架号'})[searchScope.value]||'订单号'));
+const searchPH=computed(()=>'请输入'+(({id:'订单编号',account:'账号',phone:'手机号',email:'邮箱',vin:'车架号'})[searchScope.value]||'订单编号'));
 const orders=ref([]);
 const allStatus=computed(()=>[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'},{v:'breach',l:'已违约'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}]);
 const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'},{v:'breach',l:'已违约'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}];
@@ -6084,9 +6084,9 @@ function roConfirmCancel(){if(roCancelLoading.value)return;roCancelLoading.value
 const roQ=ref('');
 const roSearchScope=ref('no');
 const roSearchScopeOpen=ref(false);
-const roSearchScopeOpts=[{v:'no',l:'订单号'},{v:'account',l:'账号'},{v:'phone',l:'手机号'},{v:'email',l:'邮箱'}];
-const roSearchScopeLabel=computed(()=>(roSearchScopeOpts.find(o=>o.v===roSearchScope.value)||{}).l||'订单号');
-const roSearchPH=computed(()=>'请输入'+({no:'订单号',account:'账号',phone:'手机号',email:'邮箱'}[roSearchScope.value]||'订单号'));
+const roSearchScopeOpts=[{v:'no',l:'订单编号'},{v:'account',l:'账号'},{v:'phone',l:'手机号'},{v:'email',l:'邮箱'}];
+const roSearchScopeLabel=computed(()=>(roSearchScopeOpts.find(o=>o.v===roSearchScope.value)||{}).l||'订单编号');
+const roSearchPH=computed(()=>'请输入'+({no:'订单编号',account:'账号',phone:'手机号',email:'邮箱'}[roSearchScope.value]||'订单编号'));
 const roStatus=ref(null);
 const roStatusTabs=[{v:null,l:'全部'},{v:['UNPAID','PAYING'],l:'待支付'},{v:['CANCELLED'],l:'已取消'},{v:['PAID'],l:'已支付'},{v:['REFUNDING'],l:'退款中'},{v:['PARTIAL_REFUND','FULL_REFUND'],l:'已退款'}];
 function roStatusActive(p){return roStatus.value===p.v}
