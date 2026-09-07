@@ -766,9 +766,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ VEHICLE DETAIL ═══ -->
 <transition name="sl">
-<div v-if="vehOV==='detail'" v-swipe-close="()=>vehOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[560] flex flex-col">
+<div v-if="vehOV==='detail'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[560] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">车辆详情</div>
 <span v-if="can('vehicle.edit')" class="text-[14px] font-medium text-[var(--link)] cursor-pointer shrink-0 active:opacity-70" @click="openVehEdit">编辑</span>
 <span v-else class="min-w-[2rem] shrink-0" aria-hidden="true"></span>
@@ -836,9 +836,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ VEHICLE LOCATION DETAIL ═══ -->
 <transition name="sl">
-<div v-if="vehOV==='location'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="veh-location-page">
+<div v-if="vehOV==='location'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="veh-location-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5" data-od-id="veh-location-nav">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8 truncate px-1" data-od-id="veh-location-title">当前位置</div>
 </div>
 <div class="flex-1 min-h-0 relative track-map overflow-hidden" data-od-id="veh-location-map">
@@ -902,9 +902,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ VEHICLE TRACK ═══ -->
 <transition name="sl">
-<div v-if="vehOV==='track'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[520] flex flex-col" data-od-id="veh-track-page">
+<div v-if="vehOV==='track'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[520] flex flex-col" data-od-id="veh-track-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">历史轨迹</div>
 </div>
 <div class="bg-white px-4 py-3 shrink-0 flex items-center gap-2" style="border-bottom:1px solid #E5E5E5" data-od-id="veh-track-time-bar">
@@ -1007,9 +1007,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ VEHICLE EDIT ═══ -->
 <transition name="sl">
-<div v-if="vehOV==='edit'" v-swipe-close="()=>vehOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<div v-if="vehOV==='edit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑车辆</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-28 hide-scroll">
@@ -1035,7 +1035,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sl">
 <div v-if="vehOV==='add'" v-swipe-close="()=>{vehOV=null;addModel='';addVin='';addCtrl=''}" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="vehOV=null;addModel='';addVin='';addCtrl=''"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack();vehOV=null;addModel='';addVin='';addCtrl=''"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">新增车辆</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-28 hide-scroll">
@@ -1315,9 +1315,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div></transition>
 
 <!-- ═══ BATTERY DETAIL 二级页 ═══ -->
-<transition name="sl"><div v-if="ordersOV==='battDetail'" v-swipe-close="()=>ordersOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="battery-detail-page">
+<transition name="sl"><div v-if="ordersOV==='battDetail'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="battery-detail-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">电池详情</div>
 <span v-if="can('battery.edit')" class="text-[14px] font-medium text-[var(--link)] cursor-pointer shrink-0 active:opacity-70" @click="openBattEdit">编辑</span>
 </div>
@@ -1387,9 +1387,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ BATTERY EDIT ═══ -->
 <transition name="sl">
-<div v-if="ordersOV==='battEdit'" v-swipe-close="()=>ordersOV='battDetail'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="battery-edit-page">
+<div v-if="ordersOV==='battEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="battery-edit-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='battDetail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑电池</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-28 hide-scroll">
@@ -1412,9 +1412,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ BATTERY LOCATION DETAIL ═══ -->
 <transition name="sl">
-<div v-if="ordersOV==='battLocation'" v-swipe-close="()=>ordersOV='battDetail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="batt-location-page">
+<div v-if="ordersOV==='battLocation'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="batt-location-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='battDetail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8 truncate px-1" data-od-id="batt-location-title">当前位置</div>
 </div>
 <div class="flex-1 min-h-0 relative track-map overflow-hidden" data-od-id="batt-location-map">
@@ -1474,9 +1474,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ BATTERY TRACK ═══ -->
 <transition name="sl">
-<div v-if="ordersOV==='battTrack'" v-swipe-close="()=>ordersOV='battDetail'" class="absolute inset-0 bg-[#F6F7F9] z-[520] flex flex-col" data-od-id="batt-track-page">
+<div v-if="ordersOV==='battTrack'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[520] flex flex-col" data-od-id="batt-track-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='battDetail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">历史轨迹</div>
 </div>
 <div class="bg-white px-4 py-3 shrink-0 flex items-center gap-2" style="border-bottom:1px solid #E5E5E5" data-od-id="batt-track-time-bar">
@@ -1655,9 +1655,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </transition>
 
-<transition name="sl"><div v-if="ordersOV==='detail' && vehOV!=='detail'" v-swipe-close="()=>ordersOV='olist'" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="ordersOV==='detail' && vehOV!=='detail'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='olist'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">订单详情</div>
 <span class="w-8 h-8 shrink-0" aria-hidden="true"></span>
 </div>
@@ -1675,7 +1675,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2">
 <div class="text-[14px] font-bold text-[#1A1A1A]">费用明细</div>
-<span v-if="feeActiveRow" v-html="luci('chevron-right','w-5 h-5 text-[#999]')" @click="ordersOV='feedetail'" class="w-8 h-8 -mr-2 rounded-full flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] shrink-0" title="查看费用明细"></span>
+<span v-if="feeActiveRow" v-html="luci('chevron-right','w-5 h-5 text-[#999]')" @click="navOpen();ordersOV='feedetail'" class="w-8 h-8 -mr-2 rounded-full flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] shrink-0" title="查看费用明细"></span>
 </div>
 <template v-if="feeActiveRow">
 <div class="text-[13px] space-y-2.5">
@@ -1750,7 +1750,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div class="w-10 h-10 rounded-full bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('folder-open','w-5 h-5 text-[var(--accent)]')"></span></div>
     <div class="flex-1 min-w-0">
       <div class="text-[14px] font-medium text-[#1A1A1A]">补充资料</div>
-      <div class="text-[12px] text-[#999] mt-0.5">{{ curDocs.length ? curDocs.length+' 份' : '可上传驾照、身份证、合同等' }}</div>
+      <div class="text-[12px] text-[#999] mt-0.5">{{ curDocs.length ? curDocs.length+' 份' : '可上传身份证、驾驶证、合同等' }}</div>
     </div>
     <span v-html="luci('chevron-right','w-4 h-4 text-[#999] shrink-0')"></span>
   </div>
@@ -1950,9 +1950,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div></div></transition>
 
 <!-- ═══ RECHARGE ORDER REFUND RECORDS ═══ -->
-<transition name="sl"><div v-if="roOV==='refunds'" v-swipe-close="()=>roOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="recharge-refund-records">
+<transition name="sl"><div v-if="roOV==='refunds'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="recharge-refund-records">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="roOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">退款记录</div>
 <span class="min-w-[2rem] shrink-0"></span>
 </div>
@@ -2003,9 +2003,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
  <!-- ═══ ORDER REFUND RECORDS ═══ -->
  <transition name="sl">
- <div v-if="ordersOV==='refunds'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="order-refund-records">
+ <div v-if="ordersOV==='refunds'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="order-refund-records">
  <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
- <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+ <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
  <div class="flex-1 text-center text-[17px] font-semibold mr-8">退款记录</div>
  </div>
  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
@@ -2052,9 +2052,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <!-- ═══ ORDER DOCS SUB-PAGE ═══ -->
  <!-- ═══ ORDER OP RECORDS SUB-PAGE ═══ -->
  <transition name="sl">
- <div v-if="ordersOV==='oprecords'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="order-pricechange-records">
+ <div v-if="ordersOV==='oprecords'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="order-pricechange-records">
    <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-     <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+     <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
      <div class="flex-1 text-center text-[17px] font-semibold mr-8">改价记录</div>
    </div>
    <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
@@ -2107,9 +2107,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
  <!-- ═══ ORDER FEE DETAIL SUB-PAGE ═══ -->
  <transition name="sl">
- <div v-if="ordersOV==='feedetail'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="order-fee-detail">
+ <div v-if="ordersOV==='feedetail'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="order-fee-detail">
    <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-     <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+     <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
      <div class="flex-1 text-center text-[17px] font-semibold">费用明细</div>
      <span class="w-8 h-8 shrink-0" aria-hidden="true"></span>
    </div>
@@ -2157,9 +2157,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  </div></transition>
 
  <transition name="sl">
- <div v-if="ordersOV==='docs'" v-swipe-close="()=>ordersOV='detail'" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+ <div v-if="ordersOV==='docs'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
  <div class="pt-14 px-4 pb-3 flex items-center bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
- <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="ordersOV='detail'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+ <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
  <div class="flex-1 text-center text-[17px] font-semibold mr-8">用户资料</div>
  </div>
  <div class="flex-1 overflow-y-auto min-h-0 px-4 pt-3 pb-24 hid">
@@ -2310,7 +2310,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="pb-7 pt-1">
 <div v-if="ordersOV!=='feedetail'" @click="showMoreActions=false;ordersOV='feedetail'" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" ><span class="text-[15px] font-medium">费用明细</span></div>
 <div v-if="canPriceOperate||(feeMoreRow&&feeMoreRow.payStatus==='待支付')" @click="showMoreActions=false;openPaySplit(feeMoreRow||null)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">改价</span></div>
-<div @click="showMoreActions=false;ordersOV='oprecords'" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">改价记录</span></div>
+<div @click="showMoreActions=false;navOpen();ordersOV='oprecords'" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">改价记录</span></div>
 <div v-if="(['已支付','部分退款'].indexOf(feeMoreRow&&feeMoreRow.payStatus)!==-1)&&orderPerm('refund.create')" @click="showMoreActions=false;openRefund('refund',feeMoreRow)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]"><span class="text-[15px] font-medium">退款</span></div>
 <div v-if="(['退款中','部分退款','全部退款'].indexOf(feeMoreRow&&feeMoreRow.payStatus)!==-1)&&orderPerm('refund.list')" @click="showMoreActions=false;openRefundRecords(feeMoreRow)" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED"><span class="text-[15px] font-medium">退款记录</span></div>
 </div>
@@ -2480,9 +2480,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
   </template>
   
-  <transition name="sl"><div v-if="profileOV==='info'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+  <transition name="sl"><div v-if="profileOV==='info'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
   <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-  <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+  <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
   <div class="flex-1 text-center text-[17px] font-semibold mr-8">个人信息</div>
   </div>
   <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -2522,7 +2522,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
     <transition name="sl"><div v-if="profileSub==='pwdVerify'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="pwd-verify-page">
       <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-        <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+        <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
         <div class="flex-1 text-center text-[17px] font-semibold mr-8">修改密码</div>
       </div>
       <div class="px-4 pt-4 flex-1 overflow-y-auto flex flex-col">
@@ -2566,7 +2566,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
    <transition name="sl"><div v-if="profileSub==='pwdReset'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="pwd-reset-page">
      <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub='pwdVerify'"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
         <div class="flex-1 text-center text-[17px] font-semibold mr-8">重置密码</div>
      </div>
      <div class="px-4 pt-4 flex-1 overflow-y-auto">
@@ -2602,7 +2602,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
    <transition name="sl"><div v-if="profileSub==='bindPhone'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="bind-phone-page">
      <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
        <div class="flex-1 text-center text-[17px] font-semibold mr-8">绑定手机号</div>
      </div>
      <div v-if="hasPhone" class="bg-[#FFF8E6] px-4 py-2.5 text-[13px] text-[#B07B00] shrink-0">已绑定手机号{{ boundPhone }}</div>
@@ -2640,7 +2640,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
    <transition name="sl"><div v-if="profileSub==='bindEmail'" class="absolute inset-0 bg-[#F6F7F9] z-[600] flex flex-col" data-od-id="bind-email-page">
      <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+       <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
        <div class="flex-1 text-center text-[17px] font-semibold mr-8">绑定邮箱</div>
      </div>
      <div v-if="hasEmail" class="bg-[#FFF8E6] px-4 py-2.5 text-[13px] text-[#B07B00] shrink-0">已绑定邮箱{{ boundEmail }}</div>
@@ -2670,9 +2670,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
      </div>
    </div></transition>
   
-  <transition name="sl"><div v-if="profileOV==='store'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+  <transition name="sl"><div v-if="profileOV==='store'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">门店列表</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -2686,9 +2686,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='model'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='model'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">车型管理</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -2723,9 +2723,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='battModel'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='battModel'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">电池型号管理</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -2760,9 +2760,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='package'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='package'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">套餐管理</div><span class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="openPackageAdd">新增</span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -2796,9 +2796,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='mEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='mEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑车型</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -2814,9 +2814,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveModel" :disabled="modelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">保存</button></div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='bmEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='bmEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑电池型号</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -2832,9 +2832,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveBattModel" :disabled="battModelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">保存</button></div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='pkgEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='pkgEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑套餐</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -2883,9 +2883,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="absolute bottom-7 left-5 right-5"><button @click="savePackage" :disabled="packageSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">保存</button></div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='pkgAdd'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='pkgAdd'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">新增套餐</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -2953,9 +2953,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </transition>
 
-<transition name="sl"><div v-if="profileOV==='account'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='account'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">账号管理</div><span v-if="can('account.add')" class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="openAccAdd()">新增</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -2988,9 +2988,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='aDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='aDetail'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">账号详情</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -3006,9 +3006,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='aAdd'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='aAdd'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">新增账号</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -3034,9 +3034,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveAccAdd" :disabled="accSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">保存</button></div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='aEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='aEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">编辑账号</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -3062,9 +3062,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveAccEdit" :disabled="accSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">保存</button></div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='pos'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='pos'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">职位管理</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -3094,9 +3094,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='pDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='pDetail'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">职位详情</div><span v-if="can('position.add')" class="text-sm font-medium text-[var(--link)] cursor-pointer shrink-0" @click="openPosAdd(dp.name)">新增下级职位</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -3113,9 +3113,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='pAdd'||profileSub==='pEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='pAdd'||profileSub==='pEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ profileSub==='pAdd'?'新增职位':'编辑职位' }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -3138,9 +3138,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="absolute bottom-7 left-5 right-5"><button @click="savePos" :disabled="posSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">保存</button></div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='cs'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='cs'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">客服信息</div><span v-if="can('cs_info.add')" class="text-sm font-medium cursor-pointer shrink-0" :style="{color:'var(--link)'}" @click="openCsEdit(-1)">新增</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -3171,9 +3171,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='csEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='csEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ csIdx===-1?'新增客服':'编辑客服' }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -3208,9 +3208,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="absolute bottom-7 left-5 right-5"><button @click="saveCs" :disabled="csSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">保存</button></div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='config'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='config'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">订单配置</div><span v-if="can('order_config.edit')" class="text-sm font-medium cursor-pointer shrink-0" :style="cfgSaving?{color:'#999',pointerEvents:'none'}:{color:'var(--link)'}" @click="saveCfg">保存</span><span v-else class="min-w-[2rem] shrink-0"></span>
 </div>
  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -3330,9 +3330,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='recharge'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
+<transition name="sl"><div v-if="profileOV==='recharge'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">充值配置</div><span class="text-sm font-medium cursor-pointer shrink-0" :style="{color:'var(--link)'}" @click="openRechargeEdit(-1)">新增</span><span class="min-w-[2rem] shrink-0"></span>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -3373,9 +3373,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileSub==='rechargeEdit'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
+<transition name="sl"><div v-if="profileSub==='rechargeEdit'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ rechargeIdx===-1?'新增充值配置':'编辑充值配置' }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
@@ -3403,9 +3403,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- 系统设置 -->
 <!-- ═══ 用户管理 — 列表 ═══ -->
-<transition name="sl"><div v-if="profileOV==='user'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="user-list-page">
+<transition name="sl"><div v-if="profileOV==='user'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="user-list-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold">用户管理</div><span class="min-w-[2rem] shrink-0"></span>
 </div>
 <!-- 筛选条件（通栏白底） -->
@@ -3452,10 +3452,135 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<!-- ═══ 用户管理 — 详情 ═══ -->
-<transition name="sl"><div v-if="profileSub==='userDetail'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="user-detail-page">
+
+<transition name="sl"><div v-if="profileOV==='settings'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="settings-page">
 <div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">系统设置</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-28 hid">
+<div class="text-[13px] font-medium text-[#999] mb-2 px-1">通用设置</div>
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div @click="profileSub='lang'" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED" data-od-id="settings-lang-row">
+<span class="flex-1 text-[15px] font-medium">切换语言</span>
+<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] mr-1">{{ appLangLabel }}</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
+</div>
+<div @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row">
+<span class="flex-1 text-[15px] font-medium">当前版本</span>
+<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.3.8</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-7 left-5 right-5" data-od-id="settings-logout-btn">
+<button @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626">退出登录</button>
+</div>
+</div></transition>
+
+<!-- 切换语言 -->
+<transition name="sl"><div v-if="profileSub==='lang'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="settings-lang-page">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">切换语言</div>
+</div>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div v-for="(lg,i) in langOptions" :key="lg.id" @click="selectLang(lg.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+<span class="flex-1 text-[15px] font-medium">{{ lg.label }}</span>
+<span v-if="appLang===lg.id" v-html="luci('check','w-5 h-5 text-[var(--accent)]')"></span>
+</div>
+</div>
+</div>
+</div></transition>
+
+<transition name="fd"><div v-if="profileMod" class="absolute inset-0 z-[800] flex items-center justify-center" style="background:rgba(0,0,0,.45)" data-od-id="profile-modal">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="text-[17px] font-bold text-center">{{ profileMdT }}</div>
+<div v-if="profileMdD" class="text-sm text-[#666] text-center leading-relaxed">{{ profileMdD }}</div>
+<div class="flex gap-3 mt-2">
+<div @click="profileMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div>
+<div @click="profileMdOk" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:var(--accent)">确认</div>
+</div></div>
+</div></transition>
+
+<!-- ═══ 新增账号成功 · 账号与初始密码 ═══ -->
+<transition name="fd"><div v-if="newAccCred" class="absolute inset-0 z-[810] flex items-center justify-center" style="background:rgba(0,0,0,.45)" data-od-id="acc-cred-modal">
+<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<div class="flex flex-col items-center mb-3">
+<div class="w-12 h-12 rounded-full flex items-center justify-center mb-2" style="background:#ECFDF3"><span v-html="luci('check','w-6 h-6 text-[#17A34A]')"></span></div>
+<div class="text-[17px] font-bold text-center">账号创建成功</div>
+<div class="text-[13px] text-[#999] text-center mt-1 leading-relaxed">请妥善保管以下账号信息</div>
+</div>
+<div class="rounded-xl mb-4" style="background:#F7F8FA;border:1px solid #E5E5E5">
+<div class="flex items-center justify-between px-3.5 py-3" style="border-bottom:1px dashed #E5E5E5">
+<div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">账号</span><span class="text-[15px] font-semibold text-[#111] truncate">{{ newAccCred.account }}</span></div>
+<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('acc')" v-html="luci('copy','w-4 h-4 text-[var(--accent)] cursor-pointer')"></span>
+</div>
+<div class="flex items-center justify-between px-3.5 py-3">
+<div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">初始密码</span><span class="text-[15px] font-semibold text-[#111] font-mono tracking-wide">{{ newAccCred.password }}</span></div>
+<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('pwd')" v-html="luci('copy','w-4 h-4 text-[var(--accent)] cursor-pointer')"></span>
+</div>
+</div>
+<div class="flex flex-col gap-2.5">
+<div @click="closeAccCred()" class="py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:var(--accent)">我知道了</div>
+</div>
+</div>
+</div></transition>
+</template>
+
+</div>
+</transition>
+
+<!-- ═══ UNIFIED TAB BAR ═══ -->
+<div v-if="!showLogin" class="absolute bottom-0 left-0 right-0 h-[83px] bg-white/90 backdrop-blur-[20px] flex pb-[22px] z-[100]" style="border-top:1px solid #E5E5E5">
+<div v-if="can('home.view')" @click="setTab('home')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='home'?'text-[var(--accent)]':'text-[#999]'">
+<span v-html="luci('home','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">首页</span>
+</div>
+<div v-if="can('vehicle.list')" @click="setTab('vehicles')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='vehicles'?'text-[var(--accent)]':'text-[#999]'">
+<span v-html="luci('bike','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">车辆</span>
+</div>
+<div v-if="can('battery.list')" @click="setTab('orders');ordersOV=null" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='orders'&&!ordersOV?'text-[var(--accent)]':'text-[#999]'">
+<span v-html="luci('battery-charging','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">电池</span>
+</div>
+<div @click="setTab('profile')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='profile'?'text-[var(--accent)]':'text-[#999]'">
+<span v-html="luci('user','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">我的</span>
+</div>
+</div>
+
+<!-- 版本检测弹窗（全局） -->
+<transition name="fd"><div v-if="showVersionCheck" class="absolute inset-0 z-[900] flex items-center justify-center rounded-[44px] overflow-hidden" style="background:rgba(0,0,0,.45)" data-od-id="version-check-modal">
+<div class="bg-white rounded-xl w-[320px] px-5 pt-6 pb-4 flex flex-col" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
+<template v-if="hasNewVersion">
+<div class="text-[17px] font-bold text-center mb-1">发现新版本</div>
+<div class="text-[13px] text-[#666] text-center mb-3">{{ '最新版本 V' + (latestVersion) }}</div>
+<div class="bg-[#F6F7F9] rounded-lg px-4 py-3 mb-4 text-[13px] text-[#555] leading-relaxed">{{ updateDesc }}</div>
+<template v-if="protoForceUpdate==='force'">
+<div class="flex gap-3">
+  <div @click="exitApp" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">退出应用</div>
+<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'var(--accent)':'var(--accent)'}">{{ updating ? '下载中…' : '立即更新' }}</div>
+</div>
+</template>
+<template v-else>
+<div class="flex gap-3">
+<div @click="showVersionCheck=false" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">稍后提醒</div>
+<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'var(--accent)':'var(--accent)'}">{{ updating ? '下载中…' : '立即更新' }}</div>
+</div>
+</template>
+</template>
+<template v-else>
+<div class="flex flex-col items-center py-6">
+<div class="w-14 h-14 rounded-full flex items-center justify-center mb-3" style="background:#EBF1FD">
+<span v-html="luci('check','w-7 h-7 text-[var(--accent)]')"></span>
+</div>
+<div class="text-[17px] font-bold mb-1">已是最新版本</div>
+<div class="text-[13px] text-[#666]">V1.3.8</div>
+</div>
+<div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:var(--accent)">知道了</div>
+</template>
+</div></div></transition>
+<!-- ═══ 用户管理 — 详情 ═══ -->
+<transition name="sl"><div v-if="profileSub==='userDetail'" v-swipe-close="()=>goBack()" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="user-detail-page">
+<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="goBack"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 text-center text-[17px] font-semibold mr-8">用户详情</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
@@ -3532,7 +3657,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <span @click="openUBind('battery')" class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EBF1FD] shrink-0" data-od-id="bind-battery-btn" title="绑定电池"><span v-html="luci('link','w-4 h-4 text-[var(--link)]')"></span></span>
   </div>
   <div v-if="uBatteries.length" class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div v-for="(b,i) in uBatteries" :key="b.code" @click="setTab('orders');goBatteryDetail(b.code)" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uBatteries.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
+    <div v-for="(b,i) in uBatteries" :key="b.code" @click="goBatteryDetail(b.code)" class="flex items-center px-4 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="i<uBatteries.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
       <div class="w-9 h-9 rounded-lg bg-[#FFF8E6] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('battery-charging','w-5 h-5 text-[#B07B00]')"></span></div>
       <div class="flex-1 min-w-0">
         <div class="text-[14px] font-semibold truncate">{{ b.code }}</div>
@@ -3717,130 +3842,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<transition name="sl"><div v-if="profileOV==='settings'" v-swipe-close="()=>profileOV=null" class="absolute inset-0 bg-[#F6F7F9] z-[500] flex flex-col" data-od-id="settings-page">
-<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileOV=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold mr-8">系统设置</div>
-</div>
-<div class="flex-1 overflow-y-auto px-5 pt-4 pb-28 hid">
-<div class="text-[13px] font-medium text-[#999] mb-2 px-1">通用设置</div>
-<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
-<div @click="profileSub='lang'" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED" data-od-id="settings-lang-row">
-<span class="flex-1 text-[15px] font-medium">切换语言</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] mr-1">{{ appLangLabel }}</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
-</div>
-<div @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row">
-<span class="flex-1 text-[15px] font-medium">当前版本</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.3.8</span><span v-html="luci('chevron-right','w-3 h-3 text-[#999]')"></span></div>
-</div>
-</div>
-</div>
-<div class="absolute bottom-7 left-5 right-5" data-od-id="settings-logout-btn">
-<button @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626">退出登录</button>
-</div>
-</div></transition>
-
-<!-- 切换语言 -->
-<transition name="sl"><div v-if="profileSub==='lang'" v-swipe-close="()=>profileSub=null" class="absolute inset-0 bg-[#F6F7F9] z-[510] flex flex-col" data-od-id="settings-lang-page">
-<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="profileSub=null"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold mr-8">切换语言</div>
-</div>
-<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
-<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
-<div v-for="(lg,i) in langOptions" :key="lg.id" @click="selectLang(lg.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
-<span class="flex-1 text-[15px] font-medium">{{ lg.label }}</span>
-<span v-if="appLang===lg.id" v-html="luci('check','w-5 h-5 text-[var(--accent)]')"></span>
-</div>
-</div>
-</div>
-</div></transition>
-
-<transition name="fd"><div v-if="profileMod" class="absolute inset-0 z-[800] flex items-center justify-center" style="background:rgba(0,0,0,.45)" data-od-id="profile-modal">
-<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col gap-3" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
-<div class="text-[17px] font-bold text-center">{{ profileMdT }}</div>
-<div v-if="profileMdD" class="text-sm text-[#666] text-center leading-relaxed">{{ profileMdD }}</div>
-<div class="flex gap-3 mt-2">
-<div @click="profileMod=null" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">取消</div>
-<div @click="profileMdOk" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:var(--accent)">确认</div>
-</div></div>
-</div></transition>
-
-<!-- ═══ 新增账号成功 · 账号与初始密码 ═══ -->
-<transition name="fd"><div v-if="newAccCred" class="absolute inset-0 z-[810] flex items-center justify-center" style="background:rgba(0,0,0,.45)" data-od-id="acc-cred-modal">
-<div class="bg-white rounded-xl w-[300px] px-5 pt-6 pb-4 flex flex-col" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
-<div class="flex flex-col items-center mb-3">
-<div class="w-12 h-12 rounded-full flex items-center justify-center mb-2" style="background:#ECFDF3"><span v-html="luci('check','w-6 h-6 text-[#17A34A]')"></span></div>
-<div class="text-[17px] font-bold text-center">账号创建成功</div>
-<div class="text-[13px] text-[#999] text-center mt-1 leading-relaxed">请妥善保管以下账号信息</div>
-</div>
-<div class="rounded-xl mb-4" style="background:#F7F8FA;border:1px solid #E5E5E5">
-<div class="flex items-center justify-between px-3.5 py-3" style="border-bottom:1px dashed #E5E5E5">
-<div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">账号</span><span class="text-[15px] font-semibold text-[#111] truncate">{{ newAccCred.account }}</span></div>
-<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('acc')" v-html="luci('copy','w-4 h-4 text-[var(--accent)] cursor-pointer')"></span>
-</div>
-<div class="flex items-center justify-between px-3.5 py-3">
-<div class="flex flex-col min-w-0"><span class="text-[11px] text-[#999] mb-0.5">初始密码</span><span class="text-[15px] font-semibold text-[#111] font-mono tracking-wide">{{ newAccCred.password }}</span></div>
-<span class="shrink-0 ml-2.5 p-1.5 rounded-full active:bg-[#EBF1FD]" @click="copyCred('pwd')" v-html="luci('copy','w-4 h-4 text-[var(--accent)] cursor-pointer')"></span>
-</div>
-</div>
-<div class="flex flex-col gap-2.5">
-<div @click="closeAccCred()" class="py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" style="background:var(--accent)">我知道了</div>
-</div>
-</div>
-</div></transition>
-</template>
-
-</div>
-</transition>
-
-<!-- ═══ UNIFIED TAB BAR ═══ -->
-<div v-if="!showLogin" class="absolute bottom-0 left-0 right-0 h-[83px] bg-white/90 backdrop-blur-[20px] flex pb-[22px] z-[100]" style="border-top:1px solid #E5E5E5">
-<div v-if="can('home.view')" @click="setTab('home')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='home'?'text-[var(--accent)]':'text-[#999]'">
-<span v-html="luci('home','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">首页</span>
-</div>
-<div v-if="can('vehicle.list')" @click="setTab('vehicles')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='vehicles'?'text-[var(--accent)]':'text-[#999]'">
-<span v-html="luci('bike','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">车辆</span>
-</div>
-<div v-if="can('battery.list')" @click="setTab('orders');ordersOV=null" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='orders'&&!ordersOV?'text-[var(--accent)]':'text-[#999]'">
-<span v-html="luci('battery-charging','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">电池</span>
-</div>
-<div @click="setTab('profile')" class="flex-1 flex flex-col items-center justify-center cursor-pointer gap-[3px] select-none" :class="tab==='profile'?'text-[var(--accent)]':'text-[#999]'">
-<span v-html="luci('user','w-[22px] h-[22px]')"></span><span class="text-[10px] font-semibold">我的</span>
-</div>
-</div>
-
-<!-- 版本检测弹窗（全局） -->
-<transition name="fd"><div v-if="showVersionCheck" class="absolute inset-0 z-[900] flex items-center justify-center rounded-[44px] overflow-hidden" style="background:rgba(0,0,0,.45)" data-od-id="version-check-modal">
-<div class="bg-white rounded-xl w-[320px] px-5 pt-6 pb-4 flex flex-col" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)">
-<template v-if="hasNewVersion">
-<div class="text-[17px] font-bold text-center mb-1">发现新版本</div>
-<div class="text-[13px] text-[#666] text-center mb-3">{{ '最新版本 V' + (latestVersion) }}</div>
-<div class="bg-[#F6F7F9] rounded-lg px-4 py-3 mb-4 text-[13px] text-[#555] leading-relaxed">{{ updateDesc }}</div>
-<template v-if="protoForceUpdate==='force'">
-<div class="flex gap-3">
-  <div @click="exitApp" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">退出应用</div>
-<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'var(--accent)':'var(--accent)'}">{{ updating ? '下载中…' : '立即更新' }}</div>
-</div>
-</template>
-<template v-else>
-<div class="flex gap-3">
-<div @click="showVersionCheck=false" class="flex-1 py-3 rounded-xl text-[15px] font-medium text-center cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1px solid #E5E5E5;background:#fff">稍后提醒</div>
-<div @click="goUpdate" class="flex-1 py-3 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer transition-colors" :style="{background:updating?'var(--accent)':'var(--accent)'}">{{ updating ? '下载中…' : '立即更新' }}</div>
-</div>
-</template>
-</template>
-<template v-else>
-<div class="flex flex-col items-center py-6">
-<div class="w-14 h-14 rounded-full flex items-center justify-center mb-3" style="background:#EBF1FD">
-<span v-html="luci('check','w-7 h-7 text-[var(--accent)]')"></span>
-</div>
-<div class="text-[17px] font-bold mb-1">已是最新版本</div>
-<div class="text-[13px] text-[#666]">V1.3.8</div>
-</div>
-<div @click="showVersionCheck=false" class="rounded-xl py-3 text-center text-[15px] font-semibold text-white cursor-pointer mt-2" style="background:var(--accent)">知道了</div>
-</template>
-</div></div></transition>
 <transition name="fd"><div v-if="appExited" class="absolute inset-0 z-[950] bg-black flex flex-col items-center justify-center rounded-[44px]" data-od-id="app-exited-overlay">
 <div class="text-white/50 text-[14px] mb-6">应用已退出</div>
 <div @click="relaunchApp" class="px-6 py-2.5 rounded-full text-[14px] text-white cursor-pointer active:bg-white/10 transition-colors" style="background:rgba(255,255,255,.12)">重新打开应用</div>
@@ -4010,7 +4011,7 @@ const homeOV=ref(null);const homeRefreshing=ref(false);
 const store=computed(()=>({name:'测试门店'}));
 const bizStats=computed(()=>[{label:'今日收款',value:'Rp 3,240',trend:null},{label:'本月收款',value:'Rp 28,500',trend:null},{label:'进行中',value:'18',trend:null},{label:'待归还',value:'8',trend:null}]);
  const vehStats=computed(()=>[{label:'在线车辆',value:'42',online:true},{label:'离线车辆',value:'8',danger:true,online:false}]);
- function goHomeVehStat(s){if(!can('home.stats.vehicle')){deny();return}if(!can('vehicle.list')){deny();return}homeOV.value=null;curAlert.value=null;alertMod.value=null;vehOV.value=null;vehQ.value='';vehPill.value='';vehFsModel.value='';vehFsLost.value=null;vehFsOnline.value=s.online===true?true:s.online===false?false:null;tab.value='vehicles'}
+ function goHomeVehStat(s){navOpen();if(!can('home.stats.vehicle')){deny();return}if(!can('vehicle.list')){deny();return}homeOV.value=null;curAlert.value=null;alertMod.value=null;vehOV.value=null;vehQ.value='';vehPill.value='';vehFsModel.value='';vehFsLost.value=null;vehFsOnline.value=s.online===true?true:s.online===false?false:null;tab.value='vehicles'}
  const ALERTS_SEED=[
   {id:1,vin:'LSVAU2Z0A00888000',type:'车辆离线',lv:'p0',status:'pending',time:'2024-10-24 10:45:18',firstTime:'2024-10-24 08:12:05',duration:'2小时33分',count:3,location:'北京市朝阳区望京街道附近',orderId:'YD202501180004',icon:'wifi-off',ignoreReason:'',closeSource:'',closedTime:'',timeline:[
   {id:'t1-1',at:'2024-10-24 08:12:05',kind:'opened'},
@@ -4182,16 +4183,16 @@ function closeAlertById(id,source){
   return a;
 }
 var alertPtrInit=false;
-function homeOpen(id){if(id==='alerts'){alertStatus.value='pending';alertType.value=''}homeOV.value=id;if(id==='alerts'){triggerListLoading('alerts');if(!alertPtrInit){nextTick(()=>{if(document.getElementById('sc-alert')){initPullToRefresh('sc-alert','ptr-alert',refreshAlert);alertPtrInit=true}})}}}
-function homeClose(){homeOV.value=null;curAlert.value=null;alertMod.value=null;alertTimelineExpanded.value=false}
+function homeOpen(id){navOpen();if(id==='alerts'){alertStatus.value='pending';alertType.value=''}homeOV.value=id;if(id==='alerts'){triggerListLoading('alerts');if(!alertPtrInit){nextTick(()=>{if(document.getElementById('sc-alert')){initPullToRefresh('sc-alert','ptr-alert',refreshAlert);alertPtrInit=true}})}}}
+function homeClose(){alertMod.value=null;navBack()}
 /* 详情叠层：只设 curAlert，不改 homeOV，返回动画与其它二级页一致（仅本层 sl 滑出） */
-function openAlertDetail(a){curAlert.value=a;alertMod.value=null;alertTimelineExpanded.value=false}
-function closeAlertDetail(){curAlert.value=null;alertMod.value=null;alertTimelineExpanded.value=false}
+function openAlertDetail(a){navOpen();curAlert.value=a;alertMod.value=null;alertTimelineExpanded.value=false}
+function closeAlertDetail(){alertMod.value=null;navBack()}
 function startProcessAlert(){if(!curAlert.value||curAlert.value.status!=='pending')return;const i=allAlerts.value.findIndex(x=>x.id===curAlert.value.id);if(i>=0){allAlerts.value[i].status='processing';allAlerts.value[i].closeSource='';allAlerts.value[i].closedTime='';pushTimeline(allAlerts.value[i],{kind:'claimed'});curAlert.value=allAlerts.value[i]}toast('已开始处理','success')}
 function resolveAlert(){if(!curAlert.value||curAlert.value.status!=='processing')return;const a=closeAlertById(curAlert.value.id,'manual');if(a){a.ignoreReason='';curAlert.value=a}toast('已关闭','success')}
 function confirmIgnoreAlert(){if(!curAlert.value||!OPEN_ALERT_STS.includes(curAlert.value.status))return;const i=allAlerts.value.findIndex(x=>x.id===curAlert.value.id);if(i>=0){allAlerts.value[i].status='ignored';allAlerts.value[i].ignoreReason=ignoreReasonPick.value;allAlerts.value[i].closeSource='';allAlerts.value[i].closedTime='';pushTimeline(allAlerts.value[i],{kind:'ignored',reason:ignoreReasonPick.value});curAlert.value=allAlerts.value[i]}alertMod.value=null}
 function reopenAlert(){if(!curAlert.value||curAlert.value.status!=='ignored')return;const i=allAlerts.value.findIndex(x=>x.id===curAlert.value.id);if(i>=0){allAlerts.value[i].status='pending';allAlerts.value[i].ignoreReason='';allAlerts.value[i].closeSource='';allAlerts.value[i].closedTime='';pushTimeline(allAlerts.value[i],{kind:'reopened'});curAlert.value=allAlerts.value[i]}}
-function goAlertVehicle(){if(!curAlert.value)return;if(!can('vehicle.list')){deny();return}const vin=curAlert.value.vin;const v=vehicles.value.find(x=>x.vin===vin)||vehicles.value[0];homeOV.value=null;curAlert.value=null;alertMod.value=null;tab.value='vehicles';if(v)vehOpenDetail(v)}
+function goAlertVehicle(){navOpen();if(!curAlert.value)return;if(!can('vehicle.list')){deny();return}const vin=curAlert.value.vin;const v=vehicles.value.find(x=>x.vin===vin)||vehicles.value[0];homeOV.value=null;curAlert.value=null;alertMod.value=null;tab.value='vehicles';if(v)vehOpenDetail(v)}
 function doFindFromAlert(){if(!can('vehicle.command.find_car')){deny();return}toast('寻车指令已发送','success')}
 function demoSetAlertCloseSource(source){
   if(!curAlert.value||(source!=='manual'&&source!=='auto'))return;
@@ -4255,10 +4256,10 @@ const armed=ref(false),lost=ref(false),motorLocked=ref(false),findLoading=ref(fa
 const editCtrl=ref(''),editModel=ref(''),editPlate=ref('');
 const editSelectedModel=computed(()=>vehModels.find(m=>m.name===editModel.value)||null);
 const editSelectedProtocol=computed(()=>(editSelectedModel.value?.protocolType)||'HTTP');
-function openVehEdit(){if(!can('vehicle.edit')){deny();return}editCtrl.value=dv.value.ctrl;editModel.value=dv.value.model;editPlate.value=dv.value.plate;vehOV.value='edit'}
-function saveVehEdit(){dv.value.ctrl=editCtrl.value;dv.value.model=editModel.value;dv.value.plate=editPlate.value;dv.value.protocol=editSelectedProtocol.value;dv.value.startMode=dv.value.startMode||'onekey';const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);if(idx>=0){vehicles.value[idx].ctrl=editCtrl.value;vehicles.value[idx].model=editModel.value;vehicles.value[idx].plate=editPlate.value;vehicles.value[idx].protocol=editSelectedProtocol.value;vehicles.value[idx].startMode=vehicles.value[idx].startMode||'onekey'}vehOV.value='detail';toast('车辆信息已保存','success')}
-function vehOpenDetail(v){if(!can('vehicle.detail')){deny();return}dv.value={...v};armed.value=false;lost.value=v.lost||false;motorLocked.value=!!v.motorLocked;vehOV.value='detail'}
-function vehOpenAdd(){if(!can('vehicle.add')){deny();return}vehOV.value='add'}
+function openVehEdit(){navOpen();if(!can('vehicle.edit')){deny();return}editCtrl.value=dv.value.ctrl;editModel.value=dv.value.model;editPlate.value=dv.value.plate;vehOV.value='edit'}
+function saveVehEdit(){dv.value.ctrl=editCtrl.value;dv.value.model=editModel.value;dv.value.plate=editPlate.value;dv.value.protocol=editSelectedProtocol.value;dv.value.startMode=dv.value.startMode||'onekey';const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);if(idx>=0){vehicles.value[idx].ctrl=editCtrl.value;vehicles.value[idx].model=editModel.value;vehicles.value[idx].plate=editPlate.value;vehicles.value[idx].protocol=editSelectedProtocol.value;vehicles.value[idx].startMode=vehicles.value[idx].startMode||'onekey'}navDrop();vehOV.value='detail';toast('车辆信息已保存','success')}
+function vehOpenDetail(v){navOpen();if(!can('vehicle.detail')){deny();return}dv.value={...v};armed.value=false;lost.value=v.lost||false;motorLocked.value=!!v.motorLocked;vehOV.value='detail'}
+function vehOpenAdd(){navOpen();if(!can('vehicle.add')){deny();return}vehOV.value='add'}
 function vehToggleViewSafe(){vehToggleView()}
 /* ══ VEHICLE LOCATION DETAIL ══ */
 const locLoading=ref(false),locRinging=ref(false),locFocus=ref('vehicle');
@@ -4298,6 +4299,7 @@ function loadLocData(){
 }
 function openVehLocation(){
   locRinging.value=false;
+  navOpen();
   vehOV.value='location';
   loadLocData();
 }
@@ -4382,6 +4384,7 @@ function openVehTrack(){
   trackStart.value={year:2025,month:8,day:6,hour:17,min:8};
   trackEnd.value={year:2025,month:8,day:6,hour:17,min:28};
   trackTimePicker.value=null;
+  navOpen();
   vehOV.value='track';
   loadTrackData();
 }
@@ -4618,12 +4621,13 @@ const demoIsTopTab=computed(()=>{if(tab.value==='home')return !homeOV.value;if(t
 function enforceTabPerms(){
   if(showLogin.value)return;
   const ok={home:can('home.view'),vehicles:can('vehicle.list'),orders:can('battery.list')||can('order.list'),profile:true};
-  if(!ok[tab.value]){tab.value='profile';homeOV.value=null;vehOV.value=null;ordersOV.value=null;curAlert.value=null}
+  if(!ok[tab.value]){navReset();tab.value='profile';homeOV.value=null;vehOV.value=null;ordersOV.value=null;curAlert.value=null}
 }
 function setTab(t){
   if(t==='home'&&!can('home.view')){deny();return}
   if(t==='vehicles'&&!can('vehicle.list')){deny();return}
   if(t==='orders'&&!can('battery.list')&&!can('order.list')){deny();return}
+  if(!_pagePushed)navReset();
   tab.value=t;
   if(t==='home'){
     if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion();
@@ -4655,8 +4659,8 @@ const ordersPlaceholder=computed(()=>!ordersEntry.value);
 const ordersLName=computed(()=>{const m={vehicle:'车辆',battery:'电池',package:'套餐'};return ordersEntry.value?m[ordersEntry.value]||'车辆':'电池'});
 const ordersListTitle=computed(()=>ordersLName.value+'订单列表');
 const orderEntries=computed(()=>[{v:'vehicle',l:'车辆租赁',icon:'bike',code:'order.list'},{v:'battery',l:'电池租赁',icon:'battery-charging',code:'order.battery.list'},{v:'package',l:'车电套餐',icon:'package',code:'order.package.list'}].filter(e=>can(e.code)));
-function homeOpenOrders(t){const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value=_ordDateDef.start;ordersFsEnd.value=_ordDateDef.end;searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
-function closeOrderList(){ordersOV.value=null;tab.value='home'}
+function homeOpenOrders(t){navOpen();const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value=_ordDateDef.start;ordersFsEnd.value=_ordDateDef.end;searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
+function closeOrderList(){navBack()}
 /* ══ BATTERY DEVICES (订单 tab → 电池) ══ */
 const battQ=ref(''),battPill=ref('');
 const batteries=ref([
@@ -4675,7 +4679,7 @@ const battFsModels=computed(()=>Array.from(new Set(batteries.value.map(b=>b.mode
 const batterFiltered=computed(()=>demoListEmpty.value?[]:batteries.value.filter(b=>{if(battPill.value&&b.status!==battPill.value)return false;if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true}));
 const curBatt=ref(null);
 function battDoSearch(){brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)}
-function battOpenDetail(b){if(!can('battery.detail')){deny();return}curBatt.value=b;ordersOV.value='battDetail'}
+function battOpenDetail(b){navOpen();if(!can('battery.detail')){deny();return}curBatt.value=b;ordersOV.value='battDetail'}
 const battMod=ref(null);
 const battDischarge=computed(()=>!!(curBatt.value&&curBatt.value.discharge));
 const battModTitle=computed(()=>{if(battMod.value==='unbind')return '解绑用户';return battMod.value==='lost'?(curBatt.value&&curBatt.value.lost?'解除报失':'电池报失'):(battDischarge.value?'禁止放电':'允许放电')});
@@ -4684,8 +4688,8 @@ function battOpenDischarge(){if(!can('battery.discharge')){deny();return}battMod
 function battOpenReportLost(){battMod.value='lost'}
 function battConfirmMod(){const b=curBatt.value;if(!b)return;if(battMod.value==='unbind'){b.account='';b.phone='';b.email='';toast('解绑成功','success')}else if(battMod.value==='lost'){b.lost=!b.lost;if(b.lost)b.discharge=false;toast(b.lost?'报失成功':'解除报失成功','success')}else{b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success')}battMod.value=null}
 const battEditModel=ref('');
-function openBattEdit(){battEditModel.value=curBatt.value?curBatt.value.model:'';ordersOV.value='battEdit'}
-function saveBattEdit(){const b=curBatt.value;if(!b)return;b.model=battEditModel.value;const idx=batteries.value.findIndex(x=>x.battNo===b.battNo);if(idx>=0)batteries.value[idx].model=battEditModel.value;ordersOV.value='battDetail';toast('电池信息已保存','success')}
+function openBattEdit(){navOpen();battEditModel.value=curBatt.value?curBatt.value.model:'';ordersOV.value='battEdit'}
+function saveBattEdit(){const b=curBatt.value;if(!b)return;b.model=battEditModel.value;const idx=batteries.value.findIndex(x=>x.battNo===b.battNo);if(idx>=0)batteries.value[idx].model=battEditModel.value;navDrop();ordersOV.value='battDetail';toast('电池信息已保存','success')}
 /* ══ BATTERY LOCATION DETAIL ══ */
 const battLocLoading=ref(false),battLocFocus=ref('battery');
 const battLocAddressFull=computed(()=>{
@@ -4722,6 +4726,7 @@ function loadBattLocData(){
   setTimeout(()=>{battLocLoading.value=false},380);
 }
 function openBattLocation(){
+  navOpen();
   ordersOV.value='battLocation';
   loadBattLocData();
 }
@@ -4790,6 +4795,7 @@ function loadBattTrackData(){
   },450);
 }
 function openBattTrack(){
+  navOpen();
   battTrackStart.value={year:2025,month:8,day:6,hour:17,min:8};
   battTrackEnd.value={year:2025,month:8,day:6,hour:17,min:28};
   battTrackTimePicker.value=null;
@@ -4860,9 +4866,9 @@ const battModels=['天能锂电 72V20Ah','天能锂电 48V20Ah','天能锂电 60
 const battFilteredModels=computed(()=>battModelQ.value?battModels.filter(m=>m.toLowerCase().includes(battModelQ.value.toLowerCase())):battModels);
 const canBattSubmit=computed(()=>!!battAddModel.value&&!!battAddNo.value.trim());
 function pickBattModel(m){if(ordersOV.value==='battEdit'){battEditModel.value=m}else{battAddModel.value=m}battShowModelSheet.value=false}
-function openBattAdd(){ordersOV.value='battAdd'}
-function closeBattAdd(){ordersOV.value=null;battAddModel.value='';battAddNo.value=''}
-function submitBattAdd(){if(!canBattSubmit.value)return;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('新增成功','success');ordersOV.value=null;battAddModel.value='';battAddNo.value=''},600)}
+function openBattAdd(){navOpen();ordersOV.value='battAdd'}
+function closeBattAdd(){navDrop();ordersOV.value=null;battAddModel.value='';battAddNo.value=''}
+function submitBattAdd(){if(!canBattSubmit.value)return;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('新增成功','success');navDrop();ordersOV.value=null;battAddModel.value='';battAddNo.value=''},600)}
 /* ══ 电池地图视图（与车辆地图逻辑一致）══ */
 const battView=ref('list');
 const battMapBatteries=computed(()=>batteries.value.filter(b=>b.lat!=null&&b.lng!=null&&!Number.isNaN(b.lat)&&!Number.isNaN(b.lng)));
@@ -4945,7 +4951,7 @@ var primaryDanger=computed(()=>['created','pickup'].indexOf(dSt.value)!==-1&&!(d
 var dualMode=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit);
 var dualIsCancel=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit);
 var dangerLabel=computed(()=>'取消订单');
-function ordersOpenDetail(o){const detailCode=o.type==='battery'?'order.battery.detail':o.type==='package'?'order.package.detail':'order.detail';if(!can(detailCode)){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=o.paySt||(o.status==='created'?'pending':'paid');dPm.value=(o.payment==='offline'?'offline':'online');dCanceledPaid.value=(o.paySt==='unpaid')?'unpaid':'paid';autoRenew.value=!!(o&&o.autoRenew);ordersOV.value='detail'}
+function ordersOpenDetail(o){navOpen();const detailCode=o.type==='battery'?'order.battery.detail':o.type==='package'?'order.package.detail':'order.detail';if(!can(detailCode)){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=o.paySt||(o.status==='created'?'pending':'paid');dPm.value=(o.payment==='offline'?'offline':'online');dCanceledPaid.value=(o.paySt==='unpaid')?'unpaid':'paid';autoRenew.value=!!(o&&o.autoRenew);ordersOV.value='detail'}
 var autoRenew=ref(false);
 function toggleAutoRenew(){var next=!autoRenew.value;autoRenew.value=next;var o=do_.value;if(o)o.autoRenew=next;toast(next?'已开启自动续租，续租费用到期自动从钱包扣除':'已关闭自动续租',next?'success':'info')}
 var dHasRealName=computed(()=>{var o=do_.value;return !!(o&&o.realName!==false)});
@@ -4953,8 +4959,8 @@ function demoSetRealName(v){var o=do_.value;if(!o)return;o.realName=!!v;toast(v?
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
 function copyText(t,label){var v=(t||'').trim();if(!v||v==='—'){toast('无内容可复制','warn');return}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){toast((label||'')+'已复制','success')},function(){toast('复制失败','warn')})}else{toast('复制失败','warn')}}
 function callPhone(p){if(!p)return;window.location.href='tel:'+p}
-function goVehicleDetail(vin){var v=vehicles.value.find(x=>x.vin===vin);setTab('vehicles');vehOpenDetail(v||{vin:vin})}
-function goBatteryDetail(no){var b=batteries.value.find(x=>x.battNo===no);battOpenDetail(b||{battNo:no})}
+function goVehicleDetail(vin){navOpen();var v=vehicles.value.find(x=>x.vin===vin);setTab('vehicles');vehOpenDetail(v||{vin:vin})}
+function goBatteryDetail(no){navOpen();var b=batteries.value.find(x=>x.battNo===no);setTab('orders');battOpenDetail(b||{battNo:no})}
 function ordersDoSearch(){}
 var ordersSaving=ref(false);
 function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit;if(isOff){ordersMod.value='confirmPay';return}if(['created','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
@@ -5043,7 +5049,7 @@ function submitRefund(){if(refundSaving.value)return;refundSaving.value=true;bra
   if(refRecScope.value)list=list.filter(function(r){return r&&r.targetNo===refRecScope.value});
   return list.sort(function(a,b){return (b.refundTime||'').localeCompare(a.refundTime||'')});
  });
- function openRefundRecords(row){if(!do_.value)return;if(!orderPerm('refund.list')){deny();return}refRecScope.value=(row&&row.isRenew)?row.subOrderNo:null;ordersOV.value='refunds'}
+ function openRefundRecords(row){navOpen();if(!do_.value)return;if(!orderPerm('refund.list')){deny();return}refRecScope.value=(row&&row.isRenew)?row.subOrderNo:null;ordersOV.value='refunds'}
   function refundStLabel(s){return {PROCESSING:'退款中',REFUNDING:'退款中',SUCCESS:'退款成功',FAILED:'退款失败'}[s]||'-'}
   function refundStg(s){var m={PROCESSING:'#F59E0B',REFUNDING:'#F59E0B',SUCCESS:'#17A34A',FAILED:'#DC2626'};return m[s]||'#999'}
   function refundSourceLabel(r){return (r&&r.refundSource)||'-'}
@@ -5453,7 +5459,7 @@ const docImageTypes=computed(()=>[{label:'身份证',icon:'camera',color:'var(--
 const showDocCard=computed(()=>true);
 const canEditDocs=computed(()=>(dSt.value==='created'||dSt.value==='pickup')&&true);
 const curDocs=computed(()=>{const id=do_.value.id;return orderDocs.value[id]||[]});
-function openDocsPage(){if(!true){deny();return}ordersOV.value='docs'}
+function openDocsPage(){navOpen();if(!true){deny();return}ordersOV.value='docs'}
 function openDocSheet(){docSheetTab.value='image';docText.value='';showDocSheet.value=true}
 function addDocImage(img){const id=do_.value.id;if(!orderDocs.value[id])orderDocs.value[id]=[];orderDocs.value[id].push({id:Date.now(),type:'image',label:img.label,color:img.color,time:now()});showDocSheet.value=false}
 function addDocText(){if(!docText.value.trim())return;const id=do_.value.id;if(!orderDocs.value[id])orderDocs.value[id]=[];orderDocs.value[id].push({id:Date.now(),type:'text',content:docText.value.trim(),time:now()});docText.value='';showDocSheet.value=false}
@@ -5486,8 +5492,8 @@ const hasPhone=ref(true),hasEmail=ref(true),hasPwd=ref(true);
 const boundPhone=ref('+86 13086666758'),boundEmail=ref('hzjs@scin.com');
 const bpArea=ref('+86'),bpPhone=ref(''),bpCode=ref(''),bpCd=ref(0),beEmail=ref(''),beCode=ref(''),beCd=ref(0);
 let bpTmr,beTmr;
-function openBindPhone(){bpPhone.value='';bpCode.value='';clearInterval(bpTmr);bpCd.value=0;profileSub.value='bindPhone'}
-function openBindEmail(){beEmail.value='';beCode.value='';clearInterval(beTmr);beCd.value=0;profileSub.value='bindEmail'}
+function openBindPhone(){navOpen();bpPhone.value='';bpCode.value='';clearInterval(bpTmr);bpCd.value=0;profileSub.value='bindPhone'}
+function openBindEmail(){navOpen();beEmail.value='';beCode.value='';clearInterval(beTmr);beCd.value=0;profileSub.value='bindEmail'}
 function sendBpCode(){
   if(!bpPhone.value||bpCd.value>0)return;
   bpCd.value=60;
@@ -5506,7 +5512,7 @@ function doBindPhone(){
     hasPhone.value=true;
     bpPhone.value='';bpCode.value='';
     clearInterval(bpTmr);bpCd.value=0;
-    profileSub.value=null;
+    navDrop();profileSub.value=null;
   },600);
 }
 function sendBeCode(){
@@ -5527,7 +5533,7 @@ function doBindEmail(){
     hasEmail.value=true;
     beEmail.value='';beCode.value='';
     clearInterval(beTmr);beCd.value=0;
-    profileSub.value=null;
+    navDrop();profileSub.value=null;
   },600);
 }
 
@@ -5540,6 +5546,7 @@ const canConfirmPwd=computed(()=>{
   return a.length>=6&&a.length<=64&&a===b;
 });
 function openPwdFlow(){
+  navOpen();
   if(!hasPhone.value&&!hasEmail.value){toast('请先绑定手机号或邮箱','info');return}
   pwdChannel.value=hasPhone.value?'phone':'email';
   pwdCode.value='';clearInterval(pwdTmr);pwdCd.value=0;
@@ -5565,6 +5572,7 @@ function sendPwdCode(ch){
   pwdTmr=setInterval(()=>{pwdCd.value--;if(pwdCd.value<=0)clearInterval(pwdTmr)},1000);
 }
 function nextPwdVerify(){
+  navOpen();
   if(!(pwdCode.value||'').trim())return;
   npwd.value='';npwd2.value='';npwdVis.value=false;npwd2Vis.value=false;
   profileSub.value='pwdReset';
@@ -5586,15 +5594,11 @@ function doResetPwd(){
     toast('密码已更新','success');
     clearInterval(pwdTmr);pwdCd.value=0;pwdCode.value='';
     npwd.value='';npwd2.value='';
-    profileSub.value=null;
+    navDrop();profileSub.value=null;
   },600);
 }
 
-function goBack(){
-  if(profileSub.value==='pwdReset')profileSub.value='pwdVerify';
-  else if(profileSub.value)profileSub.value=null;
-  else if(profileOV.value)profileOV.value=null;
-}
+function goBack(){navBack()}
 const hdrTitle=computed(()=>{const m={info:'个人信息',store:'门店列表',model:'车型管理',battModel:'电池型号管理',package:'套餐管理',account:'账号管理',pos:'职位管理',cs:'客服信息',config:'订单配置',recharge:'充值配置',user:'用户管理',settings:'系统设置'};const s={mEdit:'编辑车型',bmEdit:'编辑电池型号',pkgEdit:'编辑套餐',pkgAdd:'新增套餐',aDetail:'账号详情',aAdd:'新增账号',aEdit:'编辑账号',pDetail:'职位详情',pAdd:'新增职位',pEdit:'编辑职位',csEdit:csIdx.value===-1?'新增客服':'编辑客服',lang:'切换语言',bindPhone:'绑定手机号',bindEmail:'绑定邮箱',pwdVerify:'修改密码',pwdReset:'重置密码',userDetail:'用户详情'};return profileSub.value?(s[profileSub.value]||''):(m[profileOV.value]||'')});
 const hdrAction=computed(()=>{if(profileOV.value==='account'&&can('account.add'))return{label:'新增',fn:()=>openAccAdd()};if(profileOV.value==='cs'&&can('cs_info.add'))return{label:'新增',fn:()=>openCsEdit(-1)};if(profileOV.value==='recharge')return{label:'新增',fn:()=>openRechargeEdit(-1)};if(profileSub.value==='pDetail'&&can('position.add'))return{label:'新增下级职位',fn:()=>openPosAdd(dp.value.name)};if(profileOV.value==='config'&&can('order_config.edit'))return{label:'保存',fn:saveCfg};return null});
 const curStore=ref('');
@@ -5616,10 +5620,10 @@ const menuGroups=computed(()=>[
     {id:'recharge',label:'充值配置',icon:'wallet',code:null}
   ]}
 ].map(g=>({...g,items:g.items.filter(m=>!m.code||can(m.code))})).filter(g=>g.items.length));
-function openMenu(id){profileOV.value=id;brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)}
+function openMenu(id){navOpen();profileOV.value=id;brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)}
 const langOptions=[{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'en',label:'English'},{id:'id',label:'Bahasa Indonesia'}];
 const appLangLabel=computed(()=>'简体中文');
-function selectLang(id){profileSub.value=null}
+function selectLang(id){navDrop();profileSub.value=null}
 const showLogin=ref(false);
 const loginView=ref('main');
 const loginMode=ref('phone');
@@ -5660,9 +5664,9 @@ const dialFiltered=computed(()=>{const q=(dialQ.value||'').trim().toLowerCase().
 const canSendCode=computed(()=>{if(loginCd.value>0||!loginAgree.value)return false;if(loginMode.value==='phone')return!!(loginPhone.value||'').trim();if(loginMode.value==='email')return!!(loginEmail.value||'').trim();return false});
 const canLogin=computed(()=>{if(!loginAgree.value)return false;if(loginMode.value==='phone'){if(!(loginPhone.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}if(loginMode.value==='email'){if(!(loginEmail.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}return!!(loginAccount.value||'').trim()&&!!(loginPwd.value||'').trim()});
 function resetLoginForm(){loginView.value='main';loginMode.value='phone';loginSub.value='password';loginPhone.value='';loginEmail.value='';loginAccount.value='';loginPwd.value='';loginCode.value='';loginPwdVisible.value=false;loginAgree.value=false;dialQ.value='';dialPickerSource.value=null;if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
-function doLogout(){profileMod.value=null;profileOV.value=null;profileSub.value=null;dialPickerSource.value=null;resetLoginForm();showLogin.value=true;toast('已退出登录','info')}
-function demoLogin(){showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast('登录成功','success')}
-function demoLogout(){resetLoginForm();showLogin.value=true}
+function doLogout(){profileMod.value=null;navReset();profileOV.value=null;navDrop();profileSub.value=null;dialPickerSource.value=null;resetLoginForm();showLogin.value=true;toast('已退出登录','info')}
+function demoLogin(){navReset();showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast('登录成功','success')}
+function demoLogout(){navReset();resetLoginForm();showLogin.value=true}
 function closeLogin(){if(dialPickerSource.value==='login'){closeDialPicker();return}if(loginView.value!=='main'){loginView.value='main'}}
 function loginOpenLang(){loginView.value='lang'}
 function selectLangFromLogin(id){loginView.value='main'}
@@ -5677,40 +5681,40 @@ function loginValid(){var m=loginMode.value,s=loginSub.value;if(m==='phone'){var
 function doLogin(){if(!loginAgree.value){toast('请先阅读并同意隐私政策','warn');return}var err=loginValid();loginErr.value={};if(err){loginErr.value[err.field]=err.msg;return}brandLoading.value=true;setTimeout(function(){brandLoading.value=false;showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast('登录成功','success')},600)}
 watch([loginPhone,loginPwd,loginCode,loginEmail,loginAccount],()=>{if(Object.keys(loginErr.value).length)loginErr.value={}});
 const stores=ref([]);
-function doSwitch(n){if(n===curStore.value){profileOV.value=null;return}curStore.value=n;profileOV.value=null}
+function doSwitch(n){if(n===curStore.value){navDrop();profileOV.value=null;return}curStore.value=n;navDrop();profileOV.value=null}
 const mQ=ref('');
 const profileModels=ref([]);
 const mFilter=computed(()=>demoListEmpty.value?[]:mQ.value?profileModels.value.filter(m=>m.name.toLowerCase().includes(mQ.value.toLowerCase())):profileModels.value);
 const fm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0});
 const modelPlanOpts=[{v:'hour',l:'planHour'},{v:'day',l:'planDay'},{v:'week',l:'planWeek'},{v:'month',l:'planMonth'}];
 const modelPriceKey={hour:'priceHour',day:'priceDay',week:'priceWeek',month:'priceMonth'};
-function openModelEdit(m){if(!can('model.edit')){deny();return}fm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0};profileSub.value='mEdit'}
+function openModelEdit(m){navOpen();if(!can('model.edit')){deny();return}fm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0};profileSub.value='mEdit'}
 var modelSaving=ref(false);
-function saveModel(){if(modelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fm.value.plans[p]&&(fm.value[k]===null||fm.value[k]===undefined||fm.value[k]==='')){e[p]='请输入价格'}else if(fm.value.plans[p]&&!isAmt(fm.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fm.value.deposit===''||fm.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fm.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fm.value.sort!==''&&!(Number.isInteger(fm.value.sort)&&fm.value.sort>=1&&fm.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};modelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{plans:Object.assign({},fm.value.plans),priceHour:fm.value.priceHour,priceDay:fm.value.priceDay,priceWeek:fm.value.priceWeek,priceMonth:fm.value.priceMonth,deposit:fm.value.deposit,sort:fm.value.sort,time:now()})}profileSub.value=null;fE.value={};toast('车型已保存','success');modelSaving.value=false},400)}
+function saveModel(){if(modelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fm.value.plans[p]&&(fm.value[k]===null||fm.value[k]===undefined||fm.value[k]==='')){e[p]='请输入价格'}else if(fm.value.plans[p]&&!isAmt(fm.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fm.value.deposit===''||fm.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fm.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fm.value.sort!==''&&!(Number.isInteger(fm.value.sort)&&fm.value.sort>=1&&fm.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};modelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{plans:Object.assign({},fm.value.plans),priceHour:fm.value.priceHour,priceDay:fm.value.priceDay,priceWeek:fm.value.priceWeek,priceMonth:fm.value.priceMonth,deposit:fm.value.deposit,sort:fm.value.sort,time:now()})}navDrop();profileSub.value=null;fE.value={};toast('车型已保存','success');modelSaving.value=false},400)}
 function mPlanText(m){var PLANS={hour:'时租',day:'日租',week:'周租',month:'月租'};var s=[];['hour','day','week','month'].forEach(function(p){if(m.plans&&m.plans[p])s.push(PLANS[p])});return s.length?s.join('、'):'-'}
 function mPlanPrices(m){var M={hour:['时租','priceHour'],day:['日租','priceDay'],week:['周租','priceWeek'],month:['月租','priceMonth']};var out=[];['hour','day','week','month'].forEach(function(k){if(m.plans&&m.plans[k])out.push({label:M[k][0],price:m[M[k][1]]||0})});return out}
 const bmQ=ref('');
 const profileBattModels=ref([]);
 const bmFilter=computed(()=>demoListEmpty.value?[]:bmQ.value?profileBattModels.value.filter(m=>m.name.toLowerCase().includes(bmQ.value.toLowerCase())):profileBattModels.value);
 const fbm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0});
-function openBattModelEdit(m){fbm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0};profileSub.value='bmEdit'}
+function openBattModelEdit(m){navOpen();fbm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0};profileSub.value='bmEdit'}
 var battModelSaving=ref(false);
-function saveBattModel(){if(battModelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fbm.value.plans[p]&&(fbm.value[k]===null||fbm.value[k]===undefined||fbm.value[k]==='')){e[p]='请输入价格'}else if(fbm.value.plans[p]&&!isAmt(fbm.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fbm.value.deposit===''||fbm.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fbm.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fbm.value.sort!==''&&!(Number.isInteger(fbm.value.sort)&&fbm.value.sort>=1&&fbm.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};battModelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileBattModels.value.findIndex(m=>m.name===fbm.value.name);if(i>=0){Object.assign(profileBattModels.value[i],{plans:Object.assign({},fbm.value.plans),priceHour:fbm.value.priceHour,priceDay:fbm.value.priceDay,priceWeek:fbm.value.priceWeek,priceMonth:fbm.value.priceMonth,deposit:fbm.value.deposit,sort:fbm.value.sort,time:now()})}profileSub.value=null;fE.value={};toast('电池型号已保存','success');battModelSaving.value=false},400)}
+function saveBattModel(){if(battModelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fbm.value.plans[p]&&(fbm.value[k]===null||fbm.value[k]===undefined||fbm.value[k]==='')){e[p]='请输入价格'}else if(fbm.value.plans[p]&&!isAmt(fbm.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fbm.value.deposit===''||fbm.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fbm.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fbm.value.sort!==''&&!(Number.isInteger(fbm.value.sort)&&fbm.value.sort>=1&&fbm.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};battModelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileBattModels.value.findIndex(m=>m.name===fbm.value.name);if(i>=0){Object.assign(profileBattModels.value[i],{plans:Object.assign({},fbm.value.plans),priceHour:fbm.value.priceHour,priceDay:fbm.value.priceDay,priceWeek:fbm.value.priceWeek,priceMonth:fbm.value.priceMonth,deposit:fbm.value.deposit,sort:fbm.value.sort,time:now()})}navDrop();profileSub.value=null;fE.value={};toast('电池型号已保存','success');battModelSaving.value=false},400)}
 const pkgQ=ref('');
 const profilePackages=ref([]);
 const pkgFilter=computed(()=>demoListEmpty.value?[]:pkgQ.value?profilePackages.value.filter(m=>m.name.toLowerCase().includes(pkgQ.value.toLowerCase())):profilePackages.value);
 const fpk=ref({name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:'',status:'上架'});
-function openPackageEdit(m){fpk.value={name:m.name,vehicleModel:m.vehicleModel||'',batteryModel:m.batteryModel||'',mainImg:!!m.mainImg,thumbImg:!!m.thumbImg,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0,remark:m.remark||'',status:m.status||'上架'};profileSub.value='pkgEdit'}
-function openPackageAdd(){fpk.value={name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:'',status:'上架'};fE.value={};profileSub.value='pkgAdd'}
+function openPackageEdit(m){navOpen();fpk.value={name:m.name,vehicleModel:m.vehicleModel||'',batteryModel:m.batteryModel||'',mainImg:!!m.mainImg,thumbImg:!!m.thumbImg,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,deposit:m.deposit||0,sort:m.sort||0,remark:m.remark||'',status:m.status||'上架'};profileSub.value='pkgEdit'}
+function openPackageAdd(){navOpen();fpk.value={name:'',vehicleModel:'',batteryModel:'',mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,deposit:0,sort:0,remark:'',status:'上架'};fE.value={};profileSub.value='pkgAdd'}
 const pkgPicker=ref(null);
 const pkgPickerQ=ref('');
 const pkgPickerList=computed(()=>pkgPicker.value==='vehicle'?profileModels.value.map(m=>m.name):pkgPicker.value==='battery'?profileBattModels.value.map(m=>m.name):[]);
 const pkgPickerFiltered=computed(()=>{const q=pkgPickerQ.value.toLowerCase();return q?pkgPickerList.value.filter(n=>n.toLowerCase().includes(q)):pkgPickerList.value});
 function openPkgPicker(mode){pkgPickerQ.value='';pkgPicker.value=mode}
 function pkgPick(name){if(pkgPicker.value==='vehicle'){fpk.value.vehicleModel=name}else if(pkgPicker.value==='battery'){fpk.value.batteryModel=name}pkgPicker.value=null}
-function submitPackageAdd(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name='请输入套餐名称'}['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;profilePackages.value.push({name:fpk.value.name.trim(),vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,count:0,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()});profileSub.value=null;fE.value={};toast('套餐已新增','success');packageSaving.value=false},400)}
+function submitPackageAdd(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name='请输入套餐名称'}['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;profilePackages.value.push({name:fpk.value.name.trim(),vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,count:0,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()});navDrop();profileSub.value=null;fE.value={};toast('套餐已新增','success');packageSaving.value=false},400)}
 var packageSaving=ref(false);
-function savePackage(){if(packageSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profilePackages.value.findIndex(m=>m.name===fpk.value.name);if(i>=0){Object.assign(profilePackages.value[i],{vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()})}profileSub.value=null;fE.value={};toast('套餐已保存','success');packageSaving.value=false},400)}
+function savePackage(){if(packageSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]='请输入价格'}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]='请输入 0 或正数，小数最多两位'}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit='请输入金额'}else if(!isAmt(fpk.value.deposit)){e.deposit='请输入 0 或正数，小数最多两位'}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort='请输入 1–99 之间的整数'}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profilePackages.value.findIndex(m=>m.name===fpk.value.name);if(i>=0){Object.assign(profilePackages.value[i],{vehicleModel:fpk.value.vehicleModel,batteryModel:fpk.value.batteryModel,mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()})}navDrop();profileSub.value=null;fE.value={};toast('套餐已保存','success');packageSaving.value=false},400)}
 const aQ=ref(''),allRoles=computed(()=>['店长','管理员','员工','财务','运维']);
 const accounts=ref([]);
 const aFilter=computed(()=>{if(demoListEmpty.value)return[];const q=aQ.value.toLowerCase();return q?accounts.value.filter(a=>(a.account+a.name+a.phone).toLowerCase().includes(q)):accounts.value});
@@ -5718,7 +5722,7 @@ const fa=ref({account:'',name:'',code:'+86',phone:'',email:'',roles:[],remark:''
 const adRows=computed(()=>[{k:'账号',v:da.value.account},{k:'姓名',v:da.value.name},{k:'手机号',v:(da.value.code||'')+' '+(da.value.phone||'')},{k:'邮箱',v:da.value.email},{k:'备注',v:da.value.remark||'—'},{k:'创建时间',v:da.value.created}]);
 function mask(p){if(!p||p.length<11)return p;return p.slice(0,p.length-8)+'****'+p.slice(-4)}
 function togRole(arr,r){const i=arr.indexOf(r);i===-1?arr.push(r):arr.splice(i,1)}
-function openAccDetail(a){if(!can('account.detail')){deny();return}da.value={...a};profileSub.value='aDetail'}
+function openAccDetail(a){navOpen();if(!can('account.detail')){deny();return}da.value={...a};profileSub.value='aDetail'}
 // 账号状态机：EMPTY 账号为空 / EXIST 账号已存在 / NEW 账号不存在 / INITIAL 初始
 const accState=ref('EMPTY');
 const isAccEdit=computed(()=>profileSub.value==='aEdit');
@@ -5729,16 +5733,16 @@ function clearAccBasic(){fa.value.name='';fa.value.phone='';fa.value.email='';fa
 function onAccBlur(){const acc=(fa.value.account||'').trim();if(!acc){accState.value='EMPTY';clearAccBasic();return;}const found=accounts.value.find(a=>a.account===acc);if(found){accState.value='EXIST';fa.value.name=found.name;fa.value.code=found.code;fa.value.phone=found.phone;fa.value.email=found.email;fa.value.remark=found.remark;}else{accState.value='NEW';clearAccBasic();}}
 // 输入时清除旧状态提示，等待失焦重新查询
 function onAccInput(){accState.value='INITIAL';vClr('account');}
-function openAccEdit(a){if(!can('account.edit')){deny();return}fa.value={account:a.account,name:a.name,code:a.code,phone:a.phone,email:a.email,roles:a.roles.split('、'),remark:a.remark};accState.value='INITIAL';profileSub.value='aEdit'}
-function openAccAdd(){if(!can('account.add')){deny();return}fa.value={account:'',name:'',code:'+86',phone:'',email:'',roles:['员工'],remark:''};accState.value='EMPTY';profileSub.value='aAdd'}
+function openAccEdit(a){navOpen();if(!can('account.edit')){deny();return}fa.value={account:a.account,name:a.name,code:a.code,phone:a.phone,email:a.email,roles:a.roles.split('、'),remark:a.remark};accState.value='INITIAL';profileSub.value='aEdit'}
+function openAccAdd(){navOpen();if(!can('account.add')){deny();return}fa.value={account:'',name:'',code:'+86',phone:'',email:'',roles:['员工'],remark:''};accState.value='EMPTY';profileSub.value='aAdd'}
 var accSaving=ref(false);
 function accValid(isEdit){var e={};var a=fa.value;if(!isEdit){if(!a.account)e.account='请输入账号';else if(!/^[a-zA-Z][a-zA-Z0-9_]{3,19}$/.test(a.account))e.account='账号必须以字母开头，长度为 4–20 位';}if(!a.name)e.name='请输入姓名';else if(a.name.length>64)e.name='姓名不能超过 64 位';if(a.phone&&!/^\d+$/.test(a.phone))e.phone='手机号仅支持数字';if(a.email){if(a.email.length>255)e.email='邮箱地址不能超过 255 位';else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email))e.email='邮箱格式不正确'}if(a.remark&&a.remark.length>255)e.remark='备注不能超过 255 位';if(!a.roles||!a.roles.length)e.roles='请选择职位';var o={...fE.value};['account','name','phone','email','remark','roles'].forEach(function(k){delete o[k]});Object.assign(o,e);fE.value=o;return Object.keys(e).length===0;}
-function saveAccEdit(){if(accSaving.value)return;if(!accValid(true))return;accSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=accounts.value.findIndex(a=>a.account===fa.value.account);if(i>=0)Object.assign(accounts.value[i],{name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark});profileSub.value=null;fE.value={};toast('账号已保存','success');accSaving.value=false},400)}
+function saveAccEdit(){if(accSaving.value)return;if(!accValid(true))return;accSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=accounts.value.findIndex(a=>a.account===fa.value.account);if(i>=0)Object.assign(accounts.value[i],{name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark});navDrop();profileSub.value=null;fE.value={};toast('账号已保存','success');accSaving.value=false},400)}
 // 新增账号成功后弹窗展示账号 + 系统生成的初始密码
 var newAccCred=ref(null);
 function genPwd(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';let s='';for(let i=0;i<8;i++)s+=chars.charAt(Math.floor(Math.random()*chars.length));return s}
 function saveAccAdd(){if(accSaving.value)return;if(!accValid(false))return;accSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const pwd=genPwd();accounts.value.push({account:fa.value.account,name:fa.value.name,code:fa.value.code,phone:fa.value.phone,email:fa.value.email,roles:fa.value.roles.join('、'),remark:fa.value.remark,status:'启用',created:now()});fE.value={};accSaving.value=false;newAccCred.value={account:fa.value.account,password:pwd}},400)}
-function closeAccCred(){newAccCred.value=null;profileSub.value=null;fE.value={}}
+function closeAccCred(){newAccCred.value=null;navDrop();profileSub.value=null;fE.value={}}
 function copyCred(tp){if(!newAccCred.value)return;const c=newAccCred.value;const txt=tp==='acc'?c.account:tp==='pwd'?c.password:(c.account+' '+c.password);navigator.clipboard.writeText(txt);toast(tp==='acc'?'账号已复制':tp==='pwd'?'密码已复制':'账号和密码已复制','success')}
 let tgtAcc=null;function toggleAcc(a){const need=a.status==='启用'?'account.status.disable':'account.status.enable';if(!can(need)){deny();return}tgtAcc=a;profileMod.value='toggle'}
 /* ══ 用户管理 ══ */
@@ -5791,6 +5795,7 @@ function walletFor(acc){
   return{total:rechargeAvail+bonusAvail,rechargeBalance:rechargeAvail,rechargeFrozen:fr,bonusBalance:bonusAvail,bonusFrozen:fg};
 }
 function openUserDetail(u){
+  navOpen();
   du.value={...u};
   uWallet.value=walletFor(u.account);
   uVehicles.value=vehicles.value.filter(function(v){return v.account===u.account&&v.vin}).map(function(v){return{vin:v.vin,model:v.model,status:v.online?'在线':'离线',batteryMain:v.batteryMain,batterySub:v.batterySub}});
@@ -5854,11 +5859,11 @@ function uFlowTypeOpts(){return uFlowTxnEnum[uFlowType.value]||uFlowTxnEnum.rech
 function uFlowAmt(r){const neg=String(r.amount).trim().charAt(0)==='-';return{neg:neg,val:Math.abs(Number(r.amount))}}
 function uWdStLabel(s){return{PROCESSING:'提现中',SUCCESS:'提现成功',FAILED:'提现失败'}[s]||s}
 function uWdStg(s){var m={PROCESSING:{background:'#FFF7ED',color:'#F59E0B',border:'1px solid #F59E0B'},SUCCESS:{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'},FAILED:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
-function openUFlow(type){uFlowType.value=type;uFlowTxn.value='全部';uWalletView.value='flow'}
+function openUFlow(type){navOpen();uFlowType.value=type;uFlowTxn.value='全部';uWalletView.value='flow'}
 function openUAdjust(){Object.assign(uAdjust,{txnType:'ADD',amount:null,remark:''});uAdjustErr.amount='';uWalletSheet.value='adjust'}
 function openUWithdraw(){uWithdraw.amount=null;uWithdraw.remark='';uWithdrawErr.amount='';uWalletSheet.value='withdraw'}
-function openUWithdrawRecord(){uWdStatus.value='';uWalletView.value='wrecords'}
-function closeUWallet(){uWalletView.value=''}
+function openUWithdrawRecord(){navOpen();uWdStatus.value='';uWalletView.value='wrecords'}
+function closeUWallet(){navBack()}
 const uWalletOps=ref(false);
 function openUWalletOps(){uWalletOps.value=true}
 function opsPick(k){uWalletOps.value=false;if(k==='withdraw')openUWithdraw();else if(k==='records')openUWithdrawRecord();else if(k==='adjust')openUAdjust()}
@@ -5866,6 +5871,7 @@ function handleUBalanceChange(nr){uWallet.value.rechargeBalance=nr;uWallet.value
 function submitUAdjust(){if(!uAdjust.txnType){toast('请选择类型','warn');return}if(!uAdjust.amount||uAdjust.amount<=0){uAdjustErr.amount='请输入金额';return}uAdjustErr.amount='';if(uAdjust.txnType==='DEDUCT'&&uAdjust.amount>uWallet.value.bonusBalance){toast('扣减金额不能超过赠送余额','warn');return}uWallet.value.bonusBalance+=(uAdjust.txnType==='ADD'?uAdjust.amount:-uAdjust.amount);uWallet.value.total=uWallet.value.rechargeBalance+uWallet.value.bonusBalance;toast('赠送余额调账成功','success');uWalletSheet.value=null}
 function submitUManualWithdraw(){if(!uWithdraw.amount||uWithdraw.amount<=0){uWithdrawErr.amount='请输入提现金额';return}if(uWithdraw.amount>uWallet.value.rechargeBalance){uWithdrawErr.amount='提现金额不能超过充值余额';return}uWithdrawErr.amount='';const amt=uWithdraw.amount;handleUBalanceChange(uWallet.value.rechargeBalance-amt);const t=now();uWithdrawAll.unshift({withdrawNo:'W'+String(Date.now()).slice(-6)+uWdSeq++,amount:amt,status:'SUCCESS',withdrawType:'MERCHANT',applyTime:t,finishTime:t,remark:(uWithdraw.remark||'').trim()});toast('提现已到账，充值余额已扣减','success');uWalletSheet.value=null}
 function goUserDetail(account){
+  navOpen();
   if(!account)return;
   var u=users.value.find(function(x){return x.account===account||x.phone===account})||userList.value.find(function(x){return x.account===account||x.phone===account});
   if(!u)u={id:0,account:account,phone:'',email:'',nickname:'',status:'正常',created:'—'};
@@ -5913,18 +5919,18 @@ function gCb(g){const t=g.items.length,c=g.items.filter(x=>x.c).length;if(c===t)
 function togG(g){const all=g.items.every(x=>x.c);g.items.forEach(x=>x.c=!all);if(!all)g.exp=true}
 function selAll(tree){tree.forEach(g=>{g.items.forEach(c=>c.c=true);g.exp=true})}
 let tgtPos=null;
-function openPosDetail(p){if(!can('position.detail')){deny();return}dp.value={...p};pTreeP.value=mkP();pTreeM.value=mkPM();profileSub.value='pDetail'}
-function openPosEdit(p){if(!can('position.edit')){deny();return}fp.value={...p};rstPerm();profileSub.value='pEdit'}
-function openPosAdd(parent){if(!can('position.add')){deny();return}fp.value={name:'',parent:parent||'—',remark:''};rstPerm();profileSub.value='pAdd'}
+function openPosDetail(p){navOpen();if(!can('position.detail')){deny();return}dp.value={...p};pTreeP.value=mkP();pTreeM.value=mkPM();profileSub.value='pDetail'}
+function openPosEdit(p){navOpen();if(!can('position.edit')){deny();return}fp.value={...p};rstPerm();profileSub.value='pEdit'}
+function openPosAdd(parent){navOpen();if(!can('position.add')){deny();return}fp.value={name:'',parent:parent||'—',remark:''};rstPerm();profileSub.value='pAdd'}
 var posSaving=ref(false);
-function savePos(){if(posSaving.value)return;if(!vErr({name:fp.value.name}))return;posSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const mode=profileSub.value;profileSub.value=null;fE.value={};if(mode==='pEdit'){const i=positions.value.findIndex(p=>p.name===dp.value.name);if(i>=0)Object.assign(positions.value[i],fp.value)}else{positions.value.push({...fp.value,created:now()})}toast(mode==='pEdit'?'职位已保存':'职位新增成功','success');posSaving.value=false},400)}
+function savePos(){if(posSaving.value)return;if(!vErr({name:fp.value.name}))return;posSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const mode=profileSub.value;navDrop();profileSub.value=null;fE.value={};if(mode==='pEdit'){const i=positions.value.findIndex(p=>p.name===dp.value.name);if(i>=0)Object.assign(positions.value[i],fp.value)}else{positions.value.push({...fp.value,created:now()})}toast(mode==='pEdit'?'职位已保存':'职位新增成功','success');posSaving.value=false},400)}
 function delPos(p){if(!can('position.delete')){deny();return}tgtPos=p;profileMod.value='delPos'}
 const csList=ref([]);
 const csReceptionEnabled=ref(true);
 const csIdx=ref(-1);const fc=ref({phone:'',code:'+86',sh:9,sm:0,eh:21,em:0,remark:''});
-function openCsEdit(i){if(i===-1){if(!can('cs_info.add')){deny();return}}else if(!can('cs_info.edit')){deny();return}csIdx.value=i;fc.value=i===-1?{phone:'',code:'+86',sh:9,sm:0,eh:21,em:0,remark:''}:{...csList.value[i]};hmPicker.value=null;profileSub.value='csEdit'}
+function openCsEdit(i){navOpen();if(i===-1){if(!can('cs_info.add')){deny();return}}else if(!can('cs_info.edit')){deny();return}csIdx.value=i;fc.value=i===-1?{phone:'',code:'+86',sh:9,sm:0,eh:21,em:0,remark:''}:{...csList.value[i]};hmPicker.value=null;profileSub.value='csEdit'}
 var csSaving=ref(false);
-function saveCs(){if(csSaving.value)return;if(!vErr({phone:fc.value.phone}))return;if(fc.value.sh>fc.value.eh||(fc.value.sh===fc.value.eh&&fc.value.sm>=fc.value.em)){fE.value={time:'开始时间不能晚于或等于结束时间'};return}csSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;if(csIdx.value===-1){csList.value.push({...fc.value})}else{csList.value[csIdx.value]={...fc.value}}profileSub.value=null;fE.value={};toast(csIdx.value===-1?'客服信息已新增成功':'客服信息已编辑成功','success');csSaving.value=false},400)}
+function saveCs(){if(csSaving.value)return;if(!vErr({phone:fc.value.phone}))return;if(fc.value.sh>fc.value.eh||(fc.value.sh===fc.value.eh&&fc.value.sm>=fc.value.em)){fE.value={time:'开始时间不能晚于或等于结束时间'};return}csSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;if(csIdx.value===-1){csList.value.push({...fc.value})}else{csList.value[csIdx.value]={...fc.value}}navDrop();profileSub.value=null;fE.value={};toast(csIdx.value===-1?'客服信息已新增成功':'客服信息已编辑成功','success');csSaving.value=false},400)}
 /* 客服服务时段：底部抽屉时/分滚轮 */
 const hmPicker=ref(null);
 const hmDraft=ref({hour:9,min:0});
@@ -5979,8 +5985,8 @@ const rechargeCustom=ref(false);
 const rechargeList=ref([{id:1,amount:100,giftAmount:10,status:1,remark:'新用户首充优惠'},{id:2,amount:200,giftAmount:30,status:1,remark:'常规定制套餐'},{id:3,amount:500,giftAmount:80,status:0,remark:''}]);
 const rechargeIdx=ref(-1);const rfc=ref({amount:null,giftAmount:null,status:1,remark:''});
 var rechargeSaving=ref(false);const rfcErr=ref({amount:''});
-function openRechargeEdit(i){rechargeIdx.value=i;rfc.value=i===-1?{amount:null,giftAmount:null,status:1,remark:''}:{...rechargeList.value[i]};rfcErr.value={amount:''};profileSub.value='rechargeEdit'}
-function saveRecharge(){if(rechargeSaving.value)return;var e={};if(rfc.value.amount==null||rfc.value.amount===''||Number(rfc.value.amount)<0)e.amount='请输入充值金额';rfcErr.value=e;if(e.amount)return;rechargeSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;if(rechargeIdx.value===-1){var ids=rechargeList.value.map(x=>x.id);var nid=ids.length?Math.max(...ids):0;rechargeList.value.push({id:nid+1,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0,status:rfc.value.status,remark:rfc.value.remark||''})}else{rechargeList.value[rechargeIdx.value]={...rfc.value,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0}}profileSub.value=null;rfcErr.value={};toast(rechargeIdx.value===-1?'充值配置已新增成功':'充值配置已编辑成功','success');rechargeSaving.value=false},400)}
+function openRechargeEdit(i){navOpen();rechargeIdx.value=i;rfc.value=i===-1?{amount:null,giftAmount:null,status:1,remark:''}:{...rechargeList.value[i]};rfcErr.value={amount:''};profileSub.value='rechargeEdit'}
+function saveRecharge(){if(rechargeSaving.value)return;var e={};if(rfc.value.amount==null||rfc.value.amount===''||Number(rfc.value.amount)<0)e.amount='请输入充值金额';rfcErr.value=e;if(e.amount)return;rechargeSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;if(rechargeIdx.value===-1){var ids=rechargeList.value.map(x=>x.id);var nid=ids.length?Math.max(...ids):0;rechargeList.value.push({id:nid+1,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0,status:rfc.value.status,remark:rfc.value.remark||''})}else{rechargeList.value[rechargeIdx.value]={...rfc.value,amount:Number(rfc.value.amount),giftAmount:rfc.value.giftAmount?Number(rfc.value.giftAmount):0}}navDrop();profileSub.value=null;rfcErr.value={};toast(rechargeIdx.value===-1?'充值配置已新增成功':'充值配置已编辑成功','success');rechargeSaving.value=false},400)}
 let delRechargeI=-1;function delRecharge(i){delRechargeI=i;profileMod.value='delRecharge'}
 /* ══ 充值订单（商户端，对接 recharge-order-merchant-mobile 文档） ══ */
 const roOV=ref('');            // '' | 'list' | 'detail' | 'refunds'
@@ -6000,13 +6006,13 @@ const rechargeOrders=ref([
 ]);
 function roPayStatusTag(s){var m={UNPAID:{l:'待支付',c:'#FF8C1B'},PAYING:{l:'支付中',c:'#1A82F4'},PAID:{l:'已支付',c:'#17A34A'},REFUNDING:{l:'退款中',c:'#8B5CF6'},PARTIAL_REFUND:{l:'部分退款',c:'#E6A23C'},FULL_REFUND:{l:'全部退款',c:'#FF4343'},CANCELLED:{l:'已取消',c:'#999'}};return m[s]||{l:s,c:'#999'}}
 function roPayChannelText(c){return c?c:'-'}
-function roOpenList(){roQ.value='';roStatus.value=null;roFsPay.value='';roFsPaySt.value=[];roFsStart.value=_ordDateDef.start;roFsEnd.value=_ordDateDef.end;roFsMin.value='';roFsMax.value='';roSearchScope.value='no';roOV.value='list';tab.value='orders'}
-function roOpenDetail(o){curRechargeOrder.value=o;roOV.value='detail'}
-function roCloseList(){roOV.value=''}
-function roGoBack(){roOV.value='list'}
+function roOpenList(){navOpen();roQ.value='';roStatus.value=null;roFsPay.value='';roFsPaySt.value=[];roFsStart.value=_ordDateDef.start;roFsEnd.value=_ordDateDef.end;roFsMin.value='';roFsMax.value='';roSearchScope.value='no';roOV.value='list';tab.value='orders'}
+function roOpenDetail(o){navOpen();curRechargeOrder.value=o;roOV.value='detail'}
+function roCloseList(){navBack()}
+function roGoBack(){navBack()}
 function roCanRefund(){var s=curRechargeOrder.value&&curRechargeOrder.value.payStatus;return s==='PAID'||s==='PARTIAL_REFUND'}
 function roCanRefundRecords(){var s=curRechargeOrder.value&&curRechargeOrder.value.payStatus;return ['REFUNDING','PARTIAL_REFUND','FULL_REFUND'].indexOf(s)!==-1}
-function roOpenRefunds(){var o=curRechargeOrder.value;roRefunds.value=[{applyTime:'2026-08-10 09:12:00',rechargeAmount:o.refundAmount||0,giftAmount:o.refundGiftAmount||0,operator:'zhang.wei',refundReason:'客户要求退款',refundStatus:'REFUNDING',refundTime:o.payStatus==='FULL_REFUND'?'2026-08-11 11:00:00':''}];roOV.value='refunds'}
+function roOpenRefunds(){navOpen();var o=curRechargeOrder.value;roRefunds.value=[{applyTime:'2026-08-10 09:12:00',rechargeAmount:o.refundAmount||0,giftAmount:o.refundGiftAmount||0,operator:'zhang.wei',refundReason:'客户要求退款',refundStatus:'REFUNDING',refundTime:o.payStatus==='FULL_REFUND'?'2026-08-11 11:00:00':''}];roOV.value='refunds'}
 function roRefundTotal(){var a=Number(roRefundForm.value.amount)||0,b=Number(roRefundForm.value.giftAmount)||0;return a+b}
 function roOpenRefund(){if(!roCanRefund())return;roRefundForm.value={amount:null,giftAmount:null};roRefundMod.value=true}
 function roSubmitRefund(){var a=Number(roRefundForm.value.amount)||0,b=Number(roRefundForm.value.giftAmount)||0,o=curRechargeOrder.value;if(a<=0&&b<=0){toast('请输入退款金额','warn');return}if(a>o.amount){toast('充值金额超出可退金额','warn');return}if(b>o.giftAmount){toast('赠送金额超出可退金额','warn');return}roRefundConfirm.value=true}
@@ -6065,6 +6071,77 @@ function rechargeCustomerText(o){if(o.phone&&String(o.phone).trim())return o.pho
 const profileMdT=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用账号':'启用账号';if(profileMod.value==='delPos')return '删除职位';if(profileMod.value==='delCs')return '删除客服';if(profileMod.value==='delRecharge')return '删除充值配置';if(profileMod.value==='logout')return '退出登录';return''});
 const profileMdD=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用后该账号将无法登录，确定禁用？':'确定重新启用该账号？启用后可正常登录。';if(profileMod.value==='delPos')return '确定删除该职位？删除后不可恢复。';if(profileMod.value==='delCs')return '确定删除该客服信息？删除后不可恢复。';if(profileMod.value==='delRecharge')return '确定删除该充值配置？删除后不可恢复。';if(profileMod.value==='logout')return '确定要退出当前账号吗？退出后需重新登录。';return''});
 const profileMdDanger=computed(()=>(profileMod.value==='toggle'&&tgtAcc&&tgtAcc.status==='启用')||profileMod.value==='delPos'||profileMod.value==='delCs'||profileMod.value==='logout');
+/* ================= 统一页面导航栈（快照式，与 C 端用户端同一实现） =================
+   navOpen(name?)   入栈：快照当前页面状态入栈并 pushState；name 用于查重与日志
+   navBack()        统一返回（UI 返回按钮/侧滑/物理返回共用）：防连点 → 弹栈顶 → close 钩子 → 恢复快照 → history.back
+   navDrop(name?)   完成类操作（保存/提交后返回列表）丢弃栈顶，避免重复页面
+   navSwap(name)    关当前页并 replace 打开新页（预留，需注册 NAV_SCREENS）
+   navReset()       Tab 根切换/登录登出，清空整栈
+   popstate         物理/浏览器返回与内存栈同步；栈空交还浏览器 */
+const NAV_SCREENS={};
+function _navClone(v){return (v&&typeof v==='object')?JSON.parse(JSON.stringify(v)):v}
+function _navR(r){return{get:function(){return r.value},set:function(v){r.value=v}}}
+const pageRefList=[tab,homeOV,vehOV,vehView,ordersOV,ordersType,ordersEntry,profileOV,profileSub,roOV,uWalletView,curAlert,do_,dv,dSt,dPaySt,dPm,dCanceledPaid,autoRenew,curBatt,du,curRechargeOrder,armed,lost,motorLocked].map(function(r){return _navR(r)});
+const navStack=[];
+var _pagePushed=false,navSuppress=0,navLastBackAt=0;
+function navLog(action,name){console.log('[页面栈]',action+(name?' '+name:''),'→',navStack.map(e=>e.name||'(未命名)').join(' <- ')||'(首页)','| history.length='+history.length)}
+function _navScreen(name){return (typeof NAV_SCREENS!=='undefined'&&NAV_SCREENS[name])||null}
+function navOpen(name){
+  if(_pagePushed)return;_pagePushed=true;
+  setTimeout(function(){_pagePushed=false},0);
+  if(name&&navStack.some(e=>e.name===name)){navLog('重复入栈已忽略',name);return}
+  const snap=_navSnapshot();
+  if(!name&&navStack.length&&JSON.stringify(snap)===JSON.stringify(navStack[navStack.length-1].snap)){navLog('重复入栈已忽略',name||'');return}
+  const sc=_navScreen(name);
+  navStack.push({name:name||'',snap:snap});
+  if(sc&&sc.open)sc.open();
+  try{history.pushState({nav:name||''},'')}catch(e){}
+  navLog('push',name||'');
+}
+function navBack(){
+  const now=Date.now();if(now-navLastBackAt<250)return;navLastBackAt=now;
+  if(!navStack.length){navLog('已到首页，边界兜底，禁止继续返回');return}
+  const e=navStack.pop();
+  const sc=_navScreen(e.name);
+  if(sc&&sc.close)sc.close();
+  _navRestore(e.snap);
+  navSuppress++;try{history.back()}catch(_){}
+  navLog('back',e.name||'');
+}
+function navDrop(name){
+  const i=navStack.length-1;
+  if(i<0)return;
+  if(name&&navStack[i].name!==name)return;
+  const e=navStack.pop();
+  const sc=_navScreen(e.name);
+  if(sc&&sc.close)sc.close();
+  navSuppress++;try{history.go(-1)}catch(_){}
+  navLog('drop',e.name||'');
+}
+function navSwap(name){
+  const s=_navScreen(name);if(!s)return;
+  const top=navStack.length?navStack.pop():null;
+  if(top){const sc=_navScreen(top.name);if(sc&&sc.close)sc.close()}
+  s.open();try{history.replaceState({nav:name||''},'')}catch(_){}
+  navStack.push({name:name||'',snap:top?top.snap:_navSnapshot()});
+  navLog('replace',name);
+}
+function navReset(){
+  const n=navStack.length;
+  while(navStack.length){const e=navStack.pop();const sc=_navScreen(e.name);if(sc&&sc.close)sc.close()}
+  if(n>0){navSuppress++;try{history.go(-n)}catch(_){}}
+  navLog('reset','清空'+n+'层');
+}
+window.addEventListener('popstate',function(){
+  if(navSuppress>0){navSuppress--;return}
+  if(!navStack.length)return;
+  const e=navStack.pop();
+  const sc=_navScreen(e.name);
+  if(sc&&sc.close)sc.close();
+  _navRestore(e.snap);
+  navLog('popstate(物理返回)',e.name||'');
+});
+try{history.replaceState({nav:''},'')}catch(e){}
 function profileMdOk(){if(profileMod.value==='toggle'&&tgtAcc){tgtAcc.status=tgtAcc.status==='启用'?'禁用':'启用';toast('账号状态已' + (tgtAcc.status),'success')}if(profileMod.value==='delPos'&&tgtPos){const i=positions.value.findIndex(p=>p.name===tgtPos.name);if(i>=0)positions.value.splice(i,1);toast('职位已删除','success')}if(profileMod.value==='delCs'&&delCsI>=0){csList.value.splice(delCsI,1);toast('已删除','success')}if(profileMod.value==='delRecharge'&&delRechargeI>=0){rechargeList.value.splice(delRechargeI,1);toast('已删除','success')}if(profileMod.value==='logout'){doLogout();return}profileMod.value=null}
 
 /* ══════ GLOBAL: shared utils · paint · init · return · mount ══════ */
@@ -6230,7 +6307,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
   depositOf,chLabel,rentPlanText,rentEndOf,psAllocText,buildSplit,showPaySplit,psTab,showMoreActions,psConfirmMod,psDoSubmit,psRent2c2p,psRentWallet,psRentOffline,psDep2c2p,psDepWallet,psDepOffline,psReason,applySplit,openPaySplit,submitPaySplit,psRentPart,psDepPart,psRentSum,psDepSum,psRentValid,psDepValid,psValid,psRentDiff,psDepDiff,canPriceOperate,splitPartView,splitPartText,
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
-  profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
+  profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
   curStore,menuGroups,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,

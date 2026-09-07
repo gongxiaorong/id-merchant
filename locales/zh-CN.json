@@ -665,7 +665,7 @@
     "idInfoRequired": "必须上传实名信息",
     "idInfoUnselected": "未选择实名信息",
     "docSupplement": "补充资料",
-    "docTypesHint": "可上传驾照、身份证、合同等",
+    "docTypesHint": "可上传身份证、驾驶证、合同等",
     "operateTime": "操作时间"
   },
   "version": {
