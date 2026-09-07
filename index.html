@@ -3971,12 +3971,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <div class="demo-ops-chip" :class="{'is-on-warn':!dHasRealName}" data-od-id="demo-realname-off" @click="demoSetRealName(false)">未选择</div>
         </div>
       </div>
-      <div class="demo-ops-section" data-od-id="demo-order-fee-renew">
-        <div class="demo-ops-label">费用明细 · 续租场景</div>
-        <div class="demo-ops-chips">
-          <div v-for="s in demoRenewScenes" :key="s.v" class="demo-ops-chip" :class="{'is-on':demoRenewSceneK===s.v}" @click="demoSetRenewScene(s.v)">{{ s.l }}</div>
-        </div>
-      </div>
     </template>
   </template>
 </aside>
@@ -5016,7 +5010,7 @@ function ordersOpenDetail(o){navOpen();const detailCode=o.type==='battery'?'orde
 var autoRenew=ref(false);
 function toggleAutoRenew(){if(!orderPerm('operate.auto_renew')){deny();return}var next=!autoRenew.value;autoRenew.value=next;var o=do_.value;if(o)o.autoRenew=next;toast(next?'已开启自动续租，续租费用到期自动从钱包扣除':'已关闭自动续租',next?'success':'info')}
 var dHasRealName=computed(()=>{var o=do_.value;return !!(o&&o.realName!==false)});
-function demoSetRealName(v){var o=do_.value;if(!o)return;o.realName=!!v;toast(v?'已恢复实名信息展示':'已模拟未选择实名信息',v?'success':'info')}
+function demoSetRealName(v){var o=do_.value;if(!o)return;o.realName=!!v}
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
 function copyText(t,label){var v=(t||'').trim();if(!v||v==='—'){toast('无内容可复制','warn');return}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){toast((label||'')+'已复制','success')},function(){toast('复制失败','warn')})}else{toast('复制失败','warn')}}
 function callPhone(p){if(!p)return;window.location.href='tel:'+p}
@@ -5289,7 +5283,7 @@ function buildRenewDemo(v){
   if(v==='au'||v==='all')rows.push(mk('03','AUTO','已支付',3,150));
   return rows;
 }
-function demoSetRenewScene(v){ var o=do_.value; if(!o)return; o.renewSubOrders=buildRenewDemo(v); var t={none:'已清除续租数据',mp:'已模拟手动续租·待支付',md:'已模拟手动续租·已支付',au:'已模拟自动续租·已支付',all:'已模拟全部续租场景（手动待支付/手动已支付/自动已支付）'}[v]||'续租场景已更新'; toast(t,'info'); feeTick.value++; }
+function demoSetRenewScene(v){ var o=do_.value; if(!o)return; o.renewSubOrders=buildRenewDemo(v); feeTick.value++; }
 /* ══ 费用卡片操作：续租单 取消续租 / 线下待支付 确认支付（均二次确认） ══ */
 var feeModSub=ref(null);
 var feeMoreRow=ref(null);
