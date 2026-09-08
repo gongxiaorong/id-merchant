@@ -1682,7 +1682,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">基本信息</div><span class="text-[13px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold flex items-center justify-end gap-1.5"><span :class="(do_.account||do_.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" @click="(do_.account||do_.customer)&&goUserDetail(do_.account||do_.customer)">{{ orderCustomerText(do_) }}</span><span v-if="do_.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">租赁方案</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.plan||rentPlanText(do_) }}</span></div>
 <div class="flex items-start gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]" v-html="((do_.rentStart||'-')+' ~ '+rentEndOf(do_)).replace(' ~ ','<br>')"></span></div>
 <div class="flex items-center gap-2 py-2.5" :style="(dSt==='complete'||dSt==='cancelled')?'border-bottom:1px dashed #E5E5E5':''"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.created }}</span></div>
 <div v-if="dSt==='complete'" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">2025-01-20 14:30:00</span></div>
@@ -2138,28 +2137,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
          </div>
          <div class="text-[13px] space-y-2.5">
            <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">租赁方案</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.plan }}</span></div>
-           <div class="flex items-start gap-2"><span class="text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]">{{ r.period }}</span></div>
-           <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="feeRowOpen[i+'_rent']=!feeRowOpen[i+'_rent']">
-             <span class="text-[#999] w-16 flex-shrink-0">租金</span>
-             <div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] font-semibold text-[#333]">{{ fmtRp(r.rent) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeRowOpen[i+'_rent']?'rotate-180 transition-transform':'transition-transform'))"></span></div>
-           </div>
-           <div v-if="feeRowOpen[i+'_rent']" class="space-y-1 pb-1 pl-1">
-             <div v-for="c in feeRowBreakdown(r).rent" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
-           </div>
-           <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="feeRowOpen[i+'_dep']=!feeRowOpen[i+'_dep']">
-             <span class="text-[#999] w-16 flex-shrink-0">押金</span>
-             <div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] font-semibold text-[#333]">{{ fmtRp(r.deposit) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeRowOpen[i+'_dep']?'rotate-180 transition-transform':'transition-transform'))"></span></div>
-           </div>
-           <div v-if="feeRowOpen[i+'_dep']" class="space-y-1 pb-1 pl-1">
-             <div v-for="c in feeRowBreakdown(r).deposit" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
-           </div>
-           <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="feeRowOpen[i+'_total']=!feeRowOpen[i+'_total']">
-             <span class="text-[#999] w-16 flex-shrink-0">合计</span>
-             <div class="flex items-center gap-1.5 justify-end flex-1"><span class="font-semibold" style="color:var(--accent)">{{ fmtRp(r.total) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeRowOpen[i+'_total']?'rotate-180 transition-transform':'transition-transform'))"></span></div>
-           </div>
-           <div v-if="feeRowOpen[i+'_total']" class="space-y-1 pb-1 pl-1">
-             <div v-for="c in feeRowBreakdown(r).total" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
-           </div>
+           <div class="flex items-start gap-2"><span class="text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]" v-html="(r.period||'-').replace(' ~ ','<br>')"></span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">租金</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.rent) }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">押金</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.deposit) }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">合计</span><span class="flex-1 text-right font-semibold" style="color:var(--accent)">{{ fmtRp(r.total) }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付渠道</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ feeRowChannel(r) }}</span></div>
            <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付状态</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.payStatus }}</span></div>
            <div v-if="r.payStatus!=='待支付'&&r.payStatus!=='未支付'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.payTime }}</span></div>
            <div v-if="r.isRenew&&r.payStatus==='待支付'" class="flex gap-2 pt-1">
@@ -4968,7 +4950,7 @@ var dualIsCancel=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline'&&!
 var dangerLabel=computed(()=>'取消订单');
 function ordersOpenDetail(o){navOpen();const detailCode=o.type==='battery'?'order.battery.detail':o.type==='package'?'order.package.detail':'order.detail';if(!can(detailCode)){deny();return}do_.value=o;dSt.value=o.status;dPaySt.value=o.paySt||(o.status==='created'?'pending':'paid');dPm.value=(o.payment==='offline'?'offline':'online');dCanceledPaid.value=(o.paySt==='unpaid')?'unpaid':'paid';autoRenew.value=!!(o&&o.autoRenew);ordersOV.value='detail'}
 var autoRenew=ref(false);
-function toggleAutoRenew(){if(!orderPerm('operate.auto_renew')){deny();return}var next=!autoRenew.value;autoRenew.value=next;var o=do_.value;if(o)o.autoRenew=next;toast(next?'已开启自动续租，续租费用到期自动从钱包扣除':'已关闭自动续租',next?'success':'info')}
+function toggleAutoRenew(){if(!orderPerm('operate.auto_renew')){deny();return}var next=!autoRenew.value;autoRenew.value=next;var o=do_.value;if(o)o.autoRenew=next}
 var dHasRealName=computed(()=>{var o=do_.value;return !!(o&&o.realName!==false)});
 function demoSetRealName(v){var o=do_.value;if(!o)return;o.realName=!!v}
 function copyId(){navigator.clipboard.writeText(do_.value.id);toast('订单编号已复制','success')}
@@ -5343,6 +5325,7 @@ function feeRowBreakdown(r){
   var totalCh=Object.keys(map).map(function(k){return {channel:k,amount:map[k]};});
   return {rent:rentCh, deposit:depCh, total:totalCh};
 }
+function feeRowChannel(r){ var bd=feeRowBreakdown(r); var ch=(bd.rent[0]||bd.deposit[0]||bd.total[0]||{}).channel; return ch||'—'; }
 function splitPartView(list, fallbackAmt){
   var arr=(list||[]).filter(function(c){return c&&Number(c.amount)>0});
   if(arr.length===0){ var f=Number(fallbackAmt)||0; return { total:f, lines: f>0?[{label:'—',amount:f}]:[] } }
@@ -6290,7 +6273,7 @@ batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSear
 ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
-do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,opRecords,feeRows,feeSummary,payChannelsText,feeChannelBreakdown,feeRentOpen,feeDepOpen,feeTotalOpen,feeRowOpen,feeRowBreakdown,feeRowOnlyOffline,feeAskAction,feeMoreRow,openRowMore,feeActiveIdx,feeActiveRow,feeActiveRealIdx,feeRowTabLabel,
+do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,opRecords,feeRows,feeSummary,payChannelsText,feeChannelBreakdown,feeRentOpen,feeDepOpen,feeTotalOpen,feeRowOpen,feeRowBreakdown,feeRowChannel,feeRowOnlyOffline,feeAskAction,feeMoreRow,openRowMore,feeActiveIdx,feeActiveRow,feeActiveRealIdx,feeRowTabLabel,
 primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,
 ordersModTitle,ordersModDesc,ordersModDanger,orderPickActive,orderPickIsBatt,orderPickQ,orderPickSel,orderPickList,orderPickEmpty,openOrderPick,closeOrderPick,confirmOrderPick,orderPickScan,users,userPickActive,userPickQ,userPickSel,userPickList,userPickEmpty,openUserPick,closeUserPick,confirmUserPick,
 refundMode,rTab,rReason,rRent2c2p,rRentWallet,rRentOffline,rDep2c2p,rDepWallet,rDepOffline,refundTotal,refundValid,refundRentCapCh,refundDepCapCh,orderRefundAgg,refundChannelBreakdown,refundRentOpen,refundDepOpen,refundTotalOpen,
