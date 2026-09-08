@@ -70,6 +70,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',sy
 .filter-tabs{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain;user-select:none;width:100%;flex-wrap:nowrap;white-space:nowrap;cursor:grab}
 .filter-tabs::-webkit-scrollbar{display:none}.filter-tabs:active{cursor:grabbing}
 .filter-pill{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0}
+.wallet-ledger-tabs{display:flex;background:#fff;flex-shrink:0;border-bottom:1px solid #E5E5E5}
+.wallet-ledger-tabs .tab{flex:1;text-align:center;padding:13px 0;font-size:15px;font-weight:500;color:#666;cursor:pointer;position:relative}
+.wallet-ledger-tabs .tab.on{color:var(--accent);font-weight:600}
+.wallet-ledger-tabs .tab.on::after{content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:28px;height:3px;border-radius:2px;background:var(--accent)}
+.wallet-ledger-quickfilter{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#fff;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+.wallet-ledger-quickfilter::-webkit-scrollbar{display:none}
 .item-enter-active{transition:all .35s cubic-bezier(.32,.72,0,1)}.item-enter-from{opacity:0;transform:translateY(12px)}
 .toast-wrap{position:absolute;top:50px;left:16px;right:16px;z-index:99999;display:flex;flex-direction:column;align-items:center;pointer-events:none}
 .toast-item{padding:10px 20px;border-radius:12px;font-size:14px;font-weight:500;color:#fff;pointer-events:auto;backdrop-filter:blur(10px);text-align:center;max-width:80%;line-height:1.4}
@@ -3686,12 +3692,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ═══ 用户钱包 · 流水 ═══ -->
 <transition name="sl"><div v-if="uWalletView==='flow'" v-swipe-close="closeUWallet" class="absolute inset-0 bg-[#F6F7F9] z-[520] flex flex-col" data-od-id="wallet-flow-page">
-<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
+<div class="flex items-center pt-14 px-4 pb-2 bg-white shrink-0">
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="closeUWallet"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold mr-8">{{ uFlowType==='bonus'?'赠送余额流水':'充值余额流水' }}</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-8">余额流水</div>
 </div>
-<div class="flex items-center gap-2.5 px-4 py-2.5 bg-white shrink-0 overflow-x-auto hid" style="border-bottom:1px solid #E5E5E5">
-<div v-for="t in uFlowTypeOpts()" :key="t.v" @click="uFlowTxn=t.v" class="shrink-0 px-4 py-1.5 rounded-[20px] text-[13px] font-medium cursor-pointer transition-colors" :style="uFlowTxn===t.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t.l }}</div>
+<div class="wallet-ledger-tabs">
+<div class="tab" :class="uFlowType==='recharge'?'on':''" @click="uFlowType='recharge';uFlowTxn='全部'">充值余额</div>
+<div class="tab" :class="uFlowType==='bonus'?'on':''" @click="uFlowType='bonus';uFlowTxn='全部'">赠送余额</div>
+</div>
+<div class="wallet-ledger-quickfilter">
+<div v-for="t in walletLedgerTxnOpts" :key="t.v" @click="uFlowTxn=t.v" class="filter-pill" :style="uFlowTxn===t.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t.l }}</div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <template v-if="!uFlowList.length">
@@ -3715,51 +3725,19 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </div>
 </div></transition>
 
-<!-- ═══ 用户钱包 · 提现记录 ═══ -->
-<transition name="sl"><div v-if="uWalletView==='wrecords'" v-swipe-close="closeUWallet" class="absolute inset-0 bg-[#F6F7F9] z-[520] flex flex-col" data-od-id="wallet-withdraw-records-page">
-<div class="flex items-center pt-14 px-4 pb-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
-<div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)] active:bg-[#EBF1FD]" @click="closeUWallet"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold">提现记录</div>
-<div class="w-8 shrink-0"></div>
-</div>
-<div class="bg-white shrink-0 filter-tabs px-4 py-2.5" style="border-bottom:1px solid #E5E5E5">
-<div v-for="t in uWdStatusOpts" :key="t.v" @click="uWdStatus=t.v" class="filter-pill" :style="uWdStatus===t.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t.l }}</div>
-</div>
-<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
-<template v-if="!uWdList.length">
-<div class="flex flex-col items-center py-16">
-<div class="w-14 h-14 rounded-full bg-white flex items-center justify-center mb-3" style="border:1px solid #E5E5E5"><span v-html="luci('file-text','w-7 h-7 text-[#999]')"></span></div>
-<div class="text-[15px] font-semibold text-[#111] mb-1">暂无提现记录</div>
-</div>
-</template>
-<template v-else>
-<div v-for="r in uWdList" :key="r.withdrawNo" class="bg-white rounded-xl p-4 mb-2.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="flex items-center justify-between mb-2.5">
-<span class="text-[13px] font-semibold text-[#333]">{{ r.applyTime }}</span>
-<span class="text-[13px] font-semibold shrink-0" :style="{color:uWdStg(r.status)}">{{ uWdStLabel(r.status) }}</span>
-</div>
-<div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">提现类型</span><span class="font-medium ml-3 text-right">{{ r.withdrawType==='MERCHANT'?'商户提现':'用户提现' }}</span></div>
-<div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">提现金额</span><span class="font-medium ml-3 text-right">Rp {{ r.amount }}</span></div>
-<div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">完成时间</span><span class="font-medium ml-3 text-right">{{ r.finishTime }}</span></div>
-<div class="flex justify-between text-[13px] py-1"><span class="text-[#999] shrink-0">备注</span><span class="font-medium ml-3 text-right">{{ r.remark||'-' }}</span></div>
-</div>
-</template>
-</div>
-</div></transition>
-
-<!-- ═══ 用户钱包 · 调账 / 手动提现 ═══ -->
+<!-- ═══ 用户钱包 · 调账 ═══ -->
 <transition name="fd"><div v-if="uWalletSheet" class="absolute inset-0 z-[600] flex items-end justify-center" style="background:rgba(0,0,0,.45)" @click.self="uWalletSheet=null">
 <div class="bg-white rounded-t-[20px] w-full max-h-[82%] flex flex-col" style="z-index:601">
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="px-5 pt-2 pb-1 shrink-0 flex items-center justify-center relative">
-<span class="block text-center text-[17px] font-semibold">{{ uWalletSheet==='adjust'?'编辑赠送余额':'手动提现' }}</span>
+<span class="block text-center text-[17px] font-semibold">编辑赠送余额</span>
 <button @click="uWalletSheet=null" type="button" aria-label="关闭" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
 </div>
 <template v-if="uWalletSheet==='adjust'">
 <div class="px-5 py-3 flex-1 overflow-y-auto hid">
 <div class="text-[13px] text-[#999] mb-2">类型</div>
 <div class="flex gap-2.5 mb-4">
-<div @click="uAdjust.txnType='ADD'" class="flex-1 py-2.5 rounded-xl text-center text-[13px] font-medium cursor-pointer transition-colors" :style="uAdjust.txnType==='ADD'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F6F7F9',color:'#666',border:'1px solid #EBEDF0'}">充值</div>
+<div @click="uAdjust.txnType='ADD'" class="flex-1 py-2.5 rounded-xl text-center text-[13px] font-medium cursor-pointer transition-colors" :style="uAdjust.txnType==='ADD'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F6F7F9',color:'#666',border:'1px solid #EBEDF0'}">赠送</div>
 <div @click="uAdjust.txnType='DEDUCT'" class="flex-1 py-2.5 rounded-xl text-center text-[13px] font-medium cursor-pointer transition-colors" :style="uAdjust.txnType==='DEDUCT'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F6F7F9',color:'#666',border:'1px solid #EBEDF0'}">扣减</div>
 </div>
 <div class="text-[13px] text-[#999] mb-2">金额</div>
@@ -3775,23 +3753,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div @click="submitUAdjust" class="w-full py-3.5 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">确认</div>
 </div>
 </template>
-<template v-else-if="uWalletSheet==='withdraw'">
-<div class="px-5 py-3 flex-1 overflow-y-auto hid">
-<div class="text-[13px] text-[#999] mb-1">充值余额</div>
-<div class="text-[22px] font-bold tabular-nums mb-4" style="color:var(--accent)">Rp {{ uWallet.rechargeBalance }}</div>
-<div class="text-[13px] text-[#999] mb-2">提现金额</div>
-<div class="flex items-center rounded-xl px-3.5 py-3 mb-1" style="background:#F6F7F9;border:1px solid #E5E5E5">
-<span class="text-[16px] font-semibold shrink-0">Rp</span>
-<input v-model.number="uWithdraw.amount" type="number" min="1" :max="uWallet.rechargeBalance" placeholder="0" class="flex-1 bg-transparent border-none text-[16px] font-medium outline-none px-2">
-</div>
-<div v-if="uWithdrawErr.amount" class="text-[12px] text-[#DC2626] mb-2">{{ uWithdrawErr.amount }}</div>
-<div class="text-[13px] text-[#999] mb-2 mt-3">备注</div>
-<div class="relative"><textarea v-model="uWithdraw.remark" maxlength="255" rows="3" placeholder="请输入备注" class="w-full rounded-xl px-3.5 py-3 pb-8 text-[14px] outline-none resize-none" style="background:#F6F7F9;border:1px solid #E5E5E5"></textarea><div class="absolute right-3 bottom-2 text-[12px] text-[#999] pointer-events-none">{{ (uWithdraw.remark||'').length }}/255</div></div>
-</div>
-<div class="px-5 pb-7 pt-2 shrink-0">
-<div @click="submitUManualWithdraw" class="w-full py-3.5 rounded-xl text-white text-[15px] font-semibold text-center cursor-pointer active:opacity-80" style="background:var(--accent)">提现</div>
-</div>
-</template>
+
 </div></div></transition>
 
 <!-- ═══ 用户钱包 · 更多操作 ═══ -->
@@ -3804,8 +3766,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div @click="uWalletOps=false" class="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></div>
 </div>
 <div class="pb-7 pt-1">
-<div v-if="can('user.wallet.withdraw')" @click="opsPick('withdraw')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED"><span class="text-[15px] font-medium">手动提现</span></div>
-<div v-if="can('user.wallet.withdraw_record')" @click="opsPick('records')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED"><span class="text-[15px] font-medium">提现记录</span></div>
 <div v-if="can('user.wallet.adjust')" @click="opsPick('adjust')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]"><span class="text-[15px] font-medium">编辑赠送余额</span></div>
 </div>
 </div>
@@ -3913,7 +3873,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       </div>
     </div>
     <div class="demo-ops-group-hd">功能控制</div>
-    <div v-if="!showLogin&&((tab==='vehicles'&&!vehOV)||(tab==='orders'&&(!ordersOV||ordersOV==='olist'))||roOV==='list'||uWalletView==='flow'||uWalletView==='wrecords'||((profileOV==='user'||profileOV==='package'||['model','battModel','account','pos','cs','recharge'].indexOf(profileOV)!==-1)&&!profileSub))" class="demo-ops-section" data-od-id="demo-list-data">
+    <div v-if="!showLogin&&((tab==='vehicles'&&!vehOV)||(tab==='orders'&&(!ordersOV||ordersOV==='olist'))||roOV==='list'||uWalletView==='flow'||((profileOV==='user'||profileOV==='package'||['model','battModel','account','pos','cs','recharge'].indexOf(profileOV)!==-1)&&!profileSub))" class="demo-ops-section" data-od-id="demo-list-data">
       <div class="demo-ops-label">列表数据</div>
       <div class="demo-ops-chips">
         <div class="demo-ops-chip" :class="{'is-on':!demoListEmpty}" data-od-id="demo-list-data-full" @click="demoSetListEmpty(false)">有数据</div>
@@ -5859,74 +5819,46 @@ function openUserDetail(u){
   uBatteries.value=batteries.value.filter(function(b){return b.account===u.account&&b.battNo}).map(function(b){return{code:b.battNo,model:b.model,soc:b.level}});
   profileSub.value='userDetail';
 }
-/* ══ 用户钱包：流水 / 调账 / 手动提现 / 提现记录 ══ */
+/* ══ 用户钱包：流水 / 调账 ══ */
 const uWalletView=ref('');
 const uWalletSheet=ref('');
 const uFlowType=ref('recharge');
 const uFlowTxn=ref('全部');
-const uWdStatus=ref('');
-const uWdStatusOpts=[{v:'',l:'全部'},{v:'PROCESSING',l:'提现中'},{v:'SUCCESS',l:'提现成功'},{v:'FAILED',l:'提现失败'}];
 const uAdjust=reactive({txnType:'ADD',amount:null,remark:''});
 const uAdjustErr=reactive({amount:''});
-const uWithdraw=reactive({amount:null,remark:''});
-const uWithdrawErr=reactive({amount:''});
-let uWdSeq=1;
 const uFlowAll=[
-  {ledgerNo:'L20260901001',txnType:'消费',amount:'-135000',balanceAfter:315000,relatedOrderNo:'YD202608260013',operator:'system',remark:'自动续租扣减 - 订单 YD202608260013 第 2 期',createTime:'2026-09-01 00:00:00'},
-  {ledgerNo:'L20260831001',txnType:'消费',amount:'-135000',balanceAfter:450000,relatedOrderNo:'YD202608260013',operator:'system',remark:'自动续租扣减 - 订单 YD202608260013 第 1 期',createTime:'2026-08-31 00:00:00'},
-  {ledgerNo:'L20260826002',txnType:'消费',amount:'-135000',balanceAfter:585000,relatedOrderNo:'YD202608260013',operator:'system',remark:'自动续租扣减 - 订单 YD202608260013 首期',createTime:'2026-08-26 00:00:00'},
-  {ledgerNo:'L20260830001',txnType:'提现',amount:'-10000',balanceAfter:40000,relatedOrderNo:'-',operator:'system',remark:'商户手动提现',createTime:'2026-08-30 15:00:00'},
-  {ledgerNo:'L20260828001',txnType:'消费',amount:'-250000',balanceAfter:50000,relatedOrderNo:'YD202608280001',operator:'system',remark:'',createTime:'2026-08-28 09:30:00'},
-  {ledgerNo:'L20260825001',txnType:'退款',amount:'+300000',balanceAfter:300000,relatedOrderNo:'YD202608150002',operator:'system',remark:'',createTime:'2026-08-25 11:00:00'},
-  {ledgerNo:'L20260820001',txnType:'消费',amount:'-300000',balanceAfter:0,relatedOrderNo:'YD202608150002',operator:'system',remark:'',createTime:'2026-08-20 08:22:00'},
+  {ledgerNo:'L20260901001',txnType:'订单消费',amount:'-135000',balanceAfter:315000,relatedOrderNo:'YD202608260013',operator:'system',remark:'自动续租扣减 - 订单 YD202608260013 第 2 期',createTime:'2026-09-01 00:00:00'},
+  {ledgerNo:'L20260831001',txnType:'订单消费',amount:'-135000',balanceAfter:450000,relatedOrderNo:'YD202608260013',operator:'system',remark:'自动续租扣减 - 订单 YD202608260013 第 1 期',createTime:'2026-08-31 00:00:00'},
+  {ledgerNo:'L20260826002',txnType:'订单消费',amount:'-135000',balanceAfter:585000,relatedOrderNo:'YD202608260013',operator:'system',remark:'自动续租扣减 - 订单 YD202608260013 首期',createTime:'2026-08-26 00:00:00'},
+  {ledgerNo:'L20260828001',txnType:'订单消费',amount:'-250000',balanceAfter:50000,relatedOrderNo:'YD202608280001',operator:'system',remark:'',createTime:'2026-08-28 09:30:00'},
+  {ledgerNo:'L20260825001',txnType:'订单退款',amount:'+300000',balanceAfter:300000,relatedOrderNo:'YD202608150002',operator:'system',remark:'',createTime:'2026-08-25 11:00:00'},
+  {ledgerNo:'L20260820001',txnType:'订单消费',amount:'-300000',balanceAfter:0,relatedOrderNo:'YD202608150002',operator:'system',remark:'',createTime:'2026-08-20 08:22:00'},
   {ledgerNo:'L20260812001',txnType:'充值',amount:'+300000',balanceAfter:300000,relatedOrderNo:'RE20260812001',operator:'system',remark:'',createTime:'2026-08-12 14:00:00'},
-  {ledgerNo:'L20260810001',txnType:'消费',amount:'-450000',balanceAfter:0,relatedOrderNo:'YD202608010001',operator:'system',remark:'',createTime:'2026-08-10 09:12:00'},
-  {ledgerNo:'L20260805001',txnType:'提现',amount:'-20000',balanceAfter:450000,relatedOrderNo:'-',operator:'system',remark:'商户手动提现',createTime:'2026-08-05 16:40:00'},
+  {ledgerNo:'L20260810001',txnType:'订单消费',amount:'-450000',balanceAfter:0,relatedOrderNo:'YD202608010001',operator:'system',remark:'',createTime:'2026-08-10 09:12:00'},
   {ledgerNo:'L20260801001',txnType:'充值',amount:'+50000',balanceAfter:50000,relatedOrderNo:'RE20260801001',operator:'system',remark:'',createTime:'2026-08-01 10:00:00'},
-  {ledgerNo:'G20260829001',txnType:'消费',amount:'-800',balanceAfter:200,relatedOrderNo:'YD202608290001',operator:'system',remark:'',createTime:'2026-08-29 10:20:00'},
-  {ledgerNo:'G20260828001',txnType:'退款',amount:'+300',balanceAfter:1000,relatedOrderNo:'YD202608150002',operator:'system',remark:'',createTime:'2026-08-28 11:00:00'},
-  {ledgerNo:'G20260822001',txnType:'充值',amount:'+1500',balanceAfter:2700,relatedOrderNo:'-',operator:'admin',remark:'新用户注册赠送',createTime:'2026-08-22 15:30:00'},
+  {ledgerNo:'G20260829001',txnType:'订单消费',amount:'-800',balanceAfter:200,relatedOrderNo:'YD202608290001',operator:'system',remark:'',createTime:'2026-08-29 10:20:00'},
+  {ledgerNo:'G20260828001',txnType:'订单退款',amount:'+300',balanceAfter:1000,relatedOrderNo:'YD202608150002',operator:'system',remark:'',createTime:'2026-08-28 11:00:00'},
+  {ledgerNo:'G20260822001',txnType:'赠送',amount:'+1500',balanceAfter:2700,relatedOrderNo:'-',operator:'admin',remark:'新用户注册赠送',createTime:'2026-08-22 15:30:00'},
   {ledgerNo:'G20260815001',txnType:'扣减',amount:'-1000',balanceAfter:1200,relatedOrderNo:'-',operator:'admin',remark:'运营手动扣减',createTime:'2026-08-15 16:48:00'},
-  {ledgerNo:'G20260812001',txnType:'消费',amount:'-500',balanceAfter:2200,relatedOrderNo:'YD202608010001',operator:'system',remark:'',createTime:'2026-08-12 09:12:00'},
-  {ledgerNo:'G20260810001',txnType:'充值',amount:'+800',balanceAfter:2700,relatedOrderNo:'-',operator:'admin',remark:'充值活动返赠',createTime:'2026-08-10 14:00:00'},
-  {ledgerNo:'G20260802001',txnType:'充值',amount:'+2000',balanceAfter:2200,relatedOrderNo:'-',operator:'admin',remark:'运营赠送入账',createTime:'2026-08-02 14:30:00'}
-];
-const uWithdrawAll=[
-  {withdrawNo:'W20260901001',amount:15000,status:'PROCESSING',withdrawType:'USER',applyTime:'2026-09-01 14:20:00',finishTime:'-',remark:'用户申请提现，待审核'},
-  {withdrawNo:'W20260828001',amount:20000,status:'SUCCESS',withdrawType:'USER',applyTime:'2026-08-28 09:00:00',finishTime:'2026-08-28 09:30:00',remark:'已到账'},
-  {withdrawNo:'W20260815001',amount:8000,status:'SUCCESS',withdrawType:'MERCHANT',applyTime:'2026-08-15 10:05:00',finishTime:'2026-08-15 10:20:00',remark:'商户手动提现'},
-  {withdrawNo:'W20260820001',amount:12000,status:'FAILED',withdrawType:'MERCHANT',applyTime:'2026-08-20 16:40:00',finishTime:'2026-08-20 16:55:00',remark:'账户异常，提现失败'},
-  {withdrawNo:'W20260810001',amount:5000,status:'SUCCESS',withdrawType:'USER',applyTime:'2026-08-10 09:10:00',finishTime:'2026-08-10 09:15:00',remark:'微信提现'},
-  {withdrawNo:'W20260802001',amount:10000,status:'SUCCESS',withdrawType:'MERCHANT',applyTime:'2026-08-02 11:20:00',finishTime:'2026-08-02 11:30:00',remark:'商户手动提现'}
+  {ledgerNo:'G20260812001',txnType:'订单消费',amount:'-500',balanceAfter:2200,relatedOrderNo:'YD202608010001',operator:'system',remark:'',createTime:'2026-08-12 09:12:00'},
+  {ledgerNo:'G20260810001',txnType:'赠送',amount:'+800',balanceAfter:2700,relatedOrderNo:'-',operator:'admin',remark:'充值活动返赠',createTime:'2026-08-10 14:00:00'},
+  {ledgerNo:'G20260802001',txnType:'赠送',amount:'+2000',balanceAfter:2200,relatedOrderNo:'-',operator:'admin',remark:'运营赠送入账',createTime:'2026-08-02 14:30:00'}
 ];
 const uFlowList=computed(function(){
   const prefix=uFlowType.value==='bonus'?'G':'L';
   return demoListEmpty.value?[]:uFlowAll.filter(function(r){return String(r.ledgerNo).charAt(0)===prefix&&(uFlowTxn.value==='全部'||r.txnType===uFlowTxn.value)})
     .slice().sort(function(a,b){return String(b.createTime).localeCompare(String(a.createTime))});
 });
-const uWdList=computed(function(){return demoListEmpty.value?[]:uWithdrawAll.filter(function(r){
-  if(uWdStatus.value&&r.status!==uWdStatus.value)return false;
-  return true;
-}).slice().sort(function(a,b){return String(b.applyTime).localeCompare(String(a.applyTime))})});
-const uFlowTxnEnum={
-  recharge:[{v:'全部',l:'全部'},{v:'充值',l:'充值'},{v:'消费',l:'消费'},{v:'退款',l:'退款'},{v:'提现',l:'提现'}],
-  gift:[{v:'全部',l:'全部'},{v:'充值',l:'充值'},{v:'消费',l:'消费'},{v:'退款',l:'退款'},{v:'扣减',l:'扣减'}]
-};
-function uFlowTypeOpts(){return uFlowTxnEnum[uFlowType.value]||uFlowTxnEnum.recharge}
+const walletLedgerTxnOpts=[{v:'全部',l:'全部'},{v:'充值',l:'充值'},{v:'充值退款',l:'充值退款'},{v:'订单消费',l:'订单消费'},{v:'订单退款',l:'订单退款'},{v:'赠送',l:'赠送'},{v:'扣减',l:'扣减'}];
 function uFlowAmt(r){const neg=String(r.amount).trim().charAt(0)==='-';return{neg:neg,val:Math.abs(Number(r.amount))}}
-function uWdStLabel(s){return{PROCESSING:'提现中',SUCCESS:'提现成功',FAILED:'提现失败'}[s]||s}
-function uWdStg(s){var m={PROCESSING:{background:'#FFF7ED',color:'#F59E0B',border:'1px solid #F59E0B'},SUCCESS:{background:'#ECFDF3',color:'#17A34A',border:'1px solid #17A34A'},FAILED:{background:'#FEF2F2',color:'#DC2626',border:'1px solid #DC2626'}};return m[s]||{background:'#F6F7F9',color:'#999',border:'1px solid #DDD'}}
 function openUFlow(type){if(!can('user.wallet.flow')){deny();return}navOpen();uFlowType.value=type;uFlowTxn.value='全部';uWalletView.value='flow'}
 function openUAdjust(){if(!can('user.wallet.adjust')){deny();return}Object.assign(uAdjust,{txnType:'ADD',amount:null,remark:''});uAdjustErr.amount='';uWalletSheet.value='adjust'}
-function openUWithdraw(){if(!can('user.wallet.withdraw')){deny();return}uWithdraw.amount=null;uWithdraw.remark='';uWithdrawErr.amount='';uWalletSheet.value='withdraw'}
-function openUWithdrawRecord(){if(!can('user.wallet.withdraw_record')){deny();return}navOpen();uWdStatus.value='';uWalletView.value='wrecords'}
 function closeUWallet(){navBack()}
 const uWalletOps=ref(false);
 function openUWalletOps(){if(!can('user.wallet')){deny();return}uWalletOps.value=true}
-function opsPick(k){uWalletOps.value=false;if(k==='withdraw')openUWithdraw();else if(k==='records')openUWithdrawRecord();else if(k==='adjust')openUAdjust()}
+function opsPick(k){uWalletOps.value=false;if(k==='adjust')openUAdjust()}
 function handleUBalanceChange(nr){uWallet.value.rechargeBalance=nr;uWallet.value.total=uWallet.value.rechargeBalance+uWallet.value.bonusBalance}
 function submitUAdjust(){if(!uAdjust.txnType){toast('请选择类型','warn');return}if(!uAdjust.amount||uAdjust.amount<=0){uAdjustErr.amount='请输入金额';return}uAdjustErr.amount='';if(uAdjust.txnType==='DEDUCT'&&uAdjust.amount>uWallet.value.bonusBalance){toast('扣减金额不能超过赠送余额','warn');return}uWallet.value.bonusBalance+=(uAdjust.txnType==='ADD'?uAdjust.amount:-uAdjust.amount);uWallet.value.total=uWallet.value.rechargeBalance+uWallet.value.bonusBalance;toast('赠送余额调账成功','success');uWalletSheet.value=null}
-function submitUManualWithdraw(){if(!uWithdraw.amount||uWithdraw.amount<=0){uWithdrawErr.amount='请输入提现金额';return}if(uWithdraw.amount>uWallet.value.rechargeBalance){uWithdrawErr.amount='提现金额不能超过充值余额';return}uWithdrawErr.amount='';const amt=uWithdraw.amount;handleUBalanceChange(uWallet.value.rechargeBalance-amt);const t=now();uWithdrawAll.unshift({withdrawNo:'W'+String(Date.now()).slice(-6)+uWdSeq++,amount:amt,status:'SUCCESS',withdrawType:'MERCHANT',applyTime:t,finishTime:t,remark:(uWithdraw.remark||'').trim()});toast('提现已到账，充值余额已扣减','success');uWalletSheet.value=null}
 function goUserDetail(account){
   if(!can('user.detail')){deny();return}
   navOpen();
@@ -6372,7 +6304,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
   curStore,menuGroups,openMenu,stores,doSwitch,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
-aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,openUWithdraw,openUWithdrawRecord,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowTypeOpts,uFlowAmt,uWdStatus,uWdStatusOpts,uWdList,uWdStLabel,uWdStg,uAdjust,uAdjustErr,uWithdraw,uWithdrawErr,submitUAdjust,submitUManualWithdraw,handleUBalanceChange,uFlowAll,uWithdrawAll,
+aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
 csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
