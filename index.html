@@ -2092,8 +2092,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
              <div class="text-[13px] font-medium text-[#666] mb-2">改价前</div>
              <div class="rounded-xl p-3" style="background:#F6F7F9">
                <template v-if="r.before">
-                 <div class="mb-2"><div class="text-[12px] text-[#999]">租金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.before.rentSplit, r.before.rentFee).total) }}</div><div class="text-[12px] text-[#999]">{{ splitPartText(r.before.rentSplit, r.before.rentFee) }}</div></div>
-                 <div><div class="text-[12px] text-[#999]">押金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.before.depositSplit, r.before.deposit).total) }}</div><div class="text-[12px] text-[#999]">{{ splitPartText(r.before.depositSplit, r.before.deposit) }}</div></div>
+                 <div class="mb-2"><div class="text-[12px] text-[#999]">租金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.before.rentSplit, r.before.rentFee).total) }}</div></div>
+                 <div><div class="text-[12px] text-[#999]">押金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.before.depositSplit, r.before.deposit).total) }}</div></div>
                </template>
                <div v-else class="text-[14px] text-[#999] py-4 text-center">—</div>
              </div>
@@ -2103,8 +2103,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
              <div class="text-[13px] font-medium text-[#666] mb-2">改价后</div>
              <div class="rounded-xl p-3" style="background:#F6F7F9">
                <template v-if="r.after">
-                 <div class="mb-2"><div class="text-[12px] text-[#999]">租金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.after.rentSplit, r.after.rentFee).total) }}</div><div class="text-[12px] text-[#999]">{{ splitPartText(r.after.rentSplit, r.after.rentFee) }}</div></div>
-                 <div><div class="text-[12px] text-[#999]">押金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.after.depositSplit, r.after.deposit).total) }}</div><div class="text-[12px] text-[#999]">{{ splitPartText(r.after.depositSplit, r.after.deposit) }}</div></div>
+                 <div class="mb-2"><div class="text-[12px] text-[#999]">租金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.after.rentSplit, r.after.rentFee).total) }}</div></div>
+                 <div><div class="text-[12px] text-[#999]">押金</div><div class="text-[14px] font-bold text-[#111]">{{ fmtRp(splitPartView(r.after.depositSplit, r.after.deposit).total) }}</div></div>
                </template>
                <div v-else class="text-[14px] text-[#999] py-4 text-center">—</div>
              </div>
@@ -2220,7 +2220,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 </template>
 <div class="mb-4 pt-1"><div class="text-[14px] font-semibold mb-2">退款原因</div><div class="relative"><textarea v-model="rReason" maxlength="255" placeholder="请输入退款原因" class="w-full p-4 pb-8 rounded-xl text-[15px] outline-none resize-none min-h-[90px]" style="border:1px solid #E5E5E5;font-family:inherit"></textarea><div class="absolute right-3 bottom-2 text-[12px] text-[#999] pointer-events-none">{{ (rReason||'').length }}/255</div></div></div>
 </div>
-<div class="px-5 pb-8 shrink-0"><button @click="submitRefund" :disabled="!refundValid||refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">确认</button></div>
+<div class="px-5 pb-8 shrink-0"><button @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">确认</button></div>
 </div></transition>
 
 <!-- ═══ ADD DOC SHEET ═══ -->
@@ -3290,14 +3290,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <div class="login-field mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
         <span>天自动续租</span>
         <span class="od-info ml-1" v-html="luci('help-circle','w-4 h-4 text-[#999]')" @mouseenter="tipShow($event,'距离订单到期 N 天自动续租；填 0 代表到期当天自动续租')" @mouseleave="tipHide" @click.stop="tipToggle($event,'距离订单到期 N 天自动续租；填 0 代表到期当天自动续租')"></span>
-       </div>
-      </div>
-      <div class="form-row">
-       <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-        <span>扣款前提醒</span>
-        <div class="login-field mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewRemindDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
-        <span>天提醒用户</span>
-        <span class="od-info ml-1" v-html="luci('help-circle','w-4 h-4 text-[#999]')" @mouseenter="tipShow($event,'扣款前 N 天提醒用户；填 0 代表到期当天提醒')" @mouseleave="tipHide" @click.stop="tipToggle($event,'扣款前 N 天提醒用户；填 0 代表到期当天提醒')"></span>
        </div>
       </div>
       <div class="form-row">
@@ -5020,7 +5012,7 @@ function openRefund(mode,row){if(!orderPerm('refund.create')){deny();return}refu
   rActiveChannel.value=(do_.value&&do_.value.payment==='offline')?'OFFLINE':'2C2P';
   showRefund.value=true;}
 var refundSaving=ref(false);
-function submitRefund(){if(refundSaving.value)return;refundSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;refundSaving.value=false;ordersMod.value='refundConfirm'},600)}
+function submitRefund(){if(refundSaving.value)return;if(refundMode.value!=='return'&&refundTotal.value<=0){toast('请填写退款金额','warn');return}refundSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;refundSaving.value=false;ordersMod.value='refundConfirm'},600)}
  /* ══ Order Refund Records ══ */
   const orderRefunds=ref({
 'YD202608100007':[
@@ -6144,7 +6136,7 @@ function initI18nData(){
   const statusRank={created:0,pickup:1,progress:2,return:3,overdue:4,breach:5,complete:6,cancelled:7};
   orders.value=[
     {id:'YD202609010001',vin:'LSVAU2Z0A11119000',customer:'Han Min',phone:'+86 13800001234',plan:'月租×' + (1) + '月',amount:450,status:'progress',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-09-01 10:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-28 14:00:00',renewSubOrders:[
-      {subOrderNo:'YD202609050021',renewType:'AUTO',rentType:'daily',rentCount:3,newRentStart:'2026-09-28 14:00:00',newRentEnd:'2026-10-01 14:00:00',renewRentFee:150,subPayStatus:'已支付',payTime:'2026-09-05 12:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:150}]}},
+      {subOrderNo:'YD202609050021',renewType:'AGENT',rentType:'daily',rentCount:3,newRentStart:'2026-09-28 14:00:00',newRentEnd:'2026-10-01 14:00:00',renewRentFee:150,subPayStatus:'待支付',payTime:'—',paymentSplit:{rentSplit:[{method:'2C2P',amount:150}]}},
       {subOrderNo:'YD202609150033',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-03 14:00:00',newRentEnd:'2026-10-10 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:130}]}},
       {subOrderNo:'YD202609200022',renewType:'AGENT',rentType:'daily',rentCount:2,newRentStart:'2026-10-01 14:00:00',newRentEnd:'2026-10-03 14:00:00',renewRentFee:100,subPayStatus:'待支付',payTime:'—',paymentSplit:{rentSplit:[{method:'2C2P',amount:100}]}},
       {subOrderNo:'YD202609250044',renewType:'MANUAL',rentType:'weekly',rentCount:1,newRentStart:'2026-10-12 14:00:00',newRentEnd:'2026-10-19 14:00:00',renewRentFee:130,subPayStatus:'待支付',payTime:'—',paymentSplit:{rentSplit:[{method:'OFFLINE',amount:130}]}}
