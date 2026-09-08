@@ -1680,12 +1680,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">基本信息</div><span class="text-[13px] font-semibold" :style="stg(dSt)">{{ sl(dSt) }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] text-[#333] flex items-center justify-end gap-1.5">{{ do_.id }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyId"></span></span></div>
 <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">用户账号</span><span class="flex-1 text-right text-[13px] font-semibold flex items-center justify-end gap-1.5"><span :class="(do_.account||do_.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" @click="(do_.account||do_.customer)&&goUserDetail(do_.account||do_.customer)">{{ orderCustomerText(do_) }}</span><span v-if="do_.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></span></div>
-<div class="flex items-start gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]" v-html="((do_.rentStart||'-')+' ~ '+rentEndOf(do_)).replace(' ~ ','<br>')"></span></div>
-<div class="flex items-center gap-2 py-2.5" :style="(dSt==='complete'||dSt==='cancelled')?'border-bottom:1px dashed #E5E5E5':''"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ do_.created }}</span></div>
-<div v-if="dSt==='complete'" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">2025-01-20 14:30:00</span></div>
-<div v-if="dSt==='cancelled'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">取消时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">2025-01-18 10:15:00</span></div>
+<div class="flex items-start gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] text-[#333] leading-[1.5]" v-html="((do_.rentStart||'-')+' ~ '+rentEndOf(do_)).replace(' ~ ','<br>')"></span></div>
+<div class="flex items-center gap-2 py-2.5" :style="(dSt==='complete'||dSt==='cancelled')?'border-bottom:1px dashed #E5E5E5':''"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ do_.created }}</span></div>
+<div v-if="dSt==='complete'" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] text-[#333]">2025-01-20 14:30:00</span></div>
+<div v-if="dSt==='cancelled'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-16 flex-shrink-0">取消时间</span><span class="flex-1 text-right text-[13px] text-[#333]">2025-01-18 10:15:00</span></div>
 </div>
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2">
@@ -1696,21 +1696,21 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[13px] space-y-2.5">
 <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="feeRentOpen=!feeRentOpen">
 <span class="text-[#999] w-16 flex-shrink-0">租金</span>
-<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] font-semibold text-[#333]">{{ fmtRp(feeActiveRow.rent) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeRentOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
+<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] text-[#333]">{{ fmtRp(feeActiveRow.rent) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeRentOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
 </div>
 <div v-if="feeRentOpen" class="space-y-1 pb-1 pl-1">
 <div v-for="c in feeRowBreakdown(feeActiveRow).rent" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
 </div>
 <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="feeDepOpen=!feeDepOpen">
 <span class="text-[#999] w-16 flex-shrink-0">押金</span>
-<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] font-semibold text-[#333]">{{ fmtRp(feeActiveRow.deposit) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeDepOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
+<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] text-[#333]">{{ fmtRp(feeActiveRow.deposit) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeDepOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
 </div>
 <div v-if="feeDepOpen" class="space-y-1 pb-1 pl-1">
 <div v-for="c in feeRowBreakdown(feeActiveRow).deposit" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
 </div>
 <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="feeTotalOpen=!feeTotalOpen">
 <span class="text-[#999] w-16 flex-shrink-0">合计</span>
-<div class="flex items-center gap-1.5 justify-end flex-1"><span class="font-semibold" style="color:var(--accent)">{{ fmtRp(feeActiveRow.total) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeTotalOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
+<div class="flex items-center gap-1.5 justify-end flex-1"><span style="color:var(--accent)">{{ fmtRp(feeActiveRow.total) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(feeTotalOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
 </div>
 <div v-if="feeTotalOpen" class="space-y-1 pb-1 pl-1">
 <div v-for="c in feeRowBreakdown(feeActiveRow).total" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
@@ -1727,21 +1727,21 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="text-[13px] space-y-2.5">
 <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="refundRentOpen=!refundRentOpen">
 <span class="text-[#999] w-16 flex-shrink-0">租金</span>
-<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] font-semibold text-[#333]">{{ fmtRp(orderRefundAgg.rent) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(refundRentOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
+<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] text-[#333]">{{ fmtRp(orderRefundAgg.rent) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(refundRentOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
 </div>
 <div v-if="refundRentOpen" class="space-y-1 pb-1 pl-1">
 <div v-for="c in refundChannelBreakdown.rent" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
 </div>
 <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="refundDepOpen=!refundDepOpen">
 <span class="text-[#999] w-16 flex-shrink-0">押金</span>
-<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] font-semibold text-[#333]">{{ fmtRp(orderRefundAgg.deposit) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(refundDepOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
+<div class="flex items-center gap-1.5 justify-end flex-1"><span class="text-[13px] text-[#333]">{{ fmtRp(orderRefundAgg.deposit) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(refundDepOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
 </div>
 <div v-if="refundDepOpen" class="space-y-1 pb-1 pl-1">
 <div v-for="c in refundChannelBreakdown.deposit" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
 </div>
 <div class="flex items-center justify-between gap-2 cursor-pointer active:opacity-60" @click.stop="refundTotalOpen=!refundTotalOpen">
 <span class="text-[#999] w-16 flex-shrink-0">合计</span>
-<div class="flex items-center gap-1.5 justify-end flex-1"><span class="font-semibold" style="color:var(--accent)">{{ fmtRp(orderRefundAgg.total) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(refundTotalOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
+<div class="flex items-center gap-1.5 justify-end flex-1"><span style="color:var(--accent)">{{ fmtRp(orderRefundAgg.total) }}</span><span v-html="luci('chevron-down','w-4 h-4 text-[#999] '+(refundTotalOpen?'rotate-180 transition-transform':'transition-transform'))"></span></div>
 </div>
 <div v-if="refundTotalOpen" class="space-y-1 pb-1 pl-1">
 <div v-for="c in refundChannelBreakdown.total" :key="c.channel" class="flex items-center justify-between text-[12px]"><span class="text-[#999]">{{ c.channel }}</span><span class="text-[#666]">{{ fmtRp(c.amount,2) }}</span></div>
@@ -1924,27 +1924,27 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-32 hid" style="touch-action:pan-y">
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">基本信息</div><span class="text-[13px] font-semibold" :style="{color:roPayStatusTag(curRechargeOrder.payStatus).c}">{{ roPayStatusTag(curRechargeOrder.payStatus).l }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333] flex items-center justify-end gap-1.5">{{ curRechargeOrder.orderNo }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(curRechargeOrder.orderNo,'订单编号')"></span></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.createTime }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">支付渠道</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ roPayChannelText(curRechargeOrder.payChannel) }}</span></div>
-<div v-if="['PAID','REFUNDING','PARTIAL_REFUND','FULL_REFUND'].includes(curRechargeOrder.payStatus)" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.payTime||'-' }}</span></div>
-<div v-if="curRechargeOrder.payStatus==='CANCELLED'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">取消时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.cancelTime||'-' }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">订单编号</span><span class="flex-1 text-right text-[13px] text-[#333] flex items-center justify-end gap-1.5">{{ curRechargeOrder.orderNo }}<span v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(curRechargeOrder.orderNo,'订单编号')"></span></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">创建时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ curRechargeOrder.createTime }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">支付渠道</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ roPayChannelText(curRechargeOrder.payChannel) }}</span></div>
+<div v-if="['PAID','REFUNDING','PARTIAL_REFUND','FULL_REFUND'].includes(curRechargeOrder.payStatus)" class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ curRechargeOrder.payTime||'-' }}</span></div>
+<div v-if="curRechargeOrder.payStatus==='CANCELLED'" class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">取消时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ curRechargeOrder.cancelTime||'-' }}</span></div>
 </div>
 <div class="bg-white rounded-2xl p-4 mb-3 cursor-pointer active:bg-[#FAFAFA]" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="goUserDetail(curRechargeOrder.account||curRechargeOrder.phone||curRechargeOrder.email)">
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">用户信息</div><span v-html="luci('chevron-right','w-4 h-4 text-[#bbb]')"></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.account||'-' }}</span><span v-if="curRechargeOrder.account" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.account,'账号')" class="shrink-0 ml-1"></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">手机号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.phone||'-' }}</span><span v-if="curRechargeOrder.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)] cursor-pointer active:opacity-70')" @click.stop="callPhone(curRechargeOrder.phone)" class="shrink-0 ml-1"></span><span v-if="curRechargeOrder.phone" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.phone,'手机号')" class="shrink-0 ml-1"></span></div>
-<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">邮箱</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ curRechargeOrder.email||'-' }}</span><span v-if="curRechargeOrder.email" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.email,'邮箱')" class="shrink-0 ml-1"></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">账号</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ curRechargeOrder.account||'-' }}</span><span v-if="curRechargeOrder.account" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.account,'账号')" class="shrink-0 ml-1"></span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">手机号</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ curRechargeOrder.phone||'-' }}</span><span v-if="curRechargeOrder.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)] cursor-pointer active:opacity-70')" @click.stop="callPhone(curRechargeOrder.phone)" class="shrink-0 ml-1"></span><span v-if="curRechargeOrder.phone" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.phone,'手机号')" class="shrink-0 ml-1"></span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">邮箱</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ curRechargeOrder.email||'-' }}</span><span v-if="curRechargeOrder.email" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click.stop="copyText(curRechargeOrder.email,'邮箱')" class="shrink-0 ml-1"></span></div>
 </div>
 <div class="bg-white rounded-2xl p-4 mb-3" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="text-[14px] font-bold text-[#1A1A1A] mb-2">充值明细</div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.amount) }}</span></div>
-<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.giftAmount||0) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(curRechargeOrder.amount) }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(curRechargeOrder.giftAmount||0) }}</span></div>
 </div>
 <div v-if="roCanRefundRecords()&&can('recharge_order.refund.list')" class="bg-white rounded-2xl p-4 mb-3 cursor-pointer active:bg-[#FAFAFA]" style="box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" @click="roOpenRefunds">
 <div class="flex items-center justify-between mb-2"><div class="text-[14px] font-bold text-[#1A1A1A]">退款明细</div><span v-html="luci('chevron-right','w-4 h-4 text-[#bbb]')"></span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.refundAmount||0) }}</span></div>
-<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(curRechargeOrder.refundGiftAmount||0) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(curRechargeOrder.refundAmount||0) }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(curRechargeOrder.refundGiftAmount||0) }}</span></div>
 </div>
 <div v-if="curRechargeOrder.payStatus==='UNPAID'||roCanRefund()" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
 <div class="flex gap-3">
@@ -1974,12 +1974,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
 <div v-for="(r,i) in roRefunds" :key="i" class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
 <div class="flex items-center justify-between mb-2"><span class="text-[13px] font-semibold text-[#333]">{{ r.applyTime }}</span><span class="text-[13px] font-semibold" :style="{color:refundStg(r.refundStatus)}">{{ refundStLabel(r.refundStatus) }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.rechargeAmount) }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.giftAmount) }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">操作账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.operator }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款来源</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundSource||'-' }}</span></div>
-<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款原因</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundReason }}</span></div>
-<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.refundTime||'-' }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">充值金额</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(r.rechargeAmount) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">赠送金额</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(r.giftAmount) }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">操作账号</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.operator }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款来源</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.refundSource||'-' }}</span></div>
+<div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">退款原因</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.refundReason }}</span></div>
+<div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">完成时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.refundTime||'-' }}</span></div>
 </div>
 <div v-if="!roRefunds.length" class="flex flex-col items-center py-16"><div class="text-[15px] font-semibold text-[#111] mb-1">暂无退款记录</div></div>
 </div>
@@ -2136,14 +2136,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
            <div @click="openRowMore(r)" class="w-8 h-8 -mr-2 rounded-full flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] shrink-0" title="更多操作"><svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-[#666]"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></div>
          </div>
          <div class="text-[13px] space-y-2.5">
-           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">租赁方案</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.plan }}</span></div>
-           <div class="flex items-start gap-2"><span class="text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] font-semibold text-[#333] leading-[1.5]" v-html="(r.period||'-').replace(' ~ ','<br>')"></span></div>
-           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">租金</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.rent) }}</span></div>
-           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">押金</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ fmtRp(r.deposit) }}</span></div>
-           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">合计</span><span class="flex-1 text-right font-semibold" style="color:var(--accent)">{{ fmtRp(r.total) }}</span></div>
-           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付渠道</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ feeRowChannel(r) }}</span></div>
-           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付状态</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.payStatus }}</span></div>
-           <div v-if="r.payStatus!=='待支付'&&r.payStatus!=='未支付'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ r.payTime }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">租赁方案</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.plan }}</span></div>
+           <div class="flex items-start gap-2"><span class="text-[#999] w-16 flex-shrink-0 leading-[1.5]">租赁时间</span><span class="flex-1 min-w-0 text-right text-[13px] text-[#333] leading-[1.5]" v-html="(r.period||'-').replace(' ~ ','<br>')"></span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">租金</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(r.rent) }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">押金</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ fmtRp(r.deposit) }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">合计</span><span class="flex-1 text-right" style="color:var(--accent)">{{ fmtRp(r.total) }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付渠道</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ feeRowChannel(r) }}</span></div>
+           <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付状态</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.payStatus }}</span></div>
+           <div v-if="r.payStatus!=='待支付'&&r.payStatus!=='未支付'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.payTime }}</span></div>
            <div v-if="r.isRenew&&r.payStatus==='待支付'" class="flex gap-2 pt-1">
              <div class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-center cursor-pointer active:opacity-90" style="border:1px solid #DC2626;color:#DC2626" @click="feeAskAction('feeCancelRenew',r)">取消续租</div>
              <div v-if="feeRowOnlyOffline(r)" class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-white text-center cursor-pointer active:opacity-90" style="background:var(--accent)" @click="feeAskAction('feePayRenew',r)">确认支付</div>
@@ -2257,7 +2257,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <transition name="sh"><div v-if="showPaySplit" class="absolute bottom-0 left-0 right-0 bg-white z-[901] rounded-t-[20px] flex flex-col" style="max-height:95%;padding-bottom:env(safe-area-inset-bottom)">
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="text-center text-[17px] font-semibold py-3 px-5 shrink-0">改价</div>
-<div class="px-5"><div class="text-[12px] leading-[1.6] mb-3 rounded-lg px-3 py-2" style="background:#EBF1FD;color:#2563EB">各渠道金额合计即为调整后的租金/押金，确认后按渠道拆分入账。</div></div>
 <div class="flex mx-5 mb-3 shrink-0 rounded-full p-0.5 relative" style="background:#F6F7F9;border:1px solid #E5E5E5">
 <div @click="psTab='rent'" class="relative flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="psTab==='rent'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">租金<span v-if="psRentPart>0 && !psRentValid" class="absolute top-1.5 right-3.5 w-1.5 h-1.5 rounded-full" style="background:#DC2626"></span></div>
 <div @click="psTab='deposit'" class="relative flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="psTab==='deposit'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">押金<span v-if="psDepPart>0 && !psDepValid" class="absolute top-1.5 right-3.5 w-1.5 h-1.5 rounded-full" style="background:#DC2626"></span></div>
@@ -3585,12 +3584,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <!-- 基本信息 -->
   <div class="text-[13px] font-semibold text-[#999] mb-2">基本信息</div>
   <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">账号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.account||'-' }}</span><span v-if="du.account" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.account,'账号')" class="shrink-0 ml-1"></span></div>
-    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">手机号</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.phone||'-' }}</span><span v-if="du.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)] cursor-pointer active:opacity-70')" @click="callPhone(du.phone)" class="shrink-0 ml-1"></span><span v-if="du.phone" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.phone,'手机号')" class="shrink-0 ml-1"></span></div>
-    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">邮箱</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.email||'-' }}</span><span v-if="du.email" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.email,'邮箱')" class="shrink-0 ml-1"></span></div>
-    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">昵称</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.nickname||'-' }}</span></div>
-    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">状态</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.status||'正常' }}</span></div>
-    <div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">注册时间</span><span class="flex-1 text-right text-[13px] font-semibold text-[#333]">{{ du.created||'-' }}</span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">账号</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ du.account||'-' }}</span><span v-if="du.account" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.account,'账号')" class="shrink-0 ml-1"></span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">手机号</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ du.phone||'-' }}</span><span v-if="du.phone" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)] cursor-pointer active:opacity-70')" @click="callPhone(du.phone)" class="shrink-0 ml-1"></span><span v-if="du.phone" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.phone,'手机号')" class="shrink-0 ml-1"></span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">邮箱</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ du.email||'-' }}</span><span v-if="du.email" v-html="luci('copy','w-4 h-4 text-[#999] cursor-pointer active:text-[var(--accent)]')" @click="copyText(du.email,'邮箱')" class="shrink-0 ml-1"></span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">昵称</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ du.nickname||'-' }}</span></div>
+    <div class="flex items-center gap-2 py-2.5" style="border-bottom:1px dashed #E5E5E5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">状态</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ du.status||'正常' }}</span></div>
+    <div class="flex items-center gap-2 py-2.5"><span class="text-[13px] text-[#999] w-20 flex-shrink-0">注册时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ du.created||'-' }}</span></div>
   </div>
 
   <!-- 用户钱包 -->
@@ -5139,7 +5138,7 @@ function submitPaySplit(){
   // 显示二次确认弹窗
   psConfirmMod.value={ 
     title:'确认改价',
-    desc:'原租金 '+fmtRp(before.rentFee)+'、原押金 '+fmtRp(before.deposit)+'；改价后租金 '+fmtRp(newRent)+'、押金 '+fmtRp(newDeposit)+'，并按填写渠道拆分入账。', 
+    desc:'原租金 '+fmtRp(before.rentFee)+'、原押金 '+fmtRp(before.deposit)+'；改价后租金 '+fmtRp(newRent)+'、押金 '+fmtRp(newDeposit)+'。', 
     before:before, 
     after:after,
     rentSplit:rentSplit,
@@ -5285,7 +5284,6 @@ var refundChannelBreakdown=computed(function(){
   function add(map, list, renew){
     (list||[]).forEach(function(c){
       if(!c) return;
-      if(renew && c.method==='OFFLINE') return;            // 续租仅线上，退款不计入线下
       if(!(Number(c.amount)>0)) return;
       var ch=chLabel(c.method); map[ch]=(map[ch]||0)+Number(c.amount);
     });
@@ -5305,9 +5303,9 @@ var refundChannelBreakdown=computed(function(){
   return {rent:rentCh, deposit:depCh, total:toArr(totalMap)};
 });
 function feeRenewSplit(list, total){
-  // 续租仅支持线上支付（2C2P / 钱包），不展示线下支付
+  // 续租支持线上（2C2P / 钱包）与线下支付，均正常展示
   if(list&&list.length){
-    return list.filter(function(c){ return c && c.method!=='OFFLINE' && Number(c.amount)>0; })
+    return list.filter(function(c){ return c && Number(c.amount)>0; })
                .map(function(c){ return {channel:chLabel(c.method), amount:Number(c.amount)}; });
   }
   return Number(total)>0 ? [{channel:'2C2P', amount:Number(total)}] : [];
@@ -6148,7 +6146,8 @@ function initI18nData(){
     {id:'YD202609010001',vin:'LSVAU2Z0A11119000',customer:'Han Min',phone:'+86 13800001234',plan:'月租×' + (1) + '月',amount:450,status:'progress',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-09-01 10:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-28 14:00:00',renewSubOrders:[
       {subOrderNo:'YD202609050021',renewType:'AUTO',rentType:'daily',rentCount:3,newRentStart:'2026-09-28 14:00:00',newRentEnd:'2026-10-01 14:00:00',renewRentFee:150,subPayStatus:'已支付',payTime:'2026-09-05 12:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:150}]}},
       {subOrderNo:'YD202609150033',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-03 14:00:00',newRentEnd:'2026-10-10 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:130}]}},
-      {subOrderNo:'YD202609200022',renewType:'AGENT',rentType:'daily',rentCount:2,newRentStart:'2026-10-01 14:00:00',newRentEnd:'2026-10-03 14:00:00',renewRentFee:100,subPayStatus:'待支付',payTime:'—',paymentSplit:{rentSplit:[{method:'2C2P',amount:100}]}}
+      {subOrderNo:'YD202609200022',renewType:'AGENT',rentType:'daily',rentCount:2,newRentStart:'2026-10-01 14:00:00',newRentEnd:'2026-10-03 14:00:00',renewRentFee:100,subPayStatus:'待支付',payTime:'—',paymentSplit:{rentSplit:[{method:'2C2P',amount:100}]}},
+      {subOrderNo:'YD202609250044',renewType:'MANUAL',rentType:'weekly',rentCount:1,newRentStart:'2026-10-12 14:00:00',newRentEnd:'2026-10-19 14:00:00',renewRentFee:130,subPayStatus:'待支付',payTime:'—',paymentSplit:{rentSplit:[{method:'OFFLINE',amount:130}]}}
     ]},
     {id:'YD202609010002',vin:'LSVAU2Z0A44444000',customer:'Wang Fang',phone:'+86 13800004444',plan:'月租×' + (1) + '月',amount:520,status:'progress',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-09-02 11:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-09-02 14:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:520}],depositSplit:[{method:'2C2P',amount:500}]},renewSubOrders:[
       {subOrderNo:'YD202609150031',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-02 14:00:00',newRentEnd:'2026-10-09 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:130}]}}
