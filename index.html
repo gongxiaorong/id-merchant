@@ -3277,7 +3277,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <span>到期前</span>
         <div class="login-field mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
         <span>天自动续租</span>
-        <span class="od-info ml-1" v-html="luci('help-circle','w-4 h-4 text-[#999]')" @mouseenter="tipShow($event,'距离订单到期 N 天自动续租；填 0 代表到期当天自动续租')" @mouseleave="tipHide" @click.stop="tipToggle($event,'距离订单到期 N 天自动续租；填 0 代表到期当天自动续租')"></span>
        </div>
       </div>
       <div class="form-row">
