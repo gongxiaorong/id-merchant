@@ -196,7 +196,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="px-5 pt-2 pb-1 shrink-0 flex items-center justify-center relative">
 <span class="block text-center text-[17px] font-semibold">绑定用户</span>
-<button @click="closeUserPick" type="button" aria-label="关闭" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
+<button @click="closeUserPick" type="button" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
 </div>
 <div class="relative mx-5 mb-3 rounded-full flex items-center px-4 py-2.5 gap-2 shrink-0" style="background:#F6F7F9;border:1px solid #E5E5E5">
 <span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
@@ -724,7 +724,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
  <template v-else>
  <div class="flex-1 min-h-0 relative flex flex-col overflow-hidden">
   <div v-if="filtered.length && vehNoLocationCount>0" class="absolute top-2 left-3 right-3 z-[20] px-3 py-2 rounded-xl text-[12px] font-medium text-[#6B6B6B] bg-white/95" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.06)">{{ (vehNoLocationCount>99?'99+':vehNoLocationCount) }} 辆无定位，仅列表可见</div>
-   <div @click.stop="vehCluster=!vehCluster" role="switch" :aria-checked="vehCluster" class="absolute top-14 right-4 z-[40] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer select-none transition-all active:scale-95" aria-label="点聚合" :style="vehCluster?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)',boxShadow:'0 2px 8px rgba(0,0,0,.14)'}:{background:'#fff',color:'#444',border:'1px solid #E5E5E5',boxShadow:'0 2px 8px rgba(0,0,0,.08)'}" data-od-id="map-cluster-toggle">
+   <div @click.stop="vehCluster=!vehCluster" role="switch" :aria-checked="vehCluster" class="absolute top-14 right-4 z-[40] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer select-none transition-all active:scale-95" :style="vehCluster?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)',boxShadow:'0 2px 8px rgba(0,0,0,.14)'}:{background:'#fff',color:'#444',border:'1px solid #E5E5E5',boxShadow:'0 2px 8px rgba(0,0,0,.08)'}" data-od-id="map-cluster-toggle">
     <span v-html="luci('layers','w-5 h-5')"></span>
    </div>
   <div class="flex-1 relative min-h-0 cursor-pointer" style="background:#E8EEF5;background-image:linear-gradient(rgba(43,63,95,.06)1px,transparent 1px),linear-gradient(90deg,rgba(43,63,95,.06)1px,transparent 1px);background-size:28px 28px" @click="vehMapSelect(null)">
@@ -1062,7 +1062,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span class="flex-1 text-[15px]" :style="addModel?{color:'#111',fontWeight:500}:{color:'#999'}">{{ addModel||'选择型号' }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
 </div></div>
-<div class="form-row"><div class="form-label">车架号</div><div class="login-field relative flex items-center" :style="!addModel?{opacity:0.5,pointerEvents:'none'}:null"><input v-model="addVin" type="text" :placeholder="'请输入车架号'" :disabled="!addModel" class="flex-1 min-w-0 pl-3.5 pr-2 py-3.5 text-[15px]"><button @click="scanVin" type="button" aria-label="扫码" class="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center mr-1.5 cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button></div></div>
+<div class="form-row"><div class="form-label">车架号</div><div class="login-field relative flex items-center" :style="!addModel?{opacity:0.5,pointerEvents:'none'}:null"><input v-model="addVin" type="text" :placeholder="'请输入车架号'" :disabled="!addModel" class="flex-1 min-w-0 pl-3.5 pr-2 py-3.5 text-[15px]"><button @click="scanVin" type="button" class="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center mr-1.5 cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button></div></div>
 <div class="form-row" v-if="selectedProtocol==='TCP'"><div class="form-label">中控编号</div><div class="login-field relative flex items-center" :style="!addModel?{opacity:0.5,pointerEvents:'none'}:null"><input v-model="addCtrl" type="text" maxlength="20" :placeholder="'请输入中控编号'" :disabled="!addModel" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]"></div></div>
 </div>
 </div>
@@ -1222,7 +1222,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <template v-else>
 <div class="flex-1 min-h-0 relative flex flex-col overflow-hidden">
 <div v-if="batterFiltered.length && battNoLocationCount>0" class="absolute top-2 left-3 right-3 z-[20] px-3 py-2 rounded-xl text-[12px] font-medium text-[#6B6B6B] bg-white/95" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.06)">{{ (battNoLocationCount>99?'99+':battNoLocationCount) }} 块无定位，仅列表可见</div>
-<div @click.stop="battCluster=!battCluster" role="switch" :aria-checked="battCluster" class="absolute top-14 right-4 z-[40] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer select-none transition-all active:scale-95" aria-label="点聚合" :style="battCluster?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)',boxShadow:'0 2px 8px rgba(0,0,0,.14)'}:{background:'#fff',color:'#444',border:'1px solid #E5E5E5',boxShadow:'0 2px 8px rgba(0,0,0,.08)'}" data-od-id="battery-map-cluster-toggle">
+<div @click.stop="battCluster=!battCluster" role="switch" :aria-checked="battCluster" class="absolute top-14 right-4 z-[40] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer select-none transition-all active:scale-95" :style="battCluster?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)',boxShadow:'0 2px 8px rgba(0,0,0,.14)'}:{background:'#fff',color:'#444',border:'1px solid #E5E5E5',boxShadow:'0 2px 8px rgba(0,0,0,.08)'}" data-od-id="battery-map-cluster-toggle">
 <span v-html="luci('layers','w-5 h-5')"></span>
 </div>
 <div class="flex-1 relative min-h-0 cursor-pointer" style="background:#E8EEF5;background-image:linear-gradient(rgba(43,63,95,.06)1px,transparent 1px),linear-gradient(90deg,rgba(43,63,95,.06)1px,transparent 1px);background-size:28px 28px" @click="battMapSelect(null)">
@@ -1608,7 +1608,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <span class="flex-1 text-[15px]" :style="battAddModel?{color:'#111',fontWeight:500}:{color:'#999'}">{{ battAddModel||'选择电池型号' }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
 </div></div>
-<div class="form-row"><div class="form-label">{{ '电池编号' }}</div><div class="login-field relative flex items-center" :style="!battAddModel?{opacity:0.5,pointerEvents:'none'}:null"><input v-model="battAddNo" type="text" :placeholder="'请输入电池编号'" :disabled="!battAddModel" class="flex-1 min-w-0 pl-3.5 pr-2 py-3.5 text-[15px]"><button @click="scanBattNo" type="button" aria-label="扫码" class="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center mr-1.5 cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button></div></div>
+<div class="form-row"><div class="form-label">{{ '电池编号' }}</div><div class="login-field relative flex items-center" :style="!battAddModel?{opacity:0.5,pointerEvents:'none'}:null"><input v-model="battAddNo" type="text" :placeholder="'请输入电池编号'" :disabled="!battAddModel" class="flex-1 min-w-0 pl-3.5 pr-2 py-3.5 text-[15px]"><button @click="scanBattNo" type="button" class="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center mr-1.5 cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button></div></div>
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5">
@@ -2403,12 +2403,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="px-5 pt-2 pb-1 shrink-0 flex items-center justify-center relative">
 <span class="block text-center text-[17px] font-semibold">{{ ordersModTitle }}</span>
-<button @click="closeOrderPick" type="button" aria-label="关闭" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
+<button @click="closeOrderPick" type="button" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
 </div>
 <div class="relative mx-5 mb-3 rounded-full flex items-center px-4 py-2.5 gap-2 shrink-0" style="background:#F6F7F9;border:1px solid #E5E5E5">
 <span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
 <input v-model="orderPickQ" type="text" :placeholder="orderPickIsBatt?'搜索电池编号':'搜索车架号'" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 pr-8 placeholder:text-[#999]">
-<button @click="orderPickScan" type="button" aria-label="扫码" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button>
+<button @click="orderPickScan" type="button" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button>
 </div>
 <div class="flex-1 overflow-y-auto pb-4">
 <div v-for="x in orderPickList" :key="x.key" @click="orderPickSel=x" class="flex items-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="orderPickSel&&orderPickSel.key===x.key?{background:'#EBF1FD'}:{background:'#fff'}" style="border-bottom:1px solid #EDEDED">
@@ -3691,7 +3691,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="px-5 pt-2 pb-1 shrink-0 flex items-center justify-center relative">
 <span class="block text-center text-[17px] font-semibold">编辑赠送余额</span>
-<button @click="uWalletSheet=null" type="button" aria-label="关闭" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
+<button @click="uWalletSheet=null" type="button" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
 </div>
 <template v-if="uWalletSheet==='adjust'">
 <div class="px-5 py-3 flex-1 overflow-y-auto hid">
@@ -3739,12 +3739,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div class="w-9 h-[5px] mx-auto mt-2.5 mb-1" style="background:#CCC;border-radius:3px"></div>
 <div class="px-5 pt-2 pb-1 shrink-0 flex items-center justify-center relative">
 <span class="block text-center text-[17px] font-semibold">{{ uBindIsBatt?'绑定电池':'绑定车辆' }}</span>
-<button @click="closeUBind" type="button" aria-label="关闭" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
+<button @click="closeUBind" type="button" class="appearance-none border-0 bg-transparent p-0 absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center cursor-pointer active:opacity-60 text-[#999]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-[18px] h-[18px]"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></button>
 </div>
 <div class="relative mx-5 mb-3 rounded-full flex items-center px-4 py-2.5 gap-2 shrink-0" style="background:#F6F7F9;border:1px solid #E5E5E5">
 <span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
 <input v-model="uBindQ" type="text" :placeholder="uBindIsBatt?'搜索电池编号':'搜索车架号'" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 pr-8 placeholder:text-[#999]">
-<button @click="uBindScan" type="button" aria-label="扫码" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button>
+<button @click="uBindScan" type="button" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button>
 </div>
 <div class="flex-1 overflow-y-auto pb-4">
 <div v-for="x in uBindList" :key="x.key" @click="uBindSel=x" class="flex items-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="uBindSel&&uBindSel.key===x.key?{background:'#EBF1FD'}:{background:'#fff'}" style="border-bottom:1px solid #EDEDED">

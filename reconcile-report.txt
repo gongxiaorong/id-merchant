@@ -1,0 +1,1177 @@
+对照表键总数: 733
+
+总覆盖率: 81.9%  (786/960)
+==== A 模板含插值文案 {{ }} ====
+  候选 107  已覆盖 92  遗漏 15  覆盖率 86.0%
+    - [L?] 主 % / 副  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1759] 份
+    - [L624] 共
+    - [L1224] 块
+    - [L638] 展开全部  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L?] 暂无空闲 可选  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L2698] 更新时间  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3530] 最新版本 V  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3144] 服务时段  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L624] 条
+    - [L3414] 正常
+    - [L2012] 确认执行退款？合计退款  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1847] 赠送
+    - [L478] 辆
+    - [L2534] 重新获取
+
+==== B 模板静态文案 ====
+  候选 307  已覆盖 284  遗漏 23  覆盖率 92.5%
+    - [L396] 《用户隐私政策》  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3657] 余额流水  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L495] 充值订单  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3277] 到期前
+    - [L740] 北京市朝阳区工体北路附近
+    - [L3279] 天自动续租  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3217] 天，自动变更为「已违约」状态  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3209] 天，自动变更为「待还车」状态  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L530] 当前账号没有首页任何功能权限，请联系管理员开通  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1328] 暂无订单  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1693] 查看费用明细  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3286] 次后关闭订单自动续租  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3420] 注册时间  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3243] 类型
+    - [L3644] 解绑电池  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3624] 解绑车辆  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3204] 订单状态流转  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L2270] 请输入备注...  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1847] 赠送
+    - [L3284] 连续扣款失败
+    - [L1980] 退款来源  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1846] 金额
+    - [L1798] 钱包
+
+==== C toast / 提示消息 ====
+  候选 56  已覆盖 49  遗漏 7  覆盖率 87.5%
+    - [L5355] 更新完成！已升级至 V  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4831] 确认支付成功  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4831] 订单已结束，押金退款中  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4887] 请填写退款金额  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5859] 请输入退款金额  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5982] 账号状态已  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5860] 退款申请已提交  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+
+==== D JS 动态文案 ${} ====
+  候选 0  已覆盖 0  遗漏 0  覆盖率 100.0%
+
+==== E JS 静态字面量 ====
+  候选 490  已覆盖 361  遗漏 129  覆盖率 73.7%
+    - [L3843] 15分钟  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3836] 1小时35分  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3846] 1小时55分  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3832] 25分钟  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3853] 2小时20分  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3827] 2小时33分  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5979] popstate(物理返回
+    - [L3836] 上海市浦东新区张江路
+    - [L5109] 主订单  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L6016] 乐迪E10
+    - [L6013] 乐迪E8
+    - [L6087] 乐迪E8+星恒锂电48V24Ah
+    - [L6046] 乐迪E8+超威黑金
+    - [L6011] 乐迪SAA
+    - [L6043] 乐迪SAA+天能72V20Ah
+    - [L4036] 京A·88888
+    - [L4037] 京B·12345
+    - [L4038] 京C·66666
+    - [L4039] 京D·77777
+    - [L5349] 优化车辆定位精度\n- 新增版本检测功能\n- 修复已知问题  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4156] 停车场
+    - [L495] 充值订单  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4379] 充值订单列表  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4395] 充值订单详情  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4396] 充值退款  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4396] 充值退款记录  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4361] 充值配置列表  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4158] 写字楼
+    - [L4036] 北京市朝阳区三里屯
+    - [L740] 北京市朝阳区工体北路
+    - [L740] 北京市朝阳区工体北路附近
+    - [L3827] 北京市朝阳区望京街道
+    - [L3827] 北京市朝阳区望京街道附近
+    - [L4038] 北京市西城区西单
+    - [L3859] 南京市鼓楼区中山北路  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5005] 原押金  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5005] 原租金  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5047] 各渠道合计  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5634] 吴九
+    - [L4336] 告警列表
+    - [L2793] 周
+    - [L5633] 周八
+    - [L4155] 商业楼宇
+    - [L3209] 天
+    - [L6072] 天河店
+    - [L4529] 天能锂电 48V20Ah
+    - [L4725] 天能锂电 60V32Ah
+    - [L4527] 天能锂电 72V20Ah
+    - [L6029] 天能锂电48V20Ah
+    - [L6036] 天能锂电48V24Ah
+    - [L6034] 天能锂电60V32Ah
+    - [L6027] 天能锂电72V20Ah
+    - [L2751] 套餐
+    - [L5632] 孙七
+    - [L5856] 客户要求退款  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3827] 小时  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5970] 层
+    - [L5940] 已到首页，边界兜底，禁止继续返回  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L2593] 已绑定  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5873] 已退款  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3843] 广州市天河区体育西路
+    - [L5628] 张三
+    - [L5048] 当前减少
+    - [L5047] 当前增加
+    - [L3832] 成都市武侯区天府大道中段  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5082] 手动·已支付  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5082] 手动·待支付  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4617] 换电柜
+    - [L5005] 改价后租金  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5082] 无续租
+    - [L4725] 星恒锂电 48V24Ah
+    - [L5355] 更新完成！已升级至 V  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L6002] 月租×  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L6070] 望京店
+    - [L5924] 未命名
+    - [L5629] 李四
+    - [L3853] 杭州市西湖区文三路
+    - [L598] 次触发  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3414] 正常
+    - [L3822] 测试门店
+    - [L3849] 深圳市南山区科技园
+    - [L5970] 清空
+    - [L5630] 王五
+    - [L4283] 电池已解绑  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4154] 监管机构
+    - [L4278] 确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4546] 确认将该电池与用户解绑？解绑后将变为空闲电池，可重新绑定用户  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4278] 确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4260] 确认将该车辆与用户解绑？解绑后将变为空闲车辆，可重新绑定用户  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4829] 确认执行退款？合计退款 Rp  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4831] 确认支付成功  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4829] 确认结束订单  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4829] 确认结束订单？合计退款 Rp  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3933] 第
+    - [L5490] 简体中文  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5490] 繁體中文（中國香港  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5082] 自动·已支付  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3644] 解绑电池  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L3624] 解绑车辆  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4831] 订单已结束，押金退款中  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5680] 订单消费  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4887] 请填写退款金额  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L306] 请输入
+    - [L5859] 请输入退款金额  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5982] 账号状态已  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1847] 赠送
+    - [L5631] 赵六
+    - [L4725] 超威黑金 60V23Ah
+    - [L4528] 超威黑金 72V32Ah
+    - [L6030] 超威黑金60V23Ah
+    - [L6028] 超威黑金72V32Ah
+    - [L4283] 车辆已解绑  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L4345] 车辆订单  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5860] 退款申请已提交  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L5635] 郑十
+    - [L5929] 重复入栈已忽略  <PARTIAL: 含表内已有值，确认是否被误判为已覆盖>
+    - [L1798] 钱包
+    - [L6071] 陆家嘴店
+    - [L4037] 雅迪 City Cruise
+    - [L4036] 雅迪 E-Bike Pro
+    - [L4038] 雅迪 Mountain X
+    - [L6014] 雅迪DE2
+    - [L6077] 雅迪乐跑版
+    - [L6002] 雅迪冠能3 S9 MAX
+    - [L6044] 雅迪冠能3+超威黑金
+    - [L6075] 雅迪冠能Q7
+    - [L6076] 雅迪小钢炮
+    - [L5924] 页面栈
+    - [L4157] 餐饮门店
+
+==== 数据字段值（DATA_field · 43 条，默认排除，抽查误判）====
+    - 上海区域专线
+    - 上海市浦东新区陆家嘴环路166号
+    - 充值活动返赠
+    - 全国统一客服热线
+    - 北京区域专线
+    - 北京市朝阳区望京SOHO T1
+    - 协助店长管理
+    - 原租金
+    - 商户优惠减免补偿
+    - 天能锂电 48V20Ah
+    - 天能锂电 72V20Ah
+    - 客户要求调高租金并调整渠道
+    - 常规定制套餐
+    - 广州区域专线
+    - 广州市天河区天河路385号
+    - 提前还车，租金差额退还
+    - 新用户注册赠送
+    - 新用户首充优惠
+    - 日常运营
+    - 测试账号
+    - 测试门店
+    - 热销组合套餐，含车辆与电池
+    - 用户主动申请押金退还
+    - 用户取消订单
+    - 自动续租扣减 - 订单 YD202608260013 第 1 期
+    … 其余 18 条（store/addr/remark/model 等字段值，属数据不入表）
+
+==== F 动态生成点展开（一处源码 -> N 条，逐条建键）====
+  [组 1] @L5079 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'AUTO'?'自动续租':'续租单'
+      1. 自动续租   <OK key=renewal.auto>
+      2. 续租单   <OK key=renewal.order>
+
+  [组 2] @L4420 JS 三元 · 分支 4 条 | 需翻译 4 条 | 已覆盖 4 | 待补 0
+      expr: 'aAdd'?'新增账号':sub==='aEdit'?'编辑账号':sub==='aDetail'?'账号详情':'账号管理'
+      1. 新增账号   <OK key=profile.accountAdd>
+      2. 编辑账号   <OK key=profile.accountEdit>
+      3. 账号详情   <OK key=profile.accountDetail>
+      4. 账号管理   <OK key=profile.menuAccount>
+
+  [组 3] @L4420 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'aDetail'?'账号详情':'账号管理'
+      1. 账号详情   <OK key=profile.accountDetail>
+      2. 账号管理   <OK key=profile.menuAccount>
+
+  [组 4] @L4420 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: 'aEdit'?'编辑账号':sub==='aDetail'?'账号详情':'账号管理'
+      1. 编辑账号   <OK key=profile.accountEdit>
+      2. 账号详情   <OK key=profile.accountDetail>
+      3. 账号管理   <OK key=profile.menuAccount>
+
+  [组 5] @L5612 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: 'acc'?'账号已复制':tp==='pwd'?'密码已复制':'账号和密码已复制'
+      1. 账号已复制   <OK key=profile.accountCopied>
+      2. 密码已复制   <OK key=profile.passwordCopied>
+      3. 账号和密码已复制   <OK key=profile.bothCopied>
+
+  [组 6] @L1169 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'battNo'?'请输入电池编号':'请输入车架号'
+      1. 请输入电池编号   <OK key=vehicles.battInputPlaceholder>
+      2. 请输入车架号   <OK key=vehicles.addVinPlaceholder>
+
+  [组 7] @L4429 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'bmEdit'?'编辑电池型号':'电池型号管理'
+      1. 编辑电池型号   <OK key=vehicles.batteryModelEdit>
+      2. 电池型号管理   <OK key=vehicles.batteryModelManage>
+
+  [组 8] @L4433 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: 'csEdit'?(csIdx.value===-1?'新增客服':'编辑客服'):'客服信息'
+      1. 新增客服   <OK key=profile.csAdd>
+      2. 编辑客服   <OK key=profile.csEdit>
+      3. 客服信息   <OK key=profile.csInfo>
+
+  [组 9] @L4442 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'info'?'个人信息':'我的'
+      1. 个人信息   <OK key=profile.personalInfo>
+      2. 我的   <OK key=tab.profile>
+
+  [组 10] @L4442 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: 'lang'?'系统设置':ov==='info'?'个人信息':'我的'
+      1. 系统设置   <OK key=profile.settings>
+      2. 个人信息   <OK key=profile.personalInfo>
+      3. 我的   <OK key=tab.profile>
+
+  [组 11] @L4545 JS 三元 · 分支 4 条 | 需翻译 4 条 | 已覆盖 4 | 待补 0
+      expr: 'lost'?(curBatt.value&&curBatt.value.lost?'解除报失':'电池报失'):(battDischarge.value?'禁止放电':'允许放电')
+      1. 解除报失   <OK key=orders.reportUnlost>
+      2. 电池报失   <OK key=battery.reportLost>
+      3. 禁止放电   <OK key=vehicles.batteryDisableDischarge>
+      4. 允许放电   <OK key=vehicles.batteryAllowDischarge>
+
+  [组 12] @L4546 JS 三元 · 分支 4 条 | 需翻译 4 条 | 已覆盖 4 | 待补 0
+      expr: 'lost'?(curBatt.value&&curBatt.value.lost?'解除报失后电池将被解锁，恢复放电':'报失后电池将被锁定，无法正常放电'):(battDischarge.value?'禁止后设备将无法放电':'允许后设备可正常放电')
+      1. 解除报失后电池将被解锁，恢复放电   <OK key=battery.lostUnlockHint>
+      2. 报失后电池将被锁定，无法正常放电   <OK key=battery.lostLockHint>
+      3. 禁止后设备将无法放电   <OK key=battery.dischargeForbid>
+      4. 允许后设备可正常放电   <OK key=battery.dischargeAllow>
+
+  [组 13] @L4427 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'mEdit'?'编辑车型':'车型管理'
+      1. 编辑车型   <OK key=profile.modelEdit>
+      2. 车型管理   <OK key=profile.menuModel>
+
+  [组 14] @L4390 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'map'?'车辆地图':'车辆列表'
+      1. 车辆地图   <OK key=home.vehicleMap>
+      2. 车辆列表   <OK key=vehicle.list>
+
+  [组 15] @L5124 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: 'offline' ? '线下支付' : '2C2P'
+      1. 线下支付   <OK key=orders.confirmPay>
+      ⊘ 数据分支 1 条，不翻译: '2C2P'
+
+  [组 16] @L4424 JS 三元 · 分支 4 条 | 需翻译 4 条 | 已覆盖 4 | 待补 0
+      expr: 'pAdd'?'新增职位':sub==='pEdit'?'编辑职位':sub==='pDetail'?'职位详情':'职位管理'
+      1. 新增职位   <OK key=profile.positionAdd>
+      2. 编辑职位   <OK key=profile.positionEdit>
+      3. 职位详情   <OK key=profile.positionDetail>
+      4. 职位管理   <OK key=profile.menuPosition>
+
+  [组 17] @L4424 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'pDetail'?'职位详情':'职位管理'
+      1. 职位详情   <OK key=profile.positionDetail>
+      2. 职位管理   <OK key=profile.menuPosition>
+
+  [组 18] @L4424 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: 'pEdit'?'编辑职位':sub==='pDetail'?'职位详情':'职位管理'
+      1. 编辑职位   <OK key=profile.positionEdit>
+      2. 职位详情   <OK key=profile.positionDetail>
+      3. 职位管理   <OK key=profile.menuPosition>
+
+  [组 19] @L5767 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'pEdit'?'职位已保存':'职位新增成功'
+      1. 职位已保存   <OK key=profile.positionSaved>
+      2. 职位新增成功   <OK key=profile.positionAddSuccess>
+
+  [组 20] @L4431 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'pkgAdd'?'新增套餐':'套餐管理'
+      1. 新增套餐   <OK key=profile.packageAdd>
+      2. 套餐管理   <OK key=package.manage>
+
+  [组 21] @L4431 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: 'pkgEdit'?'编辑套餐':sub==='pkgAdd'?'新增套餐':'套餐管理'
+      1. 编辑套餐   <OK key=profile.packageEdit>
+      2. 新增套餐   <OK key=profile.packageAdd>
+      3. 套餐管理   <OK key=package.manage>
+
+  [组 22] @L5612 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'pwd'?'密码已复制':'账号和密码已复制'
+      1. 密码已复制   <OK key=profile.passwordCopied>
+      2. 账号和密码已复制   <OK key=profile.bothCopied>
+
+  [组 23] @L4436 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: 'rechargeEdit'?(rechargeIdx.value===-1?'新增充值配置':'编辑充值配置'):'充值配置'
+      1. 新增充值配置   <OK key=wallet.rechargeConfigAdd>
+      2. 编辑充值配置   <OK key=wallet.rechargeConfigEdit>
+      3. 充值配置   <OK key=wallet.rechargeConfig>
+
+  [组 24] @L4828 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'return'?'结束订单':'订单退款'
+      1. 结束订单   <OK key=orders.endOrder>
+      2. 订单退款   <OK key=orders.opRefund>
+
+  [组 25] @L4829 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 0 | 待补 3
+      expr: 'return'?(refundTotal.value>0?'确认结束订单？合计退款 Rp' + (refundTotal.value.toFixed(2)):'确认结束订单？'):'确认执行退款？合计退款 Rp' + (refundTotal.value.t
+      1. 确认结束订单？合计退款 Rp   <MISS 需建键>
+      2. 确认结束订单   <MISS 需建键>
+      3. 确认执行退款？合计退款 Rp   <MISS 需建键>
+
+  [组 26] @L4440 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: 'userDetail'?'用户详情':'用户管理'
+      1. 用户详情   <OK key=profile.userDetail>
+      2. 用户管理   <OK key=profile.userManage>
+
+  [组 27] @L4278 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 0 | 待补 2
+      expr: 'vehicle'?'确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆':'确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池'
+      1. 确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆   <MISS 需建键>
+      2. 确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池   <MISS 需建键>
+
+  [组 28] @L4277 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 0 | 待补 2
+      expr: 'vehicle'?'解绑车辆':'解绑电池'
+      1. 解绑车辆   <MISS 需建键>
+      2. 解绑电池   <MISS 需建键>
+
+  [组 29] @L4283 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 0 | 待补 2
+      expr: 'vehicle'?'车辆已解绑':'电池已解绑'
+      1. 车辆已解绑   <MISS 需建键>
+      2. 电池已解绑   <MISS 需建键>
+
+  [组 30] @L2965 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: '启用'?'禁用':'启用'
+      1. 禁用   <OK key=profile.statusDisabled>
+      2. 启用   <OK key=profile.statusEnabled>
+
+  [组 31] @L4953 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: (total>=orig-1e-9)?'全部退款':'部分退款'
+      1. 全部退款   <OK key=orders.payFullRefund>
+      2. 部分退款   <OK key=orders.payPartialRefund>
+
+  [组 32] @L5830 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: -1?'充值配置已新增成功':'充值配置已编辑成功'
+      1. 充值配置已新增成功   <OK key=wallet.rechargeConfigAddSuccess>
+      2. 充值配置已编辑成功   <OK key=wallet.rechargeConfigEditSuccess>
+
+  [组 33] @L5774 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: -1?'客服信息已新增成功':'客服信息已编辑成功'
+      1. 客服信息已新增成功   <OK key=profile.csAddSuccess>
+      2. 客服信息已编辑成功   <OK key=profile.csEditSuccess>
+
+  [组 34] @L3355 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: -1?'新增充值配置':'编辑充值配置'
+      1. 新增充值配置   <OK key=wallet.rechargeConfigAdd>
+      2. 编辑充值配置   <OK key=wallet.rechargeConfigEdit>
+
+  [组 35] @L3162 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: -1?'新增客服':'编辑客服'
+      1. 新增客服   <OK key=profile.csAdd>
+      2. 编辑客服   <OK key=profile.csEdit>
+
+  [组 36] @L5118 JS 三元 · 分支 3 条 | 需翻译 2 条 | 已覆盖 1 | 待补 1
+      expr: 0?'主订单':(feeRows.value.length>2?('续租单'+i):'续租单')
+      1. 主订单   <MISS 需建键>
+      2. 续租单   <OK key=renewal.order>
+
+  [组 37] @L3823 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 0 | 待补 1
+      expr: 500',trend:null},{label:'进行中',value:'18',trend:null},{label:'待归还',value:'8',trend:null}]);
+ const vehStats=computed(()=>[{label:'在
+      1. const parts=a.split(/[市区县]/).filter(Boolean); return parts.length?parts[parts.length-1]:a; }); const locDistM=computed(()=>{ if(locLoading.value)retu   <MISS 需建键>
+      ⊘ 数据分支 1 条，不翻译: ') + ' 次触发';
+  if(ev.kind==='claimed')return '开始处理';
+  if(ev.kind==='ignored')return ev.reason?'已忽略 · ' + (ignoreReasonLabel(ev.reason)):'已忽略';
+  if(ev.kind==='reopened')return '重新打开为待处理';
+  if(ev.kind==='closed')return '已关闭 · ' + (closeSourceLabel(ev.source)||'—');
+  return ev.kind||'—';
+}
+function timelineDotClass(ev){
+  if(!ev)return 'bg-[#CCC]';
+  if(ev.kind==='closed')return ev.source==='auto'?'bg-[#17A34A]':'bg-[var(--accent)]';
+  if(ev.kind==='claimed'||ev.kind==='reopened')return 'bg-[var(--accent)]';
+  if(ev.kind==='ignored')return 'bg-[#9CA3AF]';
+  if(ev.kind==='triggered'||ev.kind==='opened')return 'bg-[#6B6B6B]';
+  return 'bg-[#CCC]';
+}
+function timelineDescList(a){
+  const list=(a&&a.timeline)?a.timeline.slice():[];
+  return list.slice().reverse();
+}
+const alertTimelineExpanded=ref(false);
+const ALERT_TL_PREVIEW=3;
+const curAlertTimeline=computed(()=>{
+  if(!curAlert.value)return [];
+  const all=timelineDescList(curAlert.value);
+  if(alertTimelineExpanded.value||all.length<=ALERT_TL_PREVIEW)return all;
+  return all.slice(0,ALERT_TL_PREVIEW);
+});
+const curAlertTimelineHasMore=computed(()=>{
+  if(!curAlert.value||!curAlert.value.timeline)return false;
+  return curAlert.value.timeline.length>ALERT_TL_PREVIEW&&!alertTimelineExpanded.value;
+});
+function findOpenAlert(vin,type){return allAlerts.value.find(a=>a.vin===vin&&a.type===type&&OPEN_ALERT_STS.includes(a.status))}
+ 
+function ingestAlertEvent(vin,type,payload){
+  const open=findOpenAlert(vin,type);
+  if(open){
+    open.time=payload.time||nowAlertTs();
+    open.count=(open.count||1)+1;
+    if(payload.location)open.location=payload.location;
+    if(payload.lv)open.lv=payload.lv;
+    if(payload.icon)open.icon=payload.icon;
+    if(payload.orderId!==undefined)open.orderId=payload.orderId;
+    pushTimeline(open,{at:open.time,kind:'triggered',n:open.count});
+    return open;
+  }
+  const ts=payload.time||nowAlertTs();
+  const row={id:Date.now(),vin,type,lv:payload.lv||'p1',status:'pending',time:ts,firstTime:ts,duration:payload.duration||'—',count:1,location:payload.location||'',orderId:payload.orderId||'',icon:payload.icon||'alert-triangle',ignoreReason:'',closeSource:'',closedTime:'',timeline:[]};
+  pushTimeline(row,{at:ts,kind:'opened'});
+  allAlerts.value.unshift(row);
+  return row;
+}
+function closeAlertById(id,source){
+  const i=allAlerts.value.findIndex(x=>x.id===id);
+  if(i<0)return null;
+  const a=allAlerts.value[i];
+  if(a.status==='closed')return a;
+  a.status='closed';
+  a.closeSource=source;
+  a.closedTime=nowAlertTs();
+  a.duration=a.duration&&a.duration!=='—'?a.duration:'—';
+  pushTimeline(a,{at:a.closedTime,kind:'closed',source});
+  return a;
+}
+var alertPtrInit=false;
+function homeOpen(id){if(id==='alerts'&&!can('alarm.list')){deny();return}navOpen();if(id==='alerts'){alertStatus.value='pending';alertType.value=''}homeOV.value=id;if(id==='alerts'){triggerListLoading('alerts');if(!alertPtrInit){nextTick(()=>{if(document.getElementById('sc-alert')){initPullToRefresh('sc-alert','ptr-alert',refreshAlert);alertPtrInit=true}})}}}
+function homeClose(){alertMod.value=null;navBack()}
+ 
+function openAlertDetail(a){if(!can('alarm.detail')){deny();return}navOpen();curAlert.value=a;alertMod.value=null;alertTimelineExpanded.value=false}
+function closeAlertDetail(){alertMod.value=null;navBack()}
+function startProcessAlert(){if(!can('alarm.handle')){deny();return}if(!curAlert.value||curAlert.value.status!=='pending')return;const i=allAlerts.value.findIndex(x=>x.id===curAlert.value.id);if(i>=0){allAlerts.value[i].status='processing';allAlerts.value[i].closeSource='';allAlerts.value[i].closedTime='';pushTimeline(allAlerts.value[i],{kind:'claimed'});curAlert.value=allAlerts.value[i]}toast('已开始处理','success')}
+function resolveAlert(){if(!can('alarm.handle')){deny();return}if(!curAlert.value||curAlert.value.status!=='processing')return;const a=closeAlertById(curAlert.value.id,'manual');if(a){a.ignoreReason='';curAlert.value=a}toast('已关闭','success')}
+function confirmIgnoreAlert(){if(!can('alarm.ignore')){deny();return}if(!curAlert.value||!OPEN_ALERT_STS.includes(curAlert.value.status))return;const i=allAlerts.value.findIndex(x=>x.id===curAlert.value.id);if(i>=0){allAlerts.value[i].status='ignored';allAlerts.value[i].ignoreReason=ignoreReasonPick.value;allAlerts.value[i].closeSource='';allAlerts.value[i].closedTime='';pushTimeline(allAlerts.value[i],{kind:'ignored',reason:ignoreReasonPick.value});curAlert.value=allAlerts.value[i]}alertMod.value=null}
+function reopenAlert(){if(!curAlert.value||curAlert.value.status!=='ignored')return;const i=allAlerts.value.findIndex(x=>x.id===curAlert.value.id);if(i>=0){allAlerts.value[i].status='pending';allAlerts.value[i].ignoreReason='';allAlerts.value[i].closeSource='';allAlerts.value[i].closedTime='';pushTimeline(allAlerts.value[i],{kind:'reopened'});curAlert.value=allAlerts.value[i]}}
+function goAlertVehicle(){navOpen();if(!curAlert.value)return;if(!can('vehicle.detail')){deny();return}const vin=curAlert.value.vin;const v=vehicles.value.find(x=>x.vin===vin)||vehicles.value[0];homeOV.value=null;curAlert.value=null;alertMod.value=null;tab.value='vehicles';if(v)vehOpenDetail(v)}
+function doFindFromAlert(){if(!can('vehicle.command.find_car')){deny();return}toast('寻车指令已发送','success')}
+function demoSetAlertCloseSource(source){
+  if(!curAlert.value||(source!=='manual'&&source!=='auto'))return;
+  const i=allAlerts.value.findIndex(x=>x.id===curAlert.value.id);
+  if(i<0)return;
+  let a=allAlerts.value[i];
+  if(a.status!=='closed'){
+    a=closeAlertById(a.id,source);
+    if(a)a.ignoreReason='';
+  }else if(a.closeSource===source){
+    return;
+  }else{
+    a.closeSource=source;
+    a.closedTime=nowAlertTs();
+    const tl=a.timeline||[];
+    const last=tl.filter(e=>e.kind==='closed').pop();
+    if(last){last.source=source;last.at=a.closedTime}
+    else pushTimeline(a,{at:a.closedTime,kind:'closed',source});
+  }
+  if(a)curAlert.value=a;
+}
+
+
+ 
+const vehOV=ref(null),vehMod=ref(null),vehShowModelSheet=ref(false),vehShowFS=ref(false);
+const vehRefreshing=ref(false);
+const locked=ref(false),pressProgress=ref(0),lockJustDone=ref(false);
+let pressTimer=null,pressStart=0;const PRESS_DURATION=1500;
+const vehicles=ref([
+  {vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',account:'user001',phone:'+86 13800001111',email:'',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14
+
+  [组 38] @L5731 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 0 | 待补 1
+      expr: ? batteries.value.filter(idle).filter(function(b){return match(b.battNo)}).map(function(b){return{key:'b'+b.battNo,no:b.battNo,tit
+      1. 在线 离线   <MISS 需建键>
+
+  [组 39] @L4262 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: armed.value?'设防成功':'解除设防成功'
+      1. 设防成功   <OK key=vehicles.armSuccess>
+      2. 解除设防成功   <OK key=vehicles.disarmSuccess>
+
+  [组 40] @L4549 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: b.discharge?'已允许放电':'已禁止放电'
+      1. 已允许放电   <OK key=battery.dischargeAllowed>
+      2. 已禁止放电   <OK key=battery.dischargeForbidden>
+
+  [组 41] @L4549 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: b.lost?'报失成功':'解除报失成功'
+      1. 报失成功   <OK key=orders.lostSuccess>
+      2. 解除报失成功   <OK key=orders.unlostSuccess>
+
+  [组 42] @L1204 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: b.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 43] @L4546 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: battDischarge.value?'禁止后设备将无法放电':'允许后设备可正常放电'
+      1. 禁止后设备将无法放电   <OK key=battery.dischargeForbid>
+      2. 允许后设备可正常放电   <OK key=battery.dischargeAllow>
+
+  [组 44] @L4545 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: battDischarge.value?'禁止放电':'允许放电'
+      1. 禁止放电   <OK key=vehicles.batteryDisableDischarge>
+      2. 允许放电   <OK key=vehicles.batteryAllowDischarge>
+
+  [组 45] @L4545 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: curBatt.value&&curBatt.value.lost?'解除报失':'电池报失'
+      1. 解除报失   <OK key=orders.reportUnlost>
+      2. 电池报失   <OK key=battery.reportLost>
+
+  [组 46] @L4546 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: curBatt.value&&curBatt.value.lost?'解除报失后电池将被解锁，恢复放电':'报失后电池将被锁定，无法正常放电'
+      1. 解除报失后电池将被解锁，恢复放电   <OK key=battery.lostUnlockHint>
+      2. 报失后电池将被锁定，无法正常放电   <OK key=battery.lostLockHint>
+
+  [组 47] @L5118 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: feeRows.value.length>2?('续租单'+i):'续租单'
+      1. 续租单   <OK key=renewal.order>
+
+  [组 48] @L5399 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: hasEmail.value?'邮箱替换成功':'邮箱绑定成功'
+      1. 邮箱替换成功   <OK key=profile.emailReplaced>
+      2. 邮箱绑定成功   <OK key=profile.emailBoundSuccess>
+
+  [组 49] @L5378 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: hasPhone.value?'手机号替换成功':'手机号绑定成功'
+      1. 手机号替换成功   <OK key=profile.phoneReplaced>
+      2. 手机号绑定成功   <OK key=profile.phoneBoundSuccess>
+
+  [组 50] @L3935 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: if(ev.kind==='ignored')return ev.reason?'已忽略 · ' + (ignoreReasonLabel(ev.reason)):'已忽略'
+      1. 已忽略   <OK key=alert.statusIgnored>
+
+  [组 51] @L5913 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用后该账号将无法登录，确定禁用？':'确定重新启用该账号？启用后可正常登录。'
+      1. 禁用后该账号将无法登录，确定禁用   <OK key=profile.confirmDisableDesc>
+      2. 确定重新启用该账号？启用后可正常登录   <OK key=profile.confirmEnableDesc>
+
+  [组 52] @L5912 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用账号':'启用账号'
+      1. 禁用账号   <OK key=profile.confirmDisable>
+      2. 启用账号   <OK key=profile.confirmEnable>
+
+  [组 53] @L4260 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(vehMod.value==='arm')return armed.value?'确定对车辆解除设防？':'确定对车辆设防？'
+      1. 确定对车辆解除设防   <OK key=vehicles.confirmDisarmDesc>
+      2. 确定对车辆设防   <OK key=vehicles.confirmArmDesc>
+
+  [组 54] @L4259 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(vehMod.value==='arm')return armed.value?'解除设防':'车辆设防'
+      1. 解除设防   <OK key=vehicles.actionDisarm>
+      2. 车辆设防   <OK key=vehicles.confirmArm>
+
+  [组 55] @L4259 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(vehMod.value==='lost')return lost.value?'解除报失':'车辆报失'
+      1. 解除报失   <OK key=orders.reportUnlost>
+      2. 车辆报失   <OK key=orders.reportLost>
+
+  [组 56] @L4260 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(vehMod.value==='lost')return lost.value?'解除报失后车辆电机将被解锁，恢复骑行':'报失后车辆电机将被锁定，无法正常骑行'
+      1. 解除报失后车辆电机将被解锁，恢复骑行   <OK key=orders.confirmUnlostDesc>
+      2. 报失后车辆电机将被锁定，无法正常骑行   <OK key=orders.confirmLostDesc>
+
+  [组 57] @L4260 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(vehMod.value==='motorLock')return motorLocked.value?'电机解锁后车辆将恢复骑行':'电机锁定后车辆将无法骑行'
+      1. 电机解锁后车辆将恢复骑行   <OK key=vehicles.motorUnlockHint>
+      2. 电机锁定后车辆将无法骑行   <OK key=vehicles.motorLockHint>
+
+  [组 58] @L4259 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: if(vehMod.value==='motorLock')return motorLocked.value?'解锁电机':'锁电机'
+      1. 解锁电机   <OK key=vehicles.batteryUnlockMotor>
+      2. 锁电机   <OK key=vehicles.batteryLockMotor>
+
+  [组 59] @L4253 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: locked.value?'已开锁':'已关锁'
+      1. 已开锁   <OK key=vehicles.lockToastOpen>
+      2. 已关锁   <OK key=vehicles.lockToastClose>
+
+  [组 60] @L4262 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: lost.value?'报失成功':'解除报失成功'
+      1. 报失成功   <OK key=orders.lostSuccess>
+      2. 解除报失成功   <OK key=orders.unlostSuccess>
+
+  [组 61] @L4262 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: motorLocked.value?'锁电机成功':'解锁电机成功'
+      1. 锁电机成功   <OK key=vehicles.motorLockedToast>
+      2. 解锁电机成功   <OK key=vehicles.motorUnlockedToast>
+
+  [组 62] @L5991 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: off>40?'释放刷新':'下拉刷新'
+      1. 释放刷新   <OK key=common.releaseToRefresh>
+      2. 下拉刷新   <OK key=common.pullToRefresh>
+
+  [组 63] @L4840 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: orderPickIsBatt.value?'电池':'车辆'
+      1. 电池   <OK key=tab.battery>
+      2. 车辆   <OK key=tab.vehicles>
+
+  [组 64] @L4829 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 0 | 待补 2
+      expr: refundTotal.value>0?'确认结束订单？合计退款 Rp' + (refundTotal.value.toFixed(2)):'确认结束订单？'
+      1. 确认结束订单？合计退款 Rp   <MISS 需建键>
+      2. 确认结束订单   <MISS 需建键>
+
+  [组 65] @L5079 JS 三元 · 分支 3 条 | 需翻译 3 条 | 已覆盖 3 | 待补 0
+      expr: return (t==='AGENT'||t==='USER_APPLY')?'手动续租':(t==='AUTO'?'自动续租':'续租单')
+      1. 手动续租   <OK key=renewal.manual>
+      2. 自动续租   <OK key=renewal.auto>
+      3. 续租单   <OK key=renewal.order>
+
+  [组 66] @L5699 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: return demoListEmpty.value?[]:uFlowAll.filter(function(r){return String(r.ledgerNo).charAt(0)===prefix&&(uFlowTxn.value==='全部'||r.
+      1. 全部   <OK key=common.all>
+      ⊘ 数据分支 1 条，不翻译: []
+
+  [组 67] @L5487 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: return items.length?[{name:'常用功能',items}]:[]
+      1. 常用功能   <OK key=profile.commonFunctions>
+      ⊘ 数据分支 1 条，不翻译: []
+
+  [组 68] @L4836 JS 三元 · 分支 2 条 | 需翻译 1 条 | 已覆盖 0 | 待补 1
+      expr: return orderPickIsBatt.value?batteries.value.filter(idle).filter(function(b){return match(b.battNo)}).map(function(b){return{key:'
+      1. 在线 离线   <MISS 需建键>
+
+  [组 69] @L4519 JS 三元 · 分支 3 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: return ordersEntry.value?m[ordersEntry.value]||'车辆':'电池'
+      1. 车辆   <OK key=tab.vehicles>
+      2. 电池   <OK key=tab.battery>
+      ⊘ 数据分支 1 条，不翻译: m[ordersEntry.value]
+
+  [组 70] @L5745 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: status:sel.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 71] @L5668 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: status:v.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 72] @L5740 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: uBindIsBatt.value?'电池':'车辆'
+      1. 电池   <OK key=tab.battery>
+      2. 车辆   <OK key=tab.vehicles>
+
+  [组 73] @L703 JS 三元 · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: v.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 74] @L560 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 0 | 待补 1
+      expr: a.count>1?' · '+a.count+'次':''
+      1. 最近触发： 次   <MISS 需建键>
+      ⊘ 数据分支 1 条，不翻译: ''
+
+  [组 75] @L2965 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: a.status==='启用'?'禁用':'启用'
+      1. 禁用   <OK key=profile.statusDisabled>
+      2. 启用   <OK key=profile.statusEnabled>
+
+  [组 76] @L2971 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: aQ ? '未找到匹配的账号' : '暂无账号'
+      1. 未找到匹配的账号   <OK key=profile.noMatchingAccounts>
+      2. 暂无账号   <OK key=profile.noAccounts>
+
+  [组 77] @L1062 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: addModel||'选择型号'
+      1. 选择型号   <OK key=vehicles.selectModelType>
+      ⊘ 数据分支 1 条，不翻译: addModel
+
+  [组 78] @L830 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: armed?'解除设防':'设防'
+      1. 解除设防   <OK key=vehicles.actionDisarm>
+      2. 设防   <OK key=vehicles.actionArm>
+
+  [组 79] @L1204 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: b.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 80] @L1608 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: battAddModel||'选择电池型号'
+      1. 选择电池型号   <OK key=vehicles.batterySelectModel>
+      ⊘ 数据分支 1 条，不翻译: battAddModel
+
+  [组 81] @L1370 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: battDischarge?'当前允许放电，点击可禁止':'当前已禁止放电，点击可恢复'
+      1. 当前允许放电，点击可禁止   <OK key=battery.dischargeOnHint>
+      2. 当前已禁止放电，点击可恢复   <OK key=battery.dischargeOffHint>
+
+  [组 82] @L1369 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: battDischarge?'禁止放电':'允许放电'
+      1. 禁止放电   <OK key=vehicles.batteryDisableDischarge>
+      2. 允许放电   <OK key=vehicles.batteryAllowDischarge>
+
+  [组 83] @L1418 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: battEditModel||'选择电池型号'
+      1. 选择电池型号   <OK key=vehicles.batterySelectModel>
+      ⊘ 数据分支 1 条，不翻译: battEditModel
+
+  [组 84] @L1263 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: battMapSelectedBatt.location||'最后位置未知'
+      1. 最后位置未知   <OK key=vehicles.lastLocationUnknown>
+      ⊘ 数据分支 1 条，不翻译: battMapSelectedBatt.location
+
+  [组 85] @L1256 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: battMapSelectedBatt.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 86] @L1560 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: battTrackTimePicker==='start'?'选择起始时间':'选择结束时间'
+      1. 选择起始时间   <OK key=vehicles.selectStartTime>
+      2. 选择结束时间   <OK key=vehicles.selectEndTime>
+
+  [组 87] @L2648 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 1 | 待补 1
+      expr: beCd>0?'重新获取 (' + (beCd) + 's)':'获取验证码'
+      1. 重新获取   <MISS 需建键>
+      2. 获取验证码   <OK key=login.getCode>
+
+  [组 88] @L2743 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: bmQ ? '未找到匹配的电池型号' : '暂无电池型号'
+      1. 未找到匹配的电池型号   <OK key=vehicles.batteryNoMatchModel>
+      2. 暂无电池型号   <OK key=vehicles.batteryNoModel>
+
+  [组 89] @L2616 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 1 | 待补 1
+      expr: bpCd>0?'重新获取 (' + (bpCd) + 's)':'获取验证码'
+      1. 重新获取   <MISS 需建键>
+      2. 获取验证码   <OK key=login.getCode>
+
+  [组 90] @L2156 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: canEditDocs ? '点击下方按钮添加用户资料' : '当前状态仅支持查看'
+      1. 点击下方按钮添加用户资料   <OK key=orders.docAddEditMode>
+      2. 当前状态仅支持查看   <OK key=orders.docViewOnlyMode>
+
+  [组 91] @L3162 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: csIdx===-1?'新增客服':'编辑客服'
+      1. 新增客服   <OK key=profile.csAdd>
+      2. 编辑客服   <OK key=profile.csEdit>
+
+  [组 92] @L1374 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: curBatt.account || '未绑定用户'
+      1. 未绑定用户   <OK key=profile.unboundUser>
+      ⊘ 数据分支 1 条，不翻译: curBatt.account
+
+  [组 93] @L1357 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: curBatt.location || '最后位置未知'
+      1. 最后位置未知   <OK key=vehicles.lastLocationUnknown>
+      ⊘ 数据分支 1 条，不翻译: curBatt.location
+
+  [组 94] @L1381 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: curBatt.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 95] @L1768 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 1 | 待补 1
+      expr: curDocs.length ? curDocs.length+' 份' : '可上传身份证、驾驶证、合同等'
+      1. 份   <MISS 需建键>
+      2. 可上传身份证、驾驶证、合同等   <OK key=profile.docTypesHint>
+
+  [组 96] @L3570 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 0 | 待补 1
+      expr: du.status||'正常'
+      1. 正常   <MISS 需建键>
+      ⊘ 数据分支 1 条，不翻译: du.status
+
+  [组 97] @L839 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: dv.account || '未绑定用户'
+      1. 未绑定用户   <OK key=profile.unboundUser>
+      ⊘ 数据分支 1 条，不翻译: dv.account
+
+  [组 98] @L808 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: dv.location || '最后位置未知'
+      1. 最后位置未知   <OK key=vehicles.lastLocationUnknown>
+      ⊘ 数据分支 1 条，不翻译: dv.location
+
+  [组 99] @L843 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: dv.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 100] @L1038 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: editModel||'选择型号'
+      1. 选择型号   <OK key=vehicles.selectModelType>
+      ⊘ 数据分支 1 条，不翻译: editModel
+
+  [组 101] @L826 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: findLoading?'寻车中...':'寻车'
+      1. 寻车中...   <OK key=vehicles.findingVehicle>
+      2. 寻车   <OK key=vehicles.findVehicle>
+
+  [组 102] @L2837 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: fpk.batteryModel||'选择电池型号'
+      1. 选择电池型号   <OK key=vehicles.batterySelectModel>
+      ⊘ 数据分支 1 条，不翻译: fpk.batteryModel
+
+  [组 103] @L2831 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: fpk.vehicleModel||'选择车型'
+      1. 选择车型   <OK key=vehicles.selectModel>
+      ⊘ 数据分支 1 条，不翻译: fpk.vehicleModel
+
+  [组 104] @L2652 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: hasEmail?'确认替换':'绑定'
+      1. 确认替换   <OK key=profile.confirmReplaceBind>
+      2. 绑定   <OK key=profile.bind>
+
+  [组 105] @L2496 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: hasEmail?boundEmail:'未绑定'
+      1. 未绑定   <OK key=profile.notBound>
+      ⊘ 数据分支 1 条，不翻译: boundEmail
+
+  [组 106] @L2620 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: hasPhone?'确认替换':'绑定'
+      1. 确认替换   <OK key=profile.confirmReplaceBind>
+      2. 绑定   <OK key=profile.bind>
+
+  [组 107] @L2491 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: hasPhone?boundPhone:'未绑定'
+      1. 未绑定   <OK key=profile.notBound>
+      ⊘ 数据分支 1 条，不翻译: boundPhone
+
+  [组 108] @L2501 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: hasPwd?'修改密码':'设置密码'
+      1. 修改密码   <OK key=profile.changePassword>
+      2. 设置密码   <OK key=profile.setPassword>
+
+  [组 109] @L255 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: hmPicker==='start'?'开始时间':'结束时间'
+      1. 开始时间   <OK key=common.startTime>
+      2. 结束时间   <OK key=common.endTime>
+
+  [组 110] @L821 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: locked?'长按关锁':'长按开锁'
+      1. 长按关锁   <OK key=vehicles.pressToLock>
+      2. 长按开锁   <OK key=vehicles.pressToUnlock>
+
+  [组 111] @L330 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: loginCd>0?(loginCd+'s'):'获取验证码'
+      1. 获取验证码   <OK key=login.getCode>
+      ⊘ 数据分支 1 条，不翻译: loginCd+'s'
+
+  [组 112] @L2706 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: mQ ? '未找到匹配的车型' : '暂无车型'
+      1. 未找到匹配的车型   <OK key=profile.noMatchingModels>
+      2. 暂无车型   <OK key=profile.noModels>
+
+  [组 113] @L766 模板 mustache · 分支 2 条 | 需翻译 1 条 | 已覆盖 1 | 待补 0
+      expr: mapSelectedVeh.location||'最后位置未知'
+      1. 最后位置未知   <OK key=vehicles.lastLocationUnknown>
+      ⊘ 数据分支 1 条，不翻译: mapSelectedVeh.location
+
+  [组 114] @L758 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: mapSelectedVeh.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 115] @L834 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: motorLocked?'解锁电机':'锁电机'
+      1. 解锁电机   <OK key=vehicles.batteryUnlockMotor>
+      2. 锁电机   <OK key=vehicles.batteryLockMotor>
+
+  [组 116] @L2425 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: orderPickIsBatt?'电池':'车辆'
+      1. 暂无空闲电池可选   <OK key=orders.noIdleBattery>
+      2. 暂无空闲车辆可选   <OK key=orders.noIdleVehicle>
+
+  [组 117] @L2364 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: ordersDatePicker==='start'?'选择开始日期':'选择结束日期'
+      1. 选择开始日期   <OK key=orders.datePickerStart>
+      2. 选择结束日期   <OK key=orders.datePickerEnd>
+
+  [组 118] @L2428 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: ordersMod.indexOf('assign')===0?'确认绑定':'确认更换'
+      1. 确认绑定   <OK key=common.confirmBind>
+      2. 确认更换   <OK key=profile.confirmReplace>
+
+  [组 119] @L3077 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: pQ ? '未找到匹配的职位' : '暂无职位'
+      1. 未找到匹配的职位   <OK key=profile.noMatchingPositions>
+      2. 暂无职位   <OK key=profile.noPositions>
+
+  [组 120] @L2926 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: pkgPicker==='vehicle'?'选择车型':'选择电池型号'
+      1. 选择车型   <OK key=vehicles.selectModel>
+      2. 选择电池型号   <OK key=vehicles.batterySelectModel>
+
+  [组 121] @L3104 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: profileSub==='pAdd'?'新增职位':'编辑职位'
+      1. 新增职位   <OK key=profile.positionAdd>
+      2. 编辑职位   <OK key=profile.positionEdit>
+
+  [组 122] @L2534 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 1 | 待补 1
+      expr: pwdCd>0?'重新获取 (' + (pwdCd) + 's)':'获取验证码'
+      1. 重新获取   <MISS 需建键>
+      2. 获取验证码   <OK key=login.getCode>
+
+  [组 123] @L3334 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: r.status===1?'启用':'禁用'
+      1. 启用   <OK key=profile.statusEnabled>
+      2. 禁用   <OK key=profile.statusDisabled>
+
+  [组 124] @L3355 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: rechargeIdx===-1?'新增充值配置':'编辑充值配置'
+      1. 新增充值配置   <OK key=wallet.rechargeConfigAdd>
+      2. 编辑充值配置   <OK key=wallet.rechargeConfigEdit>
+
+  [组 125] @L2188 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: refundMode==='return'?'结束订单':'退款'
+      1. 结束订单   <OK key=orders.endOrder>
+      2. 退款   <OK key=orders.refund>
+
+  [组 126] @L1891 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: roDatePicker==='start'?'选择开始日期':'选择结束日期'
+      1. 选择开始日期   <OK key=orders.datePickerStart>
+      2. 选择结束日期   <OK key=orders.datePickerEnd>
+
+  [组 127] @L1168 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: scanTarget==='battNo'?'请输入电池铭牌上的电池编号':'请输入车辆铭牌上的车架号'
+      1. 请输入电池铭牌上的电池编号   <OK key=vehicles.battPlateHint>
+      2. 请输入车辆铭牌上的车架号   <OK key=vehicles.vinPlateHint>
+
+  [组 128] @L1167 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: scanTarget==='battNo'?'输入电池编号':'输入车辆编号'
+      1. 输入电池编号   <OK key=vehicles.batteryInputNo>
+      2. 输入车辆编号   <OK key=vehicles.inputVinNo>
+
+  [组 129] @L988 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: trackTimePicker==='start'?'选择起始时间':'选择结束时间'
+      1. 选择起始时间   <OK key=vehicles.selectStartTime>
+      2. 选择结束时间   <OK key=vehicles.selectEndTime>
+
+  [组 130] @L3761 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: uBindIsBatt?'电池':'车辆'
+      1. 暂无空闲电池可选   <OK key=orders.noIdleBattery>
+      2. 暂无空闲车辆可选   <OK key=orders.noIdleVehicle>
+
+  [组 131] @L3741 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: uBindIsBatt?'绑定电池':'绑定车辆'
+      1. 绑定电池   <OK key=battery.bind>
+      2. 绑定车辆   <OK key=orders.opAssignVehicle>
+
+  [组 132] @L3535 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: updating ? '下载中…' : '立即更新'
+      1. 下载中   <OK key=version.downloading>
+      2. 立即更新   <OK key=version.updateNow>
+
+  [组 133] @L216 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: userPickQ ? '未找到匹配用户' : '暂无用户'
+      1. 未找到匹配用户   <OK key=profile.noMatchUser>
+      2. 暂无用户   <OK key=profile.noUser>
+
+  [组 134] @L217 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: userPickQ ? '请调整关键词后重试' : '输入账号 / 手机号 / 邮箱搜索'
+      1. 请调整关键词后重试   <OK key=common.searchEmpty>
+      2. 输入账号 / 手机号 / 邮箱搜索   <OK key=common.searchUserPlaceholder>
+
+  [组 135] @L703 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: v.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  [组 136] @L2420 模板 mustache · 分支 2 条 | 需翻译 2 条 | 已覆盖 2 | 待补 0
+      expr: x.online?'在线':'离线'
+      1. 在线   <OK key=vehicles.online>
+      2. 离线   <OK key=vehicles.offline>
+
+  合计: 动态生成点 136 处 | 展开文案 163 条(去重) | 已覆盖 147 | 待补 16
+  -- 待补文案清单（按条建键）--
+    - const parts=a.split(/[市区县]/).filter(Boolean); return parts.length?parts[parts.length-1]:a; }); const locDistM=computed(()=>{ if(locLoading.value)retu
+    - 主订单
+    - 份
+    - 在线 离线
+    - 最近触发： 次
+    - 正常
+    - 电池已解绑
+    - 确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池
+    - 确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆
+    - 确认执行退款？合计退款 Rp
+    - 确认结束订单
+    - 确认结束订单？合计退款 Rp
+    - 解绑电池
+    - 解绑车辆
+    - 车辆已解绑
+    - 重新获取
+
+==== SPLIT 多行规则块（需按行拆分为独立键）====
+count=0
+
+==== G 枚举族跨组重复审计（同文案值落在不同键 -> 疑似散组）====
+count=0
+
+==== H 分组登记检查（新 key 首段需登记 GROUP_LABELS/GROUP_ORDER）====
+  一级分组 25 个
+  全部已登记 GROUP_LABELS
+==== I 术语一致性审计（glossary 同义词混用）====
+  (未提供术语表 --glossary <file>，跳过；用 references/glossary.md 维护词条)
+==== J 翻译表分类（kind: enum 词条枚举 / term 词条术语 / copy 文案）====
+  ROWS 行分类: enum 0 | term 0 | copy 733
+  未标注 kind 的行: 733（缺省视为 copy）
+  -> 迁移建议：先把同文案跨键（见上 G 段）收敛成枚举族/术语并标 kind，
+     其余一次性界面文案保持 copy 即可，无需逐行标注。
+
+==== L 候选幽灵键（静态中文片段源码均无）====
+count=61（另有含占位符骨架键 29 个，不自动判定）
+  - vehicles.addFirstVehicle = 点击右下角 + 添加第一辆车辆
+  - vehicles.clearFilter = 清除筛选
+  - vehicles.noMatchingAdjustSearch = 未找到匹配的车辆，请调整搜索条件
+  - vehicles.noResultsSub = 还没有车辆数据
+  - scan.invalidQr = 无效二维码
+  - orders.noResultsFiltered = 当前筛选下无匹配订单
+  - orders.noResultsSub = 还没有订单数据
+  - orders.paidAmount = 实付金额
+  - orders.payment = 支付方式
+  - orders.refundChannelOnline = 原路退回 · 2C2P
+  - orders.refundEmptySub = 该订单尚未产生退款
+  - orders.vehicleReturned = 车辆已归还
+  - profile.accountNoDataSub = 点击右上角新增账号
+  - profile.adjustModelSearch = 请调整搜索关键词
+  - profile.configBreachHint = 到达设定超期天数后订单自动切换为已违约状态，车辆远程开锁功能锁定
+  - profile.configBreachSuffix = 天状态变更至已违约且不可开锁
+  - profile.configPreHint = 租期到期前自动转为待归还状态，提醒用户及时归还
+  - profile.configPreSuffix = 天状态变更至待归还
+  - profile.noCSInfoSub = 点击右上角新增客服电话
+  - profile.noModelsSub = 还没有车型数据
+  - profile.noPositionsSub = 还没有职位数据
+  - vehicles.batteryAllOff = 全关
+  - vehicles.batteryAllOn = 全开
+  - vehicles.batteryNoDevice = 暂无电池设备数据
+  - vehicles.batteryEmptyList = 还没有电池数据
+  - vehicles.batteryEmptyModelList = 还没有电池型号数据
+  - profile.notLoggedIn = 未登录
+  - profile.noMatchPackage = 未找到匹配的套餐
+  - profile.emptyPackageList = 还没有套餐数据
+  - orders.paymentOnline = 线上支付
+  - vehicles.functionControl = 功能控制
+  - profile.permControl = 权限控制
+  - version.updateAvailable = 版本更新
+  - version.suggestUpdate = 建议更新
+  - version.forceUpdate = 强制更新
+  - home.alert.recent = 最近告警列表
+  - orders.confirmFinishOffline = 确认结束订单？该订单为线下支付，如需要退款请线下处理退款
+  - orders.noIdleBattery = 暂无空闲电池可选
+  - orders.noIdleVehicle = 暂无空闲车辆可选
+  - profile.confirmUnbindUser = 确认解绑该用户
+  - order.refund.create = 发起退款
+  - wallet.rechargeBalanceFlow = 充值余额流水
+  - wallet.rechargeAddHint = 点击右上角新增充值档位
+  - wallet.giftBalanceFlow = 赠送余额流水
+  - wallet.withdraw = 提现
+  - wallet.withdrawMerchant = 商户提现
+  - wallet.withdrawUser = 用户提现
+  - wallet.withdrawType = 提现类型
+  - wallet.withdrawAmount = 提现金额
+  - wallet.withdrawAmountPlaceholder = 请输入提现金额
+  - wallet.withdrawSuccess = 提现成功
+  - wallet.withdrawFail = 提现失败
+  - wallet.withdrawProcessing = 提现中
+  - wallet.noRechargeOrder = 暂无充值订单
+  - renewal.autoOn = 已开启自动续租，续租费用到期自动从钱包扣除
+  - renewal.autoOff = 已关闭自动续租
+  - profile.noRegisteredUser = 暂无注册用户
+  - profile.userNoMatch = 未找到匹配的用户
+  - profile.menuBusiness = 经营管理
+  - profile.menuStaffUser = 员工与用户
+  - profile.menuOpsConfig = 运营配置
+  -> 处置三选一：源码未实现的规划键(待实现后标注) / 源码措辞已改(更新表值) /
+     确认无引用(移除)。勿因撞词放行——值在别的语境出现 ≠ 该键有源。
+  -- 骨架键（含 {n} 占位符，需人工按 JS/模板插值核对，勿自动删除）--
+    · alert.expandAll = 展开全部 {n} 条
+    · alert.historyCount = 共 {n} 条
+    · alert.timelineClosed = 已关闭 · {source}
+    · alert.timelineIgnoredReason = 已忽略 · {reason}
+    · alert.timelineTriggered = 第 {n} 次触发
+    · vehicles.noLocationCount = {n} 辆无定位
+    · orders.confirmRefundDesc = 确认结束订单？合计退款 Rp{total}
+    · orders.docCount = {n} 份资料
+    · orders.planMonthlyMonths = 月租×{n}月
+    · orders.refundModalRentLimit = 可退 {amount}
+    · profile.accountStatusChanged = 账号状态已{status}
+    · profile.getCodeRetry = 重新获取 ({n}s)
+    · profile.lastUpdateLabel = 更新时间：{time}
+    · profile.modelCount = 共 {n} 辆
+    · profile.remarkLabel = 备注：{remark}
+    · profile.servicePeriod = 服务时段：{start} - {end}
+    · version.latestVersion = 最新版本 V{version}
+    · version.updateComplete = 更新完成！已升级至 V{version}
+    · orders.confirmRefundTotal = 确认执行退款？合计退款 Rp {amount}
+    · vehicles.noLocationListOnly = {n}辆无定位，仅列表可见
+    · battery.noLocationListOnly = {n}块无定位，仅列表可见
+    · renewal.beforeDueAuto = 到期前 {n} 天自动续租
+    · renewal.remindBeforeCharge = 扣款前 {n} 天提醒用户
+    · renewal.failClose = 连续扣款失败 {n} 次后关闭订单自动续租
+    · renewal.preReturnDays = 到期前 {n} 天，自动变更为「待还车」状态
+    · renewal.breachDays = 超期 {n} 天，自动变更为「已违约」状态
+    · price.confirmDesc = 原租金 {rent}、原押金 {deposit}；改价后租金 {newRent}、押金 {newDeposit}，并按填写渠道拆分入账。
+    · price.diffIncrease = 原租金 {old}，各渠道合计 {sum}，当前增加 {diff}
+    · price.diffDecrease = 原租金 {old}，各渠道合计 {sum}，当前减少 {diff}
+==== DEAD (表有源无，死键候选) ====
+count=25
+  - orders.noResultsFiltered = 当前筛选下无匹配订单
+  - orders.noResultsSub = 还没有订单数据
+  - orders.payment = 支付方式
+  - orders.payment2c2p = 2C2P
+  - orders.paymentOnline = 线上支付
+  - orders.refundChannelOnline = 原路退回 · 2C2P
+  - profile.menuBusiness = 经营管理
+  - profile.menuOpsConfig = 运营配置
+  - profile.noRegisteredUser = 暂无注册用户
+  - profile.permControl = 权限控制
+  - profile.platformPerms = 平台端权限
+  - profile.userNoMatch = 未找到匹配的用户
+  - scan.invalidQr = 无效二维码
+  - vehicles.batteryAllOff = 全关
+  - vehicles.batteryAllOn = 全开
+  - vehicles.clearFilter = 清除筛选
+  - vehicles.functionControl = 功能控制
+  - version.forceUpdate = 强制更新
+  - version.suggestUpdate = 建议更新
+  - version.updateAvailable = 版本更新
+  - wallet.withdraw = 提现
+  - wallet.withdrawFail = 提现失败
+  - wallet.withdrawMerchant = 商户提现
+  - wallet.withdrawSuccess = 提现成功
+  - wallet.withdrawUser = 用户提现
