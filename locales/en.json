@@ -233,7 +233,9 @@
     "docTypesHint": "Driver's license, ID card, contract, etc.",
     "operateTime": "Operation Time",
     "nickname": "Nickname",
-    "deregister": "Deregister"
+    "deregister": "Deregister",
+    "registerTime": "Registration Time",
+    "statusNormal": "Normal"
   },
   "home": {
     "alertCenter": "Alert Center",
@@ -358,7 +360,12 @@
     "uploadSpecSmall": "Size: 170px × 170px, format: PNG with transparent background, max 512KB",
     "moreOps": "More Actions",
     "emptyNoAccess": "No accessible content yet",
-    "renewalAutoDeduct": "Renewal fee auto-deducted from wallet"
+    "renewalAutoDeduct": "Renewal fee auto-deducted from wallet",
+    "type": "Type",
+    "amount": "Amount",
+    "hourUnit": "h",
+    "dayUnit": "d",
+    "weekUnit": "w"
   },
   "vehicles": {
     "actionArm": "Arm",
@@ -591,7 +598,15 @@
     "replaceVehicleHint": "Select a replacement vehicle for this order",
     "vehicleBound": "Vehicle bound",
     "vehicleChanged": "Vehicle changed",
-    "vehicleInfo": "Vehicle Info"
+    "vehicleInfo": "Vehicle Info",
+    "noOrders": "No Orders",
+    "channelWallet": "Wallet",
+    "unbindVehicle": "Unbind vehicle",
+    "refundAmountRequired": "Please enter the refund amount",
+    "refundAmountInput": "Enter refund amount",
+    "refundSubmitted": "Refund request submitted",
+    "payRefunded": "Refunded",
+    "unbindVehicleSuccess": "Vehicle unbound"
   },
   "scan": {
     "invalidQr": "Invalid QR code"
@@ -683,7 +698,9 @@
     "lostUnlockHint": "The battery will be unlocked once the lost report is cleared",
     "noLocationListOnly": "{n} batteries without location, visible in list only",
     "reportLost": "Report battery as lost",
-    "searchEmpty": "No matching battery found. Adjust your search"
+    "searchEmpty": "No matching battery found. Adjust your search",
+    "unbindBattery": "Unbind battery",
+    "unbindBatterySuccess": "Battery unbound"
   },
   "account": {
     "list": "Account list"
@@ -759,7 +776,10 @@
     "noRechargeOrder": "No top-up orders yet",
     "noRechargeConfig": "No top-up config yet",
     "moreOps": "More wallet actions",
-    "rechargeUserInfo": "User Info"
+    "rechargeUserInfo": "User Info",
+    "gift": "Bonus",
+    "orderConsume": "Order payment",
+    "rechargeRefund": "Top-up refund"
   },
   "renewal": {
     "auto": "Auto Renewal",
@@ -787,7 +807,8 @@
     "cancelSuccess": "Renewal cancelled",
     "notFound": "Renewal order not found",
     "needOrderType": "Select at least one order type for auto renewal",
-    "needOrderStatus": "Select at least one order status allowed to renew"
+    "needOrderStatus": "Select at least one order status allowed to renew",
+    "mainOrder": "Main Order"
   },
   "price": {
     "title": "Adjust Price",

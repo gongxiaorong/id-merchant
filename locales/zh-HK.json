@@ -233,7 +233,9 @@
     "docTypesHint": "可上傳駕照、身份證、合同等",
     "operateTime": "操作時間",
     "nickname": "暱稱",
-    "deregister": "註銷"
+    "deregister": "註銷",
+    "registerTime": "註冊時間",
+    "statusNormal": "正常"
   },
   "home": {
     "alertCenter": "告警中心",
@@ -358,7 +360,12 @@
     "uploadSpecSmall": "尺寸：170px × 170px 格式：PNG 透明底，大小：不超過 512KB",
     "moreOps": "更多操作",
     "emptyNoAccess": "暫無可存取內容",
-    "renewalAutoDeduct": "續租費用從錢包自動扣除"
+    "renewalAutoDeduct": "續租費用從錢包自動扣除",
+    "type": "類型",
+    "amount": "金額",
+    "hourUnit": "小時",
+    "dayUnit": "天",
+    "weekUnit": "週"
   },
   "vehicles": {
     "actionArm": "設防",
@@ -591,7 +598,15 @@
     "replaceVehicleHint": "請為訂單更換指定車輛",
     "vehicleBound": "車輛已綁定",
     "vehicleChanged": "車輛已更換",
-    "vehicleInfo": "車輛資訊"
+    "vehicleInfo": "車輛資訊",
+    "noOrders": "暫無訂單",
+    "channelWallet": "錢包",
+    "unbindVehicle": "解綁車輛",
+    "refundAmountRequired": "請填寫退款金額",
+    "refundAmountInput": "請輸入退款金額",
+    "refundSubmitted": "退款申請已提交",
+    "payRefunded": "已退款",
+    "unbindVehicleSuccess": "車輛已解綁"
   },
   "scan": {
     "invalidQr": "無效二維碼"
@@ -683,7 +698,9 @@
     "lostUnlockHint": "解除報失後電池將被解鎖，恢復放電",
     "noLocationListOnly": "{n}塊無定位，僅列表可見",
     "reportLost": "電池報失",
-    "searchEmpty": "未找到符合的電池，請調整搜尋條件"
+    "searchEmpty": "未找到符合的電池，請調整搜尋條件",
+    "unbindBattery": "解綁電池",
+    "unbindBatterySuccess": "電池已解綁"
   },
   "account": {
     "list": "帳號列表"
@@ -759,7 +776,10 @@
     "noRechargeOrder": "暫無充值訂單",
     "noRechargeConfig": "暫無充值配置",
     "moreOps": "更多錢包操作",
-    "rechargeUserInfo": "用戶資訊"
+    "rechargeUserInfo": "用戶資訊",
+    "gift": "贈送",
+    "orderConsume": "訂單消費",
+    "rechargeRefund": "充值退款"
   },
   "renewal": {
     "auto": "自動續租",
@@ -787,7 +807,8 @@
     "cancelSuccess": "續租已取消",
     "notFound": "未找到該續租單",
     "needOrderType": "請至少選擇一種自動續租訂單類型",
-    "needOrderStatus": "請至少選擇一種允許續租的訂單狀態"
+    "needOrderStatus": "請至少選擇一種允許續租的訂單狀態",
+    "mainOrder": "主訂單"
   },
   "price": {
     "title": "改價",

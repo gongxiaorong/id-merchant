@@ -233,7 +233,9 @@
     "docTypesHint": "SIM, KTP, kontrak, dan lainnya",
     "operateTime": "Waktu Operasi",
     "nickname": "Nama Panggilan",
-    "deregister": "Hapus Akun"
+    "deregister": "Hapus Akun",
+    "registerTime": "Waktu Pendaftaran",
+    "statusNormal": "Normal"
   },
   "home": {
     "alertCenter": "Pusat Peringatan",
@@ -358,7 +360,12 @@
     "uploadSpecSmall": "Ukuran: 170px × 170px, format: PNG latar transparan, maksimal 512KB",
     "moreOps": "Aksi Lainnya",
     "emptyNoAccess": "Belum ada konten yang dapat diakses",
-    "renewalAutoDeduct": "Biaya perpanjangan dipotong otomatis dari dompet"
+    "renewalAutoDeduct": "Biaya perpanjangan dipotong otomatis dari dompet",
+    "type": "Tipe",
+    "amount": "Jumlah",
+    "hourUnit": "jam",
+    "dayUnit": "hari",
+    "weekUnit": "minggu"
   },
   "vehicles": {
     "actionArm": "Aktifkan Keamanan",
@@ -591,7 +598,15 @@
     "replaceVehicleHint": "Pilih kendaraan pengganti untuk pesanan ini",
     "vehicleBound": "Kendaraan terikat",
     "vehicleChanged": "Kendaraan diganti",
-    "vehicleInfo": "Info Kendaraan"
+    "vehicleInfo": "Info Kendaraan",
+    "noOrders": "Tidak ada pesanan",
+    "channelWallet": "Dompet",
+    "unbindVehicle": "Lepas ikatan kendaraan",
+    "refundAmountRequired": "Silakan isi jumlah pengembalian dana",
+    "refundAmountInput": "Masukkan jumlah pengembalian dana",
+    "refundSubmitted": "Permintaan pengembalian dana terkirim",
+    "payRefunded": "Pengembalian Dana Selesai",
+    "unbindVehicleSuccess": "Kendaraan terlepas"
   },
   "scan": {
     "invalidQr": "Kode QR tidak valid"
@@ -683,7 +698,9 @@
     "lostUnlockHint": "Baterai akan dibuka kuncinya setelah laporan kehilangan dibatalkan",
     "noLocationListOnly": "{n} baterai tanpa lokasi, hanya terlihat di daftar",
     "reportLost": "Laporkan baterai hilang",
-    "searchEmpty": "Baterai yang cocok tidak ditemukan. Sesuaikan pencarian"
+    "searchEmpty": "Baterai yang cocok tidak ditemukan. Sesuaikan pencarian",
+    "unbindBattery": "Lepas ikatan baterai",
+    "unbindBatterySuccess": "Baterai terlepas"
   },
   "account": {
     "list": "Daftar akun"
@@ -759,7 +776,10 @@
     "noRechargeOrder": "Belum ada pesanan top up",
     "noRechargeConfig": "Belum ada konfigurasi top up",
     "moreOps": "Aksi dompet lainnya",
-    "rechargeUserInfo": "Info Pengguna"
+    "rechargeUserInfo": "Info Pengguna",
+    "gift": "Bonus",
+    "orderConsume": "Pembayaran pesanan",
+    "rechargeRefund": "Pengembalian dana isi ulang"
   },
   "renewal": {
     "auto": "Perpanjangan Otomatis",
@@ -787,7 +807,8 @@
     "cancelSuccess": "Perpanjangan dibatalkan",
     "notFound": "Pesanan perpanjangan tidak ditemukan",
     "needOrderType": "Pilih minimal satu tipe pesanan untuk perpanjangan otomatis",
-    "needOrderStatus": "Pilih minimal satu status pesanan yang boleh diperpanjang"
+    "needOrderStatus": "Pilih minimal satu status pesanan yang boleh diperpanjang",
+    "mainOrder": "Pesanan Utama"
   },
   "price": {
     "title": "Ubah Harga",

@@ -233,7 +233,9 @@
     "docTypesHint": "可上传身份证、驾驶证、合同等",
     "operateTime": "操作时间",
     "nickname": "昵称",
-    "deregister": "注销"
+    "deregister": "注销",
+    "registerTime": "注册时间",
+    "statusNormal": "正常"
   },
   "home": {
     "alertCenter": "告警中心",
@@ -358,7 +360,12 @@
     "uploadSpecSmall": "尺寸：170px × 170px 格式：PNG 透明底，大小：不超过 512KB",
     "moreOps": "更多操作",
     "emptyNoAccess": "暂无可访问内容",
-    "renewalAutoDeduct": "续租费用从钱包自动扣除"
+    "renewalAutoDeduct": "续租费用从钱包自动扣除",
+    "type": "类型",
+    "amount": "金额",
+    "hourUnit": "小时",
+    "dayUnit": "天",
+    "weekUnit": "周"
   },
   "vehicles": {
     "actionArm": "设防",
@@ -591,7 +598,15 @@
     "replaceVehicleHint": "请为订单更换指定车辆",
     "vehicleBound": "车辆已绑定",
     "vehicleChanged": "车辆已更换",
-    "vehicleInfo": "车辆信息"
+    "vehicleInfo": "车辆信息",
+    "noOrders": "暂无订单",
+    "channelWallet": "钱包",
+    "unbindVehicle": "解绑车辆",
+    "refundAmountRequired": "请填写退款金额",
+    "refundAmountInput": "请输入退款金额",
+    "refundSubmitted": "退款申请已提交",
+    "payRefunded": "已退款",
+    "unbindVehicleSuccess": "车辆已解绑"
   },
   "scan": {
     "invalidQr": "无效二维码"
@@ -683,7 +698,9 @@
     "lostUnlockHint": "解除报失后电池将被解锁，恢复放电",
     "noLocationListOnly": "{n}块无定位，仅列表可见",
     "reportLost": "电池报失",
-    "searchEmpty": "未找到匹配的电池，请调整搜索条件"
+    "searchEmpty": "未找到匹配的电池，请调整搜索条件",
+    "unbindBattery": "解绑电池",
+    "unbindBatterySuccess": "电池已解绑"
   },
   "account": {
     "list": "账号列表"
@@ -759,7 +776,10 @@
     "noRechargeOrder": "暂无充值订单",
     "noRechargeConfig": "暂无充值配置",
     "moreOps": "更多钱包操作",
-    "rechargeUserInfo": "用户信息"
+    "rechargeUserInfo": "用户信息",
+    "gift": "赠送",
+    "orderConsume": "订单消费",
+    "rechargeRefund": "充值退款"
   },
   "renewal": {
     "auto": "自动续租",
@@ -787,7 +807,8 @@
     "cancelSuccess": "续租已取消",
     "notFound": "未找到该续租单",
     "needOrderType": "请至少选择一种自动续租订单类型",
-    "needOrderStatus": "请至少选择一种允许续租的订单状态"
+    "needOrderStatus": "请至少选择一种允许续租的订单状态",
+    "mainOrder": "主订单"
   },
   "price": {
     "title": "改价",
