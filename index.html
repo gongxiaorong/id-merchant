@@ -2131,7 +2131,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
            <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">合计</span><span class="flex-1 text-right" style="color:var(--accent)">{{ fmtRp(r.total) }}</span></div>
            <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付渠道</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ feeRowChannel(r) }}</span></div>
            <div class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付状态</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.payStatus }}</span></div>
-           <div v-if="r.payStatus!=='待支付'&&r.payStatus!=='未支付'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.payTime }}</span></div>
+           <div v-if="r.payStatus!=='待支付'" class="flex items-center gap-2"><span class="text-[#999] w-16 flex-shrink-0">支付时间</span><span class="flex-1 text-right text-[13px] text-[#333]">{{ r.payTime }}</span></div>
            <div v-if="r.isRenew&&r.payStatus==='待支付'" class="flex gap-2 pt-1">
              <div class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-center cursor-pointer active:opacity-90" style="border:1px solid #DC2626;color:#DC2626" @click="feeAskAction('feeCancelRenew',r)">取消续租</div>
              <div v-if="feeRowOnlyOffline(r)" class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-white text-center cursor-pointer active:opacity-90" style="background:var(--accent)" @click="feeAskAction('feePayRenew',r)">确认支付</div>
@@ -4266,7 +4266,6 @@ function fmtTrackTime(t){return t.year+'-'+p2(t.month)+'-'+p2(t.day)+' '+p2(t.ho
 const trackStartLabel=computed(()=>fmtTrackTime(trackStart.value));
 const trackEndLabel=computed(()=>fmtTrackTime(trackEnd.value));
 const trackPois=[
-  {label:'监管机构',x:22,y:28},
   {label:'商业楼宇',x:68,y:24},
   {label:'停车场',x:48,y:52},
   {label:'餐饮门店',x:74,y:62},
@@ -5004,8 +5003,7 @@ function submitRefund(){if(refundSaving.value)return;if(refundMode.value!=='retu
   const orderRefunds=ref({
 'YD202608100007':[
 {refundNo:'TK202607210001',refundTime:'2026-08-21 14:30:00',finishTime:'2026-08-21 14:33:20',operator:'Staff Li',reason:'提前还车，租金差额退还',rentAmount:200,depositAmount:0,refundSource:'运营平台',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:200}]},
-{refundNo:'TK202608200002',refundTime:'2026-08-20 11:05:00',finishTime:'2026-08-20 11:07:45',operator:'运营平台',reason:'用户主动申请押金退还',rentAmount:0,depositAmount:300,refundSource:'运营平台',refundStatus:'FAILED',items:[{part:'deposit',method:'2C2P',amount:300}]},
-{refundNo:'TK202608190003',refundTime:'2026-08-19 16:42:00',operator:'Merchant Shop A',reason:'商户优惠减免补偿',rentAmount:80,depositAmount:0,refundSource:'商户端',refundStatus:'REFUNDING',items:[{part:'rent',method:'OFFLINE',amount:80}]}
+{refundNo:'TK202608200002',refundTime:'2026-08-20 11:05:00',finishTime:'2026-08-20 11:07:45',operator:'运营平台',reason:'用户主动申请押金退还',rentAmount:0,depositAmount:300,refundSource:'运营平台',refundStatus:'FAILED',items:[{part:'deposit',method:'2C2P',amount:300}]}
 ],
 'YD202608190008':[
 {refundNo:'TK202608190004',refundTime:'2026-08-19 15:30:00',finishTime:'2026-08-19 15:32:10',operator:'zhang.wei',reason:'用户取消订单',rentAmount:300,depositAmount:500,refundSource:'用户端',refundStatus:'SUCCESS',items:[{part:'rent',method:'2C2P',amount:300},{part:'deposit',method:'2C2P',amount:500}]}
@@ -6219,7 +6217,6 @@ function initI18nData(){
     {name:'员工',parent:'管理员',level:'代理商门店',remark:'日常运营',created:'2024-10-15 14:30:00'}
   ];
   csList.value=[
-    {phone:'400-800-1234',code:'+86',sh:9,sm:0,eh:21,em:0,remark:'全国统一客服热线'},
     {phone:'010-56781234',code:'+86',sh:9,sm:0,eh:18,em:0,remark:'北京区域专线'},
     {phone:'021-68881234',code:'+86',sh:9,sm:0,eh:21,em:0,remark:'上海区域专线'},
     {phone:'020-38881234',code:'+86',sh:10,sm:0,eh:19,em:0,remark:'广州区域专线'}
